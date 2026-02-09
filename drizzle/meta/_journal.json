@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1764772223467,
+      "tag": "0000_dusty_ted_forrester",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1764772308300,
+      "tag": "0001_mixed_scourge",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1770060747861,
+      "tag": "0002_handy_karen_page",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1770151698848,
+      "tag": "0003_empty_nebula",
+      "breakpoints": true
+    }
+  ]
+}
