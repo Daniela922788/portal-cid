@@ -1,5 +1,5 @@
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, courses, enrollments, InsertEnrollment, pqrsTable, InsertPQRS, news, events, projects, centrosInteres, InsertCentroInteres, sesiones, InsertSesion, asistencia, InsertAsistencia, asesorias, InsertAsesoria, gestores, InsertGestor, centrosGestores, InsertCentroGestor } from "../drizzle/schema";
+import { InsertUser, users, courses, InsertCourse, enrollments, InsertEnrollment, pqrsTable, InsertPQRS, news, events, projects, centrosInteres, InsertCentroInteres, sesiones, InsertSesion, asistencia, InsertAsistencia, asesorias, InsertAsesoria, gestores, InsertGestor, centrosGestores, InsertCentroGestor } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import { eq, and } from "drizzle-orm";
 

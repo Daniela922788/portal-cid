@@ -52,6 +52,25 @@ export default function TerritorioStem() {
             </CardHeader>
           </Card>
         </div>
+        <div className="mt-12">
+          <h2 className="text-4xl font-bold mb-8">Testimonios STEM</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              { nombre: "María González", rol: "Rectora", texto: "El CID ha transformado nuestra institución" },
+              { nombre: "Carlos Ramírez", rol: "Docente", texto: "Excelente apoyo para proyectos innovadores" }
+            ].map((t, i) => (
+              <Card key={i}>
+                <CardHeader>
+                  <CardTitle>{t.nombre}</CardTitle>
+                  <Badge>{t.rol}</Badge>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground italic">"{t.texto}"</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

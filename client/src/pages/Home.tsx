@@ -14,7 +14,11 @@ import {
   Sparkles,
   HeartHandshake
 } from "lucide-react";
-
+ 
+import educacionLogo from "@/assets/educacion-logo.png";
+import alcaldiaLogo from "@/assets/alcaldia-envigado-logo.png";
+import cienciasLogo from "@/assets/ciencias-logo.png";
+import ticLogo from "@/assets/tic-logo.png";
 export default function Home() {
   // Authentication state is managed by the app context
   // Users can login via the header button
@@ -59,11 +63,11 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                   <Lightbulb className="h-6 w-6 text-primary" />
                 </div>
-                <CardTitle>Misión</CardTitle>
+                <CardTitle>Que Somos</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Promover la innovación educativa y el desarrollo de competencias STEM en las instituciones educativas oficiales, fortaleciendo las capacidades de docentes y estudiantes para enfrentar los desafíos del siglo XXI.
+                  El Centro de Investigación y Desarrollo (CID) es un espacio académico y formativo que promueve la investigación, la innovación y el pensamiento crítico dentro de nuestra institución educativa. Nace con el propósito de fortalecer las competencias científicas, tecnológicas y sociales de nuestros estudiantes, fomentando una cultura investigativa desde edades tempranas.
                 </p>
               </CardContent>
             </Card>
@@ -73,11 +77,11 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center mb-4">
                   <Sparkles className="h-6 w-6 text-secondary" />
                 </div>
-                <CardTitle>Visión</CardTitle>
+                <CardTitle>Formación General</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Ser reconocidos como el centro de innovación educativa líder en la región, impulsando la transformación educativa a través de la investigación, la tecnología y la colaboración con aliados estratégicos.
+                  El Centro de Investigación y Desarrollo promueve la formación integral de los estudiantes, fortaleciendo el pensamiento crítico, la responsabilidad social y las habilidades necesarias para su desarrollo académico y personal.
                 </p>
               </CardContent>
             </Card>
@@ -87,11 +91,11 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-4">
                   <Award className="h-6 w-6 text-accent" />
                 </div>
-                <CardTitle>Objetivo</CardTitle>
+                <CardTitle>Convocatorias</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Fortalecer el ecosistema educativo mediante la implementación de proyectos innovadores, la formación continua de gestores de innovación y la creación de espacios de aprendizaje significativo.
+                  Espacio donde se publican las oportunidades para participar en proyectos, investigaciones y actividades del Centro de Investigación y Desarrollo.
                 </p>
               </CardContent>
             </Card>
@@ -110,85 +114,52 @@ export default function Home() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <Link href="/proyectos">
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                    <Microscope className="h-6 w-6 text-primary" />
+            <Link href="/territorio-stem">
+              <Card
+                className="h-full hover:shadow-lg transition-shadow cursor-pointer group overflow-hidden relative"
+                style={{
+                  backgroundImage: "image-set( url('/images/Fondoprueba@1600.avif') type('image/avif'), url('/images/Fondoprueba@1600.webp') type('image/webp'), url('/images/Fondoprueba.png') type('image/png') ), url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663221068197/QLvxXkXmkaeIKFpu.png')",
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat'
+                }}
+              >
+                <div className="absolute inset-0 bg-black/40"></div>
+                <CardHeader className="relative z-10">
+                  <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-3 group-hover:bg-white/30 transition-colors">
+                    <Microscope className="h-6 w-6 text-white" />
                   </div>
-                  <CardTitle className="text-lg">Proyectos STEM</CardTitle>
-                  <CardDescription>
-                    Explora proyectos de investigación e innovación
+                  <CardTitle className="text-lg text-white">Territorio STEM</CardTitle>
+                  <CardDescription className="text-white/80">
+                    Conoce el ecosistema STEM de Envigado, sus actores, proyectos y oportunidades para estudiantes y docentes. 
                   </CardDescription>
                 </CardHeader>
               </Card>
             </Link>
 
-            <Link href="/noticias">
+            <Link href="/reconocimientos">
               <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
                 <CardHeader>
                   <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center mb-3 group-hover:bg-secondary/20 transition-colors">
                     <Newspaper className="h-6 w-6 text-secondary" />
                   </div>
-                  <CardTitle className="text-lg">Noticias</CardTitle>
+                  <CardTitle className="text-lg">Premios y reconocimientos</CardTitle>
                   <CardDescription>
-                    Mantente informado sobre nuestras actividades
+                    Explora los reconocimientos que reflejan nuestro compromiso con la excelencia.
                   </CardDescription>
                 </CardHeader>
               </Card>
             </Link>
 
-            <Link href="/territorio-stem">
+            <Link href="/aliados">
               <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
                 <CardHeader>
                   <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-3 group-hover:bg-accent/20 transition-colors">
                     <Users className="h-6 w-6 text-accent" />
                   </div>
-                  <CardTitle className="text-lg">Territorio STEM</CardTitle>
+                  <CardTitle className="text-lg">Aliados</CardTitle>
                   <CardDescription>
-                    Conoce el ecosistema STEM de Envigado
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-
-            <Link href="/gestores">
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                    <GraduationCap className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-lg">Gestores de Innovación</CardTitle>
-                  <CardDescription>
-                    Conoce a nuestros gestores y sus experiencias
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-
-            <Link href="/ie-oficiales">
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center mb-3 group-hover:bg-secondary/20 transition-colors">
-                    <BookOpen className="h-6 w-6 text-secondary" />
-                  </div>
-                  <CardTitle className="text-lg">IE Oficiales</CardTitle>
-                  <CardDescription>
-                    Instituciones educativas participantes
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-
-            <Link href="/eventos">
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-3 group-hover:bg-accent/20 transition-colors">
-                    <Calendar className="h-6 w-6 text-accent" />
-                  </div>
-                  <CardTitle className="text-lg">Eventos</CardTitle>
-                  <CardDescription>
-                    Ferias, experiencias y actividades
+                    Descubre a nuestros aliados estratégicos que impulsan la innovación educativa en nuestra comunidad.
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -198,29 +169,97 @@ export default function Home() {
               <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
                 <CardHeader>
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                    <Sparkles className="h-6 w-6 text-primary" />
+                    <GraduationCap className="h-6 w-6 text-primary" />
                   </div>
                   <CardTitle className="text-lg">CID Kids</CardTitle>
                   <CardDescription>
-                    Juegos educativos y trivia STEM
+                    Conoce nuestro programa diseñado para fomentar la curiosidad y el amor por la ciencia en los más pequeños.
                   </CardDescription>
                 </CardHeader>
               </Card>
             </Link>
+          </div>
+        </div>
+      </section>
 
-            <Link href="/mesa-ayuda">
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center mb-3 group-hover:bg-secondary/20 transition-colors">
-                    <HeartHandshake className="h-6 w-6 text-secondary" />
-                  </div>
-                  <CardTitle className="text-lg">Mesa de Ayuda</CardTitle>
-                  <CardDescription>
-                    Soporte y atención PQRS
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
+{/* Banner de Innovación con Robot */}
+      <section className="relative py-20 md:py-24 overflow-hidden" style={{
+        backgroundImage: 'linear-gradient(135deg, #0ea5a5 0%, #10b981 100%)',
+        minHeight: '350px'
+      }}>
+        <div className="container">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Contenido de texto */}
+            <div className="text-white z-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                La innovación es el futuro de la educación
+              </h2>
+              <p className="text-lg md:text-xl mb-8 text-white/90">
+                Descubre cómo la tecnología y la creatividad transforman la manera de aprender y enseñar en nuestras instituciones educativas.
+              </p>
+              <Link href="/noticias">
+                <Button size="lg" variant="secondary" className="text-lg">
+                  Leer Noticias
+                </Button>
+              </Link>
+            </div>
+            
+            {/* Imagen del robot */}
+            <div className="flex justify-center md:justify-end">
+              <img 
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663221068197/DkTNcWRuzslfqEVB.png" 
+                alt="Robot de Innovación" 
+                className="w-full max-w-md h-auto drop-shadow-lg"
+                style={{ maxHeight: '350px' }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Logos de Ministerios y Entidades */}
+      <section className="py-16 bg-muted/30">
+        <div className="container">
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+            <a href="https://www.mineducacion.gov.co/portal/" target="_blank" rel="noopener noreferrer">
+              <div className="flex flex-col items-center hover:opacity-80 transition-opacity cursor-pointer">
+                <img 
+                  src={educacionLogo} 
+                  alt="Ministerio de Educación" 
+                  className="h-32 w-auto object-contain"
+                />
+              </div>
+            </a>
+
+            <a href="https://minciencias.gov.co/" target="_blank" rel="noopener noreferrer">
+              <div className="flex flex-col items-center hover:opacity-80 transition-opacity cursor-pointer">
+                <img 
+                  src={cienciasLogo} 
+                  alt="Ciencias" 
+                  className="h-32 w-auto object-contain"
+                />
+              </div>
+            </a>
+
+            <a href="https://www.mintic.gov.co/portal/inicio/" target="_blank" rel="noopener noreferrer">
+              <div className="flex flex-col items-center hover:opacity-80 transition-opacity cursor-pointer">
+                <img 
+                  src={ticLogo} 
+                  alt="TIC" 
+                  className="h-32 w-auto object-contain"
+                />
+              </div>
+            </a>
+
+            <a href="https://www.envigado.gov.co/" target="_blank" rel="noopener noreferrer">
+              <div className="flex flex-col items-center hover:opacity-80 transition-opacity cursor-pointer">
+                <img 
+                  src={alcaldiaLogo} 
+                  alt="Alcaldía de Envigado" 
+                  className="h-32 w-auto object-contain"
+                />
+              </div>
+            </a>
           </div>
         </div>
       </section>

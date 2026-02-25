@@ -94,31 +94,6 @@ export default function MesaAyuda() {
           </div>
         </div>
 
-        {/* Video Instructivo */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8">Video Instructivo: Cómo crear usuario en SAC</h2>
-          <div className="bg-white p-6 rounded-lg border-2 border-gray-200">
-            <div className="flex items-center gap-4 mb-6">
-              <Video className="h-8 w-8 text-red-600" />
-              <div>
-                <h3 className="text-xl font-bold">Aprende a crear tu usuario en el SAC</h3>
-                <p className="text-gray-600">Sigue este video paso a paso para registrarte en el sistema</p>
-              </div>
-            </div>
-            <div className="aspect-video bg-gray-900 rounded-lg overflow-hidden">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/gYKoRaxQ8H8"
-                title="Video instructivo de usuario SAC"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
-        </div>
-
         {/* Preguntas Frecuentes */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold mb-8">Preguntas Frecuentes</h2>

@@ -317,7 +317,7 @@ export default function CRMNew() {
                           variant="outline" 
                           size="sm" 
                           className="text-red-600"
-                          onClick={() => setDeleteDialog({ type: 'centro', id: centro.id })}
+                          onClick={() => setDeleteDialog({ type: 'sesion', id: sesion.id })}
                         >
                           <Trash2 className="w-4 h-4 mr-2" />
                           Eliminar
