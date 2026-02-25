@@ -10,7 +10,6 @@ import serviciosImg from "@/assets/Servicios.png";
 import comunidadImpactadaImg from "@/assets/Comunidad impactada.png";
 import equipoCIDImg from "@/assets/Equipo CID.jpg";
 import centroCienciaImg from "@/assets/Centro-de-Ciencia.jfif";
-import djiVideo from "@/assets/DJI_0067.MOV";
 import AlejandraImg from "@/assets/Alejandra.webp";
 import IsabelImg from "@/assets/Isabel.webp";
 import JulianImg from "@/assets/Julian.webp";
@@ -478,30 +477,18 @@ export default function Nosotros() {
       {/* Centro de Ciencia - MEN (Propuesta 2) */}
       <section className="pt-10 pb-2 bg-white">
         <div className="container">
-          <div className="rounded-2xl overflow-hidden shadow-2xl mb-8">
-            <video
-              src={djiVideo}
-              controls
-              preload="metadata"
-              className="w-full h-[480px] md:h-[700px] object-cover object-center"
-            >
-              Tu navegador no soporta la reproducción de video.
-            </video>
-          </div>
-        </div>
-      </section>
-
-      {/* Videito*/}
-      <section className="pt-10 pb-2 bg-white">
-        <div className="container">
-          <div className="rounded-2xl overflow-hidden shadow-2xl mb-8">
-            <img
-              src={centroCienciaImg}
-              alt="Centro de Ciencia - Propuesta Banner"
-              loading="lazy"
-              decoding="async"
-              className="w-full h-[480px] md:h-[700px] object-cover object-center"
-            />
+          <div className="max-w-6xl mx-auto mb-10">
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl">
+              <iframe
+                src="https://www.youtube.com/embed/7sFJn3IfaGY?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1"
+                title="Centro de Ciencia - Video"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
           </div>
         </div>
       </section>
