@@ -53,7 +53,7 @@ export default function Reconocimientos() {
       <div className="container">
         <div className="mb-10">
           <h1 className="text-4xl font-bold mb-3">Reconocimientos</h1>
-          <p className="text-lg text-muted-foreground">Noticias y logros destacados del territorio.</p>
+          <p className="text-lg text-muted-foreground">Logros destacados del territorio.</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">

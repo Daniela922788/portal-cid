@@ -1,6 +1,6 @@
 export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 
-export const APP_TITLE = import.meta.env.VITE_APP_TITLE || "Portal de Innovación Educativa CID";
+export const APP_TITLE = import.meta.env.VITE_APP_TITLE || "Dirección de Innovación Educativa CID";
 
 export const APP_LOGO = "/logo-cid.png";
 
