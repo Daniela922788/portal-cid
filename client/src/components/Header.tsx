@@ -81,6 +81,16 @@ export default function Header() {
                         </Link>
                       </li>
                       <li>
+                        <Link href="/semana-stem-complete">
+                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                            <div className="text-sm font-medium leading-none">Semana STEM</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Programa completo de la Semana STEM+
+                            </p>
+                          </NavigationMenuLink>
+                        </Link>
+                      </li>
+                      <li>
                         <Link href="/publicaciones">
                           <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                             <div className="text-sm font-medium leading-none">Publicaciones</div>
@@ -234,6 +244,7 @@ export default function Header() {
               <Link href="/noticias" className="px-4 py-2 hover:bg-accent rounded-md">Noticias</Link>
               <Link href="/territorio-stem" className="px-4 py-2 hover:bg-accent rounded-md">Territorio STEM</Link>
               <Link href="/proyectos" className="px-4 py-2 hover:bg-accent rounded-md">Proyectos</Link>
+              <Link href="/semana-stem-complete" className="px-4 py-2 hover:bg-accent rounded-md">Semana STEM</Link>
               <Link href="/ie-oficiales" className="px-4 py-2 hover:bg-accent rounded-md">IE Oficiales</Link>
               <Link href="/gestores" className="px-4 py-2 hover:bg-accent rounded-md">Gestores</Link>
               <Link href="/kit-herramientas" className="px-4 py-2 hover:bg-accent rounded-md">Kit Herramientas</Link>

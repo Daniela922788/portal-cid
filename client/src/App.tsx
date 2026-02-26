@@ -22,6 +22,7 @@ import KitHerramientas from "./pages/KitHerramientas";
 import Enlaces from "./pages/Enlaces";
 import Normatividad from "./pages/Normatividad";
 import SemanaStem from "./pages/SemanaStem";
+import SemanaStemComplete from "./pages/SemanaSTEM-Complete";
 import Aliados from "./pages/Aliados";
 import Premios from "./pages/Premios";
 import CentroCiencia from "./pages/CentroCiencia";
@@ -70,6 +71,7 @@ function Router() {
           <Route path="/enlaces" component={Enlaces} />
           <Route path="/normatividad" component={Normatividad} />
           <Route path="/semana-stem" component={SemanaStem} />
+          <Route path="/semana-stem-complete" component={SemanaStemComplete} />
           <Route path="/aliados" component={Aliados} />
           <Route path="/premios" component={Premios} />
           <Route path="/centro-ciencia" component={CentroCiencia} />
