@@ -26,6 +26,7 @@ export default function SemanaSTEM() {
   const [activeYear, setActiveYear] = useState(2025);
   const [activeDay, setActiveDay] = useState(1);
   const [expandedSession, setExpandedSession] = useState<number | null>(0);
+  const [sessionView, setSessionView] = useState<'original' | 'simple' | 'accordion'>('original');
   const speakerImage = (fileName: string) => `/ponentes/martes/${encodeURIComponent(fileName)}`;
 
   // Datos del Día 1 - Martes
@@ -171,10 +172,10 @@ export default function SemanaSTEM() {
   ];
 
   const daysNavigation = [
-    { day: 'Martes', date: '23 de Septiembre', index: 1, icon: '🚀' },
-    { day: 'Miércoles', date: '24 de Septiembre', index: 2, icon: '🤖' },
-    { day: 'Jueves', date: '25 de Septiembre', index: 3, icon: '💡' },
-    { day: 'Viernes', date: '26 de Septiembre', index: 4, icon: '🌍' },
+    { day: 'Martes', date: '23', index: 1, icon: '🚀' },
+    { day: 'Miércoles', date: '24', index: 2, icon: '🤖' },
+    { day: 'Jueves', date: '25', index: 3, icon: '💡' },
+    { day: 'Viernes', date: '26', index: 4, icon: '🌍' },
   ];
 
   return (
@@ -261,16 +262,16 @@ export default function SemanaSTEM() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setActiveDay(dayNav.index)}
-                      className={`w-32 h-32 rounded-full font-bold transition-all flex flex-col items-center justify-center shadow-lg hover:shadow-xl ${
+                      className={`w-40 h-40 rounded-full font-bold transition-all flex flex-col items-center justify-center shadow-lg hover:shadow-xl ${
                         activeDay === dayNav.index
                           ? `bg-gradient-to-br ${colors[idx]} text-white scale-110`
                           : `bg-gradient-to-br ${colors[idx]} text-white opacity-70 hover:opacity-100`
                       }`}
                     >
-                      <span className="text-5xl mb-2">{dayNav.icon}</span>
+                      <span className="text-6xl mb-2">{dayNav.icon}</span>
                       <div className="flex flex-col items-center text-center">
-                        <span className="font-bold text-sm">{dayNav.day}</span>
-                        <span className="text-xs mt-1 opacity-90">{dayNav.date}</span>
+                        <span className="font-bold text-base">{dayNav.day}</span>
+                        <span className="text-sm mt-1 opacity-90">{dayNav.date}</span>
                       </div>
                     </motion.button>
                   );
@@ -329,81 +330,235 @@ export default function SemanaSTEM() {
                 </div>
               </section>
 
+              <section className="px-4 pb-2 bg-white">
+                <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-3">
+                  <button
+                    onClick={() => setSessionView('original')}
+                    className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                      sessionView === 'original'
+                        ? 'bg-orange-500 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    Original
+                  </button>
+                  <button
+                    onClick={() => setSessionView('simple')}
+                    className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                      sessionView === 'simple'
+                        ? 'bg-blue-600 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    Simple
+                  </button>
+                  <button
+                    onClick={() => setSessionView('accordion')}
+                    className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                      sessionView === 'accordion'
+                        ? 'bg-purple-600 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    Accordion
+                  </button>
+                </div>
+              </section>
+
               {/* Sessions */}
-              <section className="py-12 px-4 max-w-6xl mx-auto">
-                <h3 className="text-3xl font-bold mb-8 text-gray-800">Agenda del Día</h3>
-                <div className="space-y-4">
-                  {day1Sessions.map((session, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      viewport={{ once: true }}
-                      className={`border-l-4 bg-gradient-to-r ${session.color} rounded-lg overflow-hidden shadow-lg`}
-                    >
-                      <button
-                        onClick={() => setExpandedSession(expandedSession === idx ? null : idx)}
-                        className="w-full p-6 text-left text-white hover:opacity-90 transition-opacity"
+              {sessionView === 'original' && (
+                <section className="py-12 px-4 max-w-6xl mx-auto">
+                  <h3 className="text-3xl font-bold mb-8 text-gray-800">Agenda del Día</h3>
+                  <div className="space-y-4">
+                    {day1Sessions.map((session, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        viewport={{ once: true }}
+                        className={`border-l-4 bg-gradient-to-r ${session.color} rounded-lg overflow-hidden shadow-lg`}
                       >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4">
-                            <span className="text-3xl">{session.icon}</span>
+                        <button
+                          onClick={() => setExpandedSession(expandedSession === idx ? null : idx)}
+                          className="w-full p-6 text-left text-white hover:opacity-90 transition-opacity"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                              <span className="text-3xl">{session.icon}</span>
+                              <div>
+                                <p className="font-bold text-sm opacity-90">{session.time}</p>
+                                <p className="text-xl font-bold">{session.title}</p>
+                              </div>
+                            </div>
+                            <ChevronDown
+                              className={`transition-transform ${
+                                expandedSession === idx ? 'rotate-180' : ''
+                              }`}
+                            />
+                          </div>
+                        </button>
+
+                        {expandedSession === idx && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="px-6 pb-6 bg-black/20 text-white"
+                          >
+                            <p className="mb-6 leading-relaxed">{session.description}</p>
+
+                            {session.speakers.length > 0 && (
+                              <div>
+                                <h4 className="font-bold mb-4 text-lg">Expositores</h4>
+                                <div className="flex flex-wrap justify-center gap-6">
+                                  {session.speakers.map((speaker, speakerIdx) => (
+                                    <motion.div
+                                      key={speakerIdx}
+                                      initial={{ opacity: 0, scale: 0.8 }}
+                                      animate={{ opacity: 1, scale: 1 }}
+                                      transition={{ delay: speakerIdx * 0.1 }}
+                                      className="text-center"
+                                    >
+                                      <div className="w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden border-4 border-white/30">
+                                        <img
+                                          src={speaker.image}
+                                          alt={speaker.name}
+                                          className="w-full h-full object-cover"
+                                        />
+                                      </div>
+                                      <p className="font-bold text-sm">{speaker.name}</p>
+                                      <p className="text-xs opacity-90">{speaker.organization}</p>
+                                      <p className="text-xs opacity-80">{speaker.role}</p>
+                                    </motion.div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </motion.div>
+                        )}
+                      </motion.div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {sessionView === 'simple' && (
+                <section className="py-12 px-4 max-w-6xl mx-auto">
+                  <h3 className="text-3xl font-bold mb-8 text-gray-800">Agenda del Día</h3>
+                  <div className="space-y-6">
+                    {day1Sessions.map((session, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        viewport={{ once: true }}
+                        className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
+                      >
+                        <div className="flex gap-4">
+                          <span className="text-3xl flex-shrink-0">{session.icon}</span>
+                          <div className="flex-1">
+                            <p className="text-sm text-gray-500 font-semibold mb-1">{session.time}</p>
+                            <h4 className="text-lg font-bold text-gray-900 mb-3">{session.title}</h4>
+                            <p className="text-gray-600 text-sm leading-relaxed mb-4">{session.description}</p>
+
+                            {session.speakers.length > 0 && (
+                              <div className="mt-4 pt-4 border-t border-gray-200">
+                                <p className="text-sm font-semibold text-gray-700 mb-3">Expositores</p>
+                                <div className="flex flex-wrap gap-4">
+                                  {session.speakers.map((speaker, speakerIdx) => (
+                                    <div key={speakerIdx} className="text-center">
+                                      <div className="w-16 h-16 mx-auto mb-2 rounded-full overflow-hidden border-2 border-gray-200">
+                                        <img
+                                          src={speaker.image}
+                                          alt={speaker.name}
+                                          className="w-full h-full object-cover"
+                                        />
+                                      </div>
+                                      <p className="font-semibold text-xs text-gray-900">{speaker.name}</p>
+                                      <p className="text-xs text-gray-500">{speaker.organization}</p>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {sessionView === 'accordion' && (
+                <section className="py-12 px-4 max-w-4xl mx-auto">
+                  <h3 className="text-3xl font-bold mb-8 text-gray-800">Agenda del Día</h3>
+                  <div className="space-y-3">
+                    {day1Sessions.map((session, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                        viewport={{ once: true }}
+                        className="border border-gray-200 rounded-lg overflow-hidden bg-white"
+                      >
+                        <button
+                          onClick={() => setExpandedSession(expandedSession === idx ? null : idx)}
+                          className="w-full p-4 text-left hover:bg-gray-50 transition-colors flex items-center justify-between"
+                        >
+                          <div className="flex items-center gap-3">
+                            <span className="text-2xl">{session.icon}</span>
                             <div>
-                              <p className="font-bold text-sm opacity-90">{session.time}</p>
-                              <p className="text-xl font-bold">{session.title}</p>
+                              <p className="text-xs text-gray-500 font-semibold">{session.time}</p>
+                              <p className="font-semibold text-gray-900">{session.title}</p>
                             </div>
                           </div>
                           <ChevronDown
-                            className={`transition-transform ${
+                            className={`text-gray-400 transition-transform ${
                               expandedSession === idx ? 'rotate-180' : ''
                             }`}
+                            size={20}
                           />
-                        </div>
-                      </button>
+                        </button>
 
-                      {expandedSession === idx && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="px-6 pb-6 bg-black/20 text-white"
-                        >
-                          <p className="mb-6 leading-relaxed">{session.description}</p>
+                        {expandedSession === idx && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="px-4 pb-4 bg-gray-50 border-t border-gray-200"
+                          >
+                            <p className="text-gray-600 text-sm leading-relaxed mb-4">{session.description}</p>
 
-                          {session.speakers.length > 0 && (
-                            <div>
-                              <h4 className="font-bold mb-4 text-lg">Expositores</h4>
-                              <div className="flex flex-wrap justify-center gap-6">
-                                {session.speakers.map((speaker, speakerIdx) => (
-                                  <motion.div
-                                    key={speakerIdx}
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: speakerIdx * 0.1 }}
-                                    className="text-center"
-                                  >
-                                    <div className="w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden border-4 border-white/30">
-                                      <img
-                                        src={speaker.image}
-                                        alt={speaker.name}
-                                        className="w-full h-full object-cover"
-                                      />
+                            {session.speakers.length > 0 && (
+                              <div className="pt-4 border-t border-gray-200">
+                                <p className="text-xs font-semibold text-gray-700 mb-3 uppercase">Expositores</p>
+                                <div className="flex flex-wrap gap-4">
+                                  {session.speakers.map((speaker, speakerIdx) => (
+                                    <div key={speakerIdx} className="text-center">
+                                      <div className="w-14 h-14 mx-auto mb-2 rounded-full overflow-hidden border border-gray-300">
+                                        <img
+                                          src={speaker.image}
+                                          alt={speaker.name}
+                                          className="w-full h-full object-cover"
+                                        />
+                                      </div>
+                                      <p className="font-semibold text-xs text-gray-900">{speaker.name}</p>
+                                      <p className="text-xs text-gray-500">{speaker.organization}</p>
                                     </div>
-                                    <p className="font-bold text-sm">{speaker.name}</p>
-                                    <p className="text-xs opacity-90">{speaker.organization}</p>
-                                    <p className="text-xs opacity-80">{speaker.role}</p>
-                                  </motion.div>
-                                ))}
+                                  ))}
+                                </div>
                               </div>
-                            </div>
-                          )}
-                        </motion.div>
-                      )}
-                    </motion.div>
-                  ))}
-                </div>
-              </section>
+                            )}
+                          </motion.div>
+                        )}
+                      </motion.div>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               {/* Highlights */}
               <section className="py-12 px-4 max-w-6xl mx-auto">
