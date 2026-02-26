@@ -69,6 +69,24 @@ export default function Nosotros() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
+
+  const quickSections = [
+    { id: "lo-que-hacemos", title: "Lo que Hacemos y Cómo Impactamos" },
+    { id: "centro-ciencia-men", title: "Centro de Ciencia - MEN" },
+    { id: "historia-detalle", title: "Nuestra Historia en Detalle" },
+    { id: "direccion-innovacion", title: "Dirección de Innovación" },
+    { id: "gestores-innovacion", title: "Gestores de Innovación - Dirección de Innovación" },
+    { id: "horizonte-estrategico", title: "Horizonte Estratégico" },
+    { id: "comunidad-impactada", title: "Comunidad Impactada en el Centro de Ciencia" },
+    { id: "mundo-ve", title: "Lo que el Mundo Ve en Nosotros" },
+    { id: "lineas-tematicas", title: "Líneas Temáticas" },
+  ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   
   const timelineEvents: TimelineEvent[] = [
     { 
@@ -332,6 +350,25 @@ export default function Nosotros() {
         </div>
       </motion.section>
 
+      <section className="pt-8 pb-6 bg-white">
+        <div className="container">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">Navegación rápida</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {quickSections.map((section) => (
+              <button
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
+                className="text-left p-4 rounded-xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:shadow-md hover:border-blue-300 transition-all"
+              >
+                <span className="text-sm md:text-base font-semibold text-gray-800">
+                  {section.title}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Nuestro ADN */}
       <section className="pt-10 pb-2 bg-white">
         <div className="container">
@@ -406,7 +443,7 @@ export default function Nosotros() {
       </section>
 
       {/* Lo que hacemos */}
-      <section className="pt-20 pb-2 bg-gradient-to-br from-gray-50 to-white">
+      <section id="lo-que-hacemos" className="pt-20 pb-2 bg-gradient-to-br from-gray-50 to-white scroll-mt-24">
         <div className="container">
           <h2 className="text-4xl font-bold mb-16 text-center">Lo que Hacemos y Cómo Impactamos</h2>
           <div className="grid md:grid-cols-2 gap-8 mb-16">
@@ -455,7 +492,7 @@ export default function Nosotros() {
       </section>
 
       {/* Centro de Ciencia - MEN */}
-      <section className="pt-10 pb-2 bg-gradient-to-br from-blue-50 to-teal-50">
+      <section id="centro-ciencia-men" className="pt-10 pb-2 bg-gradient-to-br from-blue-50 to-teal-50 scroll-mt-24">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
             <img 
@@ -475,7 +512,7 @@ export default function Nosotros() {
       </section>
 
       {/* Centro de Ciencia - MEN (Propuesta 2) */}
-      <section className="pt-10 pb-2 bg-white">
+      <section id="historia-detalle" className="pt-10 pb-2 bg-white scroll-mt-24">
         <div className="container">
           <div className="max-w-6xl mx-auto mb-10">
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl">
@@ -598,7 +635,7 @@ export default function Nosotros() {
       </section>
 
       {/* Nuevo Grid de Imágenes */}
-      <section className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-gray-100">
+      <section id="direccion-innovacion" className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-gray-100 scroll-mt-24">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -649,7 +686,7 @@ export default function Nosotros() {
       </section>
 
       {/* Gestores de Innovación */}
-      <section className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-gray-100">
+      <section id="gestores-innovacion" className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-gray-100 scroll-mt-24">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -763,133 +800,9 @@ export default function Nosotros() {
         </div>
       )}
 
-      {/* Horizonte Estratégico */}
-      <section className="mt-16 pt-20 pb-16 bg-gradient-to-br from-gray-50 to-white">
-        <div className="container">
-          <h2 className="text-4xl font-bold mb-16 text-center">Horizonte Estratégico</h2>
-          <div className="grid md:grid-cols-3 gap-12 mb-16">
-            <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4 text-blue-600">Objetivo</h3>
-              <p className="text-gray-700">Gestionar procesos de apropiación social del conocimiento y divulgación científica desde la innovación educativa, la cultura, la ciencia y la tecnología en el municipio de Envigado.</p>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold mb-6 text-center text-teal-600">Pilares</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
-                  <span className="text-gray-700">Innovación</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
-                  <span className="text-gray-700">Creatividad</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
-                  <span className="text-gray-700">Formación</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
-                  <span className="text-gray-700">Sostenibilidad</span>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold mb-6 text-center text-green-600">Enfoque</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  <span className="text-gray-700">Colaborativo y participativo</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  <span className="text-gray-700">Experimental</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  <span className="text-gray-700">Inclusivo</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  <span className="text-gray-700">STEM+</span>
-                </li>
-              </ul>
-            </div>
-            {/* Servicios */}
-            <div className="mt-24 w-full md:col-span-3">
-              <h3 className="text-3xl font-bold text-center mb-16 text-gray-800">
-                Servicios
-              </h3>
-
-              {/* Servicios principales */}
-              <div className="grid md:grid-cols-4 gap-10 mb-16">
-
-                <div>
-                  <h4 className="text-xl font-bold text-yellow-600">Clubes STEM</h4>
-                  <p className="text-gray-700 mt-3">
-                    Grupos experienciales que exploran STEAM+ mediante actividades prácticas y creativas.
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="text-xl font-bold text-orange-600">Alianzas</h4>
-                  <p className="text-gray-700 mt-3">
-                    Impulsar los procesos de innovación educativa.
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="text-xl font-bold text-red-600">
-                    Centro de Producción Audiovisual
-                  </h4>
-                  <p className="text-gray-700 mt-3">
-                    Creación de contenido interactivo y accesible, fomentando la comprensión y el interés por la ciencia en diversos públicos.
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="text-xl font-bold text-green-600">Formación</h4>
-                  <p className="text-gray-700 mt-3">
-                    Se diseñan y promueven procesos de formación continua para la población del territorio.
-                  </p>
-                </div>
-
-              </div>
-
-              {/* Líneas de acción - ancho completo */}
-              <div className="bg-green-100 rounded-2xl p-10 shadow-md w-full">
-                <h4 className="text-2xl font-bold mb-8 text-green-700 text-center">
-                  Líneas de acción
-                </h4>
-
-                <div className="grid md:grid-cols-3 gap-8 text-center">
-                  <div className="flex items-center justify-center gap-3">
-                    <span className="w-3 h-3 bg-green-600 rounded-full"></span>
-                    <span className="text-gray-800 font-medium">
-                      Innovación en el barrio
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-center gap-3">
-                    <span className="w-3 h-3 bg-green-600 rounded-full"></span>
-                    <span className="text-gray-800 font-medium">
-                      Formación docente
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-center gap-3">
-                    <span className="w-3 h-3 bg-green-600 rounded-full"></span>
-                    <span className="text-gray-800 font-medium">
-                      Formación complementaria
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <section id="horizonte-estrategico" className="scroll-mt-24">
+        <ServicesSection />
       </section>
-
-      <ServicesSection />
 
       {/* Líneas Estratégicas */}
       <section className="pt-10 pb-2 bg-white">
@@ -921,11 +834,13 @@ export default function Nosotros() {
 
 
 
-      <CommunityImpactSectionV1 />
+      <section id="comunidad-impactada" className="scroll-mt-24">
+        <CommunityImpactSectionV1 />
+      </section>
 
 
       {/* Lo que el mundo ve en nosotros */}
-      <section className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-white">
+      <section id="mundo-ve" className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-white scroll-mt-24">
         <div className="container">
           <h2 className="text-4xl font-bold mb-16 text-center">Lo que el Mundo Ve en Nosotros</h2>
           <div className="grid md:grid-cols-2 gap-6 mb-12">
@@ -943,7 +858,9 @@ export default function Nosotros() {
         </div>
       </section>
 
-      <ThematicLines />
+      <section id="lineas-tematicas" className="scroll-mt-24">
+        <ThematicLines />
+      </section>
 
       {/* El camino que soñamos */}
       <section className="pt-10 pb-2 bg-gradient-to-br from-blue-600 via-teal-500 to-green-500 text-white">

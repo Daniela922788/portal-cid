@@ -1,206 +1,165 @@
 import { useState } from "react";
-import Breadcrumbs from "@/components/Breadcrumbs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Award, Users, Trophy } from "lucide-react";
-
-const reconocimientos = {
-  ciudad_aprendizaje: {
-    titulo: "Ciudad del Aprendizaje",
-    descripcion: "Reconocimiento a instituciones y proyectos que impulsan el aprendizaje continuo en la comunidad",
-    icono: Award,
-    premios: [
-      {
-        id: 1,
-        nombre: "Institución Educativa Oficial",
-        ganador: "IE Parque Biblioteca Débora Arango",
-        fecha: "Octubre 2024",
-        imagen: "https://images.unsplash.com/photo-1427504494785-cdfc993f38ae?w=400&h=300&fit=crop"
-      },
-      {
-        id: 2,
-        nombre: "Proyecto Comunitario",
-        ganador: "Centro de Innovación Educativa CID",
-        fecha: "Octubre 2024",
-        imagen: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop"
-      },
-      {
-        id: 3,
-        nombre: "Docente Innovador",
-        ganador: "Mg. Carlos Rodríguez López",
-        fecha: "Octubre 2024",
-        imagen: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop"
-      }
-    ]
-  },
-  semana_stem: {
-    titulo: "Ganadores Semana STEM",
-    descripcion: "Reconocimiento a estudiantes y proyectos destacados en la Semana de Ciencia, Tecnología, Ingeniería y Matemáticas",
-    icono: Trophy,
-    premios: [
-      {
-        id: 1,
-        nombre: "Primer Lugar - Categoría Robótica",
-        ganador: "Equipo Innovadores del Futuro",
-        fecha: "Septiembre 2024",
-        imagen: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop"
-      },
-      {
-        id: 2,
-        nombre: "Primer Lugar - Categoría Investigación",
-        ganador: "Proyecto: Energías Renovables en Envigado",
-        fecha: "Septiembre 2024",
-        imagen: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop"
-      },
-      {
-        id: 3,
-        nombre: "Mención de Honor - Categoría Diseño",
-        ganador: "Equipo Diseñadores Creativos",
-        fecha: "Septiembre 2024",
-        imagen: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop"
-      },
-      {
-        id: 4,
-        nombre: "Primer Lugar - Categoría Fotografía",
-        ganador: "Proyecto: Biodiversidad Local",
-        fecha: "Septiembre 2024",
-        imagen: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=300&fit=crop"
-      }
-    ]
-  },
-  colombia_lider: {
-    titulo: "Colombia Líder",
-    descripcion: "Reconocimiento a iniciativas que posicionan a Colombia como líder en innovación educativa",
-    icono: Users,
-    premios: [
-      {
-        id: 1,
-        nombre: "Iniciativa Educativa Destacada",
-        ganador: "Programa STEM+ Envigado",
-        fecha: "Noviembre 2024",
-        imagen: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop"
-      },
-      {
-        id: 2,
-        nombre: "Liderazgo en Innovación",
-        ganador: "Centro de Ciencia CID",
-        fecha: "Noviembre 2024",
-        imagen: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop"
-      },
-      {
-        id: 3,
-        nombre: "Transformación Educativa",
-        ganador: "Red de Gestores de Innovación",
-        fecha: "Noviembre 2024",
-        imagen: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop"
-      }
-    ]
-  }
-};
+import { X, Eye } from "lucide-react";
 
 export default function Reconocimientos() {
-  const [selectedTab, setSelectedTab] = useState("ciudad_aprendizaje");
+  const [openNews, setOpenNews] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
 
-  const tabActual = reconocimientos[selectedTab as keyof typeof reconocimientos];
-  const IconComponent = tabActual.icono;
+  const noticiaEnvigado = {
+    titulo: "Envigado recibió reconocimiento por sus buenas prácticas en Foro Latinoamericano de Ciudades del Aprendizaje",
+    boletin: "Boletín 243 - 6 de noviembre de 2025",
+    categoria: "Reconocimiento UNESCO",
+    autor: "Municipio de Envigado",
+    fecha: "6 de noviembre de 2025",
+    imagen: "/images/reconocimiento-envigado.jpg",
+    resumen:
+      "El Municipio de Envigado recibió el reconocimiento otorgado por la Red Latinoamericana de Ciudades del Aprendizaje por su experiencia Construyendo futuro: territorio STEM + SMART Regenerativo.",
+    contenido: [
+      "El Municipio de Envigado recibió el reconocimiento otorgado por la Red Latinoamericana de Ciudades del Aprendizaje por su experiencia Construyendo futuro: territorio STEM + SMART Regenerativo, teniendo en cuenta las buenas prácticas que se implementan en el territorio y que apuntan a la implementación de programas de aprendizaje para el cierre de la brecha digital y el desarrollo de competencias en docentes y estudiantes, en función de su contexto socioeconómico y su sentido de pertenencia hacia el municipio. La entrega del reconocimiento se llevó a cabo en ceremonia oficial desde la ciudad de La Paz (México), dentro del Tercer Foro de Ciudades del Aprendizaje de Latinoamérica Aprendizaje basado en el lugar.",
+      "La experiencia presentada desde Envigado proyecta el territorio con la promoción de estrategias y experiencias de aprendizaje a lo largo de la vida, para desarrollar competencias, conocimientos, actitudes y valores a través de procesos de investigación, promoción de la ciencia, la tecnología y la innovación. En el sistema educativo local se entiende lo regenerativo como una apuesta que hace énfasis en la sostenibilidad, el pensamiento crítico, la conciencia ambiental, la equidad y el compromiso ciudadano, a través de una perspectiva pedagógica.",
+      "Es importante señalar que la UNESCO ratificó a Envigado como parte de la Red Global de Ciudades del Aprendizaje, designación que tiene desde 2022 y que le permite recibir y transferir buenas prácticas educativas de alto impacto global, como las que se tienen en temas como la promoción de habilidades STEM entre sus estudiantes.",
+    ],
+    views: 3120,
+    likes: 456,
+    comments: 124,
+    shares: 78,
+  };
+
+  const carouselImages = [
+    "/ciudadaprendizaje/146814_whatsapp-image-20251106-at-71037-am_1024x600.jpeg",
+    "/ciudadaprendizaje/146816_145350_315a0044_1024x600_1024x600.jpg",
+    "/ciudadaprendizaje/146817_whatsapp-image-20250922-at-103715-am_1024x600.jpeg",
+    "/ciudadaprendizaje/146818_whatsapp-image-20251017-at-23058-pm_1024x600.jpeg",
+    "/ciudadaprendizaje/146819_whatsapp-image-20251106-at-111733-am_1024x600.jpeg",
+    "/ciudadaprendizaje/146820_315a9764_1024x600.jpg",
+    "/ciudadaprendizaje/146822_envigado-fue-reconocido-por-sus-buenas-practicas-en_1024x600.jpeg",
+  ];
+
+  const goPrevImage = () => {
+    setCurrentImage((prev) => (prev === 0 ? carouselImages.length - 1 : prev - 1));
+  };
+
+  const goNextImage = () => {
+    setCurrentImage((prev) => (prev === carouselImages.length - 1 ? 0 : prev + 1));
+  };
+
+  const openNoticia = () => {
+    setCurrentImage(0);
+    setOpenNews(true);
+  };
 
   return (
     <div className="min-h-screen py-8">
       <div className="container">
-        <Breadcrumbs items={[{ label: "Contenido" }, { label: "Reconocimientos" }]} />
-
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-4">Reconocimientos</h1>
-          <p className="text-xl text-muted-foreground">
-            Celebramos los logros y contribuciones de nuestros aliados, docentes, estudiantes e instituciones
-          </p>
+        <div className="mb-10">
+          <h1 className="text-4xl font-bold mb-3">Reconocimientos</h1>
+          <p className="text-lg text-muted-foreground">Noticias y logros destacados del territorio.</p>
         </div>
 
-        {/* Tabs de Reconocimientos */}
-        <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
-            <TabsTrigger value="ciudad_aprendizaje">Ciudad del Aprendizaje</TabsTrigger>
-            <TabsTrigger value="semana_stem">Semana STEM</TabsTrigger>
-            <TabsTrigger value="colombia_lider">Colombia Líder</TabsTrigger>
-          </TabsList>
+        <div className="grid md:grid-cols-2 gap-6">
+          <button
+            onClick={openNoticia}
+            className="text-left overflow-hidden rounded-xl border border-border bg-white hover:shadow-lg transition-shadow"
+          >
+            <div className="h-52 bg-muted overflow-hidden">
+              <img
+                src={carouselImages[0]}
+                alt={noticiaEnvigado.titulo}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=700&fit=crop";
+                }}
+              />
+            </div>
+            <div className="p-5 space-y-2">
+              <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">{noticiaEnvigado.categoria}</span>
+              <h2 className="text-xl font-bold text-slate-900 leading-snug">{noticiaEnvigado.titulo}</h2>
+              <p className="text-sm text-muted-foreground">{noticiaEnvigado.boletin}</p>
+              <p className="text-sm text-blue-700 font-semibold pt-1">Abrir noticia</p>
+            </div>
+          </button>
+        </div>
+      </div>
 
-          {Object.entries(reconocimientos).map(([key, data]) => (
-            <TabsContent key={key} value={key} className="space-y-8">
-              {/* Encabezado de la sección */}
-              <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-8 border border-primary/20">
-                <div className="flex items-start gap-4">
-                  <div className="w-16 h-16 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
-                    <IconComponent className="h-8 w-8 text-primary" />
-                  </div>
-                  <div>
-                    <h2 className="text-3xl font-bold mb-2">{data.titulo}</h2>
-                    <p className="text-lg text-muted-foreground">{data.descripcion}</p>
+      {openNews && (
+        <div className="fixed inset-0 z-50 bg-black/60 p-4 overflow-y-auto" onClick={() => setOpenNews(false)}>
+          <div className="min-h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+            <div className="w-full max-w-5xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+              <div className="flex items-center justify-between p-4 border-b">
+                <h3 className="font-bold">Noticia</h3>
+                <button onClick={() => setOpenNews(false)} className="p-1 rounded hover:bg-muted" aria-label="Cerrar noticia">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-6 md:p-8 max-h-[85vh] overflow-y-auto">
+                <div className="mb-4">
+                  <span className="text-sm font-bold text-amber-600 uppercase tracking-wider">{noticiaEnvigado.categoria}</span>
+                </div>
+                <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">{noticiaEnvigado.titulo}</h1>
+                <p className="text-lg text-slate-600 mb-6 leading-relaxed">{noticiaEnvigado.resumen}</p>
+
+                <div className="flex items-center gap-6 text-sm text-slate-500 border-t border-b border-slate-300 py-4 mb-8">
+                  <span className="font-semibold text-slate-700">{noticiaEnvigado.autor}</span>
+                  <span>{noticiaEnvigado.fecha}</span>
+                  <div className="flex items-center gap-1 ml-auto">
+                    <Eye className="w-4 h-4" />
+                    <span>{noticiaEnvigado.views.toLocaleString()}</span>
                   </div>
                 </div>
-              </div>
 
-              {/* Grid de Premios */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {data.premios.map((premio) => (
-                  <Card key={premio.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                    {/* Imagen */}
-                    <div className="h-48 overflow-hidden bg-muted">
-                      <img
-                        src={premio.imagen}
-                        alt={premio.nombre}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                <div className="mb-8 rounded-lg overflow-hidden shadow-xl bg-muted relative">
+                  <img
+                    src={carouselImages[currentImage]}
+                    alt={noticiaEnvigado.titulo}
+                    className="w-full h-[420px] object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=700&fit=crop";
+                    }}
+                  />
+
+                  <button
+                    onClick={goPrevImage}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 text-white text-xl hover:bg-black/60 transition-colors"
+                    aria-label="Imagen anterior"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={goNextImage}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 text-white text-xl hover:bg-black/60 transition-colors"
+                    aria-label="Imagen siguiente"
+                  >
+                    ›
+                  </button>
+
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 bg-black/25 px-3 py-1 rounded-full">
+                    {carouselImages.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentImage(idx)}
+                        className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                          currentImage === idx ? "bg-white" : "bg-white/50"
+                        }`}
+                        aria-label={`Ir a imagen ${idx + 1}`}
                       />
-                    </div>
+                    ))}
+                  </div>
+                </div>
 
-                    {/* Contenido */}
-                    <CardHeader>
-                      <CardTitle className="text-lg">{premio.nombre}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div>
-                        <p className="text-sm text-muted-foreground mb-1">Ganador/Proyecto</p>
-                        <p className="font-semibold text-primary">{premio.ganador}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground mb-1">Fecha de Reconocimiento</p>
-                        <p className="font-medium">{premio.fecha}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                <div className="bg-white rounded-lg shadow-lg p-8 space-y-6">
+                  <p className="font-semibold text-slate-900">{noticiaEnvigado.boletin}</p>
+                  {noticiaEnvigado.contenido.map((parrafo, idx) => (
+                    <p key={idx} className="text-lg text-slate-700 leading-relaxed">
+                      {parrafo}
+                    </p>
+                  ))}
+                </div>
               </div>
-            </TabsContent>
-          ))}
-        </Tabs>
-
-        {/* Sección de Información Adicional */}
-        <div className="mt-16 bg-muted/30 rounded-lg p-8 border border-border">
-          <h3 className="text-2xl font-bold mb-4">¿Cómo Participar?</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div>
-              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
-                <span className="text-lg font-bold text-primary">1</span>
-              </div>
-              <h4 className="font-semibold mb-2">Conoce los Criterios</h4>
-              <p className="text-muted-foreground">Revisa los requisitos y categorías de reconocimiento disponibles en cada convocatoria.</p>
-            </div>
-            <div>
-              <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center mb-4">
-                <span className="text-lg font-bold text-secondary">2</span>
-              </div>
-              <h4 className="font-semibold mb-2">Prepara tu Candidatura</h4>
-              <p className="text-muted-foreground">Documenta tu proyecto o iniciativa con evidencia de impacto y resultados.</p>
-            </div>
-            <div>
-              <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-4">
-                <span className="text-lg font-bold text-accent">3</span>
-              </div>
-              <h4 className="font-semibold mb-2">Envía tu Propuesta</h4>
-              <p className="text-muted-foreground">Completa el formulario de candidatura durante los períodos de convocatoria abierta.</p>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
