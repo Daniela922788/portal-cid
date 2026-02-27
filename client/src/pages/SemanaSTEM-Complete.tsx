@@ -19,15 +19,13 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
 
 export default function SemanaSTEM() {
   const [bannerSrc, setBannerSrc] = useState('/images/semana-stem-banner.png');
   const [activeYear, setActiveYear] = useState(2025);
   const [activeDay, setActiveDay] = useState(1);
-  const [expandedSession, setExpandedSession] = useState<number | null>(0);
-  const [sessionView, setSessionView] = useState<'original' | 'simple' | 'accordion'>('original');
   const speakerImage = (fileName: string) => `/ponentes/martes/${encodeURIComponent(fileName)}`;
+  const toWebp = (imagePath: string) => imagePath.replace(/\.(jpe?g|png)$/i, '.webp');
 
   // Datos del Día 1 - Martes
   const day1Sessions = [
@@ -53,6 +51,7 @@ export default function SemanaSTEM() {
       ],
       icon: '🤖',
       color: 'from-blue-400 to-blue-600',
+      eCardImage: '/Semana%20STEM/23/Agenda/Etica-inteligencia.jpeg',
     },
     {
       time: '08:45 a.m.',
@@ -80,6 +79,7 @@ export default function SemanaSTEM() {
       ],
       icon: '💡',
       color: 'from-purple-400 to-purple-600',
+      eCardImage: '/Semana%20STEM/23/Agenda/Conversatorio-innovacion.jpeg',
     },
     {
       time: '09:30 a.m.',
@@ -103,6 +103,7 @@ export default function SemanaSTEM() {
       ],
       icon: '👶',
       color: 'from-pink-400 to-pink-600',
+      eCardImage: '/Semana%20STEM/23/Agenda/Primera-infancia.jpeg',
     },
     {
       time: '10:45 a.m.',
@@ -136,6 +137,7 @@ export default function SemanaSTEM() {
       ],
       icon: '🎯',
       color: 'from-green-400 to-green-600',
+      eCardImage: '/Semana%20STEM/23/Agenda/Conversatorio-retos.jpeg',
     },
     {
       time: '11:30 a.m.',
@@ -151,6 +153,7 @@ export default function SemanaSTEM() {
       ],
       icon: '🤝',
       color: 'from-cyan-400 to-cyan-600',
+      eCardImage: '/Semana%20STEM/23/Agenda/Redes-colaborativas.jpeg',
     },
     {
       time: '12:30 p.m.',
@@ -163,24 +166,24 @@ export default function SemanaSTEM() {
   ];
 
   const galleryImages = [
-    '/Semana%20STEM/23/315A0835.jpg',
-    '/Semana%20STEM/23/315A0838.jpg',
-    '/Semana%20STEM/23/315A0883.jpg',
-    '/Semana%20STEM/23/315A0903.jpg',
-    '/Semana%20STEM/23/315A0909.jpg',
-    '/Semana%20STEM/23/315A0945.jpg',
-    '/Semana%20STEM/23/315A0970.jpg',
-    '/Semana%20STEM/23/315A0972.jpg',
-    '/Semana%20STEM/23/315A1010.jpg',
-    '/Semana%20STEM/23/315A1061.jpg',
-    '/Semana%20STEM/23/315A1078.jpg',
-    '/Semana%20STEM/23/315A1083.jpg',
-    '/Semana%20STEM/23/315A1134.jpg',
-    '/Semana%20STEM/23/315A1167.jpg',
-    '/Semana%20STEM/23/315A1222.jpg',
-    '/Semana%20STEM/23/315A1224.jpg',
-    '/Semana%20STEM/23/315A1250.jpg',
-    '/Semana%20STEM/23/315A1273.jpg',
+    '/Semana%20STEM/23/Galeria/315A0835.jpg',
+    '/Semana%20STEM/23/Galeria/315A0838.jpg',
+    '/Semana%20STEM/23/Galeria/315A0883.jpg',
+    '/Semana%20STEM/23/Galeria/315A0903.jpg',
+    '/Semana%20STEM/23/Galeria/315A0909.jpg',
+    '/Semana%20STEM/23/Galeria/315A0945.jpg',
+    '/Semana%20STEM/23/Galeria/315A0970.jpg',
+    '/Semana%20STEM/23/Galeria/315A0972.jpg',
+    '/Semana%20STEM/23/Galeria/315A1010.jpg',
+    '/Semana%20STEM/23/Galeria/315A1061.jpg',
+    '/Semana%20STEM/23/Galeria/315A1078.jpg',
+    '/Semana%20STEM/23/Galeria/315A1083.jpg',
+    '/Semana%20STEM/23/Galeria/315A1134.jpg',
+    '/Semana%20STEM/23/Galeria/315A1167.jpg',
+    '/Semana%20STEM/23/Galeria/315A1222.jpg',
+    '/Semana%20STEM/23/Galeria/315A1224.jpg',
+    '/Semana%20STEM/23/Galeria/315A1250.jpg',
+    '/Semana%20STEM/23/Galeria/315A1273.jpg',
   ];
 
   const daysNavigation = [
@@ -295,35 +298,14 @@ export default function SemanaSTEM() {
           {/* Content Section - Show Martes (Day 1) */}
           {activeDay === 1 && (
             <div>
-              {/* Day 1 Banner */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8 }}
-                className="bg-gradient-to-r from-blue-900 via-purple-800 to-purple-900 text-white py-16 px-4"
-              >
-                <div className="max-w-6xl mx-auto">
-                  <div className="flex justify-between items-start mb-8">
-                    <div className="flex-1">
-                      <div className="bg-orange-500 text-white px-4 py-2 rounded-lg inline-block mb-4 font-bold">
-                        Martes 23 de Septiembre
-                      </div>
-                      <h2 className="text-4xl font-bold mb-4">
-                        Foro Tendencias que Transforman: Educación, Tecnología y Ética
-                      </h2>
-                      <p className="text-white/90 text-lg">
-                        Espacio de reflexión y conversación sobre los desafíos actuales de la educación en el contexto de la inteligencia artificial, las tecnologías emergentes y la necesidad de formar una ciudadanía crítica y ética.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
               <section className="px-4 py-8 bg-white">
                 <div className="max-w-6xl mx-auto overflow-hidden rounded-2xl shadow-lg">
                   <img
                     src={bannerSrc}
                     alt="Banner Semana STEM"
+                    loading="lazy"
+                    decoding="async"
+                    fetchPriority="low"
                     className="w-full h-auto object-cover"
                     onError={() => {
                       if (bannerSrc === '/images/semana-stem-banner.png') {
@@ -342,235 +324,51 @@ export default function SemanaSTEM() {
                 </div>
               </section>
 
-              <section className="px-4 pb-2 bg-white">
-                <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-3">
-                  <button
-                    onClick={() => setSessionView('original')}
-                    className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
-                      sessionView === 'original'
-                        ? 'bg-orange-500 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    Original
-                  </button>
-                  <button
-                    onClick={() => setSessionView('simple')}
-                    className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
-                      sessionView === 'simple'
-                        ? 'bg-blue-600 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    Simple
-                  </button>
-                  <button
-                    onClick={() => setSessionView('accordion')}
-                    className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
-                      sessionView === 'accordion'
-                        ? 'bg-purple-600 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    Accordion
-                  </button>
-                </div>
-              </section>
-
-              {/* Sessions */}
-              {sessionView === 'original' && (
-                <section className="py-12 px-4 max-w-6xl mx-auto">
-                  <h3 className="text-3xl font-bold mb-8 text-gray-800">Agenda del Día</h3>
-                  <div className="space-y-4">
-                    {day1Sessions.map((session, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        viewport={{ once: true }}
-                        className={`border-l-4 bg-gradient-to-r ${session.color} rounded-lg overflow-hidden shadow-lg`}
-                      >
-                        <button
-                          onClick={() => setExpandedSession(expandedSession === idx ? null : idx)}
-                          className="w-full p-6 text-left text-white hover:opacity-90 transition-opacity"
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                              <span className="text-3xl">{session.icon}</span>
-                              <div>
-                                <p className="font-bold text-sm opacity-90">{session.time}</p>
-                                <p className="text-xl font-bold">{session.title}</p>
-                              </div>
-                            </div>
-                            <ChevronDown
-                              className={`transition-transform ${
-                                expandedSession === idx ? 'rotate-180' : ''
-                              }`}
-                            />
-                          </div>
-                        </button>
-
-                        {expandedSession === idx && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="px-6 pb-6 bg-black/20 text-white"
-                          >
-                            <p className="mb-6 leading-relaxed">{session.description}</p>
-
-                            {session.speakers.length > 0 && (
-                              <div>
-                                <h4 className="font-bold mb-4 text-lg">Expositores</h4>
-                                <div className="flex flex-wrap justify-center gap-6">
-                                  {session.speakers.map((speaker, speakerIdx) => (
-                                    <motion.div
-                                      key={speakerIdx}
-                                      initial={{ opacity: 0, scale: 0.8 }}
-                                      animate={{ opacity: 1, scale: 1 }}
-                                      transition={{ delay: speakerIdx * 0.1 }}
-                                      className="text-center"
-                                    >
-                                      <div className="w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden border-4 border-white/30">
-                                        <img
-                                          src={speaker.image}
-                                          alt={speaker.name}
-                                          className="w-full h-full object-cover"
-                                        />
-                                      </div>
-                                      <p className="font-bold text-sm">{speaker.name}</p>
-                                      <p className="text-xs opacity-90">{speaker.organization}</p>
-                                      <p className="text-xs opacity-80">{speaker.role}</p>
-                                    </motion.div>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                          </motion.div>
-                        )}
-                      </motion.div>
-                    ))}
-                  </div>
-                </section>
-              )}
-
-              {sessionView === 'simple' && (
-                <section className="py-12 px-4 max-w-6xl mx-auto">
-                  <h3 className="text-3xl font-bold mb-8 text-gray-800">Agenda del Día</h3>
-                  <div className="space-y-6">
-                    {day1Sessions.map((session, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        viewport={{ once: true }}
-                        className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
-                      >
-                        <div className="flex gap-4">
-                          <span className="text-3xl flex-shrink-0">{session.icon}</span>
-                          <div className="flex-1">
-                            <p className="text-sm text-gray-500 font-semibold mb-1">{session.time}</p>
-                            <h4 className="text-lg font-bold text-gray-900 mb-3">{session.title}</h4>
-                            <p className="text-gray-600 text-sm leading-relaxed mb-4">{session.description}</p>
-
-                            {session.speakers.length > 0 && (
-                              <div className="mt-4 pt-4 border-t border-gray-200">
-                                <p className="text-sm font-semibold text-gray-700 mb-3">Expositores</p>
-                                <div className="flex flex-wrap gap-4">
-                                  {session.speakers.map((speaker, speakerIdx) => (
-                                    <div key={speakerIdx} className="text-center">
-                                      <div className="w-16 h-16 mx-auto mb-2 rounded-full overflow-hidden border-2 border-gray-200">
-                                        <img
-                                          src={speaker.image}
-                                          alt={speaker.name}
-                                          className="w-full h-full object-cover"
-                                        />
-                                      </div>
-                                      <p className="font-semibold text-xs text-gray-900">{speaker.name}</p>
-                                      <p className="text-xs text-gray-500">{speaker.organization}</p>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Agenda del Día</h3>
+                <div className="space-y-4">
+                  {day1Sessions.map((session, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: idx * 0.1 }}
+                      viewport={{ once: true }}
+                      className="bg-white border border-gray-200 rounded-lg p-6 text-gray-900 shadow-lg hover:shadow-xl transition-all"
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-4">
+                          <span className="text-4xl">{session.icon}</span>
+                          <div>
+                            <p className="text-sm font-semibold opacity-90">{session.time}</p>
+                            <h3 className="text-2xl font-bold">{session.title}</h3>
                           </div>
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </section>
-              )}
+                      </div>
 
-              {sessionView === 'accordion' && (
-                <section className="py-12 px-4 max-w-4xl mx-auto">
-                  <h3 className="text-3xl font-bold mb-8 text-gray-800">Agenda del Día</h3>
-                  <div className="space-y-3">
-                    {day1Sessions.map((session, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
-                        viewport={{ once: true }}
-                        className="border border-gray-200 rounded-lg overflow-hidden bg-white"
-                      >
-                        <button
-                          onClick={() => setExpandedSession(expandedSession === idx ? null : idx)}
-                          className="w-full p-4 text-left hover:bg-gray-50 transition-colors flex items-center justify-between"
-                        >
-                          <div className="flex items-center gap-3">
-                            <span className="text-2xl">{session.icon}</span>
-                            <div>
-                              <p className="text-xs text-gray-500 font-semibold">{session.time}</p>
-                              <p className="font-semibold text-gray-900">{session.title}</p>
-                            </div>
+                      <div className="mt-6 pt-6 border-t border-gray-200">
+                        <p className="text-gray-700 mb-6 leading-relaxed">{session.description}</p>
+
+                        {'eCardImage' in session && session.eCardImage && (
+                          <div className="mb-2">
+                            <picture>
+                              <source srcSet={toWebp(session.eCardImage)} type="image/webp" />
+                              <img
+                                src={session.eCardImage}
+                                alt={session.title}
+                                loading="lazy"
+                                decoding="async"
+                                fetchPriority="low"
+                                className="w-full rounded-lg shadow-lg"
+                              />
+                            </picture>
                           </div>
-                          <ChevronDown
-                            className={`text-gray-400 transition-transform ${
-                              expandedSession === idx ? 'rotate-180' : ''
-                            }`}
-                            size={20}
-                          />
-                        </button>
-
-                        {expandedSession === idx && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="px-4 pb-4 bg-gray-50 border-t border-gray-200"
-                          >
-                            <p className="text-gray-600 text-sm leading-relaxed mb-4">{session.description}</p>
-
-                            {session.speakers.length > 0 && (
-                              <div className="pt-4 border-t border-gray-200">
-                                <p className="text-xs font-semibold text-gray-700 mb-3 uppercase">Expositores</p>
-                                <div className="flex flex-wrap gap-4">
-                                  {session.speakers.map((speaker, speakerIdx) => (
-                                    <div key={speakerIdx} className="text-center">
-                                      <div className="w-14 h-14 mx-auto mb-2 rounded-full overflow-hidden border border-gray-300">
-                                        <img
-                                          src={speaker.image}
-                                          alt={speaker.name}
-                                          className="w-full h-full object-cover"
-                                        />
-                                      </div>
-                                      <p className="font-semibold text-xs text-gray-900">{speaker.name}</p>
-                                      <p className="text-xs text-gray-500">{speaker.organization}</p>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                          </motion.div>
                         )}
-                      </motion.div>
-                    ))}
-                  </div>
-                </section>
-              )}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
 
               {/* Highlights */}
               <section className="py-12 px-4 max-w-6xl mx-auto">
@@ -611,13 +409,17 @@ export default function SemanaSTEM() {
                       viewport={{ once: true }}
                       className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
                     >
-                      <img
-                        src={image}
-                        alt={`Foto ${idx + 1}`}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-64 object-cover hover:scale-105 transition-transform"
-                      />
+                      <picture>
+                        <source srcSet={toWebp(image)} type="image/webp" />
+                        <img
+                          src={image}
+                          alt={`Foto ${idx + 1}`}
+                          loading="lazy"
+                          decoding="async"
+                          fetchPriority="low"
+                          className="w-full h-64 object-cover hover:scale-105 transition-transform"
+                        />
+                      </picture>
                     </motion.div>
                   ))}
                 </div>
@@ -643,32 +445,6 @@ export default function SemanaSTEM() {
               </motion.div>
             </section>
           )}
-
-          {/* CTA Section */}
-          <section className="py-16 px-4 bg-gradient-to-r from-blue-600 to-purple-600 mt-16">
-            <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="text-4xl font-bold text-white mb-4">
-                  ¿Quieres saber más sobre la Semana STEM+?
-                </h2>
-                <p className="text-white/90 text-lg mb-8">
-                  Explora todas las actividades, expositores y momentos destacados
-                </p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:shadow-lg transition-all"
-                >
-                  Contáctanos
-                </motion.button>
-              </motion.div>
-            </div>
-          </section>
         </>
       ) : (
         <section className="py-20 px-4 bg-gradient-to-br from-blue-900 via-purple-800 to-purple-900 text-white min-h-screen flex items-center justify-center">

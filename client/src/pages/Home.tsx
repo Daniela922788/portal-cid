@@ -67,7 +67,7 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  El Centro de Investigación y Desarrollo (CID) es un espacio académico y formativo que promueve la investigación, la innovación y el pensamiento crítico dentro de nuestra institución educativa. Nace con el propósito de fortalecer las competencias científicas, tecnológicas y sociales de nuestros estudiantes, fomentando una cultura investigativa desde edades tempranas.
+                  La Dirección de Investigación y Desarrollo (CID) es un espacio académico y formativo que promueve la investigación, la innovación y el pensamiento crítico dentro de nuestra institución educativa. Nace con el propósito de fortalecer las competencias científicas, tecnológicas y sociales de nuestros estudiantes, fomentando una cultura investigativa desde edades tempranas.
                 </p>
               </CardContent>
             </Card>
@@ -260,30 +260,6 @@ export default function Home() {
                 />
               </div>
             </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="py-16 bg-gradient-to-br from-primary to-secondary text-white">
-        <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            ¿Quieres ser parte del cambio educativo?
-          </h2>
-          <p className="text-xl mb-8 text-blue-50 max-w-2xl mx-auto">
-            Únete a nuestra comunidad de innovadores educativos y transforma la manera de enseñar y aprender
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/formacion">
-              <Button size="lg" variant="secondary" className="text-lg">
-                Ver Formación
-              </Button>
-            </Link>
-            <Link href="/convocatorias">
-              <Button size="lg" variant="outline" className="text-lg bg-white/10 hover:bg-white/20 text-white border-white">
-                Convocatorias Abiertas
-              </Button>
-            </Link>
           </div>
         </div>
       </section>

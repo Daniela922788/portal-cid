@@ -891,28 +891,6 @@ export default function Nosotros() {
           </div>
         </div>
       </section>
-
-      {/* CTA */}
-      <section className="pt-10 pb-6 bg-white">
-        <div className="container text-center">
-          <h2 className="text-4xl font-bold mb-6">¿Quieres Ser Parte de Esta Transformación?</h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Únete a nuestro ecosistema de innovación y contribuye al desarrollo científico y tecnológico de Envigado.</p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/contactanos">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white">
-                Contáctanos <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
-            <Link href="/proyectos">
-              <Button size="lg" variant="outline">
-                Explorar Proyectos
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      
     </div>
   );
 }
