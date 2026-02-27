@@ -514,7 +514,7 @@ export default function Nosotros() {
       {/* Centro de Ciencia - MEN (Propuesta 2) */}
       <section id="historia-detalle" className="pt-10 pb-2 bg-white scroll-mt-24">
         <div className="container">
-          <div className="w-[96vw] max-w-[1800px] mx-auto mb-10">
+          <div className="max-w-6xl mx-auto mb-10">
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl">
               <iframe
                 src="https://www.youtube.com/embed/7sFJn3IfaGY?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1"
@@ -523,7 +523,7 @@ export default function Nosotros() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
-                className="absolute top-0 left-0 w-full h-full"
+                className="absolute inset-0 w-full h-full"
               />
             </div>
           </div>

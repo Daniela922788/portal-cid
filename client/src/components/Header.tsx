@@ -71,16 +71,6 @@ export default function Header() {
                         </Link>
                       </li>
                       <li>
-                        <Link href="/eventos">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Semana STEM</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Eventos de la Semana STEM Envigado
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
-                      <li>
                         <Link href="/semana-stem-complete">
                           <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                             <div className="text-sm font-medium leading-none">Semana STEM</div>

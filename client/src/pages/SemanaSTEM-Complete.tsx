@@ -163,12 +163,24 @@ export default function SemanaSTEM() {
   ];
 
   const galleryImages = [
-    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
+    '/Semana%20STEM/23/315A0835.jpg',
+    '/Semana%20STEM/23/315A0838.jpg',
+    '/Semana%20STEM/23/315A0883.jpg',
+    '/Semana%20STEM/23/315A0903.jpg',
+    '/Semana%20STEM/23/315A0909.jpg',
+    '/Semana%20STEM/23/315A0945.jpg',
+    '/Semana%20STEM/23/315A0970.jpg',
+    '/Semana%20STEM/23/315A0972.jpg',
+    '/Semana%20STEM/23/315A1010.jpg',
+    '/Semana%20STEM/23/315A1061.jpg',
+    '/Semana%20STEM/23/315A1078.jpg',
+    '/Semana%20STEM/23/315A1083.jpg',
+    '/Semana%20STEM/23/315A1134.jpg',
+    '/Semana%20STEM/23/315A1167.jpg',
+    '/Semana%20STEM/23/315A1222.jpg',
+    '/Semana%20STEM/23/315A1224.jpg',
+    '/Semana%20STEM/23/315A1250.jpg',
+    '/Semana%20STEM/23/315A1273.jpg',
   ];
 
   const daysNavigation = [
@@ -599,7 +611,13 @@ export default function SemanaSTEM() {
                       viewport={{ once: true }}
                       className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
                     >
-                      <img src={image} alt={`Foto ${idx + 1}`} className="w-full h-64 object-cover hover:scale-105 transition-transform" />
+                      <img
+                        src={image}
+                        alt={`Foto ${idx + 1}`}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-64 object-cover hover:scale-105 transition-transform"
+                      />
                     </motion.div>
                   ))}
                 </div>

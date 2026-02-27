@@ -15,7 +15,6 @@ import IEOficiales from "./pages/IEOficiales";
 import Gestores from "./pages/Gestores";
 import CIDKids from "./pages/CIDKids";
 import MesaAyuda from "./pages/MesaAyuda";
-import Eventos from "./pages/Eventos";
 import Convocatorias from "./pages/Convocatorias";
 import Formacion from "./pages/Formacion";
 import KitHerramientas from "./pages/KitHerramientas";
@@ -64,7 +63,6 @@ function Router() {
           <Route path="/gestores" component={Gestores} />
           <Route path="/cid-kids" component={CIDKids} />
           <Route path="/mesa-ayuda" component={MesaAyuda} />
-          <Route path="/eventos" component={Eventos} />
           <Route path="/convocatorias" component={Convocatorias} />
           <Route path="/formacion" component={Formacion} />
           <Route path="/kit-herramientas" component={KitHerramientas} />
