@@ -166,24 +166,12 @@ export default function SemanaSTEM() {
   ];
 
   const galleryImages = [
-    '/Semana%20STEM/23/Galeria/315A0835.jpg',
-    '/Semana%20STEM/23/Galeria/315A0838.jpg',
-    '/Semana%20STEM/23/Galeria/315A0883.jpg',
-    '/Semana%20STEM/23/Galeria/315A0903.jpg',
-    '/Semana%20STEM/23/Galeria/315A0909.jpg',
-    '/Semana%20STEM/23/Galeria/315A0945.jpg',
-    '/Semana%20STEM/23/Galeria/315A0970.jpg',
-    '/Semana%20STEM/23/Galeria/315A0972.jpg',
-    '/Semana%20STEM/23/Galeria/315A1010.jpg',
-    '/Semana%20STEM/23/Galeria/315A1061.jpg',
-    '/Semana%20STEM/23/Galeria/315A1078.jpg',
-    '/Semana%20STEM/23/Galeria/315A1083.jpg',
-    '/Semana%20STEM/23/Galeria/315A1134.jpg',
-    '/Semana%20STEM/23/Galeria/315A1167.jpg',
-    '/Semana%20STEM/23/Galeria/315A1222.jpg',
-    '/Semana%20STEM/23/Galeria/315A1224.jpg',
-    '/Semana%20STEM/23/Galeria/315A1250.jpg',
-    '/Semana%20STEM/23/Galeria/315A1273.jpg',
+    '/Semana%20STEM/23/Galeria/1.jpg',
+    '/Semana%20STEM/23/Galeria/2.jpg',
+    '/Semana%20STEM/23/Galeria/3.jpg',
+    '/Semana%20STEM/23/Galeria/4.jpg',
+    '/Semana%20STEM/23/Galeria/5.jpg',
+    '/Semana%20STEM/23/Galeria/6.jpg',
   ];
 
   const daysNavigation = [

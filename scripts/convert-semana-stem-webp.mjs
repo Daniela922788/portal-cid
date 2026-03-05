@@ -17,6 +17,7 @@ async function exists(filePath) {
 async function convertDirectory(relativeDir) {
   const dirPath = path.join(baseDir, relativeDir);
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
+  const targetWidth = relativeDir === 'Agenda' ? 1600 : 900;
 
   for (const entry of entries) {
     if (!entry.isFile()) continue;
@@ -39,7 +40,8 @@ async function convertDirectory(relativeDir) {
     }
 
     await sharp(sourcePath)
-      .webp({ quality: 78, effort: 4 })
+      .resize({ width: targetWidth, withoutEnlargement: true })
+      .webp({ quality: 74, effort: 5 })
       .toFile(webpPath);
 
     console.log(`Converted: ${path.relative(process.cwd(), sourcePath)} -> ${path.relative(process.cwd(), webpPath)}`);
