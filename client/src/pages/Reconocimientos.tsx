@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { X } from "lucide-react";
 
 type Noticia = {
@@ -8,7 +8,7 @@ type Noticia = {
   autor: string;
   fecha: string;
   resumen: string;
-  contenido: string[];
+  contenido: ReactNode[];
   imagenes: string[];
   video?: {
     url: string;
@@ -52,6 +52,9 @@ export default function Reconocimientos() {
     return `https://www.youtube.com/embed/${id}?${params.toString()}`;
   };
   const getImageFitClass = (newsId: string, imageIndex: number, isModal = false) => {
+    if (newsId === "nuevo-reconocimiento") {
+      return "object-contain bg-white";
+    }
     if (isModal && newsId === "reconocimiento-adicional" && imageIndex === 1) {
       return "object-contain bg-white";
     }
@@ -119,6 +122,54 @@ export default function Reconocimientos() {
       imagenes: ["/colombialider/1.jpeg", "/colombialider/2.jpg"],
     },
     {
+      id: "nuevo-reconocimiento",
+      titulo: "Reconocimiento a Instituciones Educativas de Envigado en las Olimpiadas STEM+ Colombia 2025",
+      categoria: "Olimpiadas STEM+ Colombia 2025",
+      autor: "Secretaría de Educación de Envigado",
+      fecha: "2025",
+      resumen:
+        "En Cartagena de Indias se realizó la Gran Final Nacional de las Olimpiadas STEM+ Colombia 2025, donde instituciones educativas de Envigado fueron reconocidas con medalla de bronce en sus respectivas categorías.",
+      contenido: [
+        "En la ciudad de Cartagena de Indias se llevó a cabo la Gran Final Nacional de las Olimpiadas STEM+ Colombia 2025, un evento que reunió a los mejores proyectos escolares del país enfocados en ciencia, tecnología, ingeniería, matemáticas e innovación territorial.",
+        "La final congregó 48 equipos seleccionados entre más de 500 propuestas provenientes de 78 Secretarías de Educación, quienes presentaron soluciones a problemáticas reales de sus territorios mediante proyectos científicos y tecnológicos.",
+        "Durante la jornada, estudiantes de todo el país expusieron prototipos e iniciativas desarrolladas a lo largo del año en áreas como ciencias naturales, tecnologías emergentes, ingeniería e innovación comunitaria. El proceso se enmarca dentro de la Estrategia de Innovación Educativa y Formación Integral del Gobierno Nacional, que busca fortalecer el pensamiento científico desde la escuela.",
+        "Protagonismo de Envigado en la final nacional.",
+        "En este importante escenario nacional, dos instituciones educativas de Envigado lograron destacarse entre los mejores proyectos del país, obteniendo reconocimiento en sus respectivas categorías.",
+        <>
+          <strong>I.E. Manuel Uribe Ángel - Sede Marceliano Vélez. Medalla de Bronce - Categoría A Senior. Proyecto: Agrigirls STEM.</strong>
+          <img
+            src="/Olimpiadas%20STEM/I.E.%20Manuel%20Uribe%20%C3%81ngel.jpg"
+            alt="I.E. Manuel Uribe Ángel"
+            loading="lazy"
+            decoding="async"
+            className="mt-3 w-full max-w-3xl rounded-lg border border-slate-200"
+          />
+        </>,
+        <>
+          <strong>I.E. Comercial de Envigado. Medalla de Bronce - Categoría B Senior. Proyecto: Defensores del Aire.</strong>
+          <img
+            src="/Olimpiadas%20STEM/I.E.%20Comercial%20de%20Envigado.jpg"
+            alt="I.E. Comercial de Envigado"
+            loading="lazy"
+            decoding="async"
+            className="mt-3 w-full max-w-3xl rounded-lg border border-slate-200"
+          />
+        </>,
+        "Estos resultados posicionan a Envigado como un referente en la promoción del talento científico escolar y evidencian el compromiso de sus instituciones educativas con la innovación y la formación integral de sus estudiantes.",
+        "Reconocimientos obtenidos.",
+        "Los equipos que alcanzaron medalla de bronce en las Olimpiadas STEM+ Colombia 2025 recibieron: beca del 100% para los cinco integrantes del equipo en programas de pregrado de la oferta virtual y a distancia de UNIMINUTO.",
+        "También recibieron participación en el FIRST LEGO League, temporada 2026-2027, uno de los programas internacionales más importantes de robótica y ciencia para estudiantes.",
+        "Innovación con impacto territorial.",
+        "Agrigirls STEM, de la I.E. Manuel Uribe Ángel, propone soluciones innovadoras que integran tecnología y sostenibilidad para fortalecer procesos agrícolas.",
+        "Defensores del Aire, de la I.E. Comercial de Envigado, desarrolla alternativas científicas orientadas a la sostenibilidad ambiental y a la búsqueda de nuevas fuentes de energía.",
+        "Ambas iniciativas demuestran cómo la creatividad, el trabajo colaborativo y el pensamiento científico de los estudiantes pueden generar propuestas con impacto real en sus comunidades.",
+        "Un logro para la educación de Envigado.",
+        "La participación y reconocimiento de estas instituciones en la final nacional de las Olimpiadas STEM+ Colombia 2025 resalta el talento, la dedicación y el compromiso de estudiantes y docentes que apuestan por la ciencia, la tecnología y la innovación como herramientas para transformar su entorno.",
+        "Estos logros reflejan el potencial de la educación pública para formar agentes de cambio capaces de desarrollar soluciones innovadoras a los retos de sus territorios, consolidando a Envigado como un referente en el impulso de la educación STEM en Colombia.",
+      ],
+      imagenes: ["/logo-colores.png"],
+    },
+    {
       id: "territorio-stem",
       titulo: "Envigado reconocido como territorio STEM+ por el Ministerio de Educación Nacional",
       categoria: "Reconocimiento STEM+",
@@ -171,6 +222,18 @@ export default function Reconocimientos() {
     },
   ];
 
+  const orderedNewsIds = [
+    "ciudad-aprendizaje",
+    "colombia-lider",
+    "nuevo-reconocimiento",
+    "territorio-stem",
+    "reconocimiento-adicional",
+  ];
+
+  const orderedNoticias = orderedNewsIds
+    .map((id) => noticias.find((noticia) => noticia.id === id))
+    .filter((noticia): noticia is Noticia => Boolean(noticia));
+
   const goPrevImage = () => {
     if (!selectedNews) return;
     setCurrentImage((prev) => (prev === 0 ? selectedNews.imagenes.length - 1 : prev - 1));
@@ -195,7 +258,7 @@ export default function Reconocimientos() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {noticias.map((noticia) => (
+          {orderedNoticias.map((noticia) => (
             <button
               key={noticia.id}
               onClick={() => openNoticia(noticia)}
@@ -296,11 +359,17 @@ export default function Reconocimientos() {
                 </div>
 
                 <div className="bg-white rounded-lg shadow-lg p-8 space-y-6">
-                  {selectedNews.contenido.map((parrafo, idx) => (
-                    <p key={idx} className="text-lg text-slate-700 leading-relaxed">
-                      {parrafo}
-                    </p>
-                  ))}
+                  {selectedNews.contenido.map((parrafo, idx) =>
+                    typeof parrafo === "string" ? (
+                      <p key={idx} className="text-lg text-slate-700 leading-relaxed">
+                        {parrafo}
+                      </p>
+                    ) : (
+                      <div key={idx} className="text-lg text-slate-700 leading-relaxed">
+                        {parrafo}
+                      </div>
+                    )
+                  )}
 
                   {selectedNews.video && (
                     <div className="pt-4">

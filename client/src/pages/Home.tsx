@@ -116,13 +116,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <Link href="/territorio-stem">
               <Card
-                className="h-full hover:shadow-lg transition-shadow cursor-pointer group overflow-hidden relative"
-                style={{
-                  backgroundImage: "image-set( url('/images/Fondoprueba@1600.avif') type('image/avif'), url('/images/Fondoprueba@1600.webp') type('image/webp'), url('/images/Fondoprueba.png') type('image/png') ), url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663221068197/QLvxXkXmkaeIKFpu.png')",
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
-                }}
+                className="home-territorio-card h-full hover:shadow-lg transition-shadow cursor-pointer group overflow-hidden relative"
               >
                 <div className="absolute inset-0 bg-black/40"></div>
                 <CardHeader className="relative z-10">
@@ -183,10 +177,7 @@ export default function Home() {
       </section>
 
 {/* Banner de Innovación con Robot */}
-      <section className="relative py-20 md:py-24 overflow-hidden" style={{
-        backgroundImage: 'linear-gradient(135deg, #0ea5a5 0%, #10b981 100%)',
-        minHeight: '350px'
-      }}>
+  <section className="home-innovation-banner relative py-20 md:py-24 overflow-hidden">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             {/* Contenido de texto */}
@@ -209,8 +200,7 @@ export default function Home() {
               <img 
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663221068197/DkTNcWRuzslfqEVB.png" 
                 alt="Robot de Innovación" 
-                className="w-full max-w-md h-auto drop-shadow-lg"
-                style={{ maxHeight: '350px' }}
+                className="home-innovation-robot w-full max-w-md h-auto drop-shadow-lg"
               />
             </div>
           </div>
@@ -220,13 +210,13 @@ export default function Home() {
       {/* Logos de Ministerios y Entidades */}
       <section className="py-16 bg-muted/30">
         <div className="container">
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+          <div className="grid grid-cols-4 items-center gap-3 md:gap-6">
             <a href="https://www.mineducacion.gov.co/portal/" target="_blank" rel="noopener noreferrer">
               <div className="flex flex-col items-center hover:opacity-80 transition-opacity cursor-pointer">
                 <img 
                   src={educacionLogo} 
                   alt="Ministerio de Educación" 
-                  className="h-32 w-auto object-contain"
+                  className="h-14 w-auto object-contain sm:h-20 md:h-24"
                 />
               </div>
             </a>
@@ -236,7 +226,7 @@ export default function Home() {
                 <img 
                   src={cienciasLogo} 
                   alt="Ciencias" 
-                  className="h-32 w-auto object-contain"
+                  className="h-14 w-auto object-contain sm:h-20 md:h-24"
                 />
               </div>
             </a>
@@ -246,7 +236,7 @@ export default function Home() {
                 <img 
                   src={ticLogo} 
                   alt="TIC" 
-                  className="h-32 w-auto object-contain"
+                  className="h-14 w-auto object-contain sm:h-20 md:h-24"
                 />
               </div>
             </a>
@@ -256,7 +246,7 @@ export default function Home() {
                 <img 
                   src={alcaldiaLogo} 
                   alt="Alcaldía de Envigado" 
-                  className="h-32 w-auto object-contain"
+                  className="h-14 w-auto object-contain sm:h-20 md:h-24"
                 />
               </div>
             </a>

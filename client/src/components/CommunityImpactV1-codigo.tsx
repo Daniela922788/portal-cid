@@ -345,18 +345,15 @@ export default function CommunityImpactV1() {
               {/* Legend */}
               <div className="grid grid-cols-2 gap-3 w-full">
                 {[
-                  { label: "Gestores", value: 268, color: "#3b82f6" },
-                  { label: "Visitas Guiadas", value: 67, color: "#06b6d4" },
-                  { label: "Impacto Maker", value: 332, color: "#14b8a6" },
-                  { label: "Talento Tech", value: 260, color: "#22c55e" },
-                  { label: "Tigo", value: 40, color: "#84cc16" },
-                  { label: "SENA", value: 47, color: "#eab308" },
+                  { label: "Gestores", value: 268, dotClass: "bg-blue-500" },
+                  { label: "Visitas Guiadas", value: 67, dotClass: "bg-cyan-500" },
+                  { label: "Impacto Maker", value: 332, dotClass: "bg-teal-500" },
+                  { label: "Talento Tech", value: 260, dotClass: "bg-green-500" },
+                  { label: "Tigo", value: 40, dotClass: "bg-lime-500" },
+                  { label: "SENA", value: 47, dotClass: "bg-yellow-500" },
                 ].map((program) => (
                   <div key={program.label} className="flex items-center gap-2">
-                    <div
-                      className="w-3 h-3 rounded-full"
-                      style={{ backgroundColor: program.color }}
-                    />
+                    <div className={`w-3 h-3 rounded-full ${program.dotClass}`} />
                     <span className="text-sm text-gray-600">
                       {program.label}: {program.value}
                     </span>

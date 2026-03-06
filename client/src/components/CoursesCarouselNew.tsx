@@ -17,6 +17,12 @@ export default function CoursesCarouselNew() {
 
   if (!images || images.length === 0) return null;
 
+  const getImageText = (imageUrl: string, index: number) => {
+    const fileName = imageUrl.split("/").pop()?.split(".")[0] ?? `curso-${index + 1}`;
+    const normalized = fileName.replace(/[-_]+/g, " ").trim();
+    return `Curso destacado ${normalized}`;
+  };
+
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
   };
@@ -38,12 +44,11 @@ export default function CoursesCarouselNew() {
 
               {/* Imagen izquierda (solo desktop) */}
               <div className="hidden lg:block lg:w-1/5 opacity-60">
-                <div
-                  className="rounded-lg overflow-hidden"
-                  style={{ aspectRatio: "1080/1350" }}
-                >
+                <div className="aspect-[1080/1350] rounded-lg overflow-hidden">
                   <img
                     src={images[(currentIndex - 1 + images.length) % images.length]}
+                    alt={getImageText(images[(currentIndex - 1 + images.length) % images.length] as string, (currentIndex - 1 + images.length) % images.length)}
+                    title={getImageText(images[(currentIndex - 1 + images.length) % images.length] as string, (currentIndex - 1 + images.length) % images.length)}
                     className="w-full h-full object-contain"
                   />
                 </div>
@@ -51,12 +56,11 @@ export default function CoursesCarouselNew() {
 
               {/* Imagen central */}
               <div className="w-full md:w-2/3 lg:w-2/5">
-                <div
-                  className="rounded-lg shadow-xl transform scale-105 hover:scale-110 transition-transform duration-300 overflow-hidden"
-                  style={{ aspectRatio: "1080/1350" }}
-                >
+                <div className="aspect-[1080/1350] rounded-lg shadow-xl transform scale-105 hover:scale-110 transition-transform duration-300 overflow-hidden">
                   <img
                     src={images[currentIndex]}
+                    alt={getImageText(images[currentIndex] as string, currentIndex)}
+                    title={getImageText(images[currentIndex] as string, currentIndex)}
                     className="w-full h-full object-contain"
                   />
                 </div>
@@ -64,12 +68,11 @@ export default function CoursesCarouselNew() {
 
               {/* Imagen derecha (solo desktop) */}
               <div className="hidden lg:block lg:w-1/5 opacity-60">
-                <div
-                  className="rounded-lg overflow-hidden"
-                  style={{ aspectRatio: "1080/1350" }}
-                >
+                <div className="aspect-[1080/1350] rounded-lg overflow-hidden">
                   <img
                     src={images[(currentIndex + 1) % images.length]}
+                    alt={getImageText(images[(currentIndex + 1) % images.length] as string, (currentIndex + 1) % images.length)}
+                    title={getImageText(images[(currentIndex + 1) % images.length] as string, (currentIndex + 1) % images.length)}
                     className="w-full h-full object-contain"
                   />
                 </div>
@@ -86,6 +89,7 @@ export default function CoursesCarouselNew() {
                 size="icon"
                 className="absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full shadow-lg"
                 onClick={prevSlide}
+                aria-label="Imagen anterior"
               >
                 <ChevronLeft className="h-6 w-6" />
               </Button>
@@ -95,6 +99,7 @@ export default function CoursesCarouselNew() {
                 size="icon"
                 className="absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full shadow-lg"
                 onClick={nextSlide}
+                aria-label="Siguiente imagen"
               >
                 <ChevronRight className="h-6 w-6" />
               </Button>
@@ -108,6 +113,7 @@ export default function CoursesCarouselNew() {
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
+                  aria-label={`Ir a imagen ${index + 1}`}
                   className={`w-3 h-3 rounded-full transition-all ${
                     index === currentIndex
                       ? "bg-primary w-8"

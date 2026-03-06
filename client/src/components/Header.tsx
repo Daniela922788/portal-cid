@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Link } from "wouter";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "wouter";
 import { Menu, X, Search, ChevronDown } from "lucide-react";
-import { APP_LOGO, APP_TITLE } from "@/const";
+import { APP_TITLE } from "@/const";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -11,19 +11,157 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const SEARCH_RESULT_SECTIONS = [
+  { path: "/nosotros", label: "Nosotros" },
+  { path: "/semana-stem-complete", label: "Semana STEM" },
+  { path: "/reconocimientos", label: "Reconocimientos" },
+  { path: "/formacion", label: "Formacion" },
+  { path: "/mesa-ayuda", label: "Contactanos" },
+] as const;
+
+const SEARCH_RESULT_LABELS = new Map<string, string>(
+  SEARCH_RESULT_SECTIONS.map((item) => [item.path, item.label])
+);
 
 export default function Header() {
+  const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<Array<{ path: string; label: string }>>([]);
+  const desktopSearchInputRef = useRef<HTMLInputElement>(null);
+  const mobileSearchInputRef = useRef<HTMLInputElement>(null);
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+  const mobileMenuItemClass = "px-4 py-2 rounded-md hover:bg-accent text-base font-medium leading-6";
+  const mobileAccordionTriggerClass = "px-2 py-2 text-base font-medium leading-6";
+
+  useEffect(() => {
+    if (searchOpen) {
+      const isDesktop = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
+      if (isDesktop) {
+        desktopSearchInputRef.current?.focus();
+      } else {
+        mobileSearchInputRef.current?.focus();
+      }
+    }
+  }, [searchOpen]);
+
+  const runBrowserFind = (value: string) => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    const browserFind = (window as Window & {
+      find?: (
+        text: string,
+        caseSensitive?: boolean,
+        backwards?: boolean,
+        wrapAround?: boolean,
+        wholeWord?: boolean,
+        searchInFrames?: boolean,
+        showDialog?: boolean
+      ) => boolean;
+    }).find;
+
+    return browserFind?.(value, false, false, true, false, false, false) ?? false;
+  };
+
+  const goToSearchResult = (path: string, query: string) => {
+    const value = query.trim();
+    if (!value) {
+      return;
+    }
+
+    if (path !== location) {
+      sessionStorage.setItem("global-search-query", value);
+      setLocation(path);
+      setSearchOpen(false);
+      setMobileMenuOpen(false);
+      return;
+    }
+
+    const found = runBrowserFind(value);
+    if (!found) {
+      window.alert(`Se abrio la seccion relacionada, pero no se encontro el texto exacto: ${value}`);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const pendingQuery = sessionStorage.getItem("global-search-query");
+    if (!pendingQuery) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      const found = runBrowserFind(pendingQuery);
+      if (!found) {
+        window.alert(`Se abrio la seccion relacionada, pero no se encontro el texto exacto: ${pendingQuery}`);
+      }
+      sessionStorage.removeItem("global-search-query");
+    }, 250);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [location]);
+
+  const handleSearchSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const value = searchQuery.trim();
+
+    if (!value || typeof window === "undefined") {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/site-search?q=${encodeURIComponent(value)}`);
+      if (!response.ok) {
+        throw new Error("Search API request failed");
+      }
+
+      const data = (await response.json()) as { matches?: Array<{ path: string }> };
+      const allowedPaths = new Set<string>(SEARCH_RESULT_SECTIONS.map((item) => item.path));
+      const uniqueMatches = Array.from(
+        new Set((data.matches ?? []).map((match) => match.path).filter((path) => allowedPaths.has(path)))
+      );
+
+      const topResults = uniqueMatches
+        .map((path) => ({ path, label: SEARCH_RESULT_LABELS.get(path) ?? path }))
+        .slice(0, 5);
+
+      setSearchResults(topResults);
+
+      if (topResults.length === 0) {
+        window.alert(`No se encontraron resultados para: ${value}`);
+        return;
+      }
+
+      // Keep the list visible so user can choose the destination section.
+      return;
+    } catch {
+      window.alert("No fue posible buscar en este momento. Intenta de nuevo.");
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container">
         <div className="flex h-16 items-center justify-between">
           {/* Logo y título */}
-          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <img src={APP_LOGO} alt="Logo CID" className="h-10 w-10" />
-            <span className="hidden sm:inline-block font-bold text-lg text-primary">{APP_TITLE}</span>
+          <Link href="/" className="flex min-w-0 items-center gap-3 hover:opacity-80 transition-opacity">
+            <img src="/logo-colores.png" alt="Logo CID" className="h-10 w-10" />
+            <span className="line-clamp-2 max-w-[185px] text-xs font-bold leading-tight text-primary sm:max-w-none sm:text-lg sm:leading-normal">
+              {APP_TITLE}
+            </span>
           </Link>
 
           {/* Navegación desktop */}
@@ -199,13 +337,65 @@ export default function Header() {
 
           {/* Acciones */}
           <div className="flex items-center gap-2">
+            {searchOpen ? (
+              <form onSubmit={handleSearchSubmit} className="hidden md:flex items-center gap-2">
+                <input
+                  ref={desktopSearchInputRef}
+                  value={searchQuery}
+                  onChange={(event) => {
+                    setSearchQuery(event.target.value);
+                    setSearchResults([]);
+                  }}
+                  type="text"
+                  placeholder="Buscar en esta pagina"
+                  className="h-9 w-44 rounded-md border border-input bg-background px-3 text-sm"
+                  aria-label="Buscar en la pagina"
+                />
+                <Button type="submit" variant="outline" size="sm">
+                  Buscar
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    setSearchOpen(false);
+                    setSearchQuery("");
+                    setSearchResults([]);
+                  }}
+                  aria-label="Cerrar busqueda"
+                  className="h-9 w-9"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </form>
+            ) : (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  setSearchOpen(true);
+                  setSearchResults([]);
+                }}
+                className="hidden md:inline-flex"
+                aria-label="Abrir busqueda"
+              >
+                <Search className="h-5 w-5" />
+              </Button>
+            )}
+
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setSearchOpen(!searchOpen)}
-              className="hidden md:inline-flex"
+              onClick={() => {
+                setSearchOpen((prev) => !prev);
+                setMobileMenuOpen(false);
+                setSearchResults([]);
+              }}
+              className="md:hidden"
+              aria-label={searchOpen ? "Cerrar busqueda" : "Abrir busqueda"}
             >
-              <Search className="h-5 w-5" />
+              {searchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
             </Button>
 
             <Link href="/login">
@@ -218,30 +408,108 @@ export default function Header() {
               variant="ghost"
               size="icon"
               className="lg:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => {
+                setSearchOpen(false);
+                setMobileMenuOpen(!mobileMenuOpen);
+                setSearchResults([]);
+              }}
+              aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
+        {/* Buscador móvil */}
+        {searchOpen && (
+          <form onSubmit={handleSearchSubmit} className="md:hidden border-t py-3">
+            <div className="flex items-center gap-2">
+              <input
+                ref={mobileSearchInputRef}
+                value={searchQuery}
+                onChange={(event) => {
+                  setSearchQuery(event.target.value);
+                  setSearchResults([]);
+                }}
+                type="text"
+                placeholder="Buscar en esta pagina"
+                className="h-10 flex-1 rounded-md border border-input bg-background px-3 text-sm"
+                aria-label="Buscar en la pagina"
+              />
+              <Button type="submit" variant="outline" size="sm" className="h-10">
+                Buscar
+              </Button>
+            </div>
+          </form>
+        )}
+
+        {searchOpen && searchResults.length > 0 && (
+          <div className="border-t py-2">
+            <p className="px-1 pb-1 text-xs text-muted-foreground">Resultados (Top 5)</p>
+            <div className="flex flex-col gap-1">
+              {searchResults.map((result) => (
+                <Button
+                  key={result.path}
+                  type="button"
+                  variant="ghost"
+                  className="h-9 justify-start"
+                  onClick={() => goToSearchResult(result.path, searchQuery)}
+                >
+                  {result.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Menú móvil */}
         {mobileMenuOpen && (
           <div className="lg:hidden border-t py-4">
             <nav className="flex flex-col gap-2">
-              <Link href="/" className="px-4 py-2 hover:bg-accent rounded-md">Inicio</Link>
-              <Link href="/nosotros" className="px-4 py-2 hover:bg-accent rounded-md">Nosotros</Link>
-              <Link href="/noticias" className="px-4 py-2 hover:bg-accent rounded-md">Noticias</Link>
-              <Link href="/territorio-stem" className="px-4 py-2 hover:bg-accent rounded-md">Territorio STEM</Link>
-              <Link href="/proyectos" className="px-4 py-2 hover:bg-accent rounded-md">Proyectos</Link>
-              <Link href="/semana-stem-complete" className="px-4 py-2 hover:bg-accent rounded-md">Semana STEM</Link>
-              <Link href="/ie-oficiales" className="px-4 py-2 hover:bg-accent rounded-md">IE Oficiales</Link>
-              <Link href="/gestores" className="px-4 py-2 hover:bg-accent rounded-md">Gestores</Link>
-              <Link href="/kit-herramientas" className="px-4 py-2 hover:bg-accent rounded-md">Kit Herramientas</Link>
-              <Link href="/formacion" className="px-4 py-2 hover:bg-accent rounded-md">Formación</Link>
-              <Link href="/cid-kids" className="px-4 py-2 hover:bg-accent rounded-md">CID Kids</Link>
-              <Link href="/mesa-ayuda" className="px-4 py-2 hover:bg-accent rounded-md">Mesa de Ayuda</Link>
-              <Link href="/login" className="px-4 py-2 hover:bg-accent rounded-md font-semibold text-primary">Iniciar Sesión</Link>
+              <Link href="/" className={mobileMenuItemClass} onClick={closeMobileMenu}>Inicio</Link>
+              <Link href="/nosotros" className={mobileMenuItemClass} onClick={closeMobileMenu}>Nosotros</Link>
+
+              <Accordion type="single" collapsible className="px-2">
+                <AccordionItem value="contenido" className="border-b">
+                  <AccordionTrigger className={mobileAccordionTriggerClass}>Contenido</AccordionTrigger>
+                  <AccordionContent className="pb-2">
+                    <div className="flex flex-col gap-1">
+                      <Link href="/noticias" className={mobileMenuItemClass} onClick={closeMobileMenu}>Noticias</Link>
+                      <Link href="/proyectos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Proyectos</Link>
+                      <Link href="/semana-stem-complete" className={mobileMenuItemClass} onClick={closeMobileMenu}>Semana STEM</Link>
+                      <Link href="/publicaciones" className={mobileMenuItemClass} onClick={closeMobileMenu}>Publicaciones</Link>
+                      <Link href="/reconocimientos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Reconocimientos</Link>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="comunidad" className="border-b">
+                  <AccordionTrigger className={mobileAccordionTriggerClass}>Comunidad</AccordionTrigger>
+                  <AccordionContent className="pb-2">
+                    <div className="flex flex-col gap-1">
+                      <Link href="/ie-oficiales" className={mobileMenuItemClass} onClick={closeMobileMenu}>IE Oficiales</Link>
+                      <Link href="/territorio-stem" className={mobileMenuItemClass} onClick={closeMobileMenu}>Territorio STEM</Link>
+                      <Link href="/aliados" className={mobileMenuItemClass} onClick={closeMobileMenu}>Aliados</Link>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="recursos" className="border-b-0">
+                  <AccordionTrigger className={mobileAccordionTriggerClass}>Recursos</AccordionTrigger>
+                  <AccordionContent className="pb-2">
+                    <div className="flex flex-col gap-1">
+                      <Link href="/kit-herramientas" className={mobileMenuItemClass} onClick={closeMobileMenu}>Kit Herramientas</Link>
+                      <Link href="/normatividad" className={mobileMenuItemClass} onClick={closeMobileMenu}>Normatividad</Link>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+
+              <Link href="/formacion" className={mobileMenuItemClass} onClick={closeMobileMenu}>Formación</Link>
+              <Link href="/cid-kids" className={mobileMenuItemClass} onClick={closeMobileMenu}>CID Kids</Link>
+              <Link href="/mesa-ayuda" className={mobileMenuItemClass} onClick={closeMobileMenu}>Mesa de Ayuda</Link>
+              <Link href="/login" className={`${mobileMenuItemClass} text-primary`} onClick={closeMobileMenu}>Iniciar Sesión</Link>
             </nav>
           </div>
         )}

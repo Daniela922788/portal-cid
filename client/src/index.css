@@ -168,6 +168,22 @@
     padding-right: 1rem;
   }
 
+  .home-territorio-card {
+    background-image: url('/images/Fondoprueba.png'), url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663221068197/QLvxXkXmkaeIKFpu.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .home-innovation-banner {
+    background-image: linear-gradient(135deg, #0ea5a5 0%, #10b981 100%);
+    min-height: 350px;
+  }
+
+  .home-innovation-robot {
+    max-height: 350px;
+  }
+
   .flex {
     min-height: 0;
     min-width: 0;
