@@ -1,5 +1,45 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
+
+function AutoPlayShortsEmbed({ videoId, title }: { videoId: string; title: string }) {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    if (!wrapperRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.6 }
+    );
+
+    observer.observe(wrapperRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const baseUrl = `https://www.youtube.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1&mute=1`;
+  const src = isInView ? `${baseUrl}&autoplay=1` : baseUrl;
+
+  return (
+    <div className="pt-4 flex justify-center" ref={wrapperRef}>
+      <div className="w-full max-w-[500px] aspect-[9/16] rounded-lg overflow-hidden border border-slate-200 shadow-sm">
+        <iframe
+          src={src}
+          title={title}
+          className="w-full h-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        />
+      </div>
+    </div>
+  );
+}
 
 type Noticia = {
   id: string;
@@ -51,9 +91,10 @@ export default function Reconocimientos() {
     });
     return `https://www.youtube.com/embed/${id}?${params.toString()}`;
   };
+  const shouldUseWebp = (newsId: string) => newsId !== "nuevo-reconocimiento";
   const getImageFitClass = (newsId: string, imageIndex: number, isModal = false) => {
     if (newsId === "nuevo-reconocimiento") {
-      return "object-contain bg-white";
+      return "object-cover";
     }
     if (isModal && newsId === "reconocimiento-adicional" && imageIndex === 1) {
       return "object-contain bg-white";
@@ -70,13 +111,37 @@ export default function Reconocimientos() {
     return "h-[500px]";
   };
   const getImagePositionClass = (newsId: string, imageIndex: number) => {
+    if (newsId === "ciudad-aprendizaje" && imageIndex === 0) {
+      return "object-[50%_40%]";
+    }
+    if (newsId === "reconocimiento-adicional" && imageIndex === 0) {
+      return "object-[50%_18%]";
+    }
+    if (newsId === "nuevo-reconocimiento" && imageIndex === 0) {
+      return "object-[50%_66%]";
+    }
+    if (newsId === "nuevo-reconocimiento" && imageIndex === 1) {
+      return "object-[50%_74%]";
+    }
+    if (newsId === "nuevo-reconocimiento" && imageIndex === 2) {
+      return "object-[50%_84%]";
+    }
+    if (newsId === "nuevo-reconocimiento" && imageIndex === 3) {
+      return "object-[50%_38%]";
+    }
     if (newsId === "colombia-lider" && imageIndex === 0) {
-      return "object-[50%_28%]";
+      return "object-[50%_12%]";
     }
     if (newsId === "territorio-stem") {
-      return "object-[50%_24%]";
+      return "object-[50%_0%]";
     }
     return "object-center";
+  };
+
+  const preloadImage = (src: string) => {
+    const img = new Image();
+    img.decoding = "async";
+    img.src = src;
   };
 
   const noticias: Noticia[] = [
@@ -142,7 +207,7 @@ export default function Reconocimientos() {
             alt="I.E. Manuel Uribe Ángel"
             loading="lazy"
             decoding="async"
-            className="mt-3 w-full max-w-3xl rounded-lg border border-slate-200"
+            className="mt-3 w-full max-w-4xl rounded-lg border border-slate-200"
           />
         </>,
         <>
@@ -152,22 +217,30 @@ export default function Reconocimientos() {
             alt="I.E. Comercial de Envigado"
             loading="lazy"
             decoding="async"
-            className="mt-3 w-full max-w-3xl rounded-lg border border-slate-200"
+            className="mt-3 w-full max-w-4xl rounded-lg border border-slate-200"
           />
         </>,
-        "Estos resultados posicionan a Envigado como un referente en la promoción del talento científico escolar y evidencian el compromiso de sus instituciones educativas con la innovación y la formación integral de sus estudiantes.",
-        "Reconocimientos obtenidos.",
+        <>
+          <strong>Estos resultados posicionan a Envigado como un referente en la promoción del talento científico escolar y evidencian el compromiso de sus instituciones educativas con la innovación y la formación integral de sus estudiantes.</strong>
+        </>,
+        <strong>Reconocimientos obtenidos.</strong>,
         "Los equipos que alcanzaron medalla de bronce en las Olimpiadas STEM+ Colombia 2025 recibieron: beca del 100% para los cinco integrantes del equipo en programas de pregrado de la oferta virtual y a distancia de UNIMINUTO.",
         "También recibieron participación en el FIRST LEGO League, temporada 2026-2027, uno de los programas internacionales más importantes de robótica y ciencia para estudiantes.",
-        "Innovación con impacto territorial.",
+        <strong>Innovación con impacto territorial.</strong>,
         "Agrigirls STEM, de la I.E. Manuel Uribe Ángel, propone soluciones innovadoras que integran tecnología y sostenibilidad para fortalecer procesos agrícolas.",
         "Defensores del Aire, de la I.E. Comercial de Envigado, desarrolla alternativas científicas orientadas a la sostenibilidad ambiental y a la búsqueda de nuevas fuentes de energía.",
         "Ambas iniciativas demuestran cómo la creatividad, el trabajo colaborativo y el pensamiento científico de los estudiantes pueden generar propuestas con impacto real en sus comunidades.",
-        "Un logro para la educación de Envigado.",
+        <strong>Un logro para la educación de Envigado.</strong>,
         "La participación y reconocimiento de estas instituciones en la final nacional de las Olimpiadas STEM+ Colombia 2025 resalta el talento, la dedicación y el compromiso de estudiantes y docentes que apuestan por la ciencia, la tecnología y la innovación como herramientas para transformar su entorno.",
         "Estos logros reflejan el potencial de la educación pública para formar agentes de cambio capaces de desarrollar soluciones innovadoras a los retos de sus territorios, consolidando a Envigado como un referente en el impulso de la educación STEM en Colombia.",
+        <AutoPlayShortsEmbed videoId="7D9AshgwwZk" title="Olimpiadas STEM+ Colombia 2025 - video" />,
       ],
-      imagenes: ["/logo-colores.png"],
+      imagenes: [
+        "/Olimpiadas%20STEM/1.jpeg",
+        "/Olimpiadas%20STEM/2.jpeg",
+        "/Olimpiadas%20STEM/3.jpeg",
+        "/Olimpiadas%20STEM/4.jpeg",
+      ],
     },
     {
       id: "territorio-stem",
@@ -245,9 +318,21 @@ export default function Reconocimientos() {
   };
 
   const openNoticia = (news: Noticia) => {
+    news.imagenes.forEach((src) => preloadImage(src));
     setCurrentImage(0);
     setSelectedNews(news);
   };
+
+  useEffect(() => {
+    if (!selectedNews) return;
+
+    const total = selectedNews.imagenes.length;
+    const nextIndex = (currentImage + 1) % total;
+    const prevIndex = (currentImage - 1 + total) % total;
+
+    preloadImage(selectedNews.imagenes[nextIndex]);
+    preloadImage(selectedNews.imagenes[prevIndex]);
+  }, [selectedNews, currentImage]);
 
   return (
     <div className="min-h-screen py-8">
@@ -266,7 +351,9 @@ export default function Reconocimientos() {
             >
               <div className="h-56 bg-muted overflow-hidden">
                 <picture>
-                  <source srcSet={toWebp(noticia.imagenes[0])} type="image/webp" />
+                  {shouldUseWebp(noticia.id) ? (
+                    <source srcSet={toWebp(noticia.imagenes[0])} type="image/webp" />
+                  ) : null}
                   <img
                     src={noticia.imagenes[0]}
                     alt={noticia.titulo}
@@ -314,14 +401,22 @@ export default function Reconocimientos() {
                 </div>
 
                 <div className="mb-8 rounded-lg overflow-hidden shadow-xl bg-muted relative">
+                  {selectedNews.imagenes.length > 1 && (
+                    <div className="hidden" aria-hidden="true">
+                      <img src={selectedNews.imagenes[(currentImage + 1) % selectedNews.imagenes.length]} alt="" />
+                      <img src={selectedNews.imagenes[(currentImage - 1 + selectedNews.imagenes.length) % selectedNews.imagenes.length]} alt="" />
+                    </div>
+                  )}
                   <picture>
-                    <source srcSet={toWebp(selectedNews.imagenes[currentImage])} type="image/webp" />
+                    {shouldUseWebp(selectedNews.id) ? (
+                      <source srcSet={toWebp(selectedNews.imagenes[currentImage])} type="image/webp" />
+                    ) : null}
                     <img
                       src={selectedNews.imagenes[currentImage]}
                       alt={selectedNews.titulo}
-                      loading="lazy"
+                      loading="eager"
                       decoding="async"
-                      fetchPriority="low"
+                      fetchPriority="high"
                       className={`w-full ${getModalImageHeightClass(selectedNews.id, currentImage)} ${getImageFitClass(selectedNews.id, currentImage, true)} ${getImagePositionClass(selectedNews.id, currentImage)}`}
                       onError={(e) => {
                         e.currentTarget.src = "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=700&fit=crop";

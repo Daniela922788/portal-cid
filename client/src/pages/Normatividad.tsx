@@ -5,32 +5,51 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { FileText, Download } from "lucide-react";
 
-const acuerdos = [
-  { nombre: "Acuerdo Municipal 001", fecha: "2023-01-15", descripcion: "Acuerdo sobre políticas de innovación educativa" }
-];
-
-const leyes = [
-  { nombre: "Ley 115 de 1994", fecha: "1994-02-08", descripcion: "Ley General de Educación" }
-];
-
-const resoluciones = [
-  { nombre: "Resolución 001 de 2023", fecha: "2023-02-01", descripcion: "Resolución de funcionamiento del Centro de Innovación" }
-];
-
-const circulares = [
-  { nombre: "Circular 001 de 2023", fecha: "2023-03-01", descripcion: "Circular informativa sobre programas de innovación" }
-];
-
-const normasCID = [
-  { nombre: "Reglamento Interno CID", fecha: "2023-01-15", descripcion: "Normas de funcionamiento del Centro de Innovación" },
-  { nombre: "Manual de Convivencia", fecha: "2023-02-01", descripcion: "Lineamientos para el uso de espacios del CID" }
-];
-
 interface Norma {
   nombre: string;
   fecha: string;
   descripcion: string;
+  urlDescarga?: string;
+  textoBoton?: string;
 }
+
+const acuerdos: Norma[] = [];
+
+const leyes: Norma[] = [
+  {
+    nombre: "Ley 115 de 1994",
+    fecha: "1994-02-08",
+    descripcion: "Ley General de Educación.",
+    urlDescarga: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma_pdf.php?i=292",
+  }
+];
+
+const resoluciones: Norma[] = [];
+
+const circulares: Norma[] = [];
+
+const normasCID: Norma[] = [
+  {
+    nombre: "Plan Nacional Decenal de Educación 2016-2026",
+    fecha: "2016-01-01",
+    descripcion: "Política pública que orienta el desarrollo educativo en Colombia.",
+    urlDescarga: "https://www.mineducacion.gov.co/1780/articles-392871_recurso_1.pdf",
+  },
+  {
+    nombre: "Plan de Desarrollo Municipal de Envigado 2024-2027",
+    fecha: "2024-01-01",
+    descripcion: "Instrumento de planificación del municipio que incluye el programa de Innovación Educativa.",
+    urlDescarga: "https://www.envigado.gov.co/planes/plan-de-desarrollo-20242027",
+    textoBoton: "Ver",
+  },
+  {
+    nombre: "Objetivos de Desarrollo Sostenible (ODS) - Naciones Unidas (2018)",
+    fecha: "2018-01-01",
+    descripcion: "Marco internacional para el desarrollo sostenible.",
+    urlDescarga: "https://www.un.org/sustainabledevelopment/es/sustainable-development-goals/",
+    textoBoton: "Ver",
+  },
+];
 
 const renderNormas = (normas: Norma[]) => (
   <div className="space-y-4">
@@ -42,7 +61,19 @@ const renderNormas = (normas: Norma[]) => (
               <CardTitle>{norma.nombre}</CardTitle>
               <p className="text-sm text-muted-foreground mt-1">{new Date(norma.fecha).toLocaleDateString('es-CO')}</p>
             </div>
-            <Button variant="outline" size="sm"><Download className="h-4 w-4 mr-2" />Descargar</Button>
+            {norma.urlDescarga ? (
+              <Button variant="outline" size="sm" asChild>
+                <a href={norma.urlDescarga} target="_blank" rel="noopener noreferrer">
+                  <Download className="h-4 w-4 mr-2" />
+                  {norma.textoBoton ?? "Descargar"}
+                </a>
+              </Button>
+            ) : (
+              <Button variant="outline" size="sm" disabled>
+                <Download className="h-4 w-4 mr-2" />
+                Descargar
+              </Button>
+            )}
           </div>
         </CardHeader>
         <CardContent>

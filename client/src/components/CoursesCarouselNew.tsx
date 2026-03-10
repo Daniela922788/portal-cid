@@ -1,19 +1,17 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function CoursesCarouselNew() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // 🔥 Cargar automáticamente todas las imágenes de la carpeta
-  const images = useMemo(() => {
-    const modules = import.meta.glob("/public/carousel/*.{jpg,jpeg,png,webp}", {
-      eager: true,
-      as: "url",
-    });
-
-    return Object.values(modules);
-  }, []);
+  // Carousel source images for Olimpiadas STEM section.
+  const images = [
+    "/Olimpiadas%20STEM/1.jpeg",
+    "/Olimpiadas%20STEM/2.jpeg",
+    "/Olimpiadas%20STEM/3.jpeg",
+    "/Olimpiadas%20STEM/4.jpeg",
+  ];
 
   if (!images || images.length === 0) return null;
 
