@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import ContactBanner from "./components/ContactBanner";
 import Home from "./pages/Home";
 import Noticias from "./pages/Noticias";
-import TerritorioStem from "./pages/TerritorioStem";
+import TerritorioStem from "./pages/TerritorySTEM.standalone";
 import Proyectos from "./pages/Proyectos";
 import IEOficiales from "./pages/IEOficiales";
 import Gestores from "./pages/Gestores";
@@ -33,7 +33,6 @@ import Login from "./pages/Login";
 import CRM from "./pages/CRM";
 import CRMNew from "./pages/CRMNew";
 import LoadData from "./pages/LoadData";
-import TerritorioStemItagui from "./pages/TerritorioStemItagui";
 import EventosDetalle from "./pages/EventosDetalle";
 import Reconocimientos from "./pages/Reconocimientos";
 import SistemaSolar from "./pages/juegos/SistemaSolar";
@@ -54,7 +53,6 @@ function Router() {
           <Route path="/crm" component={CRM} />
           <Route path="/crm-new" component={CRMNew} />
           <Route path="/load-data" component={LoadData} />
-          <Route path="/territorio-stem-itagui" component={TerritorioStemItagui} />
           <Route path="/evento/:id" component={EventosDetalle} />
           <Route path="/noticias" component={Noticias} />
           <Route path="/territorio-stem" component={TerritorioStem} />

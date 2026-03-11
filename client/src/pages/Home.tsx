@@ -22,6 +22,7 @@ import ticLogo from "@/assets/tic-logo.png";
 export default function Home() {
   // Authentication state is managed by the app context
   // Users can login via the header button
+  const showCoursesCarousel = false;
 
   return (
     <div className="min-h-screen">
@@ -52,7 +53,7 @@ export default function Home() {
       </section>
 
       {/* Carrusel de Cursos */}
-      <CoursesCarouselNew />
+      {showCoursesCarousel && <CoursesCarouselNew />}
 
       {/* Misión, Visión, Objetivo */}
       <section className="py-16 bg-muted/30">

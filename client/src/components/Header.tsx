@@ -39,6 +39,7 @@ export default function Header() {
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const mobileSearchInputRef = useRef<HTMLInputElement>(null);
   const closeMobileMenu = () => setMobileMenuOpen(false);
+  const showKitHerramientas = false;
   const mobileMenuItemClass = "px-4 py-2 rounded-md hover:bg-accent text-base font-medium leading-6";
   const mobileAccordionTriggerClass = "px-2 py-2 text-base font-medium leading-6";
 
@@ -284,16 +285,18 @@ export default function Header() {
                   <NavigationMenuTrigger>Recursos</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
-                      <li>
-                        <Link href="/kit-herramientas">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Kit Herramientas</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Recursos para docentes
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
+                      {showKitHerramientas && (
+                        <li>
+                          <Link href="/kit-herramientas">
+                            <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                              <div className="text-sm font-medium leading-none">Kit Herramientas</div>
+                              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                Recursos para docentes
+                              </p>
+                            </NavigationMenuLink>
+                          </Link>
+                        </li>
+                      )}
                       <li>
                         <Link href="/normatividad">
                           <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
@@ -499,7 +502,9 @@ export default function Header() {
                   <AccordionTrigger className={mobileAccordionTriggerClass}>Recursos</AccordionTrigger>
                   <AccordionContent className="pb-2">
                     <div className="flex flex-col gap-1">
-                      <Link href="/kit-herramientas" className={mobileMenuItemClass} onClick={closeMobileMenu}>Kit Herramientas</Link>
+                      {showKitHerramientas && (
+                        <Link href="/kit-herramientas" className={mobileMenuItemClass} onClick={closeMobileMenu}>Kit Herramientas</Link>
+                      )}
                       <Link href="/normatividad" className={mobileMenuItemClass} onClick={closeMobileMenu}>Normatividad</Link>
                     </div>
                   </AccordionContent>
