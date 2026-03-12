@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -265,6 +265,34 @@ export default function Nosotros() {
       tipo: "STEM",
       foto: WilmarImg
     },
+    {
+      id: 12,
+      nombre: "Angela María Mejía Celis",
+      profesion: "Licenciada en Humanidades y Lengua Castellana",
+      tipo: "STEM",
+      foto: "/gestores/Angela%202.png"
+    },
+    {
+      id: 13,
+      nombre: "Erika Atehortúa Argaez",
+      profesion: "Sociología, Magíster en Innovación y Educación",
+      tipo: "STEM",
+      foto: "/gestores/Erika.png"
+    },
+    {
+      id: 14,
+      nombre: "Mateo Vásquez Correa",
+      profesion: "Ingeniero de Sistemas",
+      tipo: "STEM",
+      foto: "/gestores/Mateo.png"
+    },
+    {
+      id: 15,
+      nombre: "Ronald Eduardo Gaitán Gelvez",
+      profesion: "Ing. Mecatrónico, Ing. Eléctrico, Esp.Telecomunicaciones",
+      tipo: "STEM",
+      foto: "/gestores/Ronald.png"
+    },
   ];
 
   const equipoImagenes = [
@@ -303,52 +331,45 @@ export default function Nosotros() {
     "Participación internacional de estudiantes en las Olimpiadas Latinoamericanas de Ciencia y Tecnología en Tlaxcala, México. (2024)",
   ];
 
+  useEffect(() => {
+    const priorityGestores = [
+      "/gestores/Angela%202.png",
+      "/gestores/Erika.png",
+      "/gestores/Mateo.png",
+      "/gestores/Ronald.png",
+    ];
+
+    const preloadLinks = priorityGestores.map((href) => {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = href;
+      document.head.appendChild(link);
+      return link;
+    });
+
+    return () => {
+      preloadLinks.forEach((link) => {
+        if (document.head.contains(link)) {
+          document.head.removeChild(link);
+        }
+      });
+    };
+  }, []);
+
   return (
     <div ref={containerRef} className="min-h-screen bg-white">
       {/* Hero Section */}
-      <motion.section
-        style={{ opacity, scale }}
-        className="relative -mt-4 md:-mt-6 h-[46vh] md:h-[56vh] flex items-center justify-center z-10 bg-gradient-to-br from-orange-400 via-red-500 to-pink-600 overflow-hidden"
-      >
-        <div className="absolute inset-0 opacity-20">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute top-10 right-10 w-40 h-40 bg-white rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            className="absolute bottom-10 left-10 w-32 h-32 bg-yellow-200 rounded-full blur-3xl"
-          />
-        </div>
-
-        <div className="text-center px-4 relative z-10">
-          <motion.h1
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold text-white mb-4 drop-shadow-lg"
-          >
-            Nosotros
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-white max-w-2xl mx-auto drop-shadow-md"
-          >
-            Conoce la historia, misión y visión del Centro de Innovación y Desarrollo (CID)
-          </motion.p>
-          <motion.div
-            animate={{ y: [0, 20, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="mt-10 text-white text-4xl font-bold drop-shadow-lg"
-          >
-            ↓
-          </motion.div>
-        </div>
-      </motion.section>
+      <section className="relative z-10 overflow-hidden">
+        <img
+          src="/banners/banner-nosotros.png"
+          alt="Banner sección Nosotros"
+          loading="eager"
+          fetchPriority="high"
+          decoding="sync"
+          className="w-full h-auto object-cover"
+        />
+      </section>
 
       <section className="pt-8 pb-6 bg-white">
         <div className="container">
@@ -391,6 +412,16 @@ export default function Nosotros() {
             alt="Equipo CID"
             loading="lazy"
             decoding="async"
+            className="rounded-2xl shadow-2xl w-full h-auto object-cover mb-16"
+          />
+
+          {/* Foto de los gestores */}
+          <img 
+            src="/Fotogestores.jpg"
+            alt="Gestores CID"
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
             className="rounded-2xl shadow-2xl w-full h-auto object-cover mb-16"
           />
 
@@ -517,7 +548,7 @@ export default function Nosotros() {
           <div className="max-w-6xl mx-auto mb-10">
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl">
               <iframe
-                src="https://www.youtube.com/embed/7sFJn3IfaGY?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1"
+                src="https://www.youtube.com/embed/R6ffTBIieCw?loop=1&playlist=R6ffTBIieCw"
                 title="Centro de Ciencia - Video"
                 loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -707,6 +738,16 @@ export default function Nosotros() {
             </p>
           </motion.div>
 
+          {/* Foto de los gestores */}
+          <img 
+            src="/Fotogestores.jpg"
+            alt="Gestores CID"
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
+            className="rounded-2xl shadow-2xl w-full h-auto object-cover mb-16"
+          />
+
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {gestoresData.map((gestor, index) => (
               <motion.div
@@ -722,8 +763,9 @@ export default function Nosotros() {
                   <img
                     src={gestor.foto}
                     alt={gestor.nombre}
-                    loading="lazy"
-                    decoding="async"
+                    loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
+                    fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
+                    decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
                     className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-6"
                   />
                 </div>

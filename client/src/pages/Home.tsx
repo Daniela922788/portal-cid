@@ -27,29 +27,15 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary to-secondary text-white py-20 md:py-32">
-        <div className="container">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Portal de Innovación Educativa CID
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-50">
-              Transformando la educación a través de la innovación, la investigación y el desarrollo STEM
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/proyectos">
-                <Button size="lg" variant="secondary" className="text-lg">
-                  Explorar Proyectos
-                </Button>
-              </Link>
-              <Link href="/mesa-ayuda">
-                <Button size="lg" variant="outline" className="text-lg bg-white/10 hover:bg-white/20 text-white border-white">
-                  Contáctanos
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
+      <section className="relative w-full overflow-hidden">
+        <img
+          src="/banners/banner-principal.png"
+          alt="Banner principal Portal de Innovación Educativa CID"
+          loading="eager"
+          fetchPriority="high"
+          decoding="sync"
+          className="w-full h-auto object-cover"
+        />
       </section>
 
       {/* Carrusel de Cursos */}
@@ -177,35 +163,18 @@ export default function Home() {
         </div>
       </section>
 
-{/* Banner de Innovación con Robot */}
-  <section className="home-innovation-banner relative py-20 md:py-24 overflow-hidden">
-        <div className="container">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Contenido de texto */}
-            <div className="text-white z-10">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                La innovación es el futuro de la educación
-              </h2>
-              <p className="text-lg md:text-xl mb-8 text-white/90">
-                Descubre cómo la tecnología y la creatividad transforman la manera de aprender y enseñar en nuestras instituciones educativas.
-              </p>
-              <Link href="/noticias">
-                <Button size="lg" variant="secondary" className="text-lg">
-                  Leer Noticias
-                </Button>
-              </Link>
-            </div>
-            
-            {/* Imagen del robot */}
-            <div className="flex justify-center md:justify-end">
-              <img 
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663221068197/DkTNcWRuzslfqEVB.png" 
-                alt="Robot de Innovación" 
-                className="home-innovation-robot w-full max-w-md h-auto drop-shadow-lg"
-              />
-            </div>
-          </div>
-        </div>
+      {/* Banner Semana STEM */}
+      <section className="relative w-full overflow-hidden">
+        <Link href="/semana-stem-complete" aria-label="Ir a la sección Semana STEM">
+          <img
+            src="/banners/Banner-semana.png"
+            alt="Banner Semana STEM"
+            loading="lazy"
+            fetchPriority="high"
+            decoding="async"
+            className="w-full h-auto object-cover cursor-pointer"
+          />
+        </Link>
       </section>
 
       {/* Logos de Ministerios y Entidades */}

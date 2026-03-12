@@ -165,6 +165,80 @@ export default function SemanaSTEM() {
     },
   ];
 
+  // Datos del Día 2 - Miércoles
+  const day2Sessions = [
+    {
+      time: '07:30 a.m.',
+      title: 'Apertura – Olimpiadas Maker: Misión de Rescate',
+      description:
+        'La jornada inició con la bienvenida a las Olimpiadas Maker: Misión de Rescate Maker 2025, realizadas en el marco de la Semana STEM+ Envigado 2025. El evento resaltó el compromiso del municipio con el fortalecimiento del enfoque STEM y el reconocimiento de Envigado como Ciudad del Aprendizaje y Territorio STEM. Durante la apertura se destacó el talento de los estudiantes para resolver retos del mundo real a través de la robótica, el pensamiento computacional y el diseño de soluciones tecnológicas orientadas a situaciones de emergencia como deslizamientos, desastres naturales o estructuras colapsadas.',
+      icon: '🚀',
+      color: 'from-orange-400 to-orange-600',
+    },
+    {
+      time: '08:05 a.m.',
+      title: 'Presentación del Reto: Roverbots Rescatistas',
+      description:
+        'Se presentó el desafío central de la competencia: el desarrollo de Roverbots rescatistas, robots diseñados por los equipos estudiantiles para superar una pista inspirada en escenarios de rescate. La actividad se desarrolló con el acompañamiento del Cuerpo de Bomberos Voluntarios de Envigado, quienes apoyaron el proceso formativo en gestión del riesgo y colaboraron en el diseño de la pista de competencia, conectando el aprendizaje con situaciones reales de protección de la vida.',
+      icon: '🤖',
+      color: 'from-blue-400 to-blue-600',
+    },
+    {
+      time: '08:25 a.m.',
+      title: 'Reglas de Competencia y Presentación de Jurados',
+      description:
+        'En este espacio se explicó la dinámica de la jornada y los criterios de evaluación de las Olimpiadas Maker. La calificación se dividió en dos componentes principales: el video del proceso de desarrollo del robot (40%) y el desempeño del robot en la pista de rescate (60%). También se presentaron los jurados evaluadores, encargados de analizar el diseño, la programación y el desempeño de los prototipos desarrollados por los estudiantes. Durante este momento se socializó además el orden y horario estimado de participación de cada equipo, junto con la lista oficial de instituciones y equipos competidores, con el fin de organizar el desarrollo de las pruebas en la pista de rescate y garantizar la participación de todos los grupos.',
+      scheduleRows: [
+        { hora: '8:30', institucion: 'Institución Educativa Alejandro Vélez Barrientos', equipo: 'Equipo #1' },
+        { hora: '8:40', institucion: 'Institución Educativa La Paz', equipo: 'Equipo #2' },
+        { hora: '8:50', institucion: 'Institución Educativa José Miguel de la Calle', equipo: 'Equipo #3' },
+        { hora: '9:00', institucion: 'Colegio Reggio Emilia', equipo: 'Equipo #4' },
+        { hora: '9:10', institucion: 'Institución Educativa San Vicente Alto de las Flores', equipo: 'Equipo #5' },
+        { hora: '9:20', institucion: 'Institución Educativa Manuel Uribe Ángel', equipo: 'Equipo #6' },
+        { hora: '9:30', institucion: 'Institución Educativa Comercial de Envigado', equipo: 'COMERCIALISTAS ROBÓTICOS' },
+        { hora: '9:40', institucion: 'Institución Educativa El Salado', equipo: 'Equipo #8' },
+        { hora: '9:50', institucion: 'Institución Educativa Martín Eduardo Ríos Llanos', equipo: 'Equipo #9' },
+        { hora: '10:00', institucion: 'Institución Educativa Normal Superior de Envigado', equipo: 'Equipo #10' },
+        { hora: '10:10', institucion: 'Institución Educativa Darío de Bedout', equipo: 'Equipo #11' },
+        { hora: '10:20', institucion: 'Institución Educativa Las Palmas', equipo: 'Equipo #12' },
+        { hora: '10:30', institucion: 'Colegio Benedictino de Santa María', equipo: 'ENBY TEAM' },
+        { hora: '10:40', institucion: 'Institución Educativa Darío de Bedout', equipo: 'Equipo #14' },
+        { hora: '10:50', institucion: 'Institución Educativa Comercial de Envigado', equipo: 'COMERCIALISTAS AL RESCATE' },
+        { hora: '11:00', institucion: 'Institución Educativa Leticia Arango Avendaño', equipo: 'Equipo #16' },
+        { hora: '11:10', institucion: 'Institución Educativa María Poussepin', equipo: 'Equipo #17' },
+        { hora: '11:20', institucion: 'Institución Educativa Martín Eduardo Ríos Llanos', equipo: 'Equipo #18' },
+        { hora: '11:30', institucion: 'Institución Educativa José Manuel Restrepo Vélez', equipo: 'Equipo #19' },
+        { hora: '11:40', institucion: 'Colegio Benedictino de Santa María', equipo: 'ROBOBEN' },
+      ],
+      icon: '⚙️',
+      color: 'from-purple-400 to-purple-600',
+    },
+    {
+      time: '09:30 a.m.',
+      title: 'Receso',
+      description:
+        'Espacio de pausa para los participantes, en el que se realizó la entrega de refrigerios a los equipos competidores y docentes acompañantes, permitiendo un momento de descanso antes de continuar con las actividades de la jornada.',
+      icon: '☕',
+      color: 'from-yellow-400 to-yellow-600',
+    },
+    {
+      time: '09:45 a.m.',
+      title: 'Desarrollo de la Competencia',
+      description:
+        'Los equipos pusieron a prueba sus robots en la pista de rescate, enfrentando distintos retos que exigían programación, diseño mecánico, pensamiento lógico y trabajo en equipo. Además de la competencia principal, los estudiantes pudieron participar en distintas estaciones de aprendizaje relacionadas con pensamiento computacional y robótica, fortaleciendo sus habilidades a través de experiencias prácticas y lúdicas.',
+      icon: '🧠',
+      color: 'from-green-400 to-green-600',
+    },
+    {
+      time: '12:00 p.m.',
+      title: 'Premiación y Cierre',
+      description:
+        'La jornada concluyó con la retroalimentación del jurado y el anuncio de los equipos ganadores. Los tres mejores puntajes recibieron trofeos para sus instituciones educativas y reconocimientos para los estudiantes y docentes entrenadores. Además, los cuatro primeros equipos obtuvieron la oportunidad de participar en el 5° Congreso Internacional de Gestión del Riesgo de Desastres en Medellín, donde compartirán sus prototipos de robótica educativa para rescate en estructuras colapsadas. El evento finalizó con un reconocimiento a todos los participantes, destacando que más allá de la competencia, las Olimpiadas Maker representan un espacio para aprender, innovar y construir soluciones que aporten a la vida y al territorio.',
+      icon: '🏆',
+      color: 'from-red-400 to-red-600',
+    },
+  ];
+
   const galleryImages = [
     '/Semana%20STEM/23/Galeria/1.jpg',
     '/Semana%20STEM/23/Galeria/2.jpg',
@@ -172,6 +246,54 @@ export default function SemanaSTEM() {
     '/Semana%20STEM/23/Galeria/4.jpg',
     '/Semana%20STEM/23/Galeria/5.jpg',
     '/Semana%20STEM/23/Galeria/6.jpg',
+  ];
+
+  const day2Highlights = [
+    {
+      icon: '🎯',
+      title: 'Aprendizaje Basado en Retos',
+      desc: 'La robótica como herramienta para resolver problemas reales de rescate',
+    },
+    {
+      icon: '🤖',
+      title: 'Robótica para la Gestión del Riesgo',
+      desc: 'Diseño de Roverbots inspirados en escenarios de emergencia',
+    },
+    {
+      icon: '🧠',
+      title: 'Pensamiento Computacional',
+      desc: 'Programación, lógica y creatividad aplicadas a la resolución de desafíos',
+    },
+    {
+      icon: '🤝',
+      title: 'Trabajo en Equipo',
+      desc: 'Colaboración entre estudiantes, docentes y expertos para innovar',
+    },
+  ];
+
+  const day2GalleryImages: string[] = [];
+
+  const day2TeamCards = [
+    'I.E. Alejandro Velez Barrientos',
+    'Benedictino de Santa Maria ENBY TEAM',
+    'Benedictino de Santa Maria ROBOBEN',
+    'I.E. Comercial de Envigado Comercialistas al Rescate',
+    'I.E. Comercial de Envigado Comercialistas Roboticos',
+    'I.E. Dario de Bedout 1',
+    'I.E. Dario de Bedout 2',
+    'I.E. El Salado',
+    'I.E. Jose Manuel Restrepo Velez',
+    'I.E. Jose Miguel de la Calle',
+    'I.E. La Paz',
+    'I.E. Las Palmas',
+    'I.E. Leticia Arango Avendano',
+    'I.E. Manuel Uribe Angel',
+    'I.E. Maria Poussepin',
+    'I.E. Martin Eduardo Rios Llanos 1',
+    'I.E. Martin Eduardo Rios Llanos 2',
+    'I.E. Normal Superior de Envigado',
+    'Colegio Reggio Emilia',
+    'I.E. San Vicente Alto de las Flores',
   ];
 
   const daysNavigation = [
@@ -217,35 +339,15 @@ export default function SemanaSTEM() {
       {activeYear === 2025 ? (
         <>
           {/* Hero Section */}
-          <section className="relative min-h-[60vh] bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-10 left-10 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-              <div className="absolute bottom-10 right-10 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="relative z-10 text-center px-4"
-            >
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                className="text-7xl mb-6 inline-block"
-              >
-                🚀
-              </motion.div>
-              <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
-                Semana STEM+
-              </h1>
-              <p className="text-xl md:text-2xl text-white/90 mb-2">
-                Envigado 2025
-              </p>
-              <p className="text-lg text-white/80">
-                Tendencias que Transforman: Educación, Tecnología y Ética
-              </p>
-            </motion.div>
+          <section className="relative w-full overflow-hidden">
+            <img
+              src="/banners/Banner-semana.png"
+              alt="Banner principal Semana STEM+ Envigado 2025"
+              loading="eager"
+              fetchPriority="high"
+              decoding="sync"
+              className="w-full h-auto object-cover"
+            />
           </section>
 
           {/* Days Navigation */}
@@ -415,8 +517,307 @@ export default function SemanaSTEM() {
             </div>
           )}
 
+          {/* Content Section - Show Miércoles (Day 2) */}
+          {activeDay === 2 && (
+            <div>
+              <section className="px-4 py-8 bg-white">
+                <div className="max-w-6xl mx-auto overflow-hidden rounded-2xl shadow-lg">
+                  <img
+                    src="/Semana%20STEM/24/portada-miercoles.jpeg"
+                    alt="Portada miércoles Semana STEM"
+                    loading="lazy"
+                    decoding="async"
+                    fetchPriority="low"
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              </section>
+
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Agenda del Día</h3>
+                <div className="space-y-4">
+                  {day2Sessions.map((session, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: idx * 0.1 }}
+                      viewport={{ once: true }}
+                      className="bg-white border border-gray-200 rounded-lg p-6 text-gray-900 shadow-lg hover:shadow-xl transition-all"
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-4">
+                          <span className="text-4xl">{session.icon}</span>
+                          <div>
+                            <p className="text-sm font-semibold opacity-90">{session.time}</p>
+                            <h3 className="text-2xl font-bold">{session.title}</h3>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 pt-6 border-t border-gray-200">
+                        {session.time === '08:25 a.m.' && session.title === 'Reglas de Competencia y Presentación de Jurados' ? (
+                          <>
+                            <p className="text-gray-700 leading-relaxed">{session.description}</p>
+
+                            <details className="mt-6 rounded-lg border border-gray-200 bg-slate-50 p-4">
+                              <summary className="cursor-pointer font-semibold text-gray-800">
+                                Ver reglas de competencia y jurados
+                              </summary>
+
+                              <div className="mt-4 space-y-4 text-gray-700 leading-relaxed">
+                                <div>
+                                  <h4 className="font-semibold text-gray-900">Reglas de competencia</h4>
+                                  <p className="mt-2">El video representa un 40% del puntaje total.</p>
+                                  <p>El desempeno en pista representa un 60% del puntaje total del 100%.</p>
+                                </div>
+
+                                <div>
+                                  <p className="font-medium text-gray-900">
+                                    Para la competencia en pista es importante tener en cuenta las siguientes recomendaciones:
+                                  </p>
+                                  <ol className="mt-2 list-decimal pl-6 space-y-2">
+                                    <li>El robot debe ubicarse detrás de la línea de inicio. El tiempo comienza cuando el juez da la orden de salida.</li>
+                                    <li>Cada equipo tiene 3 minutos para superar la pista. El tiempo se detiene cuando el robot lleve el kit de supervivencia hasta el triángulo de vida. Si no lo logra en los 3 minutos, se sumarán los puntos obtenidos hasta ese momento.</li>
+                                    <li>
+                                      Los puntajes que se otorgarán en la pista son:
+                                      <ul className="mt-2 list-disc pl-6 space-y-1">
+                                        <li>Paso por puente sobre el agua (+3 puntos).</li>
+                                        <li>Paso por terreno irregular (+3 puntos).</li>
+                                        <li>Paso por terreno inclinado (+3 puntos).</li>
+                                        <li>Paso por terreno arenoso (+3 puntos).</li>
+                                        <li>Evasión de obstáculos (+3 puntos).</li>
+                                        <li>Paso por túnel (+3 puntos).</li>
+                                        <li>Entrega de kits de rescate en el triángulo de vida (+9 puntos).</li>
+                                      </ul>
+                                    </li>
+                                    <li>
+                                      Durante la competencia en pista, se debe tener en cuenta las siguientes observaciones:
+                                      <ul className="mt-2 list-disc pl-6 space-y-1">
+                                        <li>El equipo puede tocar el robot para acomodarlo sobre la pista, pero se le descontará 1 punto (-1 punto).</li>
+                                        <li>El equipo podrá hacer intervención técnica al robot sobre la pista, pero se le descontará 2 puntos (-2 puntos).</li>
+                                        <li>Si el robot no es capaz de superar un obstáculo, el equipo podrá ayudarle manualmente; no se sumarán los puntos del obstáculo y se descontará 1 punto por tocar el robot.</li>
+                                      </ul>
+                                    </li>
+                                    <li>
+                                      En caso de empate, se aplicarán los siguientes criterios de desempate:
+                                      <ul className="mt-2 list-disc pl-6 space-y-1">
+                                        <li>Menor tiempo de ejecución.</li>
+                                        <li>Mejor puntaje en el video del proceso.</li>
+                                      </ul>
+                                    </li>
+                                  </ol>
+                                </div>
+
+                                <div>
+                                  <p className="font-medium text-gray-900">Jurados evaluadores:</p>
+                                  <ol className="mt-2 list-decimal pl-6 space-y-3">
+                                    <li>
+                                      <p className="font-semibold">Rolando Augusto Agudelo Alvarez</p>
+                                      <ul className="mt-1 list-disc pl-6 space-y-1">
+                                        <li>Ingeniero electrónico, egresado de la Universidad Envigado.</li>
+                                        <li>Especialista en gerencia de proyectos.</li>
+                                        <li>Docente universitario con 16 años de experiencia en áreas de tecnología e ingeniería.</li>
+                                        <li>Experto en robótica; trabaja con semilleros y academia de robótica infantil.</li>
+                                        <li>Jurado en competencias locales, nacionales e internacionales de robótica.</li>
+                                      </ul>
+                                    </li>
+                                    <li>
+                                      <p className="font-semibold">Boris Mauricio Revelo Rendon</p>
+                                      <ul className="mt-1 list-disc pl-6 space-y-1">
+                                        <li>Ingeniero en instrumentación y control.</li>
+                                        <li>Instructor Cisco y Magíster en educación.</li>
+                                        <li>Docente e investigador con experiencia en electrónica, programación y robótica.</li>
+                                        <li>Jurado en múltiples eventos de robótica.</li>
+                                      </ul>
+                                    </li>
+                                    <li>Capitana de los Bomberos Voluntarios de Envigado Juliana Rosero.</li>
+                                    <li>Sargento de los Bomberos Voluntarios de Envigado Carlos Pérez.</li>
+                                  </ol>
+                                </div>
+                              </div>
+                            </details>
+
+                            <p className="mt-6 text-gray-700 leading-relaxed">
+                              Los estudiantes tendrán la oportunidad de poner a prueba las plataformas robóticas creadas en nuestra base principal, pero, de igual forma podrán ir pasando por distintas bases en donde seguirán aprendiendo sobre pensamiento computacional y robótica a través del juego.
+                            </p>
+                          </>
+                        ) : (
+                          <p className="text-gray-700 leading-relaxed">{session.description}</p>
+                        )}
+
+                        {'scheduleRows' in session && session.scheduleRows ? (
+                          <div className="mt-6 overflow-hidden rounded-lg border border-gray-200">
+                            <div className="overflow-x-auto">
+                              <table className="min-w-full bg-white">
+                                <thead className="bg-teal-600 text-white">
+                                  <tr>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Hora presentación</th>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Institución Educativa</th>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Equipo</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {session.scheduleRows.map((row, rowIdx) => (
+                                    <tr key={`${row.hora}-${rowIdx}`} className={rowIdx % 2 === 0 ? 'bg-slate-50' : 'bg-white'}>
+                                      <td className="px-4 py-3 text-sm font-medium text-gray-800 whitespace-nowrap">{row.hora}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-700">{row.institucion}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-700 font-medium whitespace-nowrap">{row.equipo}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="py-4 px-4 max-w-6xl mx-auto">
+                <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6">Equipos Participantes</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {day2TeamCards.map((teamName, idx) => (
+                      <div
+                        key={`${teamName}-${idx}`}
+                        className="rounded-xl border border-gray-200 bg-slate-50 p-4 text-gray-800 font-medium shadow-sm hover:shadow-md transition-shadow"
+                      >
+                        {teamName}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Momentos Destacados</h3>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                  {day2Highlights.map((highlight, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      viewport={{ once: true }}
+                      className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                    >
+                      <p className="text-4xl mb-3">{highlight.icon}</p>
+                      <h4 className="font-bold text-lg mb-2">{highlight.title}</h4>
+                      <p className="text-gray-600 text-sm">{highlight.desc}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Galería de Fotos</h3>
+                {day2GalleryImages.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {day2GalleryImages.map((image, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: idx * 0.1 }}
+                        viewport={{ once: true }}
+                        className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+                      >
+                        <picture>
+                          <source srcSet={toWebp(image)} type="image/webp" />
+                          <img
+                            src={image}
+                            alt={`Foto miércoles ${idx + 1}`}
+                            loading="lazy"
+                            decoding="async"
+                            fetchPriority="low"
+                            className="w-full h-64 object-cover hover:scale-105 transition-transform"
+                          />
+                        </picture>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-8 text-center text-gray-500">
+                    Pendiente por cargar fotos del miércoles 24.
+                  </div>
+                )}
+              </section>
+            </div>
+          )}
+
+          {/* Content Section - Show Jueves (Day 3) */}
+          {activeDay === 3 && (
+            <div>
+              <section className="px-4 py-8 bg-white">
+                <div className="max-w-6xl mx-auto overflow-hidden rounded-2xl shadow-lg">
+                  <img
+                    src="/Semana%20STEM/25/portada-jueves.jpeg"
+                    alt="Portada jueves Semana STEM"
+                    loading="lazy"
+                    decoding="async"
+                    fetchPriority="low"
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              </section>
+
+              <section className="py-16 px-4 max-w-6xl mx-auto">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="text-center"
+                >
+                  <p className="text-2xl text-gray-600 mb-4">
+                    Contenido del {daysNavigation.find(d => d.index === activeDay)?.day} próximamente...
+                  </p>
+                  <p className="text-gray-500">
+                    Estamos preparando la información detallada de este día
+                  </p>
+                </motion.div>
+              </section>
+            </div>
+          )}
+
+          {/* Content Section - Show Viernes (Day 4) */}
+          {activeDay === 4 && (
+            <div>
+              <section className="px-4 py-8 bg-white">
+                <div className="max-w-6xl mx-auto overflow-hidden rounded-2xl shadow-lg">
+                  <img
+                    src="/Semana%20STEM/26/portada-viernes.jpeg"
+                    alt="Portada viernes Semana STEM"
+                    loading="lazy"
+                    decoding="async"
+                    fetchPriority="low"
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              </section>
+
+              <section className="py-16 px-4 max-w-6xl mx-auto">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="text-center"
+                >
+                  <p className="text-2xl text-gray-600 mb-4">
+                    Contenido del {daysNavigation.find(d => d.index === activeDay)?.day} próximamente...
+                  </p>
+                  <p className="text-gray-500">
+                    Estamos preparando la información detallada de este día
+                  </p>
+                </motion.div>
+              </section>
+            </div>
+          )}
+
           {/* Other Days Placeholder */}
-          {activeDay !== 1 && (
+          {activeDay > 4 && (
             <section className="py-16 px-4 max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
