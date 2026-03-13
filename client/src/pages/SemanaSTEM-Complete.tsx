@@ -327,6 +327,62 @@ export default function SemanaSTEM() {
       title: 'Asignación de Sub-retos y Presentación de Equipos',
       description:
         'Los equipos participantes se presentaron ante el público y recibieron de manera aleatoria su sub-reto mediante una ruleta digital, lo que permitió asignar distintos desafíos relacionados con el funcionamiento de las huertas urbanas. Entre los temas abordados se encontraban riego inteligente, control de plagas, compostaje, semillas, energías renovables, sensores, impacto ambiental y educación comunitaria. Cada equipo inició así el proceso de ideación y desarrollo de su propuesta utilizando herramientas de inteligencia artificial generativa.',
+      subretosRows: [
+        {
+          reto: 'Monitoreo del crecimiento y salud de las plantas',
+          institucion: 'I.E. Escuela Normal Superior María Auxiliadora',
+          municipio: 'Copacabana',
+          orden: 'Equipo #6',
+        },
+        {
+          reto: 'Inclusión y participación social',
+          institucion: 'I.E. Escuela Normal Superior de Envigado',
+          municipio: 'Envigado',
+          orden: 'Equipo #13',
+        },
+        {
+          reto: 'Recuperación y uso eficiente del agua',
+          institucion: 'I.E. Escuela Normal Superior María Auxiliadora',
+          municipio: 'Copacabana',
+          orden: 'Equipo #15',
+        },
+        {
+          reto: 'Implementación y diseño del espacio',
+          institucion: 'I.E. San Vicente Alto de las Flores',
+          municipio: 'Envigado',
+          orden: 'Equipo #3',
+        },
+        {
+          reto: 'Seguridad alimentaria y distribución local',
+          institucion: 'I.E. Escuela Normal Superior María Auxiliadora',
+          municipio: 'Copacabana',
+          orden: 'Equipo #9',
+        },
+        {
+          reto: 'Educación y sensibilización comunitaria',
+          institucion: 'Ser School',
+          municipio: 'Envigado',
+          orden: 'Equipo #8',
+        },
+        {
+          reto: 'Selección y manejo de semillas',
+          institucion: 'I.E. José Miguel de la Calle',
+          municipio: 'Envigado',
+          orden: 'Equipo #5',
+        },
+        {
+          reto: 'Cuidado y manejo de plagas',
+          institucion: 'I.E. Leticia Arango de Avendaño',
+          municipio: 'Envigado',
+          orden: 'Equipo #2',
+        },
+        {
+          reto: 'Gestión de residuos y compostaje',
+          institucion: 'I.E. Luis Carlos Galán Sarmiento',
+          municipio: 'Itagüí',
+          orden: 'Equipo #7',
+        },
+      ],
       icon: '🎲',
       color: 'from-purple-400 to-purple-600',
     },
@@ -366,7 +422,7 @@ export default function SemanaSTEM() {
       time: '03:30 p.m.',
       title: 'Premiación y Cierre',
       description:
-        'La jornada concluyó con el anuncio del equipo ganador de la primera Hackathon STEM de Envigado. Más allá de la competencia, el evento destacó el talento de los estudiantes para utilizar la inteligencia artificial como herramienta de innovación y transformación social. El cierre dejó como mensaje que la creatividad, el trabajo colaborativo y la tecnología pueden convertirse en semillas de soluciones para los desafíos del territorio.',
+        'La jornada concluyó con el anuncio del equipo ganador de la primera Hackathon STEM de Envigado. Más allá de la competencia, el evento destacó el talento de los estudiantes para utilizar la inteligencia artificial como herramienta de innovación y transformación social.\n\nEl cierre dejó como mensaje que la creatividad, el trabajo colaborativo y la tecnología pueden convertirse en semillas de soluciones para los desafíos del territorio.\n\nEl proyecto ganador fue “Monitoreo del crecimiento y salud de las plantas”, desarrollado por estudiantes de la I.E. Escuela Normal Superior María Auxiliadora del municipio de Copacabana, quienes presentaron una propuesta enfocada en el uso de tecnología e inteligencia artificial para el seguimiento del estado de las plantas en huertas urbanas, contribuyendo al cuidado de los cultivos y a la sostenibilidad alimentaria.',
       icon: '🏆',
       color: 'from-red-400 to-red-600',
     },
@@ -801,6 +857,33 @@ export default function SemanaSTEM() {
                             </div>
                           </div>
                         ) : null}
+
+                        {'subretosRows' in session && Array.isArray(session.subretosRows) ? (
+                          <div className="mt-6 overflow-hidden rounded-lg border border-gray-200">
+                            <div className="overflow-x-auto">
+                              <table className="min-w-full bg-white">
+                                <thead className="bg-teal-600 text-white">
+                                  <tr>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Reto</th>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Institución Educativa</th>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Municipio</th>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Orden de presentación</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {session.subretosRows.map((row: { reto: string; institucion: string; municipio: string; orden: string }, rowIdx: number) => (
+                                    <tr key={`${row.reto}-${rowIdx}`} className={rowIdx % 2 === 0 ? 'bg-slate-50' : 'bg-white'}>
+                                      <td className="px-4 py-3 text-sm text-gray-700 min-w-[240px]">{row.reto}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-700 min-w-[220px]">{row.institucion}</td>
+                                      <td className="px-4 py-3 text-sm font-medium text-gray-800 whitespace-nowrap">{row.municipio}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-700 font-medium whitespace-nowrap">{row.orden}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        ) : null}
                       </div>
                     </motion.div>
                   ))}
@@ -1067,6 +1150,33 @@ export default function SemanaSTEM() {
                         ) : (
                           <p className="text-gray-700 leading-relaxed">{session.description}</p>
                         )}
+
+                        {'subretosRows' in session && Array.isArray(session.subretosRows) ? (
+                          <div className="mt-6 overflow-hidden rounded-lg border border-gray-200">
+                            <div className="overflow-x-auto">
+                              <table className="min-w-full bg-white">
+                                <thead className="bg-teal-600 text-white">
+                                  <tr>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Reto</th>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Institución Educativa</th>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Municipio</th>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Orden de presentación</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {session.subretosRows.map((row: { reto: string; institucion: string; municipio: string; orden: string }, rowIdx: number) => (
+                                    <tr key={`${row.reto}-${rowIdx}`} className={rowIdx % 2 === 0 ? 'bg-slate-50' : 'bg-white'}>
+                                      <td className="px-4 py-3 text-sm text-gray-700 min-w-[240px]">{row.reto}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-700 min-w-[220px]">{row.institucion}</td>
+                                      <td className="px-4 py-3 text-sm font-medium text-gray-800 whitespace-nowrap">{row.municipio}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-700 font-medium whitespace-nowrap">{row.orden}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        ) : null}
                       </div>
                     </motion.div>
                   ))}

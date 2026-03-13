@@ -23,6 +23,7 @@ export default function Home() {
   // Authentication state is managed by the app context
   // Users can login via the header button
   const showCoursesCarousel = false;
+  const showCidKids = false;
 
   return (
     <div className="min-h-screen">
@@ -55,7 +56,7 @@ export default function Home() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    La Dirección de Investigación y Desarrollo (CID) es un espacio académico y formativo que promueve la investigación, la innovación y el pensamiento crítico dentro de nuestra institución educativa. Nace con el propósito de fortalecer las competencias científicas, tecnológicas y sociales de nuestros estudiantes, fomentando una cultura investigativa desde edades tempranas.
+                    La Dirección de Innovación es una dependencia estratégica de la Secretaría de Educación de Envigado, cuyo propósito principal es liderar, coordinar y promover el desarrollo científico, tecnológico y de innovación como motores del progreso social, económico, educativo y cultural. Esta dirección actúa como puente entre la comunidad, el conocimiento científico y las soluciones innovadoras a problemáticas reales del entorno
                   </p>
                 </CardContent>
               </Card>
@@ -104,7 +105,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className={`grid sm:grid-cols-2 lg:grid-cols-3 ${showCidKids ? "xl:grid-cols-4" : "xl:grid-cols-3"} gap-6`}>
             <Link href="/territorio-stem">
               <Card
                 className="h-full hover:shadow-lg transition-shadow cursor-pointer group"
@@ -149,39 +150,47 @@ export default function Home() {
               </Card>
             </Link>
 
-            <Link href="/cid-kids">
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                    <GraduationCap className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-lg">CID Kids</CardTitle>
-                  <CardDescription>
-                    Conoce nuestro programa diseñado para fomentar la curiosidad y el amor por la ciencia en los más pequeños.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
+            {showCidKids && (
+              <Link href="/cid-kids">
+                <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+                      <GraduationCap className="h-6 w-6 text-primary" />
+                    </div>
+                    <CardTitle className="text-lg">CID Kids</CardTitle>
+                    <CardDescription>
+                      Conoce nuestro programa diseñado para fomentar la curiosidad y el amor por la ciencia en los más pequeños.
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
+            )}
           </div>
         </div>
       </section>
 
       {/* Banner Semana STEM */}
-      <section className="relative w-full overflow-hidden">
-        <Link href="/semana-stem-complete" aria-label="Ir a la sección Semana STEM" className="group relative block cursor-pointer">
-          <img
-            src="/banners/Banner-semana.png"
-            alt="Banner Semana STEM"
-            loading="lazy"
-            fetchPriority="high"
-            decoding="async"
-            className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-[1.01]"
-          />
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/25"
-          />
-        </Link>
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="container">
+          <Link href="/semana-stem-complete" aria-label="Ir a la sección Semana STEM" className="group block cursor-pointer">
+            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-md transition-all group-hover:shadow-lg">
+              <div className="relative overflow-hidden rounded-xl">
+                <img
+                  src="/banners/banner-semana-click.png"
+                  alt="Banner Semana STEM"
+                  loading="lazy"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="h-[220px] w-full object-cover object-center md:h-[270px]"
+                />
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20"
+                />
+              </div>
+            </div>
+          </Link>
+        </div>
       </section>
 
       {/* Logos de Ministerios y Entidades */}
@@ -230,6 +239,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
     </div>
   );
 }

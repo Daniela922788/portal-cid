@@ -39,7 +39,9 @@ export default function Header() {
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const mobileSearchInputRef = useRef<HTMLInputElement>(null);
   const closeMobileMenu = () => setMobileMenuOpen(false);
-  const showKitHerramientas = false;
+  const showKitHerramientas = true;
+  const showCidKids = false;
+  const showProyectos = false;
   const mobileMenuItemClass = "px-4 py-2 rounded-md hover:bg-accent text-base font-medium leading-6";
   const mobileAccordionTriggerClass = "px-2 py-2 text-base font-medium leading-6";
 
@@ -199,16 +201,18 @@ export default function Header() {
                           </NavigationMenuLink>
                         </Link>
                       </li>
-                      <li>
-                        <Link href="/proyectos">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Proyectos</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Proyectos STEM e investigación
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
+                      {showProyectos && (
+                        <li>
+                          <Link href="/proyectos">
+                            <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                              <div className="text-sm font-medium leading-none">Proyectos</div>
+                              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                Proyectos STEM e investigación
+                              </p>
+                            </NavigationMenuLink>
+                          </Link>
+                        </li>
+                      )}
                       <li>
                         <Link href="/semana-stem-complete">
                           <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
@@ -319,13 +323,15 @@ export default function Header() {
                   </Link>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
-                  <Link href="/cid-kids">
-                    <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                      CID Kids
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
+                {showCidKids && (
+                  <NavigationMenuItem>
+                    <Link href="/cid-kids">
+                      <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                        CID Kids
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                )}
 
                 <NavigationMenuItem>
                   <Link href="/mesa-ayuda">
@@ -479,7 +485,7 @@ export default function Header() {
                   <AccordionContent className="pb-2">
                     <div className="flex flex-col gap-1">
                       <Link href="/noticias" className={mobileMenuItemClass} onClick={closeMobileMenu}>Noticias</Link>
-                      <Link href="/proyectos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Proyectos</Link>
+                      {showProyectos && <Link href="/proyectos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Proyectos</Link>}
                       <Link href="/semana-stem-complete" className={mobileMenuItemClass} onClick={closeMobileMenu}>Semana STEM</Link>
                       <Link href="/publicaciones" className={mobileMenuItemClass} onClick={closeMobileMenu}>Publicaciones</Link>
                       <Link href="/reconocimientos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Reconocimientos</Link>
@@ -512,7 +518,7 @@ export default function Header() {
               </Accordion>
 
               <Link href="/formacion" className={mobileMenuItemClass} onClick={closeMobileMenu}>Formación</Link>
-              <Link href="/cid-kids" className={mobileMenuItemClass} onClick={closeMobileMenu}>CID Kids</Link>
+              {showCidKids && <Link href="/cid-kids" className={mobileMenuItemClass} onClick={closeMobileMenu}>CID Kids</Link>}
               <Link href="/mesa-ayuda" className={mobileMenuItemClass} onClick={closeMobileMenu}>Mesa de Ayuda</Link>
               <Link href="/login" className={`${mobileMenuItemClass} text-primary`} onClick={closeMobileMenu}>Iniciar Sesión</Link>
             </nav>

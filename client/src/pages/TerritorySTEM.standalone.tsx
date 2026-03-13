@@ -205,153 +205,6 @@ export default function TerritorioStem() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white">
-      {/* ===== HERO SECTION ===== */}
-      <section className="relative w-full overflow-hidden">
-        <img
-          src="/banners/banner-territorio2.png"
-          alt="Banner principal Territorio STEM"
-          loading="eager"
-          fetchPriority="high"
-          decoding="sync"
-          className="w-full h-auto object-cover"
-        />
-      </section>
-
-           {/* ===== SECCIÓN: ¿QUÉ ES STEM+? ===== */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-        className="py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto"
-      >
-        <motion.h2 variants={itemVariants} className="text-4xl font-bold text-center mb-12 text-gray-800">
-          ¿Qué es el enfoque educativo STEM+?
-        </motion.h2>
-
-        <motion.div
-          variants={itemVariants}
-          className="bg-white rounded-2xl p-8 mb-8 shadow-lg border-2 border-blue-100"
-        >
-          <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-            <p>
-              Las diferentes interpretaciones sobre el enfoque STEM/STEAM, tanto en la práctica como en los contextos académicos e investigativos, orientan la forma en que cada país y su sistema educativo deciden implementarlo. Esta decisión se refleja en aspectos como el diseño del currículo, las prácticas pedagógicas, la colaboración entre docentes y la participación de los estudiantes en su proceso de aprendizaje.
-            </p>
-
-            <p>
-              En Colombia se ha adoptado el término STEM+, donde la A incorpora las artes y el diseño al enfoque. Esta propuesta no es solo formal, sino que plantea una visión integrada del conocimiento y busca facilitar su apropiación dentro del sistema educativo.
-            </p>
-
-            <p>
-              A partir del análisis de diferentes investigaciones y lineamientos estratégicos internacionales, se establece que <span className="font-bold text-blue-600">STEM+ es un enfoque educativo que ofrece oportunidades para que los estudiantes participen en experiencias de aprendizaje activo, integren diversas áreas del conocimiento, desarrollen competencias para la vida y se conecten con las dinámicas y desafíos de su contexto.</span>
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Consideraciones generales */}
-        <motion.h3 variants={itemVariants} className="text-2xl font-bold mb-6 text-gray-800">
-          Consideraciones generales del enfoque STEM+
-        </motion.h3>
-
-        {/* Grid de consideraciones */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <motion.div
-            variants={itemVariants}
-            className="rounded-2xl p-8 text-white shadow-lg"
-            style={{ backgroundColor: pastelColors.pink }}
-          >
-            <h4 className="text-xl font-bold mb-3 text-gray-800">Enfoque, no metodología</h4>
-            <p className="text-gray-800 leading-relaxed">
-              STEM+ no es una metodología ni un modelo pedagógico, sino un enfoque educativo que promueve la innovación educativa y la transformación curricular con una perspectiva territorial diversa e inclusiva.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="rounded-2xl p-8 text-white shadow-lg"
-            style={{ backgroundColor: pastelColors.blue }}
-          >
-            <h4 className="text-xl font-bold mb-3 text-gray-800">Participación colectiva</h4>
-            <p className="text-gray-800 leading-relaxed">
-              Se concibe como un proceso que impulsa la participación de actores educativos y organizaciones del entorno para generar alianzas que fortalezcan la gestión escolar.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="rounded-2xl p-8 text-white shadow-lg"
-            style={{ backgroundColor: pastelColors.green }}
-          >
-            <h4 className="text-xl font-bold mb-3 text-gray-800">Aprendizaje centrado en el estudiante</h4>
-            <p className="text-gray-800 leading-relaxed">
-              A través del aprendizaje activo y la integración curricular, sitúa al estudiante y sus experiencias en el centro del proceso educativo.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="rounded-2xl p-8 text-white shadow-lg"
-            style={{ backgroundColor: pastelColors.yellow }}
-          >
-            <h4 className="text-xl font-bold mb-3 text-gray-800">Docente investigador</h4>
-            <p className="text-gray-800 leading-relaxed">
-              El docente STEM+ actúa como un investigador escolar que reflexiona sobre la pedagogía, la didáctica y la evaluación, y diseña experiencias de aprendizaje activas y situadas.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="rounded-2xl p-8 text-white shadow-lg"
-            style={{ backgroundColor: pastelColors.purple }}
-          >
-            <h4 className="text-xl font-bold mb-3 text-gray-800">Competencias para el siglo XXI</h4>
-            <p className="text-gray-800 leading-relaxed">
-              Promueve el desarrollo de conocimientos, actitudes y habilidades como la resolución de problemas, el pensamiento crítico, la creatividad y el trabajo colaborativo.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="rounded-2xl p-8 text-white shadow-lg"
-            style={{ backgroundColor: pastelColors.peach }}
-          >
-            <h4 className="text-xl font-bold mb-3 text-gray-800">Ciudadanía responsable</h4>
-            <p className="text-gray-800 leading-relaxed">
-              Busca formar ciudadanos sensibles a problemáticas como el cambio climático, la protección de la biodiversidad, la reconstrucción del tejido social, el emprendimiento y el desarrollo sostenible.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Integración de conocimientos */}
-        <motion.div
-          variants={itemVariants}
-          className="rounded-2xl p-8 mb-8 shadow-lg border-l-4 border-blue-500 bg-gradient-to-r from-blue-50 to-transparent"
-        >
-          <h4 className="text-xl font-bold mb-3 text-gray-800">Integración de todas las áreas del conocimiento</h4>
-          <p className="text-lg text-gray-700 leading-relaxed">
-            Además de las disciplinas científicas y tecnológicas, invita a integrar todas las áreas del conocimiento, fomentando la creatividad, la experimentación y la innovación para el desarrollo de competencias específicas, transversales y del siglo XXI.
-          </p>
-        </motion.div>
-
-        {/* Fuente */}
-        <motion.div
-          variants={itemVariants}
-          className="rounded-lg p-6 bg-gray-100 border-l-4 border-gray-400"
-        >
-          <p className="text-sm text-gray-700 mb-2">
-            <span className="font-semibold">Fuente:</span> Organización de Estados Iberoamericanos (OEI) y Ministerio de Educación Nacional (MEN). (2020). <em>Visión STEM+: Una propuesta para la transformación educativa en Colombia</em>.
-          </p>
-          <a
-            href="https://eduteka.icesi.edu.co/pdfdir/eduteka-explora-oei-men-vision-stem-2020.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-800 underline text-sm font-medium"
-          >
-            Descargar documento completo (PDF)
-          </a>
-        </motion.div>
-      </motion.section>
-
       <section className="relative w-full overflow-hidden">
         <img
           src="/banners/banner-territorio.png"
@@ -648,6 +501,141 @@ export default function TerritorioStem() {
         </div>
       </motion.section>
 
+      {/* ===== SECCIÓN: ¿QUÉ ES STEM+? ===== */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+        className="py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto"
+      >
+        <motion.h2 variants={itemVariants} className="text-4xl font-bold text-center mb-12 text-gray-800">
+          ¿Qué es el enfoque educativo STEM+?
+        </motion.h2>
+
+        <motion.div
+          variants={itemVariants}
+          className="bg-white rounded-2xl p-8 mb-8 shadow-lg border-2 border-blue-100"
+        >
+          <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+            <p>
+              Las diferentes interpretaciones sobre el enfoque STEM/STEAM, tanto en la práctica como en los contextos académicos e investigativos, orientan la forma en que cada país y su sistema educativo deciden implementarlo. Esta decisión se refleja en aspectos como el diseño del currículo, las prácticas pedagógicas, la colaboración entre docentes y la participación de los estudiantes en su proceso de aprendizaje.
+            </p>
+
+            <p>
+              En Colombia se ha adoptado el término STEM+, donde la A incorpora las artes y el diseño al enfoque. Esta propuesta no es solo formal, sino que plantea una visión integrada del conocimiento y busca facilitar su apropiación dentro del sistema educativo.
+            </p>
+
+            <p>
+              A partir del análisis de diferentes investigaciones y lineamientos estratégicos internacionales, se establece que <span className="font-bold text-blue-600">STEM+ es un enfoque educativo que ofrece oportunidades para que los estudiantes participen en experiencias de aprendizaje activo, integren diversas áreas del conocimiento, desarrollen competencias para la vida y se conecten con las dinámicas y desafíos de su contexto.</span>
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Consideraciones generales */}
+        <motion.h3 variants={itemVariants} className="text-2xl font-bold mb-6 text-gray-800">
+          Consideraciones generales del enfoque STEM+
+        </motion.h3>
+
+        {/* Grid de consideraciones */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <motion.div
+            variants={itemVariants}
+            className="rounded-2xl p-8 text-white shadow-lg"
+            style={{ backgroundColor: pastelColors.pink }}
+          >
+            <h4 className="text-xl font-bold mb-3 text-gray-800">Enfoque, no metodología</h4>
+            <p className="text-gray-800 leading-relaxed">
+              STEM+ no es una metodología ni un modelo pedagógico, sino un enfoque educativo que promueve la innovación educativa y la transformación curricular con una perspectiva territorial diversa e inclusiva.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="rounded-2xl p-8 text-white shadow-lg"
+            style={{ backgroundColor: pastelColors.blue }}
+          >
+            <h4 className="text-xl font-bold mb-3 text-gray-800">Participación colectiva</h4>
+            <p className="text-gray-800 leading-relaxed">
+              Se concibe como un proceso que impulsa la participación de actores educativos y organizaciones del entorno para generar alianzas que fortalezcan la gestión escolar.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="rounded-2xl p-8 text-white shadow-lg"
+            style={{ backgroundColor: pastelColors.green }}
+          >
+            <h4 className="text-xl font-bold mb-3 text-gray-800">Aprendizaje centrado en el estudiante</h4>
+            <p className="text-gray-800 leading-relaxed">
+              A través del aprendizaje activo y la integración curricular, sitúa al estudiante y sus experiencias en el centro del proceso educativo.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="rounded-2xl p-8 text-white shadow-lg"
+            style={{ backgroundColor: pastelColors.yellow }}
+          >
+            <h4 className="text-xl font-bold mb-3 text-gray-800">Docente investigador</h4>
+            <p className="text-gray-800 leading-relaxed">
+              El docente STEM+ actúa como un investigador escolar que reflexiona sobre la pedagogía, la didáctica y la evaluación, y diseña experiencias de aprendizaje activas y situadas.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="rounded-2xl p-8 text-white shadow-lg"
+            style={{ backgroundColor: pastelColors.purple }}
+          >
+            <h4 className="text-xl font-bold mb-3 text-gray-800">Competencias para el siglo XXI</h4>
+            <p className="text-gray-800 leading-relaxed">
+              Promueve el desarrollo de conocimientos, actitudes y habilidades como la resolución de problemas, el pensamiento crítico, la creatividad y el trabajo colaborativo.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="rounded-2xl p-8 text-white shadow-lg"
+            style={{ backgroundColor: pastelColors.peach }}
+          >
+            <h4 className="text-xl font-bold mb-3 text-gray-800">Ciudadanía responsable</h4>
+            <p className="text-gray-800 leading-relaxed">
+              Busca formar ciudadanos sensibles a problemáticas como el cambio climático, la protección de la biodiversidad, la reconstrucción del tejido social, el emprendimiento y el desarrollo sostenible.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Integración de conocimientos */}
+        <motion.div
+          variants={itemVariants}
+          className="rounded-2xl p-8 mb-8 shadow-lg border-l-4 border-blue-500 bg-gradient-to-r from-blue-50 to-transparent"
+        >
+          <h4 className="text-xl font-bold mb-3 text-gray-800">Integración de todas las áreas del conocimiento</h4>
+          <p className="text-lg text-gray-700 leading-relaxed">
+            Además de las disciplinas científicas y tecnológicas, invita a integrar todas las áreas del conocimiento, fomentando la creatividad, la experimentación y la innovación para el desarrollo de competencias específicas, transversales y del siglo XXI.
+          </p>
+        </motion.div>
+
+        {/* Fuente */}
+        <motion.div
+          variants={itemVariants}
+          className="rounded-lg p-6 bg-gray-100 border-l-4 border-gray-400"
+        >
+          <p className="text-sm text-gray-700 mb-2">
+            <span className="font-semibold">Fuente:</span> Organización de Estados Iberoamericanos (OEI) y Ministerio de Educación Nacional (MEN). (2020). <em>Visión STEM+: Una propuesta para la transformación educativa en Colombia</em>.
+          </p>
+          <a
+            href="https://eduteka.icesi.edu.co/pdfdir/eduteka-explora-oei-men-vision-stem-2020.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-800 underline text-sm font-medium"
+          >
+            Descargar documento completo (PDF)
+          </a>
+        </motion.div>
+      </motion.section>
+
       {/* ===== SECCIÓN: TESTIMONIOS STEM+ - CARRUSEL AUTOMÁTICO ===== */}
       <motion.section
         initial="hidden"
@@ -719,6 +707,34 @@ export default function TerritorioStem() {
               ))}
             </div>
           </div>
+        </div>
+      </motion.section>
+
+      {/* ===== SECCIÓN: BANNER SEMANA STEM (FORMATO COMPACTO) ===== */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+        className="py-12 px-4 sm:px-6 lg:px-8 bg-white"
+      >
+        <div className="max-w-6xl mx-auto">
+          <motion.div variants={itemVariants}>
+            <a href="/semana-stem-complete" aria-label="Ir a Semana STEM" className="group block">
+              <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-md transition-all group-hover:shadow-lg">
+                <div className="relative overflow-hidden rounded-xl">
+                  <img
+                    src="/banners/banner-semana-click.png"
+                    alt="Banner Semana STEM"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-[190px] w-full object-cover object-center md:h-[230px]"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
+                </div>
+              </div>
+            </a>
+          </motion.div>
         </div>
       </motion.section>
     </div>

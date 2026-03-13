@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ContactBanner from "./components/ContactBanner";
+import ScrollToTopButton from "./components/ScrollToTopButton";
 import Home from "./pages/Home";
 import Noticias from "./pages/Noticias";
 import TerritorioStem from "./pages/TerritorySTEM.standalone";
@@ -39,6 +40,10 @@ import SistemaSolar from "./pages/juegos/SistemaSolar";
 import Matematicas from "./pages/juegos/Matematicas";
 import FabricaInventos from "./pages/juegos/FabricaInventos";
 import EnvigadoCurioso from "./pages/juegos/EnvigadoCurioso";
+
+const ENABLE_CID_KIDS = false;
+const ENABLE_PROYECTOS = false;
+
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
@@ -56,10 +61,10 @@ function Router() {
           <Route path="/evento/:id" component={EventosDetalle} />
           <Route path="/noticias" component={Noticias} />
           <Route path="/territorio-stem" component={TerritorioStem} />
-          <Route path="/proyectos" component={Proyectos} />
+          {ENABLE_PROYECTOS && <Route path="/proyectos" component={Proyectos} />}
           <Route path="/ie-oficiales" component={IEOficiales} />
           <Route path="/gestores" component={Gestores} />
-          <Route path="/cid-kids" component={CIDKids} />
+          {ENABLE_CID_KIDS && <Route path="/cid-kids" component={CIDKids} />}
           <Route path="/mesa-ayuda" component={MesaAyuda} />
           <Route path="/convocatorias" component={Convocatorias} />
           <Route path="/formacion" component={Formacion} />
@@ -83,6 +88,7 @@ function Router() {
           <Route component={NotFound} />
         </Switch>
       </main>
+      <ScrollToTopButton />
       <ContactBanner />
       <Footer />
     </div>

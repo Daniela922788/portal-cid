@@ -4,6 +4,7 @@ import { APP_TITLE } from "@/const";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const showProyectos = false;
 
   return (
     <footer className="bg-muted/50 border-t mt-auto">
@@ -35,11 +36,13 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Enlaces Rápidos</h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/proyectos" className="text-muted-foreground hover:text-primary transition-colors">
-                  Proyectos
-                </Link>
-              </li>
+              {showProyectos && (
+                <li>
+                  <Link href="/proyectos" className="text-muted-foreground hover:text-primary transition-colors">
+                    Proyectos
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link href="/noticias" className="text-muted-foreground hover:text-primary transition-colors">
                   Noticias

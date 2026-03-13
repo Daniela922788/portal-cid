@@ -1,32 +1,7 @@
-import { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Mail, MapPin, Phone, Video, ExternalLink } from "lucide-react";
-
-const faqs = [
-  {
-    pregunta: "¿Cómo me inscribo en un curso?",
-    respuesta: "Puedes inscribirte directamente desde la página del curso. Haz clic en 'Inscribirse' y completa el formulario con tus datos."
-  },
-  {
-    pregunta: "¿Cuál es el costo de los cursos?",
-    respuesta: "La mayoría de nuestros cursos son gratuitos. Algunos diplomados pueden tener un costo específico que se indica en la descripción del curso."
-  },
-  {
-    pregunta: "¿Recibo certificado al terminar?",
-    respuesta: "Sí, al completar un curso recibirás un certificado digital que podrás descargar desde tu perfil."
-  },
-  {
-    pregunta: "¿Puedo cambiar mi horario de clase?",
-    respuesta: "Sí, puedes solicitar cambio de horario enviándonos un mensaje a través de nuestros canales de atención."
-  },
-  {
-    pregunta: "¿Cómo contacto al CID?",
-    respuesta: "Puedes contactarnos por correo electrónico o visitando nuestras oficinas. Ver detalles en la sección de canales de atención."
-  }
-];
+import { Mail, MapPin, Phone, ExternalLink } from "lucide-react";
 
 const canales = [
   {
@@ -96,19 +71,27 @@ export default function MesaAyuda() {
 
         {/* Preguntas Frecuentes */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8">Preguntas Frecuentes</h2>
-          <Accordion type="single" collapsible className="w-full">
-            {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-lg font-semibold hover:text-primary">
-                  {faq.pregunta}
-                </AccordionTrigger>
-                <AccordionContent className="text-base text-muted-foreground">
-                  {faq.respuesta}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+
+          <div className="mb-8 rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 via-cyan-50 to-teal-50 p-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <h3 className="text-xl font-semibold text-blue-900">Preguntas Frecuentes</h3>
+                <p className="mt-1 text-sm text-blue-800">
+                  Consulta el banco oficial de preguntas frecuentes del SAC.
+                </p>
+              </div>
+              <a
+                href="https://sac2.gestionsecretariasdeeducacion.gov.co/Ciu_PreguntasFrecuentesAreas_Busqueda/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button className="bg-blue-600 text-white hover:bg-blue-700">
+                  Ver preguntas frecuentes
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </Button>
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Canales de Atención */}

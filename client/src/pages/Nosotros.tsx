@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Lightbulb, Palette, Leaf, ArrowRight, Sparkles, Calendar, MapPin, Users } from "lucide-react";
+import { Lightbulb, Palette, Leaf, ArrowRight, Sparkles, Calendar, MapPin, Users, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import lineasTematicasImg from "@/assets/Líneas Temáticas.png";
 import serviciosImg from "@/assets/Servicios.png";
@@ -69,6 +69,9 @@ export default function Nosotros() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
+  const [directionCarouselIndex, setDirectionCarouselIndex] = useState(0);
+  const [directionVisibleCards, setDirectionVisibleCards] = useState(4);
+  const [gestoresCarouselIndex, setGestoresCarouselIndex] = useState(0);
 
   const quickSections = [
     { id: "lo-que-hacemos", title: "Lo que Hacemos y Cómo Impactamos" },
@@ -297,18 +300,18 @@ export default function Nosotros() {
 
   const equipoImagenes = [
     { id: 5, nombre: "Daniela Jaramillo Hoyos", cargo: "Directora de Innovación", foto: DanielaImg },
-    { id: 1, nombre: "Alexander Heredia Heredia", cargo: "Profesional de Innovación", foto: AlexImg },
-    { id: 12, nombre: "Yethy Gisela Granda", cargo: "Profesional de Innovación", foto: YethyImg },
-    { id: 2, nombre: "Angela María González Valencia", cargo: "Profesional de Innovación", foto: AngelaImg },
-    { id: 4, nombre: "Carolina Tabres Isaza", cargo: "Profesional de Innovación", foto: CaroImg },
-    { id: 9, nombre: "Jhon Fredy Ríos Montoya", cargo: "Profesional de Innovación", foto: JhonImg },
-    { id: 3, nombre: "Juan Camilo Álvarez Bedoya", cargo: "Profesional de Innovación", foto: CamiloImg },
-    { id: 6, nombre: "Dubiel Restrepo Marulanda", cargo: "Profesional de Innovación", foto: DubielImg },
-    { id: 8, nombre: "Jairo Muñoz Díaz", cargo: "Profesional de Innovación", foto: JairoImg },
-    { id: 13, nombre: "Daniela Serna Gallego", cargo: "Profesional de Innovación", foto: "/gestores/Daniela%20SG.png" },
-    { id: 10, nombre: "John Fredis Carmona", cargo: "Profesional de Innovación", foto: JohnImg },
-    { id: 11, nombre: "Jorge Guzmán", cargo: "Profesional de Innovación", foto: JorgeImg },
-    { id: 7, nombre: "Hernán Maury Andrade", cargo: "Profesional de Innovación", foto: HernanImg },
+    { id: 1, nombre: "Alexander Heredia Heredia", cargo: "Profesional Universitario", foto: AlexImg },
+    { id: 12, nombre: "Yethy Gisela Granda Zapata", cargo: "Coordinadora Gestores Innovación - UPB", foto: YethyImg },
+    { id: 2, nombre: "Angela María González Valencia", cargo: "Asistente Administrativa - UPB", foto: AngelaImg },
+    { id: 4, nombre: "Carolina Tabres Isaza", cargo: "Técnico Operativo", foto: CaroImg },
+    { id: 9, nombre: "Jhon Fredy Ríos Montoya", cargo: "Profesional Universitario", foto: JhonImg },
+    { id: 3, nombre: "Juan Camilo Álvarez Bedoya", cargo: "Contratista", foto: CamiloImg },
+    { id: 6, nombre: "Dubiel Enrique Restrepo Marulanda", cargo: "Contratista", foto: DubielImg },
+    { id: 8, nombre: "Jairo Alberto Muñoz Díaz", cargo: "Contratista", foto: JairoImg },
+    { id: 13, nombre: "Daniela Serna Gallego", cargo: "Programadora - UPB", foto: "/gestores/Daniela%20SG.png" },
+    { id: 10, nombre: "John Fredis Carmona Calderin", cargo: "Técnico Audiovisual - UPB", foto: JohnImg },
+    { id: 11, nombre: "Jorge Guzmán Ruiz", cargo: "Técnico Audiovisual - UPB", foto: JorgeImg },
+    { id: 7, nombre: "Hernán Alberto Maury Andrade", cargo: "Soporte Técnico de Tigo", foto: HernanImg },
   ];
 
   const eventsByYear = new Map<number, TimelineEvent[]>();
@@ -331,6 +334,63 @@ export default function Nosotros() {
     "Séptimo puesto a nivel internacional en cohetería deportiva para el equipo de la IE Normal Superior de Envigado. (2024)",
     "Participación internacional de estudiantes en las Olimpiadas Latinoamericanas de Ciencia y Tecnología en Tlaxcala, México. (2024)",
   ];
+
+  useEffect(() => {
+    const updateVisibleCards = () => {
+      if (window.innerWidth >= 1280) {
+        setDirectionVisibleCards(4);
+        return;
+      }
+
+      if (window.innerWidth >= 1024) {
+        setDirectionVisibleCards(3);
+        return;
+      }
+
+      if (window.innerWidth >= 768) {
+        setDirectionVisibleCards(2);
+        return;
+      }
+
+      setDirectionVisibleCards(1);
+    };
+
+    updateVisibleCards();
+    window.addEventListener("resize", updateVisibleCards);
+    return () => window.removeEventListener("resize", updateVisibleCards);
+  }, []);
+
+  const directionTotal = equipoImagenes.length;
+  const directionGapPx = 32;
+  const directionMaxStart = Math.max(0, directionTotal - directionVisibleCards);
+
+  const goDirectionPrev = () => {
+    setDirectionCarouselIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const goDirectionNext = () => {
+    setDirectionCarouselIndex((prev) => Math.min(directionMaxStart, prev + 1));
+  };
+
+  const gestoresTotal = gestoresData.length;
+  const gestoresGapPx = 32;
+  const gestoresMaxStart = Math.max(0, gestoresTotal - directionVisibleCards);
+
+  const goGestoresPrev = () => {
+    setGestoresCarouselIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const goGestoresNext = () => {
+    setGestoresCarouselIndex((prev) => Math.min(gestoresMaxStart, prev + 1));
+  };
+
+  useEffect(() => {
+    setDirectionCarouselIndex((prev) => Math.min(prev, directionMaxStart));
+  }, [directionMaxStart]);
+
+  useEffect(() => {
+    setGestoresCarouselIndex((prev) => Math.min(prev, gestoresMaxStart));
+  }, [gestoresMaxStart]);
 
   useEffect(() => {
     const priorityGestores = [
@@ -484,16 +544,16 @@ export default function Nosotros() {
       {/* Lo que hacemos */}
       <section id="lo-que-hacemos" className="pt-20 pb-2 bg-gradient-to-br from-gray-50 to-white scroll-mt-24">
         <div className="container">
-          <h2 className="text-4xl font-bold mb-16 text-center">Lo que Hacemos y Cómo Impactamos</h2>
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <h2 className="text-4xl font-bold mb-10 text-center">Lo que Hacemos y Cómo Impactamos</h2>
+          <div className="grid md:grid-cols-2 gap-4 mb-10">
             <Card className="overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all">
               <CardContent className="p-0">
                 <div className="flex h-full">
                   <div className="w-2 bg-blue-500" />
-                  <div className="p-7">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600/80 mb-3">Linea de accion</p>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-4">Innovación Educativa</h3>
-                    <p className="text-slate-700 leading-relaxed">Transformación de las dinámicas educativas, desde la implementación del enfoque STEM y desarrollos propios.</p>
+                  <div className="p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-blue-600/80 mb-2">Linea de accion</p>
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">Innovación Educativa</h3>
+                    <p className="text-sm text-slate-700 leading-snug">Transformación de las dinámicas educativas, desde la implementación del enfoque STEM y desarrollos propios.</p>
                   </div>
                 </div>
               </CardContent>
@@ -502,10 +562,10 @@ export default function Nosotros() {
               <CardContent className="p-0">
                 <div className="flex h-full">
                   <div className="w-2 bg-cyan-500" />
-                  <div className="p-7">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-700/80 mb-3">Linea de accion</p>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-4">Investigación Digital</h3>
-                    <p className="text-slate-700 leading-relaxed">Proceso de innovación disruptiva que busca soluciones digitales más eficientes y pertinentes.</p>
+                  <div className="p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-cyan-700/80 mb-2">Linea de accion</p>
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">Investigación Digital</h3>
+                    <p className="text-sm text-slate-700 leading-snug">Proceso de innovación disruptiva que busca soluciones digitales más eficientes y pertinentes.</p>
                   </div>
                 </div>
               </CardContent>
@@ -514,10 +574,10 @@ export default function Nosotros() {
               <CardContent className="p-0">
                 <div className="flex h-full">
                   <div className="w-2 bg-emerald-500" />
-                  <div className="p-7">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700/80 mb-3">Linea de accion</p>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-4">Investigación Educativa</h3>
-                    <p className="text-slate-700 leading-relaxed">Fortalecimiento de los procesos educativos en las instituciones educativas.</p>
+                  <div className="p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-700/80 mb-2">Linea de accion</p>
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">Investigación Educativa</h3>
+                    <p className="text-sm text-slate-700 leading-snug">Fortalecimiento de los procesos educativos en las instituciones educativas.</p>
                   </div>
                 </div>
               </CardContent>
@@ -526,10 +586,10 @@ export default function Nosotros() {
               <CardContent className="p-0">
                 <div className="flex h-full">
                   <div className="w-2 bg-teal-500" />
-                  <div className="p-7">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700/80 mb-3">Linea de accion</p>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-4">Centro de Ciencia</h3>
-                    <p className="text-slate-700 leading-relaxed">Busca la transformación del territorio con base en la ciencia, la tecnología y la innovación.</p>
+                  <div className="p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-teal-700/80 mb-2">Linea de accion</p>
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">Centro de Ciencia</h3>
+                    <p className="text-sm text-slate-700 leading-snug">Busca la transformación del territorio con base en la ciencia, la tecnología y la innovación.</p>
                   </div>
                 </div>
               </CardContent>
@@ -572,7 +632,7 @@ export default function Nosotros() {
           <div className="max-w-6xl mx-auto mb-10">
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl">
               <iframe
-                src="https://www.youtube.com/embed/R6ffTBIieCw?loop=1&playlist=R6ffTBIieCw"
+                src="https://www.youtube.com/embed/R6ffTBIieCw?autoplay=1&mute=1&loop=1&playlist=R6ffTBIieCw&playsinline=1"
                 title="Centro de Ciencia - Video"
                 loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -607,61 +667,77 @@ export default function Nosotros() {
               </h3>
             </motion.div>
 
-            {/* Timeline vertical line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 top-36 bottom-40 bg-gradient-to-b from-blue-500 via-teal-500 to-green-500 opacity-30" />
+            {/* Timeline horizontal completa sin scroll */}
+            <div className="relative left-1/2 w-screen -translate-x-1/2 px-3 md:px-6 lg:px-8">
+              <div className="relative">
+                <div className="pointer-events-none absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-gradient-to-r from-blue-500 via-teal-500 to-green-500 opacity-35" />
 
-            
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4 lg:grid-cols-8 lg:gap-3">
+                  {sortedYears.map((year, yearIndex) => {
+                    const yearEvents = eventsByYear.get(year) || [];
+                    const showTopCards = yearIndex % 2 === 0;
 
-            {/* Events */}
-            <div className="space-y-12">
-              {sortedYears.map((year, yearIndex) => {
-                const yearEvents = eventsByYear.get(year) || [];
-                return (
-                  <motion.div
-                    key={year}
-                    initial={{ opacity: 0, x: yearIndex % 2 === 0 ? -50 : 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    className={`flex items-center gap-8 ${yearIndex % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
-                  >
-                    {/* Year Badge */}
-                    <div className={`flex-1 flex ${yearIndex % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
-                      <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-teal-600 text-white font-bold px-6 py-3 rounded-full shadow-lg">
-                        <Calendar className="w-5 h-5" />
-                        <span className="text-xl">{year}</span>
-                      </div>
-                    </div>
+                    return (
+                      <motion.div
+                        key={year}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-80px" }}
+                        transition={{ duration: 0.45, delay: yearIndex * 0.04 }}
+                        className="grid min-h-[440px] md:min-h-[480px] grid-rows-[1fr_auto_1fr]"
+                      >
+                        <div className="flex h-full flex-col justify-end space-y-3 pb-2 md:pb-3">
+                          {showTopCards &&
+                            yearEvents.map((event) => (
+                              <motion.div
+                                key={event.id}
+                                whileHover={{ scale: 1.02, y: -3 }}
+                                onClick={() => setSelectedEvent(event)}
+                                className="cursor-pointer rounded-lg border border-blue-200 bg-gradient-to-br from-blue-50 to-teal-50 p-3 shadow-sm transition-all hover:border-blue-400 hover:shadow-md"
+                              >
+                                <h4 className="mb-1 text-sm font-bold text-blue-900">{event.title}</h4>
+                                <p className="mb-2 text-xs leading-relaxed text-gray-700">{event.description}</p>
+                                {event.category && (
+                                  <span className="inline-block rounded-full bg-blue-600 px-2 py-0.5 text-[10px] text-white">
+                                    {event.category}
+                                  </span>
+                                )}
+                              </motion.div>
+                            ))}
+                        </div>
 
-                    {/* Timeline dot */}
-                    <div className="relative z-10">
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-teal-500 border-4 border-white shadow-lg" />
-                    </div>
+                        <div className="relative z-10 flex flex-col items-center py-3">
+                          <div className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-teal-600 px-3 py-2 text-white shadow-lg md:px-4">
+                            <Calendar className="h-3.5 w-3.5" />
+                            <span className="text-sm font-bold md:text-base">{year}</span>
+                          </div>
+                          <div className="mt-2 h-4 w-4 rounded-full border-4 border-white bg-gradient-to-r from-blue-500 to-teal-500 shadow" />
+                        </div>
 
-                    {/* Events */}
-                    <div className="flex-1">
-                      <div className="space-y-4">
-                        {yearEvents.map((event, eventIndex) => (
-                          <motion.div
-                            key={event.id}
-                            whileHover={{ scale: 1.02, y: -4 }}
-                            onClick={() => setSelectedEvent(event)}
-                            className="bg-gradient-to-br from-blue-50 to-teal-50 p-6 rounded-xl border border-blue-200 hover:border-blue-400 cursor-pointer shadow-md hover:shadow-xl transition-all"
-                          >
-                            <h4 className="text-xl font-bold text-blue-900 mb-2">{event.title}</h4>
-                            <p className="text-gray-700 mb-3">{event.description}</p>
-                            {event.category && (
-                              <span className="inline-block bg-blue-600 text-white text-xs px-3 py-1 rounded-full">
-                                {event.category}
-                              </span>
-                            )}
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
+                        <div className="space-y-3 pt-4">
+                          {!showTopCards &&
+                            yearEvents.map((event) => (
+                              <motion.div
+                                key={event.id}
+                                whileHover={{ scale: 1.02, y: -3 }}
+                                onClick={() => setSelectedEvent(event)}
+                                className="cursor-pointer rounded-lg border border-blue-200 bg-gradient-to-br from-blue-50 to-teal-50 p-3 shadow-sm transition-all hover:border-blue-400 hover:shadow-md"
+                              >
+                                <h4 className="mb-1 text-sm font-bold text-blue-900">{event.title}</h4>
+                                <p className="mb-2 text-xs leading-relaxed text-gray-700">{event.description}</p>
+                                {event.category && (
+                                  <span className="inline-block rounded-full bg-blue-600 px-2 py-0.5 text-[10px] text-white">
+                                    {event.category}
+                                  </span>
+                                )}
+                              </motion.div>
+                            ))}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
 
             {/* Footer Message */}
@@ -670,7 +746,7 @@ export default function Nosotros() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-center mt-16 pt-12 border-t border-gray-200"
+              className="text-center mt-6 pt-4 border-t border-gray-200"
             >
               <p className="text-gray-600 text-lg font-semibold mb-4">
                 Continuamos innovando y creciendo cada día
@@ -711,32 +787,76 @@ export default function Nosotros() {
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {equipoImagenes.map((persona, index) => (
-              <motion.div
-                key={persona.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
-              >
-                <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
-                  <img
-                    src={persona.foto}
-                    alt={persona.nombre}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-6"
-                  />
-                </div>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={goDirectionPrev}
+              aria-label="Anterior en Dirección de Innovación"
+              disabled={directionCarouselIndex === 0}
+              className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
 
-                <div className="px-6 py-6 text-center">
-                  <h3 className="text-lg font-bold text-gray-900">{persona.nombre}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{persona.cargo}</p>
-                </div>
+            <button
+              type="button"
+              onClick={goDirectionNext}
+              aria-label="Siguiente en Dirección de Innovación"
+              disabled={directionCarouselIndex >= directionMaxStart}
+              className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+
+            <div className="overflow-hidden px-6">
+              <motion.div
+                animate={{
+                  x: `calc(-${directionCarouselIndex} * ((100% - ${(directionVisibleCards - 1) * directionGapPx}px) / ${directionVisibleCards} + ${directionGapPx}px))`,
+                }}
+                transition={{ type: "spring", stiffness: 90, damping: 20, mass: 0.8 }}
+                className="flex"
+                style={{ gap: `${directionGapPx}px` }}
+              >
+                {equipoImagenes.map((persona) => (
+                  <div
+                    key={persona.id}
+                    className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
+                    style={{
+                      flex: `0 0 calc((100% - ${(directionVisibleCards - 1) * directionGapPx}px) / ${directionVisibleCards})`,
+                    }}
+                  >
+                    <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
+                      <img
+                        src={persona.foto}
+                        alt={persona.nombre}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-6"
+                      />
+                    </div>
+
+                    <div className="px-6 py-6 text-center">
+                      <h3 className="text-lg font-bold text-gray-900">{persona.nombre}</h3>
+                      <p className="text-sm text-gray-600 mt-1">{persona.cargo}</p>
+                    </div>
+                  </div>
+                ))}
               </motion.div>
-            ))}
+            </div>
+
+            <div className="mt-8 flex justify-center gap-2">
+              {Array.from({ length: directionMaxStart + 1 }, (_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setDirectionCarouselIndex(idx)}
+                  aria-label={`Ir al bloque ${idx + 1}`}
+                  className={`h-2 rounded-full transition-all ${
+                    directionCarouselIndex === idx ? "w-8 bg-slate-800" : "w-2 bg-slate-400"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -770,43 +890,85 @@ export default function Nosotros() {
             loading="eager"
             fetchPriority="high"
             decoding="sync"
-            className="rounded-2xl shadow-2xl w-full h-auto object-cover mb-16"
+            className="rounded-2xl shadow-2xl w-full h-[690px] md:h-[770px] lg:h-[830px] object-cover object-top mb-16"
           />
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {gestoresData.map((gestor, index) => (
-              <motion.div
-                key={gestor.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
-              >
-                {/* Imagen sin cortar - completa */}
-                <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
-                  <img
-                    src={gestor.foto}
-                    alt={gestor.nombre}
-                    loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
-                    fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
-                    decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
-                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-6"
-                  />
-                </div>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={goGestoresPrev}
+              aria-label="Anterior en Gestores de Innovación"
+              disabled={gestoresCarouselIndex === 0}
+              className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
 
-                {/* Contenido */}
-                <div className="px-6 py-6 text-center">
-                  <h3 className="text-lg font-bold text-gray-900 mb-1">{gestor.nombre}</h3>
-                  <p className="text-sm text-gray-600 mb-3">{gestor.profesion}</p>
-                  <div className="flex justify-center">
-                    <Badge variant={gestor.tipo === "STEM" ? "default" : "secondary"}>
-                      {gestor.tipo}
-                    </Badge>
+            <button
+              type="button"
+              onClick={goGestoresNext}
+              aria-label="Siguiente en Gestores de Innovación"
+              disabled={gestoresCarouselIndex >= gestoresMaxStart}
+              className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+
+            <div className="overflow-hidden px-6">
+              <motion.div
+                animate={{
+                  x: `calc(-${gestoresCarouselIndex} * ((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards} + ${gestoresGapPx}px))`,
+                }}
+                transition={{ type: "spring", stiffness: 90, damping: 20, mass: 0.8 }}
+                className="flex"
+                style={{ gap: `${gestoresGapPx}px` }}
+              >
+                {gestoresData.map((gestor, index) => (
+                  <div
+                    key={gestor.id}
+                    className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
+                    style={{
+                      flex: `0 0 calc((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards})`,
+                    }}
+                  >
+                    <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
+                      <img
+                        src={gestor.foto}
+                        alt={gestor.nombre}
+                        loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
+                        fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
+                        decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
+                        className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-6"
+                      />
+                    </div>
+
+                    <div className="px-6 py-6 text-center">
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">{gestor.nombre}</h3>
+                      <p className="text-sm text-gray-600 mb-3">{gestor.profesion}</p>
+                      <div className="flex justify-center">
+                        <Badge variant={gestor.tipo === "STEM" ? "default" : "secondary"}>
+                          {gestor.tipo}
+                        </Badge>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </motion.div>
-            ))}
+            </div>
+
+            <div className="mt-8 flex justify-center gap-2">
+              {Array.from({ length: gestoresMaxStart + 1 }, (_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setGestoresCarouselIndex(idx)}
+                  aria-label={`Ir al bloque de gestores ${idx + 1}`}
+                  className={`h-2 rounded-full transition-all ${
+                    gestoresCarouselIndex === idx ? "w-8 bg-slate-800" : "w-2 bg-slate-400"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
