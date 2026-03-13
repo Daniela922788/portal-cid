@@ -30,7 +30,7 @@ export default function Services() {
       description:
         "Grupos experienciales que exploran STEAM+ mediante actividades prácticas y creativas.",
       icon: <Cpu className="text-gray-900" />,
-      color: "bg-yellow-200",
+      color: "bg-blue-100",
       details: [
         "Innovación en el barrio",
         "Formación docente",
@@ -42,7 +42,7 @@ export default function Services() {
       title: "Alianzas",
       description: "Impulsar los procesos de innovación educativa.",
       icon: <Users className="text-gray-900" />,
-      color: "bg-orange-200",
+      color: "bg-cyan-100",
       details: [
         "Colaboración institucional",
         "Redes de innovación",
@@ -54,7 +54,7 @@ export default function Services() {
       description:
         "Creación de contenido interactivo y accesible, fomentando la comprensión y el interés por la ciencia.",
       icon: <Video className="text-gray-900" />,
-      color: "bg-red-200",
+      color: "bg-teal-100",
       details: [
         "Contenido multimedia",
         "Divulgación científica",
@@ -66,7 +66,7 @@ export default function Services() {
       description:
         "Se diseñan y promueven procesos de formación continua para la población del territorio.",
       icon: <GraduationCap className="text-gray-900" />,
-      color: "bg-green-200",
+      color: "bg-emerald-100",
       details: [
         "Capacitación continua",
         "Desarrollo profesional",
@@ -83,10 +83,10 @@ export default function Services() {
   ];
 
   const servicesData = [
-    { name: "Clubes STEM", icon: <Cpu className="w-16 h-16" />, color: "bg-yellow-400" },
-    { name: "Alianzas", icon: <Users className="w-16 h-16" />, color: "bg-orange-400" },
-    { name: "Centro Audiovisual", icon: <Video className="w-16 h-16" />, color: "bg-red-400" },
-    { name: "Formación", icon: <GraduationCap className="w-16 h-16" />, color: "bg-green-400" },
+    { name: "Clubes STEM", icon: <Cpu className="w-16 h-16" />, color: "bg-blue-500" },
+    { name: "Alianzas", icon: <Users className="w-16 h-16" />, color: "bg-cyan-500" },
+    { name: "Centro Audiovisual", icon: <Video className="w-16 h-16" />, color: "bg-teal-500" },
+    { name: "Formación", icon: <GraduationCap className="w-16 h-16" />, color: "bg-emerald-500" },
   ];
 
   return (

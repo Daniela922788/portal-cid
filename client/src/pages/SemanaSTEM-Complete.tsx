@@ -17,15 +17,31 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function SemanaSTEM() {
   const [bannerSrc, setBannerSrc] = useState('/images/semana-stem-banner.png');
   const [activeYear, setActiveYear] = useState(2025);
   const [activeDay, setActiveDay] = useState(1);
+  const [selectedDay2Team, setSelectedDay2Team] = useState<string | null>(null);
+  const [day2VisibleImages, setDay2VisibleImages] = useState(6);
   const speakerImage = (fileName: string) => `/ponentes/martes/${encodeURIComponent(fileName)}`;
   const toWebp = (imagePath: string) => imagePath.replace(/\.(jpe?g|png)$/i, '.webp');
+
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+
+    return () => {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'auto';
+      }
+    };
+  }, []);
 
   // Datos del Día 1 - Martes
   const day1Sessions = [
@@ -271,7 +287,124 @@ export default function SemanaSTEM() {
     },
   ];
 
-  const day2GalleryImages: string[] = [];
+  const day2GalleryImages: string[] = [
+    '/Semana STEM/24/1.jpg',
+    '/Semana STEM/24/2.jpg',
+    '/Semana STEM/24/3.jpg',
+    '/Semana STEM/24/4.jpg',
+    '/Semana STEM/24/5.jpg',
+    '/Semana STEM/24/6.jpg',
+    '/Semana STEM/24/7.jpg',
+    '/Semana STEM/24/8.jpg',
+    '/Semana STEM/24/9.jpg',
+    '/Semana STEM/24/10.jpg',
+    '/Semana STEM/24/11.jpg',
+    '/Semana STEM/24/12.jpg',
+    '/Semana STEM/24/13.jpg',
+    '/Semana STEM/24/14.jpg',
+  ];
+
+  // Datos del Dia 4 - Viernes
+  const day4Sessions = [
+    {
+      time: '07:30 a.m.',
+      title: 'Apertura - Hackathon STEM Envigado',
+      description:
+        'La jornada inició con la bienvenida a la primera Hackathon STEM de Envigado, realizada en el marco de la Semana STEM+ Envigado 2025. Este espacio reunió a estudiantes de distintas instituciones educativas para enfrentar retos reales utilizando creatividad, tecnología e inteligencia artificial. Durante la apertura se resaltó el compromiso del municipio con la educación innovadora y el reconocimiento de Envigado como Ciudad del Aprendizaje y Territorio STEM, así como el trabajo conjunto con aliados estratégicos que hacen posible estos escenarios de innovación educativa.',
+      icon: '🚀',
+      color: 'from-orange-400 to-orange-600',
+    },
+    {
+      time: '07:45 a.m.',
+      title: 'Presentación del Reto y Metodología GENIA',
+      description:
+        'En este espacio se presentó el desafío central de la Hackathon: desarrollar soluciones para huertas urbanas inteligentes apoyadas en inteligencia artificial, con el objetivo de aportar a la seguridad alimentaria y la sostenibilidad en entornos urbanos. Los participantes conocieron la metodología GENIA (Genera, Explora, Nuevas ideas, Inventa y Aplica), que orientó el proceso creativo de los equipos para identificar problemas, investigar, diseñar soluciones con IA y presentar propuestas con impacto en la comunidad.',
+      icon: '🧠',
+      color: 'from-blue-400 to-blue-600',
+    },
+    {
+      time: '08:00 a.m.',
+      title: 'Asignación de Sub-retos y Presentación de Equipos',
+      description:
+        'Los equipos participantes se presentaron ante el público y recibieron de manera aleatoria su sub-reto mediante una ruleta digital, lo que permitió asignar distintos desafíos relacionados con el funcionamiento de las huertas urbanas. Entre los temas abordados se encontraban riego inteligente, control de plagas, compostaje, semillas, energías renovables, sensores, impacto ambiental y educación comunitaria. Cada equipo inició así el proceso de ideación y desarrollo de su propuesta utilizando herramientas de inteligencia artificial generativa.',
+      icon: '🎲',
+      color: 'from-purple-400 to-purple-600',
+    },
+    {
+      time: '08:10 a.m.',
+      title: 'Desarrollo del Reto en Salas de Innovación',
+      description:
+        'Luego de conocer su desafío, los equipos se desplazaron a diferentes salas de trabajo donde iniciaron el proceso de creación acompañado por gestores de innovación. Durante esta fase, los estudiantes exploraron ideas, investigaron problemáticas, diseñaron prototipos conceptuales y utilizaron herramientas de inteligencia artificial para estructurar soluciones innovadoras que respondieran a los retos asignados.',
+      icon: '⚙️',
+      color: 'from-cyan-400 to-cyan-600',
+    },
+    {
+      time: '12:30 p.m.',
+      title: 'Receso - Almuerzo',
+      description:
+        'Después de una intensa jornada de trabajo creativo, los participantes realizaron una pausa para el almuerzo antes de continuar con la etapa final de la Hackathon: la presentación de sus proyectos ante el jurado.',
+      icon: '🍽️',
+      color: 'from-yellow-400 to-yellow-600',
+    },
+    {
+      time: '01:30 p.m.',
+      title: 'Presentación de Proyectos (Pitch)',
+      description:
+        'Cada equipo presentó su propuesta en un pitch de 5 minutos, seguido de un espacio de preguntas por parte del jurado. Las presentaciones incluyeron el problema identificado, la solución diseñada con inteligencia artificial y el impacto esperado en la comunidad. Los estudiantes utilizaron herramientas digitales para mostrar infografías, imágenes, prototipos y demostraciones de sus ideas innovadoras.',
+      icon: '🎤',
+      color: 'from-emerald-400 to-emerald-600',
+    },
+    {
+      time: '03:00 p.m.',
+      title: 'Deliberación del Jurado y Presentación Artística',
+      description:
+        'Mientras los jurados evaluaban las propuestas, los asistentes disfrutaron de una presentación artística a cargo de la Estudiantina de Envigado, resaltando el vínculo entre la creatividad artística y la innovación científica.',
+      icon: '🎶',
+      color: 'from-pink-400 to-pink-600',
+    },
+    {
+      time: '03:30 p.m.',
+      title: 'Premiación y Cierre',
+      description:
+        'La jornada concluyó con el anuncio del equipo ganador de la primera Hackathon STEM de Envigado. Más allá de la competencia, el evento destacó el talento de los estudiantes para utilizar la inteligencia artificial como herramienta de innovación y transformación social. El cierre dejó como mensaje que la creatividad, el trabajo colaborativo y la tecnología pueden convertirse en semillas de soluciones para los desafíos del territorio.',
+      icon: '🏆',
+      color: 'from-red-400 to-red-600',
+    },
+  ];
+
+  const day4Highlights = [
+    {
+      icon: '💡',
+      title: 'Innovación con Inteligencia Artificial',
+      desc: 'Uso de herramientas de IA generativa para diseñar soluciones con impacto social.',
+    },
+    {
+      icon: '🌱',
+      title: 'Huertas Urbanas Inteligentes',
+      desc: 'Propuestas tecnológicas para fortalecer la seguridad alimentaria en entornos urbanos.',
+    },
+    {
+      icon: '🧠',
+      title: 'Metodología GENIA',
+      desc: 'Proceso creativo que conecta investigación, ideación y prototipado.',
+    },
+    {
+      icon: '🤝',
+      title: 'Trabajo Colaborativo',
+      desc: 'Equipos de estudiantes creando soluciones para su comunidad.',
+    },
+  ];
+
+  const day4GalleryImages: string[] = [
+    '/Semana STEM/26/1.jpg',
+    '/Semana STEM/26/2.jpg',
+    '/Semana STEM/26/3.jpg',
+    '/Semana STEM/26/4.jpg',
+    '/Semana STEM/26/5.jpg',
+    '/Semana STEM/26/6.jpg',
+    '/Semana STEM/26/7.jpg',
+    '/Semana STEM/26/8.jpg',
+  ];
 
   const day2TeamCards = [
     'I.E. Alejandro Velez Barrientos',
@@ -295,6 +428,15 @@ export default function SemanaSTEM() {
     'Colegio Reggio Emilia',
     'I.E. San Vicente Alto de las Flores',
   ];
+
+  const day2TeamVideos: Record<string, string> = {
+    'I.E. Alejandro Velez Barrientos': 'https://www.youtube.com/embed/KvWugLklRnk?autoplay=1&mute=1&rel=0',
+    'Benedictino de Santa Maria ENBY TEAM': 'https://www.youtube.com/embed/KwqUjFV8AHY?autoplay=1&mute=1&rel=0',
+    'Benedictino de Santa Maria ROBOBEN': 'https://www.youtube.com/embed/XtdAWwpAniQ?autoplay=1&mute=1&rel=0',
+    'I.E. Comercial de Envigado Comercialistas al Rescate': 'https://www.youtube.com/embed/bZe3Y83YwX4?autoplay=1&mute=1&rel=0',
+    'I.E. Comercial de Envigado Comercialistas Roboticos': 'https://www.youtube.com/embed/fsU9GRDMgGc?autoplay=1&mute=1&rel=0',
+    'I.E. Dario de Bedout 1': 'https://www.youtube.com/embed/gB3XPxh1JdI?autoplay=1&mute=1&rel=0',
+  };
 
   const daysNavigation = [
     { day: 'Martes', date: '23', index: 1, icon: '🚀' },
@@ -353,34 +495,23 @@ export default function SemanaSTEM() {
           {/* Days Navigation */}
           <section className="py-12 px-4 bg-white border-b border-gray-200">
             <div className="max-w-6xl mx-auto">
-              <div className="flex justify-center items-center gap-8 flex-wrap">
-                {daysNavigation.map((dayNav, idx) => {
-                  const colors = [
-                    'from-orange-400 to-orange-600',
-                    'from-blue-400 to-blue-600',
-                    'from-purple-400 to-purple-600',
-                    'from-green-400 to-green-600',
-                  ];
-                  return (
-                    <motion.button
-                      key={dayNav.index}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => setActiveDay(dayNav.index)}
-                      className={`w-40 h-40 rounded-full font-bold transition-all flex flex-col items-center justify-center shadow-lg hover:shadow-xl ${
-                        activeDay === dayNav.index
-                          ? `bg-gradient-to-br ${colors[idx]} text-white scale-110`
-                          : `bg-gradient-to-br ${colors[idx]} text-white opacity-70 hover:opacity-100`
-                      }`}
-                    >
-                      <span className="text-6xl mb-2">{dayNav.icon}</span>
-                      <div className="flex flex-col items-center text-center">
-                        <span className="font-bold text-base">{dayNav.day}</span>
-                        <span className="text-sm mt-1 opacity-90">{dayNav.date}</span>
-                      </div>
-                    </motion.button>
-                  );
-                })}
+              <div className="mx-auto flex max-w-3xl flex-wrap justify-center gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-2">
+                {daysNavigation.map((dayNav) => (
+                  <motion.button
+                    key={dayNav.index}
+                    whileHover={{ y: -1 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setActiveDay(dayNav.index)}
+                    className={`min-w-[150px] rounded-xl px-5 py-3 text-left transition-all ${
+                      activeDay === dayNav.index
+                        ? 'bg-white text-gray-900 shadow-sm ring-1 ring-gray-300'
+                        : 'text-gray-600 hover:bg-white/80 hover:text-gray-800'
+                    }`}
+                  >
+                    <p className="text-sm font-semibold">{dayNav.day}</p>
+                    <p className="text-xs text-gray-500">{dayNav.date} de julio</p>
+                  </motion.button>
+                ))}
               </div>
             </div>
           </section>
@@ -681,14 +812,46 @@ export default function SemanaSTEM() {
                   <h3 className="text-2xl font-bold text-gray-800 mb-6">Equipos Participantes</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {day2TeamCards.map((teamName, idx) => (
-                      <div
+                      <button
+                        type="button"
                         key={`${teamName}-${idx}`}
-                        className="rounded-xl border border-gray-200 bg-slate-50 p-4 text-gray-800 font-medium shadow-sm hover:shadow-md transition-shadow"
+                        onClick={() =>
+                          setSelectedDay2Team((prev) => (prev === teamName ? null : teamName))
+                        }
+                        className={`rounded-xl border p-4 text-left text-gray-800 font-medium shadow-sm transition-all hover:shadow-md ${
+                          selectedDay2Team === teamName
+                            ? 'border-teal-400 bg-teal-50'
+                            : 'border-gray-200 bg-slate-50'
+                        }`}
                       >
                         {teamName}
-                      </div>
+                      </button>
                     ))}
                   </div>
+
+                  {selectedDay2Team && (
+                    <div className="mt-6">
+                      <h4 className="text-lg font-semibold text-gray-800 mb-3">Video: {selectedDay2Team}</h4>
+
+                      {day2TeamVideos[selectedDay2Team] ? (
+                        <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-gray-200 shadow-md">
+                          <iframe
+                            src={day2TeamVideos[selectedDay2Team]}
+                            title={`Video del equipo ${selectedDay2Team}`}
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            allowFullScreen
+                            className="absolute inset-0 w-full h-full"
+                          />
+                        </div>
+                      ) : (
+                        <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6 text-gray-500">
+                          Video pendiente por cargar para esta institución.
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </section>
 
@@ -715,30 +878,41 @@ export default function SemanaSTEM() {
               <section className="py-12 px-4 max-w-6xl mx-auto">
                 <h3 className="text-3xl font-bold mb-8 text-gray-800">Galería de Fotos</h3>
                 {day2GalleryImages.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {day2GalleryImages.map((image, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: idx * 0.1 }}
-                        viewport={{ once: true }}
-                        className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                      >
-                        <picture>
-                          <source srcSet={toWebp(image)} type="image/webp" />
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {day2GalleryImages.slice(0, day2VisibleImages).map((image, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: idx * 0.08 }}
+                          viewport={{ once: true }}
+                          className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+                        >
                           <img
                             src={image}
                             alt={`Foto miércoles ${idx + 1}`}
-                            loading="lazy"
-                            decoding="async"
-                            fetchPriority="low"
+                            loading={idx < 6 ? "eager" : "lazy"}
+                            decoding={idx < 6 ? "sync" : "async"}
+                            fetchPriority={idx < 6 ? "high" : "low"}
                             className="w-full h-64 object-cover hover:scale-105 transition-transform"
                           />
-                        </picture>
-                      </motion.div>
-                    ))}
-                  </div>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {day2VisibleImages < day2GalleryImages.length && (
+                      <div className="mt-8 flex justify-center">
+                        <button
+                          type="button"
+                          onClick={() => setDay2VisibleImages((prev) => prev + 4)}
+                          className="rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                        >
+                          Ver más fotos
+                        </button>
+                      </div>
+                    )}
+                  </>
                 ) : (
                   <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-8 text-center text-gray-500">
                     Pendiente por cargar fotos del miércoles 24.
@@ -798,20 +972,158 @@ export default function SemanaSTEM() {
                 </div>
               </section>
 
-              <section className="py-16 px-4 max-w-6xl mx-auto">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="text-center"
-                >
-                  <p className="text-2xl text-gray-600 mb-4">
-                    Contenido del {daysNavigation.find(d => d.index === activeDay)?.day} próximamente...
-                  </p>
-                  <p className="text-gray-500">
-                    Estamos preparando la información detallada de este día
-                  </p>
-                </motion.div>
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Agenda del Día</h3>
+                <div className="space-y-4">
+                  {day4Sessions.map((session, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: idx * 0.1 }}
+                      viewport={{ once: true }}
+                      className="bg-white border border-gray-200 rounded-lg p-6 text-gray-900 shadow-lg hover:shadow-xl transition-all"
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-4">
+                          <span className="text-4xl">{session.icon}</span>
+                          <div>
+                            <p className="text-sm font-semibold opacity-90">{session.time}</p>
+                            <h3 className="text-2xl font-bold">{session.title}</h3>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 pt-6 border-t border-gray-200">
+                        {session.time === '07:45 a.m.' && session.title === 'Presentación del Reto y Metodología GENIA' ? (
+                          <>
+                            <p className="text-gray-700 leading-relaxed">{session.description}</p>
+
+                            <details className="mt-6 rounded-lg border border-gray-200 bg-slate-50 p-4">
+                              <summary className="cursor-pointer font-semibold text-gray-800">
+                                Ver detalle del reto y metodología GENIA
+                              </summary>
+
+                              <div className="mt-4 space-y-4 text-gray-700 leading-relaxed">
+                                <div>
+                                  <h4 className="font-semibold text-gray-900">Introducción y contexto</h4>
+                                  <p className="mt-2">Las huertas urbanas son una alternativa sostenible para fortalecer la seguridad alimentaria en las ciudades, reducir el impacto ambiental del transporte de alimentos y promover prácticas ecológicas en las comunidades. Sin embargo, su gestión enfrenta desafíos como el uso eficiente del agua, el manejo del suelo, el control de plagas y la adaptación al cambio climático.</p>
+                                  <p className="mt-2">En este contexto, la inteligencia artificial se convierte en una herramienta para optimizar estos procesos y transformar las huertas en sistemas más eficientes, al tiempo que permite a los estudiantes desarrollar competencias tecnológicas, ambientales y de innovación.</p>
+                                </div>
+
+                                <div>
+                                  <h4 className="font-semibold text-gray-900">Planteamiento del reto</h4>
+                                  <p className="mt-2">El reto de la Hackathon consistió en que los equipos diseñaran y prototiparan una solución innovadora basada en inteligencia artificial que permitiera mejorar la gestión, producción o impacto social de una huerta urbana escolar o comunitaria.</p>
+                                  <p className="mt-2">Las propuestas debían considerar condiciones reales de implementación, promover la sostenibilidad ambiental y utilizar metodologías de pensamiento de diseño y cultura maker.</p>
+                                </div>
+
+                                <div>
+                                  <h4 className="font-semibold text-gray-900">Objetivos específicos</h4>
+                                  <ul className="mt-2 list-disc pl-6 space-y-1">
+                                    <li>Comprender la relación entre seguridad alimentaria, sostenibilidad y huertas urbanas.</li>
+                                    <li>Aplicar herramientas de inteligencia artificial para analizar y proponer soluciones a problemáticas del huerto.</li>
+                                    <li>Utilizar la metodología GENIA para estructurar el proceso creativo desde la identificación del problema hasta la propuesta de solución.</li>
+                                    <li>Fomentar el trabajo colaborativo, la comunicación y la distribución de roles dentro de los equipos.</li>
+                                    <li>Promover una visión crítica y responsable sobre el uso de la inteligencia artificial en retos sociales y ambientales.</li>
+                                  </ul>
+                                </div>
+
+                                <div>
+                                  <h4 className="font-semibold text-gray-900">Distribución creativa de roles por equipo</h4>
+                                  <p className="mt-2">Cada equipo estuvo conformado por seis integrantes con roles específicos para fortalecer el trabajo colaborativo:</p>
+                                  <ul className="mt-2 list-disc pl-6 space-y-1">
+                                    <li>Líder de innovación: impulsa las ideas y orienta el proceso creativo.</li>
+                                    <li>Investigador de IA y medio ambiente: analiza la problemática y explora el uso de tecnologías.</li>
+                                    <li>Diseñador digital / prototipador: desarrolla el diseño visual o conceptual de la solución.</li>
+                                    <li>Gestor de recursos: organiza materiales y herramientas necesarias para el proyecto.</li>
+                                    <li>Comunicador: construye el mensaje y la narrativa del proyecto.</li>
+                                    <li>Presentador: expone la solución final ante el jurado.</li>
+                                  </ul>
+                                </div>
+
+                                <div>
+                                  <h4 className="font-semibold text-gray-900">Entregables esperados</h4>
+                                  <p className="mt-2">Los equipos debían presentar tres elementos principales:</p>
+                                  <ul className="mt-2 list-disc pl-6 space-y-1">
+                                    <li>Prototipo: modelo conceptual o funcional que integre inteligencia artificial para mejorar la huerta urbana.</li>
+                                    <li>Presentación tipo pitch: explicación clara del problema, la solución propuesta y su impacto social y ambiental.</li>
+                                    <li>Documento o video: evidencia del proceso de trabajo, los roles del equipo y el uso de herramientas de IA.</li>
+                                  </ul>
+                                </div>
+
+                                <div>
+                                  <h4 className="font-semibold text-gray-900">Criterios de evaluación</h4>
+                                  <p className="mt-2">Las propuestas fueron evaluadas considerando:</p>
+                                  <ul className="mt-2 list-disc pl-6 space-y-1">
+                                    <li>Creatividad e innovación: uso original de la inteligencia artificial para resolver el reto.</li>
+                                    <li>Viabilidad: posibilidad real de implementar la solución en un contexto escolar o comunitario.</li>
+                                    <li>Impacto social y ambiental: aporte a la sostenibilidad y a la seguridad alimentaria.</li>
+                                    <li>Trabajo en equipo: articulación de roles y calidad del proceso colaborativo.</li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </details>
+                          </>
+                        ) : (
+                          <p className="text-gray-700 leading-relaxed">{session.description}</p>
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Momentos Destacados</h3>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                  {day4Highlights.map((highlight, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      viewport={{ once: true }}
+                      className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                    >
+                      <p className="text-4xl mb-3">{highlight.icon}</p>
+                      <h4 className="font-bold text-lg mb-2">{highlight.title}</h4>
+                      <p className="text-gray-600 text-sm">{highlight.desc}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Galería de Fotos</h3>
+                {day4GalleryImages.length > 0 ? (
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {day4GalleryImages.map((image, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: idx * 0.08 }}
+                          viewport={{ once: true }}
+                          className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+                        >
+                          <img
+                            src={image}
+                            alt={`Foto viernes ${idx + 1}`}
+                            loading={idx < 6 ? "eager" : "lazy"}
+                            decoding={idx < 6 ? "sync" : "async"}
+                            fetchPriority={idx < 6 ? "high" : "low"}
+                            className="w-full h-64 object-cover hover:scale-105 transition-transform"
+                          />
+                        </motion.div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-8 text-center text-gray-500">
+                    Pendiente por cargar fotos del viernes 26.
+                  </div>
+                )}
               </section>
             </div>
           )}

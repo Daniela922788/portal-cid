@@ -296,18 +296,19 @@ export default function Nosotros() {
   ];
 
   const equipoImagenes = [
-    { id: 5, nombre: "Daniela", foto: DanielaImg },
-    { id: 1, nombre: "Alex", foto: AlexImg },
-    { id: 12, nombre: "Yethy", foto: YethyImg },
-    { id: 2, nombre: "Angela", foto: AngelaImg },
-    { id: 4, nombre: "Caro", foto: CaroImg },
-    { id: 9, nombre: "Jhon", foto: JhonImg },
-    { id: 3, nombre: "Camilo", foto: CamiloImg },
-    { id: 6, nombre: "Dubiel", foto: DubielImg },
-    { id: 7, nombre: "Hernan", foto: HernanImg },
-    { id: 8, nombre: "Jairo", foto: JairoImg },
-    { id: 10, nombre: "John", foto: JohnImg },
-    { id: 11, nombre: "Jorge", foto: JorgeImg },
+    { id: 5, nombre: "Daniela Jaramillo Hoyos", cargo: "Directora de Innovación", foto: DanielaImg },
+    { id: 1, nombre: "Alexander Heredia Heredia", cargo: "Profesional de Innovación", foto: AlexImg },
+    { id: 12, nombre: "Yethy Gisela Granda", cargo: "Profesional de Innovación", foto: YethyImg },
+    { id: 2, nombre: "Angela María González Valencia", cargo: "Profesional de Innovación", foto: AngelaImg },
+    { id: 4, nombre: "Carolina Tabres Isaza", cargo: "Profesional de Innovación", foto: CaroImg },
+    { id: 9, nombre: "Jhon Fredy Ríos Montoya", cargo: "Profesional de Innovación", foto: JhonImg },
+    { id: 3, nombre: "Juan Camilo Álvarez Bedoya", cargo: "Profesional de Innovación", foto: CamiloImg },
+    { id: 6, nombre: "Dubiel Restrepo Marulanda", cargo: "Profesional de Innovación", foto: DubielImg },
+    { id: 8, nombre: "Jairo Muñoz Díaz", cargo: "Profesional de Innovación", foto: JairoImg },
+    { id: 13, nombre: "Daniela Serna Gallego", cargo: "Profesional de Innovación", foto: "/gestores/Daniela%20SG.png" },
+    { id: 10, nombre: "John Fredis Carmona", cargo: "Profesional de Innovación", foto: JohnImg },
+    { id: 11, nombre: "Jorge Guzmán", cargo: "Profesional de Innovación", foto: JorgeImg },
+    { id: 7, nombre: "Hernán Maury Andrade", cargo: "Profesional de Innovación", foto: HernanImg },
   ];
 
   const eventsByYear = new Map<number, TimelineEvent[]>();
@@ -371,17 +372,27 @@ export default function Nosotros() {
         />
       </section>
 
-      <section className="pt-8 pb-6 bg-white">
+      <section className="pt-10 pb-10 bg-gradient-to-b from-white to-slate-50">
         <div className="container">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">Navegación rápida</h2>
+          <div className="mx-auto max-w-4xl text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Navegación rápida</h2>
+            <p className="mt-3 text-slate-600">Accede en un clic a las secciones principales de esta página.</p>
+          </div>
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {quickSections.map((section) => (
+            {quickSections.map((section, idx) => (
               <button
                 key={section.id}
                 onClick={() => scrollToSection(section.id)}
-                className="text-left p-4 rounded-xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:shadow-md hover:border-blue-300 transition-all"
+                className="group rounded-2xl border border-slate-200 bg-white px-5 py-4 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
               >
-                <span className="text-sm md:text-base font-semibold text-gray-800">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-teal-600" />
+                </div>
+                <span className="text-sm md:text-base font-semibold text-slate-800 group-hover:text-slate-900">
                   {section.title}
                 </span>
               </button>
@@ -415,57 +426,54 @@ export default function Nosotros() {
             className="rounded-2xl shadow-2xl w-full h-auto object-cover mb-16"
           />
 
-          {/* Foto de los gestores */}
-          <img 
-            src="/Fotogestores.jpg"
-            alt="Gestores CID"
-            loading="eager"
-            fetchPriority="high"
-            decoding="sync"
-            className="rounded-2xl shadow-2xl w-full h-auto object-cover mb-16"
-          />
-
           {/* Nuestro Equipo */}
           <div className="mb-16">
             <h3 className="text-3xl font-bold mb-8 text-center text-teal-600">Nuestro Equipo</h3>
             <p className="text-lg text-gray-700 mb-12 text-center">
               Contamos con un equipo multidisciplinario que hace posible el diseño, la ejecución y el acompañamiento de nuestras iniciativas
             </p>
-            <div className="grid md:grid-cols-2 gap-8">
-              <Card className="border-0 bg-gradient-to-br from-blue-50 to-cyan-50 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-blue-600">Equipo Administrativo</CardTitle>
-                  <p className="text-sm text-gray-600 mt-2">(7 personas)</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader className="space-y-3">
+                  <div className="h-1.5 w-14 rounded-full bg-blue-500" />
+                  <CardTitle className="text-xl text-slate-900">Equipo Administrativo</CardTitle>
+                  <p className="text-sm font-medium text-slate-500">7 personas</p>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700">Lidera los procesos estratégicos que dan vida a los proyectos.</p>
+                  <p className="text-slate-700">Lidera los procesos estratégicos que dan vida a los proyectos.</p>
                 </CardContent>
               </Card>
-              <Card className="border-0 bg-gradient-to-br from-teal-50 to-green-50 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-teal-600">Gestores de Innovación e Investigación</CardTitle>
-                  <p className="text-sm text-gray-600 mt-2">(14 personas)</p>
+
+              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader className="space-y-3">
+                  <div className="h-1.5 w-14 rounded-full bg-teal-500" />
+                  <CardTitle className="text-xl text-slate-900">Gestores de Innovación e Investigación</CardTitle>
+                  <p className="text-sm font-medium text-slate-500">16 personas</p>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700">Acompaña procesos pedagógicos innovadores y de investigación que fortalecen la transformación educativa.</p>
+                  <p className="text-slate-700">Acompaña procesos pedagógicos innovadores y de investigación que fortalecen la transformación educativa.</p>
                 </CardContent>
               </Card>
-              <Card className="border-0 bg-gradient-to-br from-purple-50 to-pink-50 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-purple-600">Equipo de Tecnología</CardTitle>
-                  <p className="text-sm text-gray-600 mt-2">(5 personas)</p>
+
+              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader className="space-y-3">
+                  <div className="h-1.5 w-14 rounded-full bg-cyan-500" />
+                  <CardTitle className="text-xl text-slate-900">Equipo de Tecnología</CardTitle>
+                  <p className="text-sm font-medium text-slate-500">5 personas</p>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700">Implementa soluciones digitales para nuestras iniciativas educativas.</p>
+                  <p className="text-slate-700">Implementa soluciones digitales para nuestras iniciativas educativas.</p>
                 </CardContent>
               </Card>
-              <Card className="border-0 bg-gradient-to-br from-orange-50 to-yellow-50 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-orange-600">Técnicos Audiovisuales</CardTitle>
-                  <p className="text-sm text-gray-600 mt-2">(2 personas)</p>
+
+              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader className="space-y-3">
+                  <div className="h-1.5 w-14 rounded-full bg-emerald-500" />
+                  <CardTitle className="text-xl text-slate-900">Técnicos Audiovisuales</CardTitle>
+                  <p className="text-sm font-medium text-slate-500">2 personas</p>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700">Generan experiencias mediante narrativas visuales de alto impacto.</p>
+                  <p className="text-slate-700">Generan experiencias mediante narrativas visuales de alto impacto.</p>
                 </CardContent>
               </Card>
             </div>
@@ -478,36 +486,52 @@ export default function Nosotros() {
         <div className="container">
           <h2 className="text-4xl font-bold mb-16 text-center">Lo que Hacemos y Cómo Impactamos</h2>
           <div className="grid md:grid-cols-2 gap-8 mb-16">
-            <Card className="border-0 bg-gradient-to-br from-blue-50 to-teal-50 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-2xl text-blue-600">Innovación Educativa</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">Transformación de las dinámicas educativas, desde la implementación del enfoque STEM y desarrollos propios.</p>
+            <Card className="overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all">
+              <CardContent className="p-0">
+                <div className="flex h-full">
+                  <div className="w-2 bg-blue-500" />
+                  <div className="p-7">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600/80 mb-3">Linea de accion</p>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-4">Innovación Educativa</h3>
+                    <p className="text-slate-700 leading-relaxed">Transformación de las dinámicas educativas, desde la implementación del enfoque STEM y desarrollos propios.</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
-            <Card className="border-0 bg-gradient-to-br from-purple-50 to-pink-50 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-2xl text-purple-600">Investigación Digital</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">Proceso de innovación disruptiva que busca soluciones digitales más eficientes y pertinentes.</p>
+            <Card className="overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all">
+              <CardContent className="p-0">
+                <div className="flex h-full">
+                  <div className="w-2 bg-cyan-500" />
+                  <div className="p-7">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-700/80 mb-3">Linea de accion</p>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-4">Investigación Digital</h3>
+                    <p className="text-slate-700 leading-relaxed">Proceso de innovación disruptiva que busca soluciones digitales más eficientes y pertinentes.</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
-            <Card className="border-0 bg-gradient-to-br from-green-50 to-emerald-50 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-2xl text-green-600">Investigación Educativa</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">Fortalecimiento de los procesos educativos en las instituciones educativas.</p>
+            <Card className="overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all">
+              <CardContent className="p-0">
+                <div className="flex h-full">
+                  <div className="w-2 bg-emerald-500" />
+                  <div className="p-7">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700/80 mb-3">Linea de accion</p>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-4">Investigación Educativa</h3>
+                    <p className="text-slate-700 leading-relaxed">Fortalecimiento de los procesos educativos en las instituciones educativas.</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
-            <Card className="border-0 bg-gradient-to-br from-orange-50 to-yellow-50 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-2xl text-orange-600">Centro de Ciencia</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">Busca la transformación del territorio con base en la ciencia, la tecnología y la innovación.</p>
+            <Card className="overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all">
+              <CardContent className="p-0">
+                <div className="flex h-full">
+                  <div className="w-2 bg-teal-500" />
+                  <div className="p-7">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700/80 mb-3">Linea de accion</p>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-4">Centro de Ciencia</h3>
+                    <p className="text-slate-700 leading-relaxed">Busca la transformación del territorio con base en la ciencia, la tecnología y la innovación.</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -709,6 +733,7 @@ export default function Nosotros() {
 
                 <div className="px-6 py-6 text-center">
                   <h3 className="text-lg font-bold text-gray-900">{persona.nombre}</h3>
+                  <p className="text-sm text-gray-600 mt-1">{persona.cargo}</p>
                 </div>
               </motion.div>
             ))}

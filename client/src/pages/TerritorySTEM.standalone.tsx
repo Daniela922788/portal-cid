@@ -206,38 +206,16 @@ export default function TerritorioStem() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white">
       {/* ===== HERO SECTION ===== */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      >
-        <div className="absolute inset-0 opacity-30">
-          <div
-            className="absolute top-10 left-10 w-72 h-72 rounded-full"
-            style={{ backgroundColor: pastelColors.pink, filter: 'blur(80px)' }}
-          />
-          <div
-            className="absolute bottom-10 right-10 w-72 h-72 rounded-full"
-            style={{ backgroundColor: pastelColors.blue, filter: 'blur(80px)' }}
-          />
-        </div>
-
-        <div className="relative max-w-4xl mx-auto text-center">
-          <motion.h1
-            variants={itemVariants}
-            className="text-5xl sm:text-6xl font-bold mb-6 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent"
-          >
-            Territorio STEM+
-          </motion.h1>
-          <motion.p
-            variants={itemVariants}
-            className="text-xl text-gray-700 mb-8 leading-relaxed"
-          >
-            Envigado se propone como un territorio innovador donde la educación, la tecnología, la ciencia, la ingeniería y las matemáticas convergen para transformar la sociedad y preparar a nuestros ciudadanos para los retos del futuro.
-          </motion.p>
-        </div>
-      </motion.section>
+      <section className="relative w-full overflow-hidden">
+        <img
+          src="/banners/banner-territorio2.png"
+          alt="Banner principal Territorio STEM"
+          loading="eager"
+          fetchPriority="high"
+          decoding="sync"
+          className="w-full h-auto object-cover"
+        />
+      </section>
 
            {/* ===== SECCIÓN: ¿QUÉ ES STEM+? ===== */}
       <motion.section
@@ -373,6 +351,17 @@ export default function TerritorioStem() {
           </a>
         </motion.div>
       </motion.section>
+
+      <section className="relative w-full overflow-hidden">
+        <img
+          src="/banners/banner-territorio.png"
+          alt="Banner Territorio STEM"
+          loading="lazy"
+          fetchPriority="low"
+          decoding="async"
+          className="w-full h-auto object-cover"
+        />
+      </section>
 
       {/* ===== SECCIÓN: MANIFIESTO ===== */}
       <motion.section
