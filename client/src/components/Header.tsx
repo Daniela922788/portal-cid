@@ -34,10 +34,12 @@ export default function Header() {
   const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [desktopMenuOpen, setDesktopMenuOpen] = useState<"" | "contenido" | "comunidad" | "recursos">("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Array<{ path: string; label: string }>>([]);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const mobileSearchInputRef = useRef<HTMLInputElement>(null);
+  const desktopNavMenuRef = useRef<HTMLDivElement>(null);
   const closeMobileMenu = () => setMobileMenuOpen(false);
   const showKitHerramientas = true;
   const showCidKids = false;
@@ -55,6 +57,22 @@ export default function Header() {
       }
     }
   }, [searchOpen]);
+
+  useEffect(() => {
+    if (!desktopMenuOpen) {
+      return;
+    }
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (desktopNavMenuRef.current && !desktopNavMenuRef.current.contains(target)) {
+        setDesktopMenuOpen("");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [desktopMenuOpen]);
 
   const runBrowserFind = (value: string) => {
     if (typeof window === "undefined") {
@@ -169,7 +187,11 @@ export default function Header() {
 
           {/* Navegación desktop */}
           <nav className="hidden lg:flex items-center gap-6">
-            <NavigationMenu>
+            <NavigationMenu
+              ref={desktopNavMenuRef}
+              value={desktopMenuOpen}
+              onValueChange={(value) => setDesktopMenuOpen(value as "" | "contenido" | "comunidad" | "recursos")}
+            >
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <Link href="/">
@@ -187,8 +209,17 @@ export default function Header() {
                   </Link>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Contenido</NavigationMenuTrigger>
+                <NavigationMenuItem value="contenido">
+                  <NavigationMenuTrigger
+                    onPointerEnter={(event) => event.preventDefault()}
+                    onPointerMove={(event) => event.preventDefault()}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setDesktopMenuOpen((prev) => (prev === "contenido" ? "" : "contenido"));
+                    }}
+                  >
+                    Contenido
+                  </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
                       <li>
@@ -247,8 +278,17 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Comunidad</NavigationMenuTrigger>
+                <NavigationMenuItem value="comunidad">
+                  <NavigationMenuTrigger
+                    onPointerEnter={(event) => event.preventDefault()}
+                    onPointerMove={(event) => event.preventDefault()}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setDesktopMenuOpen((prev) => (prev === "comunidad" ? "" : "comunidad"));
+                    }}
+                  >
+                    Comunidad
+                  </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
                       <li>
@@ -285,8 +325,17 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Recursos</NavigationMenuTrigger>
+                <NavigationMenuItem value="recursos">
+                  <NavigationMenuTrigger
+                    onPointerEnter={(event) => event.preventDefault()}
+                    onPointerMove={(event) => event.preventDefault()}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setDesktopMenuOpen((prev) => (prev === "recursos" ? "" : "recursos"));
+                    }}
+                  >
+                    Recursos
+                  </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
                       {showKitHerramientas && (

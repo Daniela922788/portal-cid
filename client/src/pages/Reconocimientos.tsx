@@ -370,6 +370,9 @@ export default function Reconocimientos() {
               <div className="p-5 space-y-2">
                 <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">{noticia.categoria}</span>
                 <h2 className="text-xl font-bold text-slate-900 leading-snug">{noticia.titulo}</h2>
+                <p className="text-sm text-slate-600">
+                  <span className="font-medium">Fecha de publicación:</span> {noticia.fecha}
+                </p>
                 <p className="text-sm text-blue-700 font-semibold pt-1">Abrir noticia</p>
               </div>
             </button>
@@ -397,7 +400,9 @@ export default function Reconocimientos() {
 
                 <div className="flex items-center gap-6 text-sm text-slate-500 border-t border-b border-slate-300 py-4 mb-8">
                   <span className="font-semibold text-slate-700">{selectedNews.autor}</span>
-                  <span>{selectedNews.fecha}</span>
+                  <span>
+                    <span className="font-medium text-slate-700">Fecha de publicación:</span> {selectedNews.fecha}
+                  </span>
                 </div>
 
                 <div className="mb-8 rounded-lg overflow-hidden shadow-xl bg-muted relative">
