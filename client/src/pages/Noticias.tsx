@@ -432,6 +432,7 @@ export default function Noticias() {
                   <CardTitle className="line-clamp-2">{noticia.titulo}</CardTitle>
                   <CardDescription className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
+                    <span className="font-medium">Fecha de publicación:</span>
                     {new Date(noticia.fecha).toLocaleDateString('es-CO')}
                     {noticia.autor && <span className="ml-2">• {noticia.autor}</span>}
                   </CardDescription>
@@ -507,6 +508,7 @@ export default function Noticias() {
                   </Badge>
                   <span className="inline-flex items-center gap-1">
                     <Calendar className="h-4 w-4" />
+                    <span className="font-medium">Fecha de publicación:</span>
                     {new Date(selectedNews.fecha).toLocaleDateString("es-CO")}
                   </span>
                   {selectedNews.autor && <span>• {selectedNews.autor}</span>}
