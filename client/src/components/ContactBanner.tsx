@@ -4,7 +4,7 @@ import { MessageCircle, HeadphonesIcon } from "lucide-react";
 
 export default function ContactBanner() {
   return (
-    <section className="bg-gradient-to-r from-primary to-secondary text-white py-12">
+    <section className="bg-[#0D4B56] text-white py-12">
       <div className="container">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">

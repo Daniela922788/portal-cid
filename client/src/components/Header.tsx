@@ -46,6 +46,16 @@ export default function Header() {
   const showProyectos = false;
   const mobileMenuItemClass = "px-4 py-2 rounded-md hover:bg-accent text-base font-medium leading-6";
   const mobileAccordionTriggerClass = "px-2 py-2 text-base font-medium leading-6";
+  const isHome = location === "/";
+  const headerClassName = isHome
+    ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
+    : "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
+  const topLevelNavLinkClass = isHome
+    ? "group inline-flex h-10 w-max items-center justify-center rounded-md bg-black/35 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+    : "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
+  const triggerClassName = isHome
+    ? "h-10 rounded-md bg-black/35 px-4 text-sm font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
+    : "";
 
   useEffect(() => {
     if (searchOpen) {
@@ -174,13 +184,13 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className={headerClassName}>
       <div className="container">
         <div className="flex h-16 items-center justify-between">
           {/* Logo y título */}
           <Link href="/" className="flex min-w-0 items-center gap-3 hover:opacity-80 transition-opacity">
             <img src="/logo-colores.png" alt="Logo CID" className="h-10 w-10" />
-            <span className="line-clamp-2 max-w-[185px] text-xs font-bold leading-tight text-primary sm:max-w-none sm:text-lg sm:leading-normal">
+            <span className={`line-clamp-2 max-w-[185px] text-xs font-bold leading-tight sm:max-w-none sm:text-lg sm:leading-normal ${isHome ? "text-white drop-shadow" : "text-primary"}`}>
               {APP_TITLE}
             </span>
           </Link>
@@ -195,7 +205,7 @@ export default function Header() {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <Link href="/">
-                    <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                    <NavigationMenuLink className={topLevelNavLinkClass}>
                       Inicio
                     </NavigationMenuLink>
                   </Link>
@@ -203,7 +213,7 @@ export default function Header() {
 
                 <NavigationMenuItem>
                   <Link href="/nosotros">
-                    <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                    <NavigationMenuLink className={topLevelNavLinkClass}>
                       Nosotros
                     </NavigationMenuLink>
                   </Link>
@@ -211,6 +221,7 @@ export default function Header() {
 
                 <NavigationMenuItem value="contenido">
                   <NavigationMenuTrigger
+                    className={triggerClassName}
                     onPointerEnter={(event) => event.preventDefault()}
                     onPointerMove={(event) => event.preventDefault()}
                     onClick={(event) => {
@@ -280,6 +291,7 @@ export default function Header() {
 
                 <NavigationMenuItem value="comunidad">
                   <NavigationMenuTrigger
+                    className={triggerClassName}
                     onPointerEnter={(event) => event.preventDefault()}
                     onPointerMove={(event) => event.preventDefault()}
                     onClick={(event) => {
@@ -327,6 +339,7 @@ export default function Header() {
 
                 <NavigationMenuItem value="recursos">
                   <NavigationMenuTrigger
+                    className={triggerClassName}
                     onPointerEnter={(event) => event.preventDefault()}
                     onPointerMove={(event) => event.preventDefault()}
                     onClick={(event) => {
@@ -366,7 +379,7 @@ export default function Header() {
 
                 <NavigationMenuItem>
                   <Link href="/formacion">
-                    <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                    <NavigationMenuLink className={topLevelNavLinkClass}>
                       Formación
                     </NavigationMenuLink>
                   </Link>
@@ -375,7 +388,7 @@ export default function Header() {
                 {showCidKids && (
                   <NavigationMenuItem>
                     <Link href="/cid-kids">
-                      <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                      <NavigationMenuLink className={topLevelNavLinkClass}>
                         CID Kids
                       </NavigationMenuLink>
                     </Link>
@@ -384,7 +397,7 @@ export default function Header() {
 
                 <NavigationMenuItem>
                   <Link href="/mesa-ayuda">
-                    <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                    <NavigationMenuLink className={topLevelNavLinkClass}>
                       Contáctanos
                     </NavigationMenuLink>
                   </Link>

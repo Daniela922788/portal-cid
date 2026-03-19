@@ -28,160 +28,154 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative w-full overflow-hidden">
-        <img
-          src="/banners/banner-principal.png"
-          alt="Banner principal Portal de Innovación Educativa CID"
-          loading="eager"
-          fetchPriority="high"
-          decoding="sync"
-          className="w-full h-auto object-cover"
-        />
+      <section className="relative w-full overflow-hidden md:h-screen">
+        <picture>
+          <source
+            media="(max-width: 767px)"
+            srcSet="/banners/banner%20principal%20cel.png"
+          />
+          <img
+            src="/banners/banner%20principal.png"
+            alt="Banner principal Portal de Innovación Educativa CID"
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
+            className="w-full h-auto object-contain md:h-full md:object-cover md:object-center"
+          />
+        </picture>
       </section>
 
       {/* Carrusel de Cursos */}
       {showCoursesCarousel && <CoursesCarouselNew />}
 
-      {/* Misión, Visión, Objetivo */}
-      <section className="py-16 bg-muted/30">
-        <div className="container">
-          <div className="grid md:grid-cols-3 gap-8">
-            <Link href="/nosotros">
-              <Card className="h-full cursor-pointer transition-shadow hover:shadow-lg">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                    <Lightbulb className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle>Que Somos</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    La Dirección de Innovación es una dependencia estratégica de la Secretaría de Educación de Envigado, cuyo propósito principal es liderar, coordinar y promover el desarrollo científico, tecnológico y de innovación como motores del progreso social, económico, educativo y cultural. Esta dirección actúa como puente entre la comunidad, el conocimiento científico y las soluciones innovadoras a problemáticas reales del entorno
-                  </p>
-                </CardContent>
-              </Card>
-            </Link>
+      {/* Banners de acceso rápido */}
+      <section className="bg-white pt-4 md:py-8">
+        <div className="w-full space-y-2 md:container md:mx-auto md:space-y-4 md:px-4">
+          <Link href="/nosotros" aria-label="Ir a Nosotros" className="group block">
+            <div className="overflow-hidden rounded-2xl shadow-md">
+              <div className="relative overflow-hidden rounded-2xl">
+                <img
+                  src="/banners/banner%202.png"
+                  alt="Banner Nosotros"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.01] md:group-hover:scale-100"
+                />
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 hidden bg-black/0 transition-colors duration-300 md:block md:group-hover:bg-black/20"
+                />
+              </div>
+            </div>
+          </Link>
 
-            <Link href="/formacion">
-              <Card className="h-full cursor-pointer transition-shadow hover:shadow-lg">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center mb-4">
-                    <Sparkles className="h-6 w-6 text-secondary" />
-                  </div>
-                  <CardTitle>Formación General</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    El Centro de Investigación y Desarrollo promueve la formación integral de los estudiantes, fortaleciendo el pensamiento crítico, la responsabilidad social y las habilidades necesarias para su desarrollo académico y personal.
-                  </p>
-                </CardContent>
-              </Card>
-            </Link>
+          <Link href="/formacion" aria-label="Ir a Formación" className="group block">
+            <div className="overflow-hidden rounded-2xl shadow-md">
+              <div className="relative overflow-hidden rounded-2xl">
+                <img
+                  src="/banners/banner%204.png"
+                  alt="Banner Formación"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.01] md:group-hover:scale-100"
+                />
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 hidden bg-black/0 transition-colors duration-300 md:block md:group-hover:bg-black/20"
+                />
+              </div>
+            </div>
+          </Link>
 
-            <Card>
-              <CardHeader>
-                <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-4">
-                  <Award className="h-6 w-6 text-accent" />
-                </div>
-                <CardTitle>Convocatorias</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Espacio donde se publican las oportunidades para participar en proyectos, investigaciones y actividades del Centro de Investigación y Desarrollo.
-                </p>
-              </CardContent>
-            </Card>
+          <div className="overflow-hidden rounded-2xl shadow-md">
+            <div className="overflow-hidden rounded-2xl">
+              <img
+                src="/banners/banner%203.png"
+                alt="Banner Convocatorias"
+                loading="lazy"
+                decoding="async"
+                className="w-full object-cover"
+              />
+            </div>
           </div>
         </div>
+      </section>
+
+
+      {/* Banner Nuestras Secciones — ancho completo */}
+      <section className="w-full pt-4 md:pt-0">
+        <img
+          src="/banners/nuestras%20secciones.png"
+          alt="Nuestras Secciones"
+          loading="lazy"
+          decoding="async"
+          className="w-full object-cover h-16 sm:h-20 md:h-auto"
+        />
       </section>
 
       {/* Accesos Rápidos */}
       <section className="py-16">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Explora Nuestras Secciones</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Descubre todo lo que el CID tiene para ofrecer a la comunidad educativa
-            </p>
+        {/* Nuestras Secciones - estilo destacado (comparación) */}
+        <section className="w-full py-12" style={{ background: '#11B2AA' }}>
+          <div className="container">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Territorio STEM */}
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
+                <img src="/Home/1.png" alt="Territorio STEM" className="w-full h-auto object-contain bg-white" />
+                <div className="p-6 flex-1 flex flex-col">
+                  <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Territorio STEM</h3>
+                  <p className="text-gray-700 text-base mb-2">Conoce el ecosistema STEM de Envigado, sus actores, proyectos y oportunidades para estudiantes y docentes.</p>
+                </div>
+              </div>
+              {/* Premios y reconocimientos */}
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
+                <img src="/Home/2.png" alt="Premios y reconocimientos" className="w-full h-auto object-contain bg-white" />
+                <div className="p-6 flex-1 flex flex-col">
+                  <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Premios y reconocimientos</h3>
+                  <p className="text-gray-700 text-base mb-2">Explora los reconocimientos que reflejan nuestro compromiso con la excelencia.</p>
+                </div>
+              </div>
+              {/* Aliados */}
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
+                <img src="/Home/3.png" alt="Aliados" className="w-full h-auto object-contain bg-white" />
+                <div className="p-6 flex-1 flex flex-col">
+                  <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Aliados</h3>
+                  <p className="text-gray-700 text-base mb-2">Descubre a nuestros aliados estratégicos que impulsan la innovación educativa en nuestra comunidad.</p>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <div className={`grid sm:grid-cols-2 lg:grid-cols-3 ${showCidKids ? "xl:grid-cols-4" : "xl:grid-cols-3"} gap-6`}>
-            <Link href="/territorio-stem">
-              <Card
-                className="h-full hover:shadow-lg transition-shadow cursor-pointer group"
-              >
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                    <Microscope className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-lg">Territorio STEM</CardTitle>
-                  <CardDescription>
-                    Conoce el ecosistema STEM de Envigado, sus actores, proyectos y oportunidades para estudiantes y docentes. 
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-
-            <Link href="/reconocimientos">
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center mb-3 group-hover:bg-secondary/20 transition-colors">
-                    <Newspaper className="h-6 w-6 text-secondary" />
-                  </div>
-                  <CardTitle className="text-lg">Premios y reconocimientos</CardTitle>
-                  <CardDescription>
-                    Explora los reconocimientos que reflejan nuestro compromiso con la excelencia.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-
-            <Link href="/aliados">
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-3 group-hover:bg-accent/20 transition-colors">
-                    <Users className="h-6 w-6 text-accent" />
-                  </div>
-                  <CardTitle className="text-lg">Aliados</CardTitle>
-                  <CardDescription>
-                    Descubre a nuestros aliados estratégicos que impulsan la innovación educativa en nuestra comunidad.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-
-            {showCidKids && (
-              <Link href="/cid-kids">
-                <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                  <CardHeader>
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                      <GraduationCap className="h-6 w-6 text-primary" />
-                    </div>
-                    <CardTitle className="text-lg">CID Kids</CardTitle>
-                    <CardDescription>
-                      Conoce nuestro programa diseñado para fomentar la curiosidad y el amor por la ciencia en los más pequeños.
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-              </Link>
-            )}
-          </div>
-        </div>
+        </section>
       </section>
 
       {/* Banner Semana STEM */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="container">
+      <section className="py-8 md:py-12 bg-white">
+        {/* Mobile: banner extendido, Desktop: container */}
+        <div className="block md:hidden w-full">
           <Link href="/semana-stem-complete" aria-label="Ir a la sección Semana STEM" className="group block cursor-pointer">
-            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-md transition-all group-hover:shadow-lg">
-              <div className="relative overflow-hidden rounded-xl">
+            <div className="overflow-hidden rounded-2xl shadow-md">
+              <img
+                src="/banners/banner-semana-click.png"
+                alt="Banner Semana STEM"
+                loading="lazy"
+                fetchPriority="high"
+                decoding="async"
+                className="w-full object-contain h-20 sm:h-28 rounded-2xl"
+              />
+            </div>
+          </Link>
+        </div>
+        <div className="hidden md:block container">
+          <Link href="/semana-stem-complete" aria-label="Ir a la sección Semana STEM" className="group block cursor-pointer">
+            <div className="overflow-hidden rounded-2xl shadow-md">
+              <div className="relative overflow-hidden rounded-2xl">
                 <img
                   src="/banners/banner-semana-click.png"
                   alt="Banner Semana STEM"
                   loading="lazy"
                   fetchPriority="high"
                   decoding="async"
-                  className="h-[220px] w-full object-cover object-center md:h-[270px]"
+                  className="h-[220px] w-full object-cover object-center md:h-[270px] rounded-2xl"
                 />
                 <span
                   aria-hidden="true"
@@ -194,7 +188,7 @@ export default function Home() {
       </section>
 
       {/* Logos de Ministerios y Entidades */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 bg-white">
         <div className="container">
           <div className="grid grid-cols-4 items-center gap-3 md:gap-6">
             <a href="https://www.mineducacion.gov.co/portal/" target="_blank" rel="noopener noreferrer">
