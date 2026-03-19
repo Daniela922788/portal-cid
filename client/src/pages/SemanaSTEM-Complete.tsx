@@ -304,6 +304,189 @@ export default function SemanaSTEM() {
     '/Semana STEM/24/14.jpg',
   ];
 
+  // Datos del Día 3 - Jueves
+  const day3Sessions = [
+    {
+      time: '07:00 a.m.',
+      title: 'Montaje de la Feria',
+      description:
+        'Los equipos iniciaron el montaje de sus stands en la plazoleta principal de la Institución Universitaria de Envigado, organizando sus proyectos de investigación y adecuando los espacios para la socialización de sus propuestas.',
+      icon: '🌱',
+      color: 'from-emerald-400 to-emerald-600',
+    },
+    {
+      time: '07:30 a.m.',
+      title: 'Registro de Participantes',
+      description:
+        'Se realizó el registro de estudiantes, docentes y equipos participantes, dando inicio formal a la jornada académica y organizativa de la feria.',
+      icon: '📝',
+      color: 'from-slate-400 to-slate-600',
+    },
+    {
+      time: '08:00 a.m.',
+      title: 'Apertura – Feria PRAE',
+      description:
+        'La jornada inició como un espacio de encuentro para la socialización de proyectos de investigación escolar enfocados en el medio ambiente. Se destacó la importancia de fortalecer la cultura investigativa, el enfoque PRAE y el compromiso de las instituciones educativas con el territorio.',
+      icon: '🚀',
+      color: 'from-orange-400 to-orange-600',
+    },
+    {
+      time: '08:00 a.m.',
+      title: 'Foro: Investigación y Diálogo de Saberes en la Formación Ambiental',
+      description:
+        'Se desarrolló un espacio dirigido a docentes en el auditorio principal, enfocado en la reflexión sobre la educación ambiental, el diálogo de saberes y la sostenibilidad. Este espacio permitió fortalecer la articulación entre la investigación escolar y las prácticas pedagógicas en el territorio.',
+      forumTopics: [
+        'La educación ambiental como herramienta de transformación',
+        'La sostenibilidad en el contexto educativo',
+        'La implementación del Plan de Educación Ambiental Municipal (PEAM)',
+      ],
+      location: 'Auditorio principal',
+      icon: '🎓',
+      color: 'from-blue-400 to-blue-600',
+    },
+    {
+      time: '08:30 a.m.',
+      title: 'Inicio de Exposiciones',
+      description:
+        'Los equipos de semilleros de investigación presentaron sus proyectos, compartiendo hallazgos, experiencias y propuestas enfocadas en problemáticas ambientales. Este espacio permitió evidenciar el impacto de la investigación escolar en el entorno.',
+      icon: '🔬',
+      color: 'from-purple-400 to-purple-600',
+    },
+    {
+      time: '10:00 a.m.',
+      title: 'Refrigerio',
+      description:
+        'Espacio de pausa para el descanso e intercambio de experiencias entre estudiantes, docentes e invitados.',
+      icon: '☕',
+      color: 'from-yellow-400 to-yellow-600',
+    },
+    {
+      time: '10:30 a.m.',
+      title: 'Continuación de Exposiciones',
+      description:
+        'Los equipos continuaron la socialización de sus proyectos, fortaleciendo habilidades de comunicación, argumentación y trabajo colaborativo en torno a la investigación científica escolar.',
+      icon: '🔎',
+      color: 'from-cyan-400 to-cyan-600',
+    },
+    {
+      time: '12:30 p.m.',
+      title: 'Cierre y Entrega de Certificados',
+      description:
+        'La jornada concluyó con el reconocimiento a la participación de los equipos y la entrega de certificados, resaltando el valor de la investigación escolar como herramienta para la transformación del entorno.',
+      icon: '🏆',
+      color: 'from-red-400 to-red-600',
+    },
+  ];
+
+  const day3ProjectRows = [
+    { institucion: 'I. E. Comercial de Envigado - sede principal', grupo: 'The Titans Forest', docente: 'Jhon Alexander Echeverri Acosta' },
+    { institucion: 'I. E. Darío de Bedout', grupo: 'Construyendo Armonías', docente: 'Mónica Trujillo' },
+    { institucion: 'I. E. El Salado - sede principal', grupo: 'Aguas Literarias', docente: 'Daniel Botero' },
+    { institucion: 'I. E. José Manuel Restrepo Vélez', grupo: 'Ecos Ancestrales', docente: 'Sandra Penagos' },
+    { institucion: 'I. E. José Manuel Restrepo Vélez', grupo: 'El Tintero', docente: 'Juan Carlos Cuartas' },
+    { institucion: 'I. E. José Manuel Restrepo Vélez', grupo: 'Vos Con Voz', docente: 'Carlos Alberto Villada Giraldo' },
+    { institucion: 'I. E. José Miguel de la Calle', grupo: 'Quebrada La Yurá', docente: 'Olga Lucía Mesa Hincapié' },
+    { institucion: 'I. E. José Miguel de la Calle', grupo: 'Investigarte', docente: 'Wilberto Sanchez' },
+    { institucion: 'I. E. La Paz - sede principal', grupo: 'Alimentación Saludable', docente: 'Jason Cardona Gomez' },
+    { institucion: 'I. E. La Paz - sede principal', grupo: 'Acción Climática', docente: 'Viviana Obando' },
+    { institucion: 'I. E. Las Palmas', grupo: 'Supernova', docente: 'Juan Camilo Grajales Arboleda' },
+    { institucion: 'I. E. Las Palmas', grupo: 'Huerta escolar', docente: 'Gloria Isabel Valencia Rentería' },
+    { institucion: 'I. E. Leticia Arango de Avendaño', grupo: 'Sistema IOT', docente: 'Carolina Torres Lasso' },
+    { institucion: 'I. E. Manuel Uribe Ángel - Marceliano Vélez', grupo: 'Huerta_4.0', docente: 'Elis Yaneth Vides Bulloso' },
+    { institucion: 'I. E. Manuel Uribe Ángel - sede principal', grupo: 'Lenguajes En Contexto', docente: 'Catalina Higuita' },
+    { institucion: 'I. E. María Poussepin', grupo: 'Polinizando Saberes', docente: 'Mónica Pineda Tavera' },
+    { institucion: 'I. E. Martín Eduardo Ríos Llano - principal', grupo: 'Investigación_7b', docente: 'Yesenia Morales Mejia' },
+    { institucion: 'I. E. Martín Eduardo Ríos Llano - principal', grupo: 'Investigacion_9a', docente: 'Lorena Palacios' },
+    { institucion: 'I. E. Martín Eduardo Ríos Llano - principal', grupo: 'Investigacion_9b', docente: 'Isabel Velásquez' },
+    { institucion: 'I. E. Martín Eduardo Ríos Llano - principal', grupo: 'Investigacion_8a', docente: 'Gabriela Bedoya Duque' },
+    { institucion: 'I. E. Normal Superior de Envigado', grupo: 'Leo Mi Normal', docente: 'Abraham Quintero' },
+    { institucion: 'I. E. Normal Superior de Envigado', grupo: 'Aquaplanton', docente: 'Luisa Fernanda Rodríguez González' },
+    { institucion: 'I. E. Normal Superior de Envigado', grupo: 'GANSE', docente: 'John Mario Pérez' },
+    { institucion: 'I. E. San Vicente Alto de las Flóres', grupo: 'Matemáticas Divertidas', docente: 'Noreyda Florez Mena' },
+    { institucion: 'Institución Educativa José Miguel de la Calle', grupo: 'Proseres', docente: 'María Isabel Cárdenas Espinosa' },
+    { institucion: 'I.E Manuel Uribe Ángel, sede Marceliano Vélez', grupo: 'Transición Energética', docente: 'Yaneth Vides Bulloso' },
+    { institucion: 'I.E Manuel Uribe Ángel, sede Marceliano Vélez', grupo: 'Mentes robóticas', docente: 'Lina Marcela García Ramírez' },
+    { institucion: 'Institución Educativa José Miguel de la Calle', grupo: 'Aula Felíz de la Jose: innovación Educativa con enfoque STEM', docente: 'Liliana María Ochoa Betancur' },
+    { institucion: 'IE LA PAZ', grupo: 'Circuitos y vida', docente: 'Ginna Rozo' },
+    { institucion: 'Institución Educativa José Manuel Restrepo Vélez', grupo: 'Pequeños investigadores, grandes mentes creativas', docente: 'Ana María Jaramillo Restrepo' },
+    { institucion: 'Martin Eduardo Rios Llanos', grupo: 'Patrimonio', docente: 'Mabel Pacheco, David Gonzalez, Gabriela Bedoya' },
+    { institucion: 'Institución Educativa San Vicente Alto de las Flores', grupo: 'Bichos en el Patio', docente: 'Claudia Elena Cardona Villa' },
+    { institucion: 'Colegio Franciscano Palermo de San José', grupo: 'SIPAL', docente: 'Luz Marina Duque Zuluaga' },
+  ];
+
+  const day3InvitedInstitutions = [
+    { municipio: 'El Peñol – Antioquia', institucion: 'I.E. León XIII', grupo: 'Mentes Sinápticas', docente: 'Edwin Alexander Gallo Zuluaga' },
+    { municipio: 'Caldas – Antioquia', institucion: 'C.E.R. Claudina Múnera', grupo: 'Weather Scientists', docente: 'Gustavo Adolfo Restrepo Arboleda' },
+    { municipio: 'Sabaneta – Antioquia', institucion: 'I.E. Rafael J. Mejía', grupo: 'Alas de Cristal (Jardines funcionales)', docente: 'Catalina Ayala Arroyave' },
+    { municipio: 'Sabaneta – Antioquia', institucion: 'I.E. José Félix de Restrepo Vélez', grupo: 'PRAE', docente: 'Angélica María Betancur Garcés' },
+    { municipio: 'Caldas – Antioquia', institucion: 'I.E. Federico Ángel', grupo: 'Salvadores del planeta', docente: 'Viviana Ramírez y Álvaro Fausto Peláez' },
+    { municipio: 'Institución Universitaria de Envigado', institucion: 'Semillero de investigación aplicada Incore', grupo: '', docente: 'Lina María Zapata Pérez' },
+    { municipio: 'Institución Universitaria de Envigado', institucion: 'Semillero de investigación El Taller', grupo: '', docente: 'Diana Lucía Gómez Santamaría y Juan Guillermo Estrada Vallejo' },
+    { municipio: 'Institución Universitaria de Envigado', institucion: 'Semillero de investigación GICE', grupo: '', docente: 'Raúl David Ruiz Escobar' },
+    { municipio: 'Institución Universitaria de Envigado', institucion: 'Semillero Finanzas IUE', grupo: '', docente: 'Raúl David Ruiz Escobar' },
+  ];
+
+  const day3Recognitions = [
+    {
+      category: 'Categoría básica secundaria',
+      items: [
+        'Alas de cristal de la Institución educativa Rafael J. Mejía (Medio ambiente).',
+        'Sociedad Norma Literaria (LEO mi normal) de la Institución Educativa Normal Superior de Envigado.',
+      ],
+    },
+    {
+      category: 'Categoría básica primaria',
+      items: [
+        'Pequeños investigadores, grandes mentes creativas de la Institución Educativa José Manuel Restrepo Vélez.',
+        'Bichos en el Patio de la Institución Educativa San Vicente Alto de las Flores (Medio ambiente).',
+      ],
+    },
+    {
+      category: 'Reconocimiento a la trayectoria',
+      items: [
+        'Supernova de la Institución Educativa Las Palmas.',
+      ],
+    },
+  ];
+
+  const day3Highlights = [
+    {
+      icon: '🌱',
+      title: 'Investigación con Impacto Ambiental',
+      desc: 'Proyectos escolares enfocados en la sostenibilidad y el cuidado del entorno.',
+    },
+    {
+      icon: '🔬',
+      title: 'Cultura Investigativa Escolar',
+      desc: 'Fortalecimiento de habilidades de indagación, análisis y comunicación.',
+    },
+    {
+      icon: '🤝',
+      title: 'Trabajo Colaborativo',
+      desc: 'Estudiantes y docentes construyendo conocimiento de manera conjunta.',
+    },
+    {
+      icon: '🌍',
+      title: 'Conexión con el Territorio',
+      desc: 'Propuestas que responden a problemáticas ambientales locales.',
+    },
+  ];
+
+  const day3GalleryImages: string[] = [
+    '/Semana%20STEM/25/1.jpg',
+    '/Semana%20STEM/25/2.jpg',
+    '/Semana%20STEM/25/3.jpg',
+    '/Semana%20STEM/25/4.jpg',
+    '/Semana%20STEM/25/5.jpg',
+    '/Semana%20STEM/25/6.jpg',
+    '/Semana%20STEM/25/7.jpg',
+    '/Semana%20STEM/25/8.jpg',
+    '/Semana%20STEM/25/9.jpg',
+    '/Semana%20STEM/25/10.jpg',
+    '/Semana%20STEM/25/11.jpg',
+    '/Semana%20STEM/25/14.jpg',
+  ];
+
   // Datos del Dia 4 - Viernes
   const day4Sessions = [
     {
@@ -486,12 +669,26 @@ export default function SemanaSTEM() {
   ];
 
   const day2TeamVideos: Record<string, string> = {
-    'I.E. Alejandro Velez Barrientos': 'https://www.youtube.com/embed/KvWugLklRnk?autoplay=1&mute=1&rel=0',
-    'Benedictino de Santa Maria ENBY TEAM': 'https://www.youtube.com/embed/KwqUjFV8AHY?autoplay=1&mute=1&rel=0',
+    'I.E. Alejandro Velez Barrientos': '',
+    'Benedictino de Santa Maria ENBY TEAM': '',
     'Benedictino de Santa Maria ROBOBEN': 'https://www.youtube.com/embed/XtdAWwpAniQ?autoplay=1&mute=1&rel=0',
     'I.E. Comercial de Envigado Comercialistas al Rescate': 'https://www.youtube.com/embed/bZe3Y83YwX4?autoplay=1&mute=1&rel=0',
     'I.E. Comercial de Envigado Comercialistas Roboticos': 'https://www.youtube.com/embed/fsU9GRDMgGc?autoplay=1&mute=1&rel=0',
     'I.E. Dario de Bedout 1': 'https://www.youtube.com/embed/gB3XPxh1JdI?autoplay=1&mute=1&rel=0',
+    'I.E. Dario de Bedout 2': 'https://www.youtube.com/embed/xJ52Sn3ufsQ?autoplay=1&mute=1&rel=0',
+    'I.E. El Salado': 'https://www.youtube.com/embed/O6wNRTuTDdk?autoplay=1&mute=1&rel=0',
+    'I.E. Jose Manuel Restrepo Velez': 'https://www.youtube.com/embed/3fXfxUdhSN8?autoplay=1&mute=1&rel=0',
+    'I.E. Jose Miguel de la Calle': 'https://www.youtube.com/embed/dm1w5l5n--0?autoplay=1&mute=1&rel=0',
+    'I.E. La Paz': 'https://www.youtube.com/embed/6xC2YXb-wuo?autoplay=1&mute=1&rel=0',
+    'I.E. Las Palmas': 'https://www.youtube.com/embed/3XGTzJVrO3o?autoplay=1&mute=1&rel=0',
+    'I.E. Leticia Arango Avendano': 'https://www.youtube.com/embed/X7xWT9YwWuA?autoplay=1&mute=1&rel=0',
+    'I.E. Manuel Uribe Angel': 'https://www.youtube.com/embed/AmXY42urPuQ?autoplay=1&mute=1&rel=0',
+    'I.E. Maria Poussepin': '',
+    'I.E. Martin Eduardo Rios Llanos 1': 'https://www.youtube.com/embed/AUPxMjj7bhQ?autoplay=1&mute=1&rel=0',
+    'I.E. Martin Eduardo Rios Llanos 2': 'https://www.youtube.com/embed/lOGpBY61YBo?autoplay=1&mute=1&rel=0',
+    'I.E. Normal Superior de Envigado': 'https://www.youtube.com/embed/IXItsW-CWSU?autoplay=1&mute=1&rel=0',
+    'Colegio Reggio Emilia': 'https://www.youtube.com/embed/0uSnMbCQXGk?autoplay=1&mute=1&rel=0',
+    'I.E. San Vicente Alto de las Flores': '',
   };
 
   const daysNavigation = [
@@ -615,7 +812,6 @@ export default function SemanaSTEM() {
                     >
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center gap-4">
-                          <span className="text-4xl">{session.icon}</span>
                           <div>
                             <p className="text-sm font-semibold opacity-90">{session.time}</p>
                             <h3 className="text-2xl font-bold">{session.title}</h3>
@@ -734,7 +930,6 @@ export default function SemanaSTEM() {
                     >
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center gap-4">
-                          <span className="text-4xl">{session.icon}</span>
                           <div>
                             <p className="text-sm font-semibold opacity-90">{session.time}</p>
                             <h3 className="text-2xl font-bold">{session.title}</h3>
@@ -1021,20 +1216,195 @@ export default function SemanaSTEM() {
                 </div>
               </section>
 
-              <section className="py-16 px-4 max-w-6xl mx-auto">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="text-center"
-                >
-                  <p className="text-2xl text-gray-600 mb-4">
-                    Contenido del {daysNavigation.find(d => d.index === activeDay)?.day} próximamente...
-                  </p>
-                  <p className="text-gray-500">
-                    Estamos preparando la información detallada de este día
-                  </p>
-                </motion.div>
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Agenda del Día</h3>
+                <div className="space-y-4">
+                  {day3Sessions.map((session, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: idx * 0.08 }}
+                      viewport={{ once: true }}
+                      className="bg-white border border-gray-200 rounded-lg p-6 text-gray-900 shadow-lg hover:shadow-xl transition-all"
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-4">
+                          <div>
+                            <p className="text-sm font-semibold opacity-90">{session.time}{'location' in session && session.location ? ` - ${session.location}` : ''}</p>
+                            <h3 className="text-2xl font-bold">{session.title}</h3>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 pt-6 border-t border-gray-200">
+                        <p className="text-gray-700 leading-relaxed">{session.description}</p>
+
+                        {'forumTopics' in session && Array.isArray(session.forumTopics) ? (
+                          <>
+                            <div className="mt-4 rounded-lg border border-blue-100 bg-blue-50 p-4">
+                              <h4 className="font-semibold text-gray-900">Durante el foro se abordaron temas como:</h4>
+                              <ul className="mt-3 list-disc pl-6 space-y-1 text-gray-700">
+                                {session.forumTopics.map((topic: string) => (
+                                  <li key={topic}>{topic}</li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <img
+                                src="/Semana%20STEM/25/Profes%201.jpg"
+                                alt="Foro docentes - imagen 1"
+                                loading="lazy"
+                                className="w-full rounded-lg object-cover shadow-md"
+                              />
+                              <img
+                                src="/Semana%20STEM/25/Profes%202.jpg"
+                                alt="Foro docentes - imagen 2"
+                                loading="lazy"
+                                className="w-full rounded-lg object-cover shadow-md"
+                              />
+                            </div>
+                          </>
+                        ) : null}
+
+                        {session.title === 'Inicio de Exposiciones' ? (
+                          <div className="mt-6 overflow-hidden rounded-lg border border-gray-200">
+                            <div className="overflow-x-auto">
+                              <table className="min-w-full bg-white">
+                                <thead className="bg-emerald-600 text-white">
+                                  <tr>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Institución educativa</th>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Nombre del grupo</th>
+                                    <th className="px-4 py-3 text-left text-sm font-semibold">Docente feria</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {day3ProjectRows.map((row, rowIdx) => (
+                                    <tr key={`${row.institucion}-${row.grupo}-${rowIdx}`} className={rowIdx % 2 === 0 ? 'bg-slate-50' : 'bg-white'}>
+                                      <td className="px-4 py-3 text-sm text-gray-700 min-w-[260px]">{row.institucion}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-700 min-w-[220px]">{row.grupo}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-700 min-w-[220px]">{row.docente}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Invitados Destacados</h3>
+                <div className="mb-6 rounded-2xl border border-blue-100 bg-blue-50 p-6">
+                  <h4 className="text-xl font-bold text-gray-900">Participación Regional e Institucional</h4>
+                  <p className="mt-2 text-gray-700">La feria contó con la participación de instituciones educativas y semilleros de investigación invitados de distintos municipios, fortaleciendo el intercambio de experiencias y el trabajo colaborativo en torno a la investigación escolar y la educación ambiental.</p>
+                </div>
+
+                <div className="overflow-hidden rounded-lg border border-gray-200">
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full bg-white">
+                      <thead className="bg-teal-600 text-white">
+                        <tr>
+                          <th className="px-4 py-3 text-left text-sm font-semibold">Municipio / entidad</th>
+                          <th className="px-4 py-3 text-left text-sm font-semibold">Institución / semillero</th>
+                          <th className="px-4 py-3 text-left text-sm font-semibold">Grupo</th>
+                          <th className="px-4 py-3 text-left text-sm font-semibold">Docente(s)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {day3InvitedInstitutions.map((row, rowIdx) => (
+                          <tr key={`${row.municipio}-${row.institucion}-${rowIdx}`} className={rowIdx % 2 === 0 ? 'bg-slate-50' : 'bg-white'}>
+                            <td className="px-4 py-3 text-sm text-gray-700 min-w-[180px]">{row.municipio}</td>
+                            <td className="px-4 py-3 text-sm text-gray-700 min-w-[240px]">{row.institucion}</td>
+                            <td className="px-4 py-3 text-sm text-gray-700 min-w-[220px]">{row.grupo || '—'}</td>
+                            <td className="px-4 py-3 text-sm text-gray-700 min-w-[220px]">{row.docente}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </section>
+
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Reconocimientos</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {day3Recognitions.map((group) => (
+                    <div key={group.category} className="rounded-2xl border border-emerald-100 bg-emerald-50 p-6 shadow-sm">
+                      <h4 className="text-lg font-bold text-gray-900 mb-4">{group.category}</h4>
+                      <ul className="space-y-3 text-sm text-gray-700">
+                        {group.items.map((item) => (
+                          <li key={item} className="flex items-start gap-2">
+                            <span className="mt-1 text-emerald-600">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-gray-700">
+                  Para la evaluación de los proyectos se conformó un equipo de 12 profesionales integrado por tres gestores de innovación, tres técnicos ambientales de la Secretaría de Medio Ambiente, tres docentes de la Institución Universitaria de Envigado y tres invitados.
+                </div>
+              </section>
+
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Momentos Destacados</h3>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                  {day3Highlights.map((highlight, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      viewport={{ once: true }}
+                      className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                    >
+                      <p className="text-4xl mb-3">{highlight.icon}</p>
+                      <h4 className="font-bold text-lg mb-2">{highlight.title}</h4>
+                      <p className="text-gray-600 text-sm">{highlight.desc}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="py-12 px-4 max-w-6xl mx-auto">
+                <h3 className="text-3xl font-bold mb-8 text-gray-800">Galería de Fotos</h3>
+                {day3GalleryImages.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {day3GalleryImages.map((image, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: idx * 0.08 }}
+                        viewport={{ once: true }}
+                        className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+                      >
+                        <picture>
+                          <source srcSet={toWebp(image)} type="image/webp" />
+                          <img
+                            src={image}
+                            alt={`Foto jueves ${idx + 1}`}
+                            loading={idx < 6 ? 'eager' : 'lazy'}
+                            decoding={idx < 6 ? 'sync' : 'async'}
+                            fetchPriority={idx < 6 ? 'high' : 'low'}
+                            className="w-full h-64 object-cover hover:scale-105 transition-transform"
+                          />
+                        </picture>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-8 text-center text-gray-500">
+                    Pendiente por cargar fotos del jueves 25.
+                  </div>
+                )}
               </section>
             </div>
           )}
@@ -1069,7 +1439,6 @@ export default function SemanaSTEM() {
                     >
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center gap-4">
-                          <span className="text-4xl">{session.icon}</span>
                           <div>
                             <p className="text-sm font-semibold opacity-90">{session.time}</p>
                             <h3 className="text-2xl font-bold">{session.title}</h3>

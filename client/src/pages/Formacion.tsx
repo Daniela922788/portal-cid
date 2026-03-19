@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +14,7 @@ interface ECard {
   tematica: string;
   estado: string;
   lugar: string;
+  edad: string;
   fechas: string[];
   sesiones: string[]; // ISO dates: "2026-03-20"
   ano: number;
@@ -32,6 +33,7 @@ export default function Formacion() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTematicas, setSelectedTematicas] = useState<string[]>([]);
   const [selectedEstados, setSelectedEstados] = useState<string[]>([]);
+  const [selectedEdades, setSelectedEdades] = useState<string[]>([]);
   const [selectedLugares, setSelectedLugares] = useState<string[]>([]);
   const [ecardOpen, setEcardOpen] = useState(false);
   const [selectedEcard, setSelectedEcard] = useState<ECard | null>(null);
@@ -39,21 +41,38 @@ export default function Formacion() {
   const { data: cursos = [], isLoading } = trpc.courses.list.useQuery();
 
   // Opciones de filtros
-  const tematicas = ["Robotica", "IA", "Musica", "Ciencia", "Fotografia", "Edicion"];
-  const estados = ["En inscripciones", "En curso", "Cerrado"];
+  const tematicas = ["Robótica", "IA", "Inteligencia Artificial", "Alfabetización Digital", "Diseño", "Animación", "Música", "Ciencia", "Fotografía", "Medio ambiente", "Podcast", "Edición", "Cocina", "Analítica"];
+  const tematicaAliases: Record<string, string[]> = {
+    "Robótica": ["Robótica", "Robotica"],
+    "Música": ["Música", "Musica"],
+    "Fotografía": ["Fotografía", "Fotografia"],
+    "Edición": ["Edición", "Edicion"],
+  };
+  const estados = ["En inscripciones", "En curso", "Finalizado"];
+  const edades = ["8 - 12", "12 a 18", "+18", "+60"];
+  const edadBuckets: Record<string, { min: number; max: number }> = {
+    "8 - 12": { min: 8, max: 12 },
+    "12 a 18": { min: 12, max: 18 },
+    "+18": { min: 18, max: Number.POSITIVE_INFINITY },
+    "+60": { min: 60, max: Number.POSITIVE_INFINITY },
+  };
   const lugares = [
     "Biblioteca Pública y Parque Cultural Débora Arango",
-    "Lugar X",
-    "Lugar Y",
+    "Otros lugares",
   ];
+  const lugarAliases: Record<string, string[]> = {
+    "Biblioteca Pública y Parque Cultural Débora Arango": ["Biblioteca Pública y Parque Cultural Débora Arango"],
+    "Otros lugares": ["Lugar X", "Palma de Mayorca", "Area de Recreación Urbana (ARU) Trianón-La Heliodora", "Envigado", "Lugar Y"],
+  };
 
   // Datos de ejemplo de ECards
   const ecards: ECard[] = [
     {
       id: "1",
-      titulo: "Semillero STEAMers Kids 2025",
-      tematica: "Robotica",
-      estado: "Cerrado",
+      titulo: "STEAMers Kids",
+      tematica: "Robótica",
+      estado: "Finalizado",
+      edad: "10 a 13 años",
       lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
       fechas: [
         "22 de abril - 20 de mayo de 2025",
@@ -64,9 +83,7 @@ export default function Formacion() {
       subtitulo:
         "Espacio formativo para explorar Ciencia, Tecnología, Ingeniería, Arte y Matemáticas (STEAM) con experiencias prácticas y basadas en el juego.",
       descripcion: [
-        "El Semillero STEAMers Kids fue un espacio formativo dirigido a estudiantes de primaria para explorar las áreas de Ciencia, Tecnología, Ingeniería, Arte y Matemáticas (STEAM) mediante experiencias prácticas y basadas en el juego.",
-        "A través del uso de herramientas digitales, actividades creativas y proyectos de robótica artesanal, los estudiantes se acercaron a conceptos de programación básica, pensamiento computacional y experimentación, fortaleciendo su curiosidad científica y su capacidad para resolver problemas.",
-        "El curso fue diseñado para principiantes, por lo que no se requirieron conocimientos previos.",
+        "El Semillero STEAMers Kids es un espacio formativo dirigido a estudiantes de primaria para introducirlos en las áreas de Ciencia, Tecnología, Ingeniería, Arte y Matemáticas (STEAM) a través de actividades lúdicas y prácticas. Durante el curso, los participantes exploraron el pensamiento computacional, la programación por bloques, el modelado 3D en Tinkercad y la construcción de robots artesanales, trabajando mediante metodologías activas como el juego, los retos y el trabajo colaborativo. Como resultado del proceso, los estudiantes diseñaron y pusieron a prueba sus propios robots, fortaleciendo habilidades como la creatividad, la resolución de problemas y el trabajo en equipo.",
       ],
       trabajado: [
         "Exploraron el pensamiento computacional mediante actividades desconectadas.",
@@ -100,6 +117,7 @@ export default function Formacion() {
       titulo: "IA para Educadores",
       tematica: "IA",
       estado: "En curso",
+      edad: "18+ años",
       lugar: "Lugar X",
       fechas: ["15 de marzo - 30 de abril de 2026"],
       sesiones: [
@@ -120,12 +138,453 @@ export default function Formacion() {
       competencias: ["Competencia 1"],
       proyectoFinal: "Proyecto final...",
     },
+    {
+      id: "3",
+      titulo: "Explorando la IA",
+      tematica: "Inteligencia Artificial",
+      estado: "Finalizado",
+      edad: "8 a 17 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["24 de abril - 29 de mayo de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20Explorando%20la%20IA.jpeg",
+      subtitulo:
+        "Curso para comprender la Inteligencia Artificial de forma accesible, creativa y reflexiva.",
+      descripcion: [
+        "El curso Explorando la Inteligencia Artificial acercó a estudiantes de primaria y secundaria al mundo de la IA de manera accesible, creativa y reflexiva, permitiéndoles comprender qué es, cómo funciona y en qué contextos se utiliza. A través de actividades lúdicas, herramientas digitales y proyectos creativos, los participantes exploraron conceptos como el aprendizaje automático, los algoritmos y el uso de plataformas de IA para la creación de contenidos como historias, imágenes y música. El proceso se desarrolló mediante metodologías activas que promovieron el pensamiento crítico, el trabajo colaborativo y la reflexión ética, finalizando con la socialización de proyectos donde los estudiantes analizaron el impacto y las implicaciones del uso de la inteligencia artificial en la vida cotidiana.",
+      ],
+      trabajado: ["Proyecto creativo con IA"],
+      enfoque: "Enfoque de exploración tecnológica y pensamiento crítico.",
+      metodologias: ["Aprendizaje basado en proyectos"],
+      enfoqueCierre: "Socialización de proyectos y reflexión ética.",
+      competencias: ["Pensamiento crítico", "Creatividad", "Trabajo colaborativo"],
+      proyectoFinal: "Socialización de proyectos sobre uso e impacto de la IA.",
+    },
+    {
+      id: "4",
+      titulo: "Senior Tech: Herramientas digitales para la vida",
+      tematica: "Alfabetización Digital",
+      estado: "Finalizado",
+      edad: "Adultos mayores",
+      lugar: "Palma de Mayorca",
+      fechas: ["6 de mayo - 24 de junio de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20Senior%20Tech.jpeg",
+      subtitulo:
+        "Ruta formativa para fortalecer habilidades digitales y autonomía tecnológica en personas mayores.",
+      descripcion: [
+        "La ruta formativa Senior Tech: apropiación digital para todxs fue un espacio diseñado para fortalecer las habilidades digitales de personas mayores, promoviendo su inclusión y autonomía en un entorno cada vez más tecnológico. A través de un enfoque práctico y vivencial basado en STEAM, los participantes aprendieron el uso básico de dispositivos, navegación segura en internet, realización de trámites en línea y el uso de herramientas como asistentes virtuales e inteligencia artificial. El proceso se desarrolló mediante actividades colaborativas, ejercicios cotidianos y espacios de reflexión, permitiendo no solo adquirir conocimientos técnicos, sino también ganar confianza, pensamiento crítico y seguridad en el uso de la tecnología en su vida diaria.",
+      ],
+      trabajado: [
+        "Uso básico de dispositivos digitales",
+        "Navegación segura en internet",
+        "Trámites en línea",
+        "Uso de asistentes virtuales e inteligencia artificial",
+      ],
+      enfoque: "Enfoque práctico, vivencial y colaborativo basado en STEAM.",
+      metodologias: ["Actividades colaborativas", "Ejercicios cotidianos", "Espacios de reflexión"],
+      enfoqueCierre: "Fortalecimiento de confianza y autonomía digital para la vida diaria.",
+      competencias: ["Autonomía digital", "Pensamiento crítico", "Seguridad digital"],
+      proyectoFinal: "Aplicación de herramientas digitales en situaciones cotidianas.",
+    },
+    {
+      id: "5",
+      titulo: "Exprésate con estilo: Canva",
+      tematica: "Diseño",
+      estado: "Finalizado",
+      edad: "10 en adelante",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["14 de mayo - 30 de mayo"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/CID-10_Ecard.jpeg",
+      subtitulo:
+        "Curso para fortalecer habilidades de comunicación visual con herramientas digitales.",
+      descripcion: [
+        "El curso Exprésate con estilo: Canva fue un espacio formativo orientado a profesionales, emprendedores y estudiantes interesados en fortalecer sus habilidades de comunicación visual mediante el uso de herramientas digitales. A través de sesiones prácticas, los participantes aprendieron a crear piezas gráficas atractivas para sus proyectos, explorando el potencial de Canva para diseñar contenidos visuales de manera sencilla y creativa, potenciando así su capacidad de comunicar ideas de forma efectiva.",
+      ],
+      trabajado: [
+        "Diseño de piezas gráficas con Canva",
+        "Comunicación visual para proyectos",
+      ],
+      enfoque: "Aprendizaje práctico orientado a comunicación visual efectiva.",
+      metodologias: ["Sesiones prácticas", "Aprendizaje basado en creación"],
+      enfoqueCierre: "Fortalecimiento de habilidades de diseño y expresión visual.",
+      competencias: ["Comunicación visual", "Creatividad digital"],
+      proyectoFinal: "Creación de piezas gráficas aplicadas a proyectos personales o profesionales.",
+    },
+    {
+      id: "6",
+      titulo: "Fotografía Creativa Express",
+      tematica: "Fotografía",
+      estado: "Finalizado",
+      edad: "12 a 20 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["13 de junio - 29 de mayo"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/CID-09_Ecard.jpeg",
+      subtitulo:
+        "Experiencia intensiva para desarrollar una mirada fotográfica técnica, narrativa y creativa.",
+      descripcion: [
+        "Este curso de fotografía creativa express está diseñado como una experiencia de aprendizaje intensiva para transformar la mirada técnica en una capacidad narrativa profunda en tiempo récord. El programa se centra en el dominio de la luz natural y artificial, explorando cómo las atmósferas visuales y los contrastes pueden comunicar emociones específicas sin depender exclusivamente de equipos costosos. A través de módulos prácticos, los estudiantes aprenden reglas de composición avanzada, como el uso de marcos naturales y líneas de fuga, para guiar la atención del espectador de manera efectiva. La metodología promueve el \"disparo consciente\", una técnica que busca minimizar errores desde la captura para optimizar los flujos de trabajo en la postproducción digital posterior. Al finalizar, los participantes habrán desarrollado un lenguaje visual propio, siendo capaces de identificar oportunidades estéticas en entornos cotidianos y producir imágenes con acabado profesional. Es una propuesta ideal para quienes buscan resultados inmediatos en sus proyectos visuales, integrando la eficiencia técnica con la sensibilidad artística necesaria para contar historias impactantes.",
+      ],
+      trabajado: [
+        "Dominio de luz natural y artificial",
+        "Composición avanzada",
+        "Narrativa visual",
+        "Disparo consciente y postproducción",
+      ],
+      enfoque: "Aprendizaje intensivo orientado a resultados visuales inmediatos y de alta calidad.",
+      metodologias: ["Módulos prácticos", "Ejercicios de observación", "Producción visual aplicada"],
+      enfoqueCierre: "Integración de técnica fotográfica con sensibilidad artística y narrativa.",
+      competencias: ["Composición visual", "Narrativa fotográfica", "Sensibilidad estética"],
+      proyectoFinal: "Producción de imágenes con acabado profesional y enfoque narrativo propio.",
+    },
+    {
+      id: "7",
+      titulo: "Stop Motion con Legos",
+      tematica: "Animación",
+      estado: "Finalizado",
+      edad: "8 a 16 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["17 de junio - 20 de junio de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/stopmotion%20con%20legos.png",
+      subtitulo:
+        "Curso creativo para explorar animación y narrativa audiovisual con LEGO y herramientas digitales.",
+      descripcion: [
+        "El curso Stop Motion con Legos fue una experiencia creativa en la que niños, niñas y adolescentes exploraron el mundo de la animación y la narrativa audiovisual mediante la creación de cortometrajes cuadro a cuadro. A través del uso de piezas LEGO, herramientas digitales y metodologías activas, los participantes diseñaron historias, construyeron escenarios y dieron vida a sus ideas, fortaleciendo habilidades como la creatividad, el pensamiento lógico, el trabajo en equipo y la resolución de problemas, en un proceso lúdico que integró elementos del pensamiento computacional y la expresión artística.",
+      ],
+      trabajado: [
+        "Creación de historias cuadro a cuadro",
+        "Diseño de escenarios con LEGO",
+        "Narrativa audiovisual",
+        "Pensamiento computacional y expresión artística",
+      ],
+      enfoque: "Aprendizaje lúdico y creativo para contar historias a través de la animación.",
+      metodologias: ["Metodologías activas", "Creación colaborativa", "Producción audiovisual práctica"],
+      enfoqueCierre: "Integración de creatividad, lógica y trabajo en equipo mediante el stop motion.",
+      competencias: ["Creatividad", "Pensamiento lógico", "Trabajo en equipo", "Resolución de problemas"],
+      proyectoFinal: "Creación de cortometrajes animados cuadro a cuadro con LEGO.",
+    },
+    {
+      id: "8",
+      titulo: "STEAMers Kids 2",
+      tematica: "Robótica",
+      estado: "Finalizado",
+      edad: "10 a 13 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["16 de junio - 20 de junio de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20Steamer%20Kids%20%281%29.jpeg",
+      subtitulo:
+        "Curso para explorar las áreas STEAM mediante programación, pensamiento computacional y robótica creativa.",
+      descripcion: [
+        "El curso STEAMers Kids fue un espacio formativo dirigido a niños y niñas entre 10 y 13 años para explorar las áreas STEAM a través de la programación, el pensamiento computacional y la creación de proyectos tecnológicos. Durante las sesiones, los participantes trabajaron con programación por bloques, diseño 3D en Tinkercad y la construcción de robots artesanales motorizados, desarrollando retos prácticos que fomentaron la creatividad, el pensamiento lógico y la resolución de problemas. Como resultado, los estudiantes diseñaron, construyeron y pusieron a prueba sus propios robots en una actividad colaborativa, fortaleciendo habilidades técnicas y de trabajo en equipo.",
+      ],
+      trabajado: [
+        "Programación por bloques",
+        "Pensamiento computacional",
+        "Diseño 3D en Tinkercad",
+        "Construcción de robots artesanales motorizados",
+      ],
+      enfoque: "Aprendizaje práctico STEAM basado en retos y creación tecnológica.",
+      metodologias: ["Retos prácticos", "Aprendizaje activo", "Trabajo colaborativo"],
+      enfoqueCierre: "Fortalecimiento de habilidades técnicas, creativas y de colaboración.",
+      competencias: ["Creatividad", "Pensamiento lógico", "Resolución de problemas", "Trabajo en equipo"],
+      proyectoFinal: "Diseño, construcción y prueba de robots propios en una actividad colaborativa.",
+    },
+    {
+      id: "9",
+      titulo: "Música y Ciencia",
+      tematica: "Música",
+      estado: "Finalizado",
+      edad: "8 a 12 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["24 de junio - 27 de junio"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20Ciencia%20y%20M%C3%BAsica.jpeg",
+      subtitulo:
+        "Taller para explorar la música y el sonido mediante la creación de instrumentos artesanales.",
+      descripcion: [
+        "El taller Creando instrumentos fue una experiencia lúdica en la que niños y niñas exploraron la música a través de la creación de instrumentos artesanales como maracas, palo de agua y zampoñas. Mediante actividades de ritmo, construcción y experimentación sonora, los participantes comprendieron de manera práctica conceptos básicos sobre el sonido, fortaleciendo su creatividad, el trabajo en equipo y la expresión musical en un ambiente participativo.",
+      ],
+      trabajado: [
+        "Creación de maracas, palo de agua y zampoñas",
+        "Ritmo y experimentación sonora",
+        "Conceptos básicos sobre el sonido",
+      ],
+      enfoque: "Aprendizaje lúdico basado en construcción, ritmo y exploración musical.",
+      metodologias: ["Actividades de ritmo", "Construcción artesanal", "Experimentación sonora"],
+      enfoqueCierre: "Fortalecimiento de creatividad, expresión musical y trabajo en equipo.",
+      competencias: ["Creatividad", "Trabajo en equipo", "Expresión musical"],
+      proyectoFinal: "Construcción y exploración de instrumentos artesanales propios.",
+    },
+    {
+      id: "10",
+      titulo: "Explorando el territorio",
+      tematica: "Medio ambiente",
+      estado: "Finalizado",
+      edad: "9 a 12 años",
+      lugar: "Area de Recreación Urbana (ARU) Trianón-La Heliodora",
+      fechas: ["24 de junio - 27 de julio de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20Explorando.jpeg",
+      subtitulo:
+        "Experiencia educativa para explorar la flora y fauna de Envigado mediante recorridos y actividades prácticas.",
+      descripcion: [
+        "El curso Explorando el territorio fue una experiencia educativa en la que niños y niñas exploraron la flora y fauna de Envigado a través de recorridos, observación directa y actividades prácticas como la elaboración de herbarios y el uso de bitácoras de campo. Durante las sesiones, los participantes fortalecieron su pensamiento científico, la creatividad y el trabajo en equipo, al tiempo que desarrollaron una mayor conciencia sobre el cuidado del entorno natural y la importancia de la biodiversidad.",
+      ],
+      trabajado: [
+        "Recorridos y observación directa",
+        "Elaboración de herbarios",
+        "Uso de bitácoras de campo",
+        "Exploración de flora y fauna local",
+      ],
+      enfoque: "Aprendizaje vivencial en territorio para fortalecer la relación con el entorno natural.",
+      metodologias: ["Recorridos guiados", "Observación directa", "Actividades prácticas"],
+      enfoqueCierre: "Desarrollo de pensamiento científico, creatividad y conciencia ambiental.",
+      competencias: ["Pensamiento científico", "Trabajo en equipo", "Conciencia ambiental"],
+      proyectoFinal: "Registro y análisis de hallazgos del entorno natural mediante bitácoras y herbarios.",
+    },
+    {
+      id: "11",
+      titulo: "Let's Play Videopodcast Gamer",
+      tematica: "Podcast",
+      estado: "Finalizado",
+      edad: "12 a 18 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["24 de junio - 27 de julio de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20Video%20Podcast.jpeg",
+      subtitulo:
+        "Semillero vacacional para crear contenidos digitales y episodios sobre videojuegos en formato podcast.",
+      descripcion: [
+        "El semillero vacacional Videopodcast Gamer fue una experiencia formativa en la que los participantes exploraron la creación de contenidos digitales a través del formato podcast, enfocado en el mundo de los videojuegos. Durante las sesiones, desarrollaron habilidades de expresión oral, manejo de la voz, escritura de guiones y producción audiovisual, culminando con la grabación de sus propios episodios. Este proceso fortaleció la creatividad, la comunicación y la confianza en un entorno dinámico y participativo.",
+      ],
+      trabajado: [
+        "Expresión oral y manejo de la voz",
+        "Escritura de guiones",
+        "Producción audiovisual",
+        "Grabación de episodios propios",
+      ],
+      enfoque: "Aprendizaje creativo y participativo para la producción de contenidos digitales.",
+      metodologias: ["Producción práctica", "Creación colaborativa", "Narrativa digital"],
+      enfoqueCierre: "Fortalecimiento de creatividad, comunicación y confianza en un entorno dinámico.",
+      competencias: ["Comunicación", "Creatividad", "Confianza", "Producción digital"],
+      proyectoFinal: "Grabación y socialización de episodios de videopodcast sobre videojuegos.",
+    },
+    {
+      id: "12",
+      titulo: "Fotografía de retrato",
+      tematica: "Fotografía",
+      estado: "Finalizado",
+      edad: "18 o mas años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["29 de julio - 12 de agosto"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20Fotografia%20de%20Retrato.jpeg",
+      subtitulo:
+        "Serie de cursos para convertir el celular en una herramienta de expresión artística y conexión humana.",
+      descripcion: [
+        "Retratos con Alma es una serie de cursos diseñados para transformar el celular en una herramienta de expresión artística y conexión humana profunda. A lo largo de este proceso, los participantes exploran la fotografía más allá de la captura convencional, enfocándose en descubrir la esencia de las personas y las historias que habitan en su entorno cotidiano. Desde el dominio de la luz natural y el drama del blanco y negro hasta la construcción de narrativas visuales complejas en color, cada sesión prioriza la sensibilidad narrativa sobre la técnica fría. El programa enseña a dirigir sujetos mediante la conversación y la empatía, reemplazando las poses rígidas por gestos genuinos que revelan la identidad única del retratado. En esta etapa avanzada, los estudiantes profundizan en el retrato conceptual, la psicología cromática y la postproducción profesional en Snapseed, desarrollando una voz artística propia y coherente. El viaje creativo culmina en una exposición física donde cada participante materializa su visión en una fotografía impresa de alta calidad. Esta propuesta busca democratizar el arte visual, demostrando que no se requiere equipo profesional para conmover a la comunidad. Al finalizar, los alumnos no solo dominan su dispositivo, sino que han cultivado una mirada poética capaz de transformar lo ordinario en una obra de arte digna de ser expuesta.",
+      ],
+      trabajado: [
+        "Dirección de retrato con empatía y conversación",
+        "Narrativas visuales en blanco y negro y color",
+        "Retrato conceptual y psicología cromática",
+        "Postproducción profesional en Snapseed",
+      ],
+      enfoque: "Formación artística orientada a la sensibilidad narrativa y la identidad visual.",
+      metodologias: ["Práctica guiada", "Narrativa visual", "Crítica y curaduría fotográfica"],
+      enfoqueCierre: "Consolidación de una voz artística propia y exposición final de obra.",
+      competencias: ["Narrativa visual", "Dirección de retrato", "Postproducción", "Expresión artística"],
+      proyectoFinal: "Exposición física de una fotografía de retrato impresa en alta calidad.",
+    },
+    {
+      id: "13",
+      titulo: "Fotografía Experimental",
+      tematica: "Fotografía",
+      estado: "Finalizado",
+      edad: "18 o mas años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["29 de julio - 12 de agosto"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20Fotografia%20Experimental.jpeg",
+      subtitulo:
+        "Un laboratorio creativo y práctico donde el celular se convierte en una herramienta de exploración artística ilimitada.",
+      descripcion: [
+        "El curso fotografía Experimental es un laboratorio creativo y práctico donde el teléfono celular deja de ser una simple cámara para convertirse en una herramienta de exploración artística ilimitada. A lo largo de la experiencia, los estudiantes descubren cómo romper las reglas tradicionales de la imagen, aprendiendo a alterar físicamente la óptica con vidrios y celofanes, manipular el comportamiento de la luz a través de técnicas como el light painting y la larga exposición, y fusionar el mundo físico con el digital mediante proyecciones. En esencia, se aprende a observar la realidad desde una perspectiva completamente nueva, transformando objetos cotidianos y espacios comunes en composiciones visuales abstractas y oníricas, lo que les permite desarrollar su pensamiento creativo y encontrar su propia voz expresiva más allá del modo automático.",
+      ],
+      trabajado: [
+        "Alteración física de la óptica con vidrios y celofanes",
+        "Técnicas de light painting y larga exposición",
+        "Fusión del mundo físico y digital mediante proyecciones",
+        "Composiciones visuales abstractas y oníricas",
+      ],
+      enfoque: "Exploración artística ilimitada a través de técnicas experimentales con dispositivos móviles.",
+      metodologias: ["Experimentación práctica", "Exploración creativa", "Innovación visual"],
+      enfoqueCierre: "Desarrollo del pensamiento creativo y expresión artística personal más allá de formas convencionales.",
+      competencias: ["Pensamiento creativo", "Exploración técnica", "Expresión artística", "Innovación visual"],
+      proyectoFinal: "Creación de series de composiciones visuales experimentales y presentación de descubrimientos artísticos.",
+    },
+    {
+      id: "14",
+      titulo: "CapCut Creativo",
+      tematica: "Edición",
+      estado: "Finalizado",
+      edad: "18 o mas años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["23 de julio - 31 de julio"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20CapCut%20Creativo.jpeg",
+      subtitulo:
+        "Curso práctico y dinámico para editar videos desde el celular con creatividad y enfoque comunicativo.",
+      descripcion: [
+        "El curso CapCut Creativo permitió a los participantes aprender a editar videos desde el celular de forma práctica y dinámica, explorando herramientas básicas de corte, efectos, texto y sonido. A través de actividades creativas, desarrollaron contenidos audiovisuales propios, fortaleciendo su creatividad, expresión digital y habilidades de comunicación en entornos digitales.",
+      ],
+      trabajado: [
+        "Herramientas de corte y organización de clips",
+        "Aplicación de efectos, texto y sonido",
+        "Producción de contenidos audiovisuales propios",
+        "Comunicación digital en formatos de video",
+      ],
+      enfoque: "Formación práctica en edición móvil para potenciar la expresión digital.",
+      metodologias: ["Aprendizaje basado en proyectos", "Práctica guiada", "Creación audiovisual"],
+      enfoqueCierre: "Consolidación de habilidades narrativas y técnicas para comunicar ideas con video.",
+      competencias: ["Edición de video", "Creatividad", "Comunicación digital", "Narrativa audiovisual"],
+      proyectoFinal: "Creación y presentación de una pieza audiovisual editada completamente en celular.",
+    },
+    {
+      id: "15",
+      titulo: "A Fuego Lento",
+      tematica: "Cocina",
+      estado: "Finalizado",
+      edad: "18 o mas años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["10 de septiembre - 29 de octubre"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20A%20Fuego%20Lento.jpeg",
+      subtitulo:
+        "Curso para explorar la alimentación como fenómeno cultural, ecológico, narrativo y científico.",
+      descripcion: [
+        "La alimentación como un fenómeno cultural, ecológico, narrativo y científico, a través de experiencias sensoriales y reflexivas en torno a ingredientes fundamentales de la cocina colombiana, especialmente antioqueña, con énfasis en la conexión entre historia, ciencia y tradición",
+      ],
+      trabajado: [
+        "Lectura cultural e histórica de ingredientes locales",
+        "Experiencias sensoriales aplicadas a la cocina",
+        "Relación entre ciencia, tradición y territorio",
+        "Reflexión ecológica sobre prácticas alimentarias",
+      ],
+      enfoque: "Aprendizaje integral de la cocina como lenguaje cultural, científico y ecológico.",
+      metodologias: ["Exploración sensorial", "Aprendizaje experiencial", "Reflexión colectiva"],
+      enfoqueCierre: "Reconocimiento de la cocina como puente entre memoria, territorio e innovación.",
+      competencias: ["Cultura alimentaria", "Pensamiento crítico", "Sensibilidad ecológica", "Trabajo colaborativo"],
+      proyectoFinal: "Diseño de una propuesta culinaria argumentada desde historia, ciencia y tradición local.",
+    },
+    {
+      id: "16",
+      titulo: "Diseño Creativo en Canva",
+      tematica: "Diseño",
+      estado: "Finalizado",
+      edad: "18 o mas años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["5 de septiembre - 19 de septiembre"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20Diseno%20Creativo%20en%20Canva.jpeg",
+      subtitulo:
+        "Introducción práctica al diseño gráfico digital para crear contenidos visuales claros y creativos.",
+      descripcion: [
+        "El curso Diseño Creativo en Canva brindó a los participantes una introducción práctica al diseño gráfico digital, permitiéndoles crear contenidos visuales de manera sencilla y creativa. A través del uso de herramientas intuitivas, exploraron principios básicos de diseño, desarrollaron piezas gráficas y fortalecieron habilidades de comunicación visual en un entorno dinámico y accesible.",
+      ],
+      trabajado: [
+        "Principios básicos de composición y jerarquía visual",
+        "Creación de piezas gráficas en Canva",
+        "Uso de plantillas, tipografía y color",
+        "Comunicación visual para entornos digitales",
+      ],
+      enfoque: "Diseño accesible y funcional orientado a la comunicación visual efectiva.",
+      metodologias: ["Práctica guiada", "Diseño por proyectos", "Iteración creativa"],
+      enfoqueCierre: "Fortalecimiento de la autonomía para crear piezas gráficas con intención comunicativa.",
+      competencias: ["Diseño gráfico básico", "Comunicación visual", "Creatividad", "Uso de herramientas digitales"],
+      proyectoFinal: "Desarrollo de una colección de piezas gráficas para una campaña de comunicación.",
+    },
+    {
+      id: "17",
+      titulo: "Retratos con Alma",
+      tematica: "Fotografía",
+      estado: "Finalizado",
+      edad: "18 o mas años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["2 de septiembre - 18 de septiembre"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20Retratos%20con%20Alma.jpeg",
+      subtitulo:
+        "Proceso fotográfico para construir retratos sensibles, narrativos y técnicamente sólidos desde el celular.",
+      descripcion: [
+        "Retratos con Alma es una serie de cursos diseñados para transformar el celular en una herramienta de expresión artística y conexión humana profunda. A lo largo de este proceso, los participantes exploran la fotografía más allá de la captura convencional, enfocándose en descubrir la esencia de las personas y las historias que habitan en su entorno cotidiano. Desde el dominio de la luz natural y el drama del blanco y negro hasta la construcción de narrativas visuales complejas en color, cada sesión prioriza la sensibilidad narrativa sobre la técnica fría. El programa enseña a dirigir sujetos mediante la conversación y la empatía, reemplazando las poses rígidas por gestos genuinos que revelan la identidad única del retratado. En esta etapa avanzada, los estudiantes profundizan en el retrato conceptual, la psicología cromática y la postproducción profesional en Snapseed, desarrollando una voz artística propia y coherente. El viaje creativo culmina en una exposición física donde cada participante materializa su visión en una fotografía impresa de alta calidad. Esta propuesta busca democratizar el arte visual, demostrando que no se requiere equipo profesional para conmover a la comunidad. Al finalizar, los alumnos no solo dominan su dispositivo, sino que han cultivado una mirada poética capaz de transformar lo ordinario en una obra de arte digna de ser expuesta.",
+      ],
+      trabajado: [
+        "Dirección de sujetos desde la conversación y la empatía",
+        "Narrativas visuales en blanco y negro y color",
+        "Retrato conceptual y psicología cromática",
+        "Postproducción avanzada en Snapseed",
+      ],
+      enfoque: "Formación fotográfica centrada en la sensibilidad narrativa y la identidad del retratado.",
+      metodologias: ["Práctica guiada", "Narrativa visual", "Crítica y curaduría fotográfica"],
+      enfoqueCierre: "Consolidación de una voz autoral propia mediante una exposición final.",
+      competencias: ["Dirección de retrato", "Narrativa visual", "Postproducción", "Expresión artística"],
+      proyectoFinal: "Producción y exhibición de una fotografía de retrato impresa en alta calidad.",
+    },
+    {
+      id: "18",
+      titulo: "Excel Power BI",
+      tematica: "Analítica",
+      estado: "Finalizado",
+      edad: "18 o mas años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["15 de octubre - 26 de noviembre"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/Formacion/Ecard%20Power%20Bi.jpeg",
+      subtitulo:
+        "Introducción práctica a la analítica de datos con Excel y Power BI para organizar, visualizar y comunicar información.",
+      descripcion: [
+        "El curso Excel y Power BI ofreció una introducción práctica a la analítica de datos, permitiendo a los participantes dar sus primeros pasos en el manejo, organización y visualización de información. A través del uso de herramientas accesibles, se exploraron conceptos básicos de análisis de datos y se desarrollaron habilidades para interpretar y comunicar información de manera efectiva.",
+      ],
+      trabajado: [
+        "Organización y limpieza básica de datos",
+        "Visualización de información con gráficos y tableros",
+        "Conceptos fundamentales de análisis de datos",
+        "Comunicación efectiva de hallazgos",
+      ],
+      enfoque: "Aprendizaje aplicado en analítica para la toma de decisiones informadas.",
+      metodologias: ["Práctica guiada", "Análisis de casos", "Construcción de tableros"],
+      enfoqueCierre: "Fortalecimiento de competencias para interpretar datos y convertirlos en información útil.",
+      competencias: ["Analítica básica", "Visualización de datos", "Pensamiento lógico", "Comunicación de datos"],
+      proyectoFinal: "Construcción de un tablero básico en Power BI con datos organizados en Excel.",
+    },
   ];
 
   const ecardTagStyles: Record<string, string> = {
     tematica: "border-cyan-200 bg-cyan-50 text-cyan-800",
     fechas: "border-amber-200 bg-amber-50 text-amber-800",
     estado: "border-rose-200 bg-rose-50 text-rose-800",
+    edad: "border-emerald-200 bg-emerald-50 text-emerald-800",
     lugar: "border-violet-200 bg-violet-50 text-violet-800",
   };
 
@@ -142,19 +601,68 @@ export default function Formacion() {
     }
   };
 
+  const parseEdadRange = (edad: string): { min: number; max: number } | null => {
+    const normalized = edad.toLowerCase();
+
+    if (normalized.includes("adultos mayores")) {
+      return { min: 60, max: Number.POSITIVE_INFINITY };
+    }
+
+    const plusMatch = normalized.match(/(\d+)\s*\+/);
+    if (plusMatch) {
+      const min = Number(plusMatch[1]);
+      return { min, max: Number.POSITIVE_INFINITY };
+    }
+
+    const openMatch = normalized.match(/(\d+)\s*(?:en adelante|o mas|o más)/);
+    if (openMatch) {
+      const min = Number(openMatch[1]);
+      return { min, max: Number.POSITIVE_INFINITY };
+    }
+
+    const rangeMatch = normalized.match(/(\d+)\s*(?:a|-)\s*(\d+)/);
+    if (rangeMatch) {
+      const min = Number(rangeMatch[1]);
+      const max = Number(rangeMatch[2]);
+      return { min: Math.min(min, max), max: Math.max(min, max) };
+    }
+
+    return null;
+  };
+
+  const rangesOverlap = (
+    a: { min: number; max: number },
+    b: { min: number; max: number }
+  ) => a.min <= b.max && b.min <= a.max;
+
   const filteredEcards = ecards.filter((ecard) => {
+    const ecardEdadRange = parseEdadRange(ecard.edad);
+    const selectedTematicaValues = new Set(
+      selectedTematicas.flatMap((tematica) => tematicaAliases[tematica] ?? [tematica])
+    );
     const matchesSearch = ecard.titulo
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesTematica =
       selectedTematicas.length === 0 ||
-      selectedTematicas.includes(ecard.tematica);
+      selectedTematicaValues.has(ecard.tematica);
     const matchesEstado =
       selectedEstados.length === 0 || selectedEstados.includes(ecard.estado);
+    const matchesEdad =
+      selectedEdades.length === 0 ||
+      (ecardEdadRange && selectedEdades.some((edadSeleccionada) => {
+        const bucketRange = edadBuckets[edadSeleccionada];
+        if (!bucketRange) return false;
+        return rangesOverlap(bucketRange, ecardEdadRange);
+      }));
     const matchesLugar =
-      selectedLugares.length === 0 || selectedLugares.includes(ecard.lugar);
+      selectedLugares.length === 0 ||
+      selectedLugares.some((lugarSeleccionado) => {
+        const lugarAliasValues = lugarAliases[lugarSeleccionado] ?? [lugarSeleccionado];
+        return lugarAliasValues.includes(ecard.lugar);
+      });
 
-    return matchesSearch && matchesTematica && matchesEstado && matchesLugar;
+    return matchesSearch && matchesTematica && matchesEstado && matchesEdad && matchesLugar;
   });
 
   // Separar por categoría
@@ -206,10 +714,34 @@ export default function Formacion() {
   const tematicaColor: Record<string, string> = {
     Robotica: "bg-cyan-400",
     IA: "bg-violet-400",
+    "Inteligencia Artificial": "bg-violet-500",
+    "Animación": "bg-fuchsia-400",
     Musica: "bg-pink-400",
+    "Diseño": "bg-indigo-400",
     Ciencia: "bg-emerald-400",
     Fotografia: "bg-amber-400",
+    "Fotografía": "bg-amber-400",
+    "Medio ambiente": "bg-lime-500",
+    Podcast: "bg-sky-500",
     Edicion: "bg-orange-400",
+    "Edición": "bg-orange-400",
+    Cocina: "bg-red-400",
+    "Analítica": "bg-teal-500",
+  };
+
+  const wideCardWidthByTitle: Record<string, number> = {
+    "STEAMers Kids 2": 1.28,
+    "Stop Motion con Legos": 1.28,
+    "Música y Ciencia": 1.28,
+    "Explorando el territorio": 1.28,
+    "Let's Play Videopodcast Gamer": 1.28,
+    "Fotografía de retrato": 1.28,
+    "Fotografía Experimental": 1.28,
+    "CapCut Creativo": 1.28,
+    "A Fuego Lento": 1.28,
+    "Diseño Creativo en Canva": 1.28,
+    "Retratos con Alma": 1.28,
+    "Excel Power BI": 1.28,
   };
 
   // Componente de carrusel
@@ -219,63 +751,178 @@ export default function Formacion() {
   }: {
     title: string;
     items: ECard[];
-  }) => (
-    <div className="mb-12">
-      <h2 className="text-2xl font-bold mb-6 text-slate-900">{title}</h2>
-      {items.length === 0 ? (
-        <div className="text-center py-12 bg-slate-50 rounded-lg">
-          <BookOpen className="h-12 w-12 mx-auto text-muted-foreground mb-2" />
-          <p className="text-muted-foreground">
-            No hay cursos disponibles en esta categoría
-          </p>
-        </div>
-      ) : (
-        <div className="overflow-x-auto pb-4">
-          <div className="flex gap-6 w-min md:w-full">
-            {items.map((ecard) => (
-              <button
-                key={ecard.id}
-                type="button"
-                onClick={() => {
-                  setSelectedEcard(ecard);
-                  setEcardOpen(true);
-                }}
-                className="group block flex-shrink-0 w-80 overflow-hidden rounded-2xl shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl text-left"
-                aria-label={`Abrir ${ecard.titulo}`}
-              >
-                <img
-                  src={ecard.imagen}
-                  alt={ecard.titulo}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-auto w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
-                />
-                <div className="bg-white px-4 py-3">
-                  <p className="mb-2 text-sm font-bold text-slate-900 line-clamp-2">
-                    {ecard.titulo}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    <Badge variant="outline" className={`text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.tematica}`}>
-                      {ecard.tematica}
-                    </Badge>
-                    <Badge variant="outline" className={`text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.fechas}`}>
-                      {ecard.fechas[0]}
-                    </Badge>
-                    <Badge variant="outline" className={`text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.estado}`}>
-                      {ecard.estado}
-                    </Badge>
-                    <Badge variant="outline" className={`text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.lugar}`}>
-                      {ecard.lugar}
-                    </Badge>
-                  </div>
-                </div>
-              </button>
-            ))}
+  }) => {
+    const orderedItems = [...items].reverse();
+    const trackRef = useRef<HTMLDivElement | null>(null);
+    const [carouselIndex, setCarouselIndex] = useState(0);
+    const [pageCount, setPageCount] = useState(1);
+    const [visibleCards, setVisibleCards] = useState(4);
+    const gapPx = 24;
+
+    useEffect(() => {
+      const updateVisibleCards = () => {
+        if (window.innerWidth >= 1280) {
+          setVisibleCards(4);
+          return;
+        }
+        if (window.innerWidth >= 1024) {
+          setVisibleCards(3);
+          return;
+        }
+        if (window.innerWidth >= 768) {
+          setVisibleCards(2);
+          return;
+        }
+        setVisibleCards(1);
+      };
+
+      updateVisibleCards();
+      window.addEventListener("resize", updateVisibleCards);
+      return () => window.removeEventListener("resize", updateVisibleCards);
+    }, []);
+
+    useEffect(() => {
+      const track = trackRef.current;
+      if (!track) return;
+
+      const syncPagination = () => {
+        const nextPageCount = Math.max(1, Math.ceil(track.scrollWidth / track.clientWidth));
+        setPageCount(nextPageCount);
+        const nextIndex = Math.min(
+          nextPageCount - 1,
+          Math.max(0, Math.round(track.scrollLeft / track.clientWidth))
+        );
+        setCarouselIndex(nextIndex);
+      };
+
+      syncPagination();
+      track.addEventListener("scroll", syncPagination, { passive: true });
+      window.addEventListener("resize", syncPagination);
+
+      return () => {
+        track.removeEventListener("scroll", syncPagination);
+        window.removeEventListener("resize", syncPagination);
+      };
+    }, [orderedItems.length, visibleCards]);
+
+    const scrollToPage = (page: number) => {
+      const track = trackRef.current;
+      if (!track) return;
+      track.scrollTo({ left: track.clientWidth * page, behavior: "smooth" });
+    };
+
+    return (
+      <div className="mb-12">
+        <h2 className="text-2xl font-bold mb-6 text-slate-900">{title}</h2>
+        {orderedItems.length === 0 ? (
+          <div className="text-center py-12 bg-slate-50 rounded-lg">
+            <BookOpen className="h-12 w-12 mx-auto text-muted-foreground mb-2" />
+            <p className="text-muted-foreground">
+              No hay cursos disponibles en esta categoría
+            </p>
           </div>
-        </div>
-      )}
-    </div>
-  );
+        ) : (
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => scrollToPage(Math.max(0, carouselIndex - 1))}
+              aria-label={`Anterior en ${title}`}
+              disabled={carouselIndex === 0}
+              className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollToPage(Math.min(pageCount - 1, carouselIndex + 1))}
+              aria-label={`Siguiente en ${title}`}
+              disabled={carouselIndex >= pageCount - 1}
+              className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+
+            <div
+              ref={trackRef}
+              className="overflow-x-auto overflow-y-hidden px-6 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              <div
+                className="flex"
+                style={{
+                  gap: `${gapPx}px`,
+                }}
+              >
+                {orderedItems.map((ecard) => (
+                  <button
+                    key={ecard.id}
+                    type="button"
+                    onClick={() => {
+                      setSelectedEcard(ecard);
+                      setEcardOpen(true);
+                    }}
+                    className="group block h-full snap-start overflow-hidden rounded-2xl shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl text-left"
+                    style={{
+                      flex: wideCardWidthByTitle[ecard.titulo]
+                        ? `0 0 calc(((100% - ${(visibleCards - 1) * gapPx}px) / ${visibleCards}) * ${wideCardWidthByTitle[ecard.titulo]})`
+                        : `0 0 calc((100% - ${(visibleCards - 1) * gapPx}px) / ${visibleCards})`,
+                    }}
+                    aria-label={`Abrir ${ecard.titulo}`}
+                  >
+                    <div className="flex h-[22rem] items-start justify-center overflow-hidden bg-white pt-3 sm:h-[24rem] lg:h-[25rem]">
+                      <img
+                        src={ecard.imagen}
+                        alt={ecard.titulo}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-contain object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                      />
+                    </div>
+                    <div className="bg-white px-3 py-3">
+                      <p className="mb-2 text-sm font-bold text-slate-900 line-clamp-2">
+                        {ecard.titulo}
+                      </p>
+                      <div className="-ml-0.5 flex flex-wrap gap-1.5">
+                        <Badge variant="outline" className={`max-w-full whitespace-normal break-words text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.tematica}`}>
+                          {ecard.tematica}
+                        </Badge>
+                        <Badge variant="outline" className={`max-w-full whitespace-normal break-words text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.edad}`}>
+                          {ecard.edad}
+                        </Badge>
+                        <Badge variant="outline" className={`max-w-full whitespace-normal break-words text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.fechas}`}>
+                          {ecard.fechas[0]}
+                        </Badge>
+                        <Badge variant="outline" className={`max-w-full whitespace-normal break-words text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.estado}`}>
+                          {ecard.estado}
+                        </Badge>
+                        <Badge variant="outline" className={`max-w-full whitespace-normal break-words text-xs leading-4 rounded-full px-2 py-0.5 text-left ${ecardTagStyles.lugar}`}>
+                          {ecard.lugar}
+                        </Badge>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-center gap-2">
+              {Array.from({ length: pageCount }, (_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => scrollToPage(idx)}
+                  aria-label={`Ir al bloque ${idx + 1} en ${title}`}
+                  className={`h-2 rounded-full transition-all ${
+                    carouselIndex === idx ? "w-8 bg-slate-800" : "w-2 bg-slate-400"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen py-8 bg-slate-50">
@@ -470,6 +1117,37 @@ export default function Formacion() {
                 </div>
               </div>
 
+              {/* Filtros por Edad */}
+              <div className="mb-8 pb-8 border-b border-slate-200">
+                <h3 className="text-sm font-semibold text-slate-900 mb-3">
+                  Edad
+                </h3>
+                <div className="space-y-2">
+                  {edades.map((edad) => (
+                    <label
+                      key={edad}
+                      className="flex items-center gap-3 cursor-pointer group"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedEdades.includes(edad)}
+                        onChange={() =>
+                          toggleFilter(
+                            edad,
+                            selectedEdades,
+                            setSelectedEdades
+                          )
+                        }
+                        className="w-4 h-4 rounded border-slate-300 text-emerald-500 focus:ring-2 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm text-slate-700 group-hover:text-slate-900">
+                        {edad}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
               {/* Filtros por Lugar */}
               <div className="mb-6">
                 <h3 className="text-sm font-semibold text-slate-900 mb-3">
@@ -505,12 +1183,14 @@ export default function Formacion() {
               {(searchTerm ||
                 selectedTematicas.length > 0 ||
                 selectedEstados.length > 0 ||
+                selectedEdades.length > 0 ||
                 selectedLugares.length > 0) && (
                 <button
                   onClick={() => {
                     setSearchTerm("");
                     setSelectedTematicas([]);
                     setSelectedEstados([]);
+                    setSelectedEdades([]);
                     setSelectedLugares([]);
                   }}
                   className="w-full py-2 px-3 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors"
@@ -533,133 +1213,82 @@ export default function Formacion() {
       {/* MODAL DE DETALLE */}
       {ecardOpen && selectedEcard && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden bg-black/55 p-3 md:p-4"
           onClick={() => setEcardOpen(false)}
         >
           <div
-            className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl"
+            className="max-h-[90vh] w-full max-w-5xl overflow-x-hidden overflow-y-auto rounded-3xl border border-slate-200 bg-white shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-white px-5 py-4">
-              <div>
-                <h3 className="text-lg font-bold text-slate-900">
-                  {selectedEcard.titulo}
-                </h3>
-              </div>
+            <div className="relative p-5 md:p-8">
               <button
                 type="button"
                 onClick={() => setEcardOpen(false)}
-                className="rounded-full p-1.5 text-slate-600 hover:bg-slate-100"
+                className="absolute right-4 top-4 rounded-full p-1.5 text-slate-600 hover:bg-slate-100"
                 aria-label="Cerrar información del curso"
               >
                 <X className="h-5 w-5" />
               </button>
-            </div>
 
-            <div className="p-6 md:p-8">
-              <div className="mb-6 overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
-                <img
-                  src={selectedEcard.imagen}
-                  alt={selectedEcard.titulo}
-                  loading="eager"
-                  decoding="async"
-                  className="w-full object-cover"
-                />
-              </div>
-
-              <h4 className="text-2xl font-black text-slate-900">
-                {selectedEcard.titulo}
-              </h4>
-              <p className="mt-2 text-base leading-7 text-slate-700">
-                {selectedEcard.subtitulo}
-              </p>
-
-              <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-5">
-                  <h5 className="text-base font-bold text-emerald-800">
-                    Estado del curso
-                  </h5>
-                  <p className="mt-2 text-sm font-medium text-emerald-900">
-                    {selectedEcard.estado}
-                  </p>
+              <div className="grid gap-6 md:grid-cols-[320px_minmax(0,1fr)] md:gap-8">
+                <div className="max-h-[320px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 md:max-h-none">
+                  <img
+                    src={selectedEcard.imagen}
+                    alt={selectedEcard.titulo}
+                    loading="eager"
+                    decoding="async"
+                    className="h-full w-full object-contain"
+                  />
                 </div>
-                <div className="rounded-xl border border-amber-100 bg-amber-50 p-5">
-                  <h5 className="text-base font-bold text-amber-800">
-                    Fechas de realización
-                  </h5>
-                  <div className="mt-2 space-y-1 text-sm text-amber-900">
-                    {selectedEcard.fechas.map((fecha) => (
-                      <p key={fecha}>{fecha}</p>
+
+                <div className="md:pr-8">
+                  <h3 className="text-2xl font-black text-slate-900 md:text-3xl">
+                    {selectedEcard.titulo}
+                  </h3>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <Badge
+                      variant="outline"
+                      className={`max-w-full whitespace-normal break-words rounded-full px-3 py-1 text-left text-sm font-semibold ${ecardTagStyles.estado}`}
+                    >
+                      {selectedEcard.estado}
+                    </Badge>
+                    <Badge
+                      variant="outline"
+                      className={`max-w-full whitespace-normal break-words rounded-full px-3 py-1 text-left text-sm font-semibold ${ecardTagStyles.tematica}`}
+                    >
+                      {selectedEcard.tematica}
+                    </Badge>
+                    <Badge
+                      variant="outline"
+                      className={`max-w-full whitespace-normal break-words rounded-full px-3 py-1 text-left text-sm font-semibold ${ecardTagStyles.edad}`}
+                    >
+                      {selectedEcard.edad}
+                    </Badge>
+                    <Badge
+                      variant="outline"
+                      className={`max-w-full whitespace-normal break-words rounded-full px-3 py-1 text-left text-sm font-semibold ${ecardTagStyles.fechas}`}
+                    >
+                      {selectedEcard.fechas[0]}
+                    </Badge>
+                    <Badge
+                      variant="outline"
+                      className={`max-w-full whitespace-normal break-words rounded-xl px-3 py-1 text-left text-sm font-semibold ${ecardTagStyles.lugar}`}
+                    >
+                      {selectedEcard.lugar}
+                    </Badge>
+                  </div>
+
+                  <div className="mt-5 h-px w-full bg-slate-200" />
+
+                  <div className="mt-5 space-y-4">
+                    {selectedEcard.descripcion.map((parrafo) => (
+                      <p key={parrafo} className="text-base leading-7 text-slate-700">
+                        {parrafo}
+                      </p>
                     ))}
                   </div>
                 </div>
-              </div>
-
-              <div className="mt-5 space-y-4">
-                {selectedEcard.descripcion.map((parrafo) => (
-                  <p key={parrafo} className="text-base leading-7 text-slate-700">
-                    {parrafo}
-                  </p>
-                ))}
-              </div>
-
-              <div className="mt-7 rounded-xl border border-slate-200 bg-slate-50 p-5">
-                <h5 className="text-lg font-bold text-slate-900">
-                  ¿Qué se trabajó en el semillero?
-                </h5>
-                <ul className="mt-3 space-y-2">
-                  {selectedEcard.trabajado.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-2 text-sm leading-6 text-slate-700"
-                    >
-                      <span className="mt-2 inline-block h-1.5 w-1.5 rounded-full bg-fuchsia-600" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-5">
-                  <h5 className="text-base font-bold text-emerald-800">
-                    Enfoque pedagógico
-                  </h5>
-                  <p className="mt-2 text-sm leading-6 text-emerald-900">
-                    {selectedEcard.enfoque}
-                  </p>
-                  <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
-                    Metodologías aplicadas
-                  </p>
-                  <ul className="mt-3 space-y-1 text-sm font-medium text-emerald-900">
-                    {selectedEcard.metodologias.map((item) => (
-                      <li key={item}>• {item}</li>
-                    ))}
-                  </ul>
-                  <p className="mt-3 text-sm leading-6 text-emerald-900">
-                    {selectedEcard.enfoqueCierre}
-                  </p>
-                </div>
-
-                <div className="rounded-xl border border-indigo-100 bg-indigo-50 p-5">
-                  <h5 className="text-base font-bold text-indigo-800">
-                    Habilidades desarrolladas
-                  </h5>
-                  <ul className="mt-3 space-y-1 text-sm text-indigo-900">
-                    {selectedEcard.competencias.map((item) => (
-                      <li key={item}>• {item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="mt-6 rounded-xl border border-fuchsia-100 bg-fuchsia-50 p-5">
-                <h5 className="text-base font-bold text-fuchsia-800">
-                  Proyecto final
-                </h5>
-                <p className="mt-2 text-sm leading-6 text-fuchsia-900">
-                  {selectedEcard.proyectoFinal}
-                </p>
               </div>
             </div>
           </div>
