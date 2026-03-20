@@ -420,45 +420,22 @@ export default function Nosotros() {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative z-10 overflow-hidden">
-        <img
-          src="/banners/banner-nosotros.png"
-          alt="Banner sección Nosotros"
-          loading="eager"
-          fetchPriority="high"
-          decoding="sync"
-          className="w-full h-auto object-cover"
-        />
-      </section>
-
-      <section className="pt-10 pb-10 bg-gradient-to-b from-white to-slate-50">
-        <div className="container">
-          <div className="mx-auto max-w-4xl text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Navegación rápida</h2>
-            <p className="mt-3 text-slate-600">Accede en un clic a las secciones principales de esta página.</p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {quickSections.map((section, idx) => (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                className="group rounded-2xl border border-slate-200 bg-white px-5 py-4 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
-              >
-                <div className="mb-3 flex items-center justify-between">
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600">
-                    {String(idx + 1).padStart(2, "0")}
-                  </span>
-                  <ArrowRight className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-teal-600" />
-                </div>
-                <span className="text-sm md:text-base font-semibold text-slate-800 group-hover:text-slate-900">
-                  {section.title}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
+      {/* Banner Principal Nosotros */}
+      <section className="relative w-full overflow-hidden md:h-screen">
+        <picture>
+          <source
+            media="(max-width: 767px)"
+            srcSet="/Nosotros/Banner%20principal%20cel.png"
+          />
+          <img
+            src="/Nosotros/Banner%20principal.png"
+            alt="Banner principal Nosotros"
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
+            className="w-full h-auto object-contain md:h-full md:object-cover md:object-center"
+          />
+        </picture>
       </section>
 
       {/* Nuestro ADN */}

@@ -46,14 +46,14 @@ export default function Header() {
   const showProyectos = false;
   const mobileMenuItemClass = "px-4 py-2 rounded-md hover:bg-accent text-base font-medium leading-6";
   const mobileAccordionTriggerClass = "px-2 py-2 text-base font-medium leading-6";
-  const isHome = location === "/";
-  const headerClassName = isHome
+  const isTransparent = location === "/" || location === "/nosotros";
+  const headerClassName = isTransparent
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
     : "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
-  const topLevelNavLinkClass = isHome
+  const topLevelNavLinkClass = isTransparent
     ? "group inline-flex h-10 w-max items-center justify-center rounded-md bg-black/35 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
     : "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
-  const triggerClassName = isHome
+  const triggerClassName = isTransparent
     ? "h-10 rounded-md bg-black/35 px-4 text-sm font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
     : "";
 
@@ -190,7 +190,7 @@ export default function Header() {
           {/* Logo y título */}
           <Link href="/" className="flex min-w-0 items-center gap-3 hover:opacity-80 transition-opacity">
             <img src="/logo-colores.png" alt="Logo CID" className="h-10 w-10" />
-            <span className={`line-clamp-2 max-w-[185px] text-xs font-bold leading-tight sm:max-w-none sm:text-lg sm:leading-normal ${isHome ? "text-white drop-shadow" : "text-primary"}`}>
+            <span className={`line-clamp-2 max-w-[185px] text-xs font-bold leading-tight sm:max-w-none sm:text-lg sm:leading-normal ${isTransparent ? "text-white drop-shadow" : "text-primary"}`}>
               {APP_TITLE}
             </span>
           </Link>

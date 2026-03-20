@@ -27,6 +27,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+
       {/* Hero Section */}
       <section className="relative w-full overflow-hidden md:h-screen">
         <picture>
@@ -45,79 +46,79 @@ export default function Home() {
         </picture>
       </section>
 
-      {/* Carrusel de Cursos */}
-      {showCoursesCarousel && <CoursesCarouselNew />}
-
-      {/* Banners de acceso rápido */}
-      <section className="bg-white pt-4 md:py-8">
-        <div className="w-full space-y-2 md:container md:mx-auto md:space-y-4 md:px-4">
-          <Link href="/nosotros" aria-label="Ir a Nosotros" className="group block">
-            <div className="overflow-hidden rounded-2xl shadow-md">
-              <div className="relative overflow-hidden rounded-2xl">
-                <img
-                  src="/banners/banner%202.png"
-                  alt="Banner Nosotros"
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.01] md:group-hover:scale-100"
-                />
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 hidden bg-black/0 transition-colors duration-300 md:block md:group-hover:bg-black/20"
-                />
-              </div>
-            </div>
-          </Link>
-
-          <Link href="/formacion" aria-label="Ir a Formación" className="group block">
-            <div className="overflow-hidden rounded-2xl shadow-md">
-              <div className="relative overflow-hidden rounded-2xl">
-                <img
-                  src="/banners/banner%204.png"
-                  alt="Banner Formación"
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.01] md:group-hover:scale-100"
-                />
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 hidden bg-black/0 transition-colors duration-300 md:block md:group-hover:bg-black/20"
-                />
-              </div>
-            </div>
-          </Link>
-
-          <div className="overflow-hidden rounded-2xl shadow-md">
-            <div className="overflow-hidden rounded-2xl">
-              <img
-                src="/banners/banner%203.png"
-                alt="Banner Convocatorias"
-                loading="lazy"
-                decoding="async"
-                className="w-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Banner Nuestras Secciones — ancho completo */}
-      <section className="w-full pt-4 md:pt-0">
+      {/* Banner Trancion de fondo debajo del principal y debajo de los cuadros */}
+      <div className="relative w-full">
         <img
-          src="/banners/nuestras%20secciones.png"
-          alt="Nuestras Secciones"
+          src="/Home/banner%20trancion.png"
+          alt="Banner Trancion"
           loading="lazy"
           decoding="async"
-          className="w-full object-cover h-16 sm:h-20 md:h-auto"
+          className="absolute inset-0 w-full h-auto object-cover z-0"
+          style={{ pointerEvents: 'none' }}
         />
-      </section>
+        {/* Banners de acceso rápido sobre el fondo */}
+        <section className="relative z-10 bg-transparent pt-4 md:py-8">
+          <div className="w-full space-y-2 md:container md:mx-auto md:space-y-4 md:px-4">
+            <Link href="/nosotros" aria-label="Ir a Nosotros" className="group block">
+              <div className="overflow-hidden rounded-2xl shadow-md">
+                <div className="relative overflow-hidden rounded-2xl">
+                  <img
+                    src="/banners/banner%202.png"
+                    alt="Banner Nosotros"
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.01] md:group-hover:scale-100"
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 hidden bg-black/0 transition-colors duration-300 md:block md:group-hover:bg-black/20"
+                  />
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/formacion" aria-label="Ir a Formación" className="group block">
+              <div className="overflow-hidden rounded-2xl shadow-md">
+                <div className="relative overflow-hidden rounded-2xl">
+                  <img
+                    src="/banners/banner%204.png"
+                    alt="Banner Formación"
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.01] md:group-hover:scale-100"
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 hidden bg-black/0 transition-colors duration-300 md:block md:group-hover:bg-black/20"
+                  />
+                </div>
+              </div>
+            </Link>
+
+            <div className="overflow-hidden rounded-2xl shadow-md">
+              <div className="overflow-hidden rounded-2xl">
+                <img
+                  src="/banners/banner%203.png"
+                  alt="Banner Convocatorias"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Carrusel de Cursos */}
+      {showCoursesCarousel && <CoursesCarouselNew />}
 
       {/* Accesos Rápidos */}
       <section className="py-16">
         {/* Nuestras Secciones - estilo destacado (comparación) */}
         <section className="w-full py-12" style={{ background: '#11B2AA' }}>
           <div className="container">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-[#2B3990] tracking-tight">NUESTRAS SECCIONES</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Territorio STEM */}
               <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
