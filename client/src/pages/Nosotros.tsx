@@ -74,6 +74,7 @@ export default function Nosotros() {
   const [gestoresCarouselIndex, setGestoresCarouselIndex] = useState(0);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [timelineMobileIndex, setTimelineMobileIndex] = useState(0);
+  const [activeNosotrosSection, setActiveNosotrosSection] = useState<"direccion" | "gestores" | "cpa">("direccion");
 
   const quickSections = [
     { id: "lo-que-hacemos", title: "Lo que Hacemos y Cómo Impactamos" },
@@ -462,6 +463,49 @@ export default function Nosotros() {
           className="w-full h-auto object-contain md:h-full md:object-cover md:object-center"
         />
       </section>
+
+      <section className="bg-white pt-6 pb-3">
+        <div className="container">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <Button
+              type="button"
+              onClick={() => setActiveNosotrosSection("direccion")}
+              className={
+                activeNosotrosSection === "direccion"
+                  ? "w-full bg-blue-600 text-white hover:bg-blue-700"
+                  : "w-full bg-slate-100 text-slate-700 hover:bg-slate-200"
+              }
+            >
+              Dirección de Innovación
+            </Button>
+            <Button
+              type="button"
+              onClick={() => setActiveNosotrosSection("gestores")}
+              className={
+                activeNosotrosSection === "gestores"
+                  ? "w-full bg-blue-600 text-white hover:bg-blue-700"
+                  : "w-full bg-slate-100 text-slate-700 hover:bg-slate-200"
+              }
+            >
+              Gestores
+            </Button>
+            <Button
+              type="button"
+              onClick={() => setActiveNosotrosSection("cpa")}
+              className={
+                activeNosotrosSection === "cpa"
+                  ? "w-full bg-blue-600 text-white hover:bg-blue-700"
+                  : "w-full bg-slate-100 text-slate-700 hover:bg-slate-200"
+              }
+            >
+              Centro de producción audiovisual (CPA)
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {activeNosotrosSection === "direccion" ? (
+        <>
 
       {/* Nuestro ADN */}
       <section className="pt-10 pb-2 bg-white">
@@ -966,7 +1010,7 @@ export default function Nosotros() {
             loading="eager"
             fetchPriority="high"
             decoding="sync"
-            className="rounded-2xl shadow-2xl w-full h-[320px] sm:h-[690px] md:h-[770px] lg:h-[830px] object-cover object-top mb-16"
+            className="w-full rounded-2xl shadow-2xl h-auto sm:h-[690px] md:h-[770px] lg:h-[830px] object-contain sm:object-cover sm:object-top mb-16"
           />
 
           <div className="relative">
@@ -1076,6 +1120,171 @@ export default function Nosotros() {
           />
         </div>
       </div>
+
+      {/* Event Detail Modal */}
+      {selectedEvent && (
+        <div
+          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedEvent(null)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-2xl p-8 max-w-2xl w-full shadow-2xl"
+          >
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-teal-600 flex items-center justify-center text-white font-bold text-lg">
+                  {selectedEvent.year}
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">{selectedEvent.title}</h3>
+                  {selectedEvent.category && (
+                    <span className="text-sm text-blue-600 font-semibold">{selectedEvent.category}</span>
+                  )}
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedEvent(null)}
+                className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
+              >
+                ×
+              </button>
+            </div>
+            <p className="text-gray-700 text-lg leading-relaxed mb-6">
+              {selectedEvent.description}
+            </p>
+            {(selectedEvent.location || selectedEvent.participants) && (
+              <div className="flex gap-6 pt-4 border-t border-gray-200">
+                {selectedEvent.location && (
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <MapPin className="w-5 h-5" />
+                    <span>{selectedEvent.location}</span>
+                  </div>
+                )}
+                {selectedEvent.participants && (
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Users className="w-5 h-5" />
+                    <span>{selectedEvent.participants} participantes</span>
+                  </div>
+                )}
+              </div>
+            )}
+          </motion.div>
+        </div>
+      )}
+
+      <section id="horizonte-estrategico" className="scroll-mt-24">
+        <ServicesSection />
+      </section>
+
+      {/* Líneas Estratégicas */}
+      <section className="pt-10 pb-2 bg-white">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-16 text-center">Líneas Estratégicas del Centro de Ciencia</h2>
+          <div className="grid md:grid-cols-2 gap-12 mb-16">
+            <Card className="border-0 bg-gradient-to-br from-teal-50 to-cyan-50 shadow-lg hover:shadow-xl transition-all">
+              <CardHeader>
+                <CardTitle className="text-2xl text-teal-600">Apropiación Social del Conocimiento</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700">Busca conectar la investigación con las realidades y necesidades de la sociedad, haciendo que el conocimiento sea accesible y relevante para todos.</p>
+              </CardContent>
+            </Card>
+            <Card className="border-0 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg hover:shadow-xl transition-all">
+              <CardHeader>
+                <CardTitle className="text-2xl text-blue-600">Divulgación Pública de la Ciencia</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700">Acercar la ciencia y la tecnología a la sociedad de manera clara, accesible y atractiva, fomentando una cultura científica en la comunidad.</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Placeholder - Comunidad Impactada */}
+        </div>
+      </section>
+
+
+
+
+      <section id="comunidad-impactada" className="scroll-mt-24">
+        <CommunityImpactSectionV1 />
+      </section>
+
+
+      {/* Lo que el mundo ve en nosotros */}
+      <section id="mundo-ve" className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-white scroll-mt-24">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-16 text-center">Lo que el Mundo Ve en Nosotros</h2>
+          <div className="grid md:grid-cols-2 gap-6 mb-12">
+            {logrosData.map((logro, idx) => (
+              <div key={idx} className="flex gap-4 p-6 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 hover:border-green-300 transition-all">
+                <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-1">
+                  <span className="text-white font-bold text-sm">✓</span>
+                </div>
+                <p className="text-gray-700">{logro}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Placeholder - Líneas Temáticas */}
+        </div>
+      </section>
+
+      <section id="lineas-tematicas" className="scroll-mt-24">
+        <ThematicLines />
+      </section>
+
+      {/* El camino que soñamos */}
+      <section className="pt-10 pb-2 bg-gradient-to-br from-blue-600 via-teal-500 to-green-500 text-white">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-12 text-center">El Camino que Soñamos para el Centro de Ciencia</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 hover:border-white/40 transition-all">
+              <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-6">
+                <Lightbulb className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-4">Consolidación Académica</h3>
+              <p>Contribuir con la consolidación del sector académico – científico para responder a los retos del siglo XXI.</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 hover:border-white/40 transition-all">
+              <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-6">
+                <Palette className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-4">Articulación Sectorial</h3>
+              <p>Articular la ciencia, la tecnología y la innovación con el sector productivo de Envigado.</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 hover:border-white/40 transition-all">
+              <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-6">
+                <Leaf className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-4">Territorio STEM+</h3>
+              <p>Incentivar la apropiación social de la CTI en actores clave para impulsar el territorio STEM+.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+        </>
+      ) : (
+        <section className="bg-white py-14">
+          <div className="container">
+            <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-slate-50 px-6 py-12 text-center">
+              <h2 className="mb-3 text-2xl font-bold text-slate-900">
+                {activeNosotrosSection === "gestores"
+                  ? "Gestores"
+                  : "Centro de producción audiovisual (CPA)"}
+              </h2>
+              <p className="text-slate-600">
+                Esta sección estará disponible próximamente.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
