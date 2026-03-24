@@ -536,7 +536,7 @@ export default function Header() {
 
         {/* Menú móvil */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t py-4">
+          <div className="lg:hidden border-t py-4 bg-white">
             <nav className="flex flex-col gap-2">
               <Link href="/" className={mobileMenuItemClass} onClick={closeMobileMenu}>Inicio</Link>
               <Link href="/nosotros" className={mobileMenuItemClass} onClick={closeMobileMenu}>Nosotros</Link>

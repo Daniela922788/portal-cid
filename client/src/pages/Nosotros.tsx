@@ -72,6 +72,8 @@ export default function Nosotros() {
   const [directionCarouselIndex, setDirectionCarouselIndex] = useState(0);
   const [directionVisibleCards, setDirectionVisibleCards] = useState(4);
   const [gestoresCarouselIndex, setGestoresCarouselIndex] = useState(0);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [timelineMobileIndex, setTimelineMobileIndex] = useState(0);
 
   const quickSections = [
     { id: "lo-que-hacemos", title: "Lo que Hacemos y Cómo Impactamos" },
@@ -337,6 +339,8 @@ export default function Nosotros() {
 
   useEffect(() => {
     const updateVisibleCards = () => {
+      setIsMobileViewport(window.innerWidth < 768);
+
       if (window.innerWidth >= 1280) {
         setDirectionVisibleCards(4);
         return;
@@ -352,7 +356,7 @@ export default function Nosotros() {
         return;
       }
 
-      setDirectionVisibleCards(1);
+      setDirectionVisibleCards(2);
     };
 
     updateVisibleCards();
@@ -361,7 +365,7 @@ export default function Nosotros() {
   }, []);
 
   const directionTotal = equipoImagenes.length;
-  const directionGapPx = 32;
+  const directionGapPx = directionVisibleCards === 2 ? 12 : 32;
   const directionMaxStart = Math.max(0, directionTotal - directionVisibleCards);
 
   const goDirectionPrev = () => {
@@ -373,8 +377,9 @@ export default function Nosotros() {
   };
 
   const gestoresTotal = gestoresData.length;
-  const gestoresGapPx = 32;
+  const gestoresGapPx = isMobileViewport ? 12 : 32;
   const gestoresMaxStart = Math.max(0, gestoresTotal - directionVisibleCards);
+  const timelineMobileMaxIndex = Math.max(0, sortedYears.length - 1);
 
   const goGestoresPrev = () => {
     setGestoresCarouselIndex((prev) => Math.max(0, prev - 1));
@@ -384,6 +389,14 @@ export default function Nosotros() {
     setGestoresCarouselIndex((prev) => Math.min(gestoresMaxStart, prev + 1));
   };
 
+  const goTimelineMobilePrev = () => {
+    setTimelineMobileIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const goTimelineMobileNext = () => {
+    setTimelineMobileIndex((prev) => Math.min(timelineMobileMaxIndex, prev + 1));
+  };
+
   useEffect(() => {
     setDirectionCarouselIndex((prev) => Math.min(prev, directionMaxStart));
   }, [directionMaxStart]);
@@ -391,6 +404,10 @@ export default function Nosotros() {
   useEffect(() => {
     setGestoresCarouselIndex((prev) => Math.min(prev, gestoresMaxStart));
   }, [gestoresMaxStart]);
+
+  useEffect(() => {
+    setTimelineMobileIndex((prev) => Math.min(prev, timelineMobileMaxIndex));
+  }, [timelineMobileMaxIndex]);
 
   useEffect(() => {
     const priorityGestores = [
@@ -436,20 +453,14 @@ export default function Nosotros() {
     <div ref={containerRef} className="min-h-screen bg-white">
       {/* Banner Principal Nosotros */}
       <section className="relative w-full overflow-hidden md:h-screen">
-        <picture>
-          <source
-            media="(max-width: 767px)"
-            srcSet="/Nosotros/Banner%20principal%20cel.png"
-          />
-          <img
-            src="/Nosotros/Banner%20principal.png"
-            alt="Banner principal Nosotros"
-            loading="eager"
-            fetchPriority="high"
-            decoding="sync"
-            className="w-full h-auto object-contain md:h-full md:object-cover md:object-center"
-          />
-        </picture>
+        <img
+          src="/Nosotros/Banner%20principal.png"
+          alt="Banner principal Nosotros"
+          loading="eager"
+          fetchPriority="high"
+          decoding="sync"
+          className="w-full h-auto object-contain md:h-full md:object-cover md:object-center"
+        />
       </section>
 
       {/* Nuestro ADN */}
@@ -459,11 +470,11 @@ export default function Nosotros() {
           
           {/* Dirección de Innovación */}
           <div className="mb-16">
-            <h3 className="text-3xl font-bold mb-6 text-blue-600">La Dirección de Innovación</h3>
-            <p className="text-lg text-gray-700 mb-6">
+            <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-blue-600">La Dirección de Innovación</h3>
+            <p className="text-base sm:text-lg text-gray-700 mb-6">
               La Dirección de Innovación es una dependencia estratégica de la Secretaría de Educación de Envigado, cuyo propósito principal es liderar, coordinar y promover el desarrollo científico, tecnológico y de innovación como motores del progreso social, económico, educativo y cultural.
             </p>
-            <p className="text-lg text-gray-700">
+            <p className="text-base sm:text-lg text-gray-700">
               Esta dirección actúa como puente entre la comunidad, el conocimiento científico y las soluciones innovadoras a problemáticas reales del entorno.
             </p>
           </div>
@@ -479,52 +490,52 @@ export default function Nosotros() {
 
           {/* Nuestro Equipo */}
           <div className="mb-16">
-            <h3 className="text-3xl font-bold mb-8 text-center text-teal-600">Nuestro Equipo</h3>
-            <p className="text-lg text-gray-700 mb-12 text-center">
+            <h3 className="text-2xl sm:text-3xl font-bold mb-8 text-center text-teal-600">Nuestro Equipo</h3>
+            <p className="text-base sm:text-lg text-gray-700 mb-12 text-center">
               Contamos con un equipo multidisciplinario que hace posible el diseño, la ejecución y el acompañamiento de nuestras iniciativas
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
-                <CardHeader className="space-y-3">
-                  <div className="h-1.5 w-14 rounded-full bg-blue-500" />
-                  <CardTitle className="text-xl text-slate-900">Equipo Administrativo</CardTitle>
-                  <p className="text-sm font-medium text-slate-500">7 personas</p>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4">
+              <Card className="border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+                <CardHeader className="space-y-1.5 p-3 sm:space-y-3 sm:p-6">
+                  <div className="h-1.5 w-10 rounded-full bg-blue-500 sm:w-14" />
+                  <CardTitle className="text-sm leading-tight text-slate-900 sm:text-xl">Equipo Administrativo</CardTitle>
+                  <p className="text-xs font-medium text-slate-500 sm:text-sm">7 personas</p>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-slate-700">Lidera los procesos estratégicos que dan vida a los proyectos.</p>
+                <CardContent className="p-3 pt-0 sm:p-6 sm:pt-0">
+                  <p className="text-xs leading-snug text-slate-700 sm:text-base">Lidera los procesos estratégicos que dan vida a los proyectos.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
-                <CardHeader className="space-y-3">
-                  <div className="h-1.5 w-14 rounded-full bg-teal-500" />
-                  <CardTitle className="text-xl text-slate-900">Gestores de Innovación e Investigación</CardTitle>
-                  <p className="text-sm font-medium text-slate-500">16 personas</p>
+              <Card className="border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+                <CardHeader className="space-y-1.5 p-3 sm:space-y-3 sm:p-6">
+                  <div className="h-1.5 w-10 rounded-full bg-teal-500 sm:w-14" />
+                  <CardTitle className="text-sm leading-tight text-slate-900 sm:text-xl">Gestores de Innovación e Investigación</CardTitle>
+                  <p className="text-xs font-medium text-slate-500 sm:text-sm">16 personas</p>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-slate-700">Acompaña procesos pedagógicos innovadores y de investigación que fortalecen la transformación educativa.</p>
+                <CardContent className="p-3 pt-0 sm:p-6 sm:pt-0">
+                  <p className="text-xs leading-snug text-slate-700 sm:text-base">Acompaña procesos pedagógicos innovadores y de investigación que fortalecen la transformación educativa.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
-                <CardHeader className="space-y-3">
-                  <div className="h-1.5 w-14 rounded-full bg-cyan-500" />
-                  <CardTitle className="text-xl text-slate-900">Equipo de Tecnología</CardTitle>
-                  <p className="text-sm font-medium text-slate-500">5 personas</p>
+              <Card className="border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+                <CardHeader className="space-y-1.5 p-3 sm:space-y-3 sm:p-6">
+                  <div className="h-1.5 w-10 rounded-full bg-cyan-500 sm:w-14" />
+                  <CardTitle className="text-sm leading-tight text-slate-900 sm:text-xl">Equipo de Tecnología</CardTitle>
+                  <p className="text-xs font-medium text-slate-500 sm:text-sm">5 personas</p>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-slate-700">Implementa soluciones digitales para nuestras iniciativas educativas.</p>
+                <CardContent className="p-3 pt-0 sm:p-6 sm:pt-0">
+                  <p className="text-xs leading-snug text-slate-700 sm:text-base">Implementa soluciones digitales para nuestras iniciativas educativas.</p>
                 </CardContent>
               </Card>
 
-              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
-                <CardHeader className="space-y-3">
-                  <div className="h-1.5 w-14 rounded-full bg-emerald-500" />
-                  <CardTitle className="text-xl text-slate-900">Técnicos Audiovisuales</CardTitle>
-                  <p className="text-sm font-medium text-slate-500">2 personas</p>
+              <Card className="border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+                <CardHeader className="space-y-1.5 p-3 sm:space-y-3 sm:p-6">
+                  <div className="h-1.5 w-10 rounded-full bg-emerald-500 sm:w-14" />
+                  <CardTitle className="text-sm leading-tight text-slate-900 sm:text-xl">Técnicos Audiovisuales</CardTitle>
+                  <p className="text-xs font-medium text-slate-500 sm:text-sm">2 personas</p>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-slate-700">Generan experiencias mediante narrativas visuales de alto impacto.</p>
+                <CardContent className="p-3 pt-0 sm:p-6 sm:pt-0">
+                  <p className="text-xs leading-snug text-slate-700 sm:text-base">Generan experiencias mediante narrativas visuales de alto impacto.</p>
                 </CardContent>
               </Card>
             </div>
@@ -533,7 +544,7 @@ export default function Nosotros() {
       </section>
 
       {/* Lo que hacemos */}
-      <section id="lo-que-hacemos" className="pt-20 pb-2 bg-gradient-to-br from-gray-50 to-white scroll-mt-24">
+      <section id="lo-que-hacemos" className="pt-6 sm:pt-20 pb-2 bg-gradient-to-br from-gray-50 to-white scroll-mt-24">
         <div className="container">
           <h2 className="text-4xl font-bold mb-10 text-center">Lo que Hacemos y Cómo Impactamos</h2>
           <div className="grid md:grid-cols-2 gap-4 mb-10">
@@ -609,9 +620,9 @@ export default function Nosotros() {
               className="rounded-2xl shadow-2xl w-full h-auto object-cover"
             />
             <div>
-              <h2 className="text-4xl font-bold mb-6">Centro de Ciencia - MEN</h2>
-              <p className="text-lg text-gray-700 mb-6">Los Centros de Ciencia, se definen como instituciones de carácter público, privado o mixto, sin ánimo de lucro, con personería jurídica o dependientes de otra organización, con una planta física abierta al público de manera permanente y que tienen la apropiación social del conocimiento como parte integral de su misión u objeto social.</p>
-              <p className="text-lg text-gray-700">Asimismo, reconocen la diversidad cultural, económica y social de las comunidades, promueven los principios de acceso democrático a la información y al conocimiento, y contribuyen a fortalecer la cultura de ciencia y tecnología en el país mediante programas y actividades educativas.</p>
+              <h2 className="text-2xl sm:text-4xl font-bold mb-6 whitespace-nowrap sm:whitespace-normal">Centro de Ciencia - MEN</h2>
+              <p className="text-base sm:text-lg text-gray-700 mb-6">Los Centros de Ciencia, se definen como instituciones de carácter público, privado o mixto, sin ánimo de lucro, con personería jurídica o dependientes de otra organización, con una planta física abierta al público de manera permanente y que tienen la apropiación social del conocimiento como parte integral de su misión u objeto social.</p>
+              <p className="text-base sm:text-lg text-gray-700">Asimismo, reconocen la diversidad cultural, económica y social de las comunidades, promueven los principios de acceso democrático a la información y al conocimiento, y contribuyen a fortalecer la cultura de ciencia y tecnología en el país mediante programas y actividades educativas.</p>
             </div>
           </div>
         </div>
@@ -637,11 +648,11 @@ export default function Nosotros() {
       </section>
 
       {/* Línea del Tiempo */}
-      <section className="pt-10 pb-2 bg-white">
+      <section className="pt-4 sm:pt-10 pb-2 bg-white">
         <div className="container">
           
           {/* Línea de Tiempo Interactiva */}
-          <div className="mt-16 relative">
+          <div className="mt-8 sm:mt-16 relative">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -658,12 +669,86 @@ export default function Nosotros() {
               </h3>
             </motion.div>
 
-            {/* Timeline horizontal completa sin scroll */}
-            <div className="relative left-1/2 w-screen -translate-x-1/2 px-3 md:px-6 lg:px-8">
+            {/* Timeline carrusel móvil */}
+            <div className="relative left-1/2 w-screen -translate-x-1/2 px-3 md:hidden">
+              <div className="relative">
+                <div className="pointer-events-none absolute left-3 right-3 top-[18px] h-1 rounded-full bg-gradient-to-r from-blue-500 via-teal-500 to-green-500 opacity-35" />
+
+                <div className="relative z-10 mb-3 flex items-center justify-between">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={goTimelineMobilePrev}
+                    disabled={timelineMobileIndex === 0}
+                    aria-label="Año anterior"
+                    className="h-8 w-8 rounded-full"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+
+                  <span className="text-xs font-semibold text-slate-600">
+                    {timelineMobileIndex + 1} / {sortedYears.length}
+                  </span>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={goTimelineMobileNext}
+                    disabled={timelineMobileIndex === timelineMobileMaxIndex}
+                    aria-label="Año siguiente"
+                    className="h-8 w-8 rounded-full"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+
+                {sortedYears.length > 0 && (
+                  <motion.div
+                    key={sortedYears[timelineMobileIndex]}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="w-full"
+                  >
+                    <div className="relative z-10 mb-3 flex items-center gap-2">
+                      <div className="h-4 w-4 rounded-full border-4 border-white bg-gradient-to-r from-blue-500 to-teal-500 shadow" />
+                      <div className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-teal-600 px-3 py-1.5 text-white shadow-lg">
+                        <Calendar className="h-3.5 w-3.5" />
+                        <span className="text-sm font-bold">{sortedYears[timelineMobileIndex]}</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      {(eventsByYear.get(sortedYears[timelineMobileIndex]) || []).map((event) => (
+                        <motion.div
+                          key={event.id}
+                          whileHover={{ scale: 1.01, y: -2 }}
+                          onClick={() => setSelectedEvent(event)}
+                          className="cursor-pointer rounded-lg border border-blue-200 bg-gradient-to-br from-blue-50 to-teal-50 p-3 shadow-sm transition-all hover:border-blue-400 hover:shadow-md"
+                        >
+                          <h4 className="mb-1 text-sm font-bold text-blue-900">{event.title}</h4>
+                          <p className="mb-2 text-xs leading-relaxed text-gray-700">{event.description}</p>
+                          {event.category && (
+                            <span className="inline-block rounded-full bg-blue-600 px-2 py-0.5 text-[10px] text-white">
+                              {event.category}
+                            </span>
+                          )}
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            </div>
+
+            {/* Timeline desktop */}
+            <div className="relative left-1/2 hidden w-screen -translate-x-1/2 px-3 md:block md:px-6 lg:px-8">
               <div className="relative">
                 <div className="pointer-events-none absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-gradient-to-r from-blue-500 via-teal-500 to-green-500 opacity-35" />
 
-                <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4 lg:grid-cols-8 lg:gap-3">
+                <div className="grid grid-cols-4 gap-4 lg:grid-cols-8 lg:gap-3">
                   {sortedYears.map((year, yearIndex) => {
                     const yearEvents = eventsByYear.get(year) || [];
                     const showTopCards = yearIndex % 2 === 0;
@@ -675,9 +760,9 @@ export default function Nosotros() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-80px" }}
                         transition={{ duration: 0.45, delay: yearIndex * 0.04 }}
-                        className="grid min-h-[440px] md:min-h-[480px] grid-rows-[1fr_auto_1fr]"
+                        className="grid min-h-[480px] grid-rows-[1fr_auto_1fr]"
                       >
-                        <div className="flex h-full flex-col justify-end space-y-3 pb-2 md:pb-3">
+                        <div className="flex h-full flex-col justify-end space-y-3 pb-3">
                           {showTopCards &&
                             yearEvents.map((event) => (
                               <motion.div
@@ -698,9 +783,9 @@ export default function Nosotros() {
                         </div>
 
                         <div className="relative z-10 flex flex-col items-center py-3">
-                          <div className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-teal-600 px-3 py-2 text-white shadow-lg md:px-4">
+                          <div className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-teal-600 px-4 py-2 text-white shadow-lg">
                             <Calendar className="h-3.5 w-3.5" />
-                            <span className="text-sm font-bold md:text-base">{year}</span>
+                            <span className="text-base font-bold">{year}</span>
                           </div>
                           <div className="mt-2 h-4 w-4 rounded-full border-4 border-white bg-gradient-to-r from-blue-500 to-teal-500 shadow" />
                         </div>
@@ -811,7 +896,7 @@ export default function Nosotros() {
                 {equipoImagenes.map((persona) => (
                   <div
                     key={persona.id}
-                    className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
+                    className="group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
                     style={{
                       flex: `0 0 calc((100% - ${(directionVisibleCards - 1) * directionGapPx}px) / ${directionVisibleCards})`,
                     }}
@@ -822,13 +907,13 @@ export default function Nosotros() {
                         alt={persona.nombre}
                         loading="lazy"
                         decoding="async"
-                        className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-6"
+                        className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-3 sm:py-6"
                       />
                     </div>
 
-                    <div className="px-6 py-6 text-center">
-                      <h3 className="text-lg font-bold text-gray-900">{persona.nombre}</h3>
-                      <p className="text-sm text-gray-600 mt-1">{persona.cargo}</p>
+                    <div className="px-4 py-4 text-center sm:px-6 sm:py-6">
+                      <h3 className="text-base sm:text-lg font-bold text-gray-900">{persona.nombre}</h3>
+                      <p className="text-xs sm:text-sm text-gray-600 mt-1">{persona.cargo}</p>
                     </div>
                   </div>
                 ))}
@@ -881,7 +966,7 @@ export default function Nosotros() {
             loading="eager"
             fetchPriority="high"
             decoding="sync"
-            className="rounded-2xl shadow-2xl w-full h-[690px] md:h-[770px] lg:h-[830px] object-cover object-top mb-16"
+            className="rounded-2xl shadow-2xl w-full h-[320px] sm:h-[690px] md:h-[770px] lg:h-[830px] object-cover object-top mb-16"
           />
 
           <div className="relative">
@@ -917,7 +1002,7 @@ export default function Nosotros() {
                 {gestoresData.map((gestor, index) => (
                   <div
                     key={gestor.id}
-                    className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
+                    className="group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
                     style={{
                       flex: `0 0 calc((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards})`,
                     }}
@@ -929,13 +1014,13 @@ export default function Nosotros() {
                         loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
                         fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
                         decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
-                        className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-6"
+                        className="h-[170px] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105 sm:h-auto sm:object-contain sm:py-6"
                       />
                     </div>
 
-                    <div className="px-6 py-6 text-center">
-                      <h3 className="text-lg font-bold text-gray-900 mb-1">{gestor.nombre}</h3>
-                      <p className="text-sm text-gray-600 mb-3">{gestor.profesion}</p>
+                    <div className="px-3 py-3 text-center sm:px-6 sm:py-6">
+                      <h3 className="mb-1 text-base font-bold leading-tight text-gray-900 sm:text-lg">{gestor.nombre}</h3>
+                      <p className="mb-2 line-clamp-4 text-xs leading-snug text-gray-600 sm:mb-3 sm:line-clamp-none sm:text-sm">{gestor.profesion}</p>
                       <div className="flex justify-center">
                         <Badge variant={gestor.tipo === "STEM" ? "default" : "secondary"}>
                           {gestor.tipo}
