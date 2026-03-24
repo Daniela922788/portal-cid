@@ -418,6 +418,20 @@ export default function Nosotros() {
     };
   }, []);
 
+  useEffect(() => {
+    const scriptId = "genially-embed-js";
+
+    if (document.getElementById(scriptId)) {
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.async = true;
+    script.src = "https://view.genially.com/static/embed/embed.js";
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <div ref={containerRef} className="min-h-screen bg-white">
       {/* Banner Principal Nosotros */}
@@ -950,153 +964,33 @@ export default function Nosotros() {
         </div>
       </section>
 
-
-      {/* Event Detail Modal */}
-      {selectedEvent && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedEvent(null)}
+      <div style={{ width: "100%" }}>
+        <div
+          style={{
+            position: "relative",
+            paddingBottom: "56.25%",
+            paddingTop: 0,
+            height: 0,
+          }}
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-2xl p-8 max-w-2xl w-full shadow-2xl"
-          >
-            <div className="flex items-start justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-teal-600 flex items-center justify-center text-white font-bold text-lg">
-                  {selectedEvent.year}
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">{selectedEvent.title}</h3>
-                  {selectedEvent.category && (
-                    <span className="text-sm text-blue-600 font-semibold">{selectedEvent.category}</span>
-                  )}
-                </div>
-              </div>
-              <button
-                onClick={() => setSelectedEvent(null)}
-                className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
-              >
-                ×
-              </button>
-            </div>
-            <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              {selectedEvent.description}
-            </p>
-            {(selectedEvent.location || selectedEvent.participants) && (
-              <div className="flex gap-6 pt-4 border-t border-gray-200">
-                {selectedEvent.location && (
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <MapPin className="w-5 h-5" />
-                    <span>{selectedEvent.location}</span>
-                  </div>
-                )}
-                {selectedEvent.participants && (
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <Users className="w-5 h-5" />
-                    <span>{selectedEvent.participants} participantes</span>
-                  </div>
-                )}
-              </div>
-            )}
-          </motion.div>
+          <iframe
+            title="Horizonte Estratégico"
+            frameBorder={0}
+            width="1200"
+            height="675"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+            }}
+            src="https://view.genially.com/69bc5e2ee9f2206b8c7e204d"
+            allowFullScreen
+            scrolling="yes"
+          />
         </div>
-      )}
-
-      <section id="horizonte-estrategico" className="scroll-mt-24">
-        <ServicesSection />
-      </section>
-
-      {/* Líneas Estratégicas */}
-      <section className="pt-10 pb-2 bg-white">
-        <div className="container">
-          <h2 className="text-4xl font-bold mb-16 text-center">Líneas Estratégicas del Centro de Ciencia</h2>
-          <div className="grid md:grid-cols-2 gap-12 mb-16">
-            <Card className="border-0 bg-gradient-to-br from-teal-50 to-cyan-50 shadow-lg hover:shadow-xl transition-all">
-              <CardHeader>
-                <CardTitle className="text-2xl text-teal-600">Apropiación Social del Conocimiento</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">Busca conectar la investigación con las realidades y necesidades de la sociedad, haciendo que el conocimiento sea accesible y relevante para todos.</p>
-              </CardContent>
-            </Card>
-            <Card className="border-0 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg hover:shadow-xl transition-all">
-              <CardHeader>
-                <CardTitle className="text-2xl text-blue-600">Divulgación Pública de la Ciencia</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">Acercar la ciencia y la tecnología a la sociedad de manera clara, accesible y atractiva, fomentando una cultura científica en la comunidad.</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Placeholder - Comunidad Impactada */}
-        </div>
-      </section>
-
-
-
-
-      <section id="comunidad-impactada" className="scroll-mt-24">
-        <CommunityImpactSectionV1 />
-      </section>
-
-
-      {/* Lo que el mundo ve en nosotros */}
-      <section id="mundo-ve" className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-white scroll-mt-24">
-        <div className="container">
-          <h2 className="text-4xl font-bold mb-16 text-center">Lo que el Mundo Ve en Nosotros</h2>
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            {logrosData.map((logro, idx) => (
-              <div key={idx} className="flex gap-4 p-6 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 hover:border-green-300 transition-all">
-                <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-1">
-                  <span className="text-white font-bold text-sm">✓</span>
-                </div>
-                <p className="text-gray-700">{logro}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Placeholder - Líneas Temáticas */}
-        </div>
-      </section>
-
-      <section id="lineas-tematicas" className="scroll-mt-24">
-        <ThematicLines />
-      </section>
-
-      {/* El camino que soñamos */}
-      <section className="pt-10 pb-2 bg-gradient-to-br from-blue-600 via-teal-500 to-green-500 text-white">
-        <div className="container">
-          <h2 className="text-4xl font-bold mb-12 text-center">El Camino que Soñamos para el Centro de Ciencia</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 hover:border-white/40 transition-all">
-              <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-6">
-                <Lightbulb className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Consolidación Académica</h3>
-              <p>Contribuir con la consolidación del sector académico – científico para responder a los retos del siglo XXI.</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 hover:border-white/40 transition-all">
-              <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-6">
-                <Palette className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Articulación Sectorial</h3>
-              <p>Articular la ciencia, la tecnología y la innovación con el sector productivo de Envigado.</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 hover:border-white/40 transition-all">
-              <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-6">
-                <Leaf className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Territorio STEM+</h3>
-              <p>Incentivar la apropiación social de la CTI en actores clave para impulsar el territorio STEM+.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   );
 }
