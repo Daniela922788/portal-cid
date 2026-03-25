@@ -5,21 +5,14 @@ import { Mail, MapPin, Phone, ExternalLink } from "lucide-react";
 
 const canales = [
   {
-    nombre: "Correo Electrónico SAC",
-    descripcion: "Para consultas sobre trámites",
-    contacto: "sacenvigado@envigado.gov.co",
-    icono: Mail,
-    color: "bg-blue-100 text-blue-700"
-  },
-  {
-    nombre: "Teléfono SAC",
+    nombre: "Teléfono",
     descripcion: "Atención telefónica",
-    contacto: "3394000 exts 4123-4124",
+    contacto: "(+57) 301 2577662",
     icono: Phone,
     color: "bg-green-100 text-green-700"
   },
   {
-    nombre: "Correo Electrónico CID",
+    nombre: "Correo Electrónico",
     descripcion: "Para consultas generales",
     contacto: "info@cidenvigado.edu.co",
     icono: Mail,
@@ -28,7 +21,7 @@ const canales = [
   {
     nombre: "Ubicación",
     descripcion: "Visítanos en nuestras oficinas",
-    contacto: "Parque Biblioteca Débora Arango, Envigado",
+    contacto: "Biblioteca Pública y Parque Cultural Débora Arango, Envigado",
     icono: MapPin,
     color: "bg-red-100 text-red-700"
   }
@@ -39,25 +32,48 @@ export default function MesaAyuda() {
     <div className="min-h-screen py-8">
       <div className="container">
         <Breadcrumbs items={[{ label: "Contactanos" }]} />
-        
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-4">Contáctanos</h1>
-          <p className="text-xl text-muted-foreground">
-            Estamos aquí para ayudarte. Resuelve tus dudas o comunícate con nosotros
-          </p>
+
+        {/* Bloque de Contacto Superior */}
+        <div className="grid md:grid-cols-2 gap-12 mb-16 py-12 border-b border-gray-200">
+          {/* Izquierda - Título y descripción */}
+          <div>
+            <h1 className="text-5xl font-bold mb-6">Contáctanos</h1>
+            <p className="text-gray-600 leading-relaxed">
+              Estamos aquí para ayudarte. Resuelve tus dudas o comunícate con nosotros a través de nuestros múltiples canales de atención. Nuestro equipo está disponible para brindarte el apoyo que necesitas.
+            </p>
+          </div>
+
+          {/* Derecha - Información de contacto en columnas */}
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Dirección */}
+            <div>
+              <h3 className="text-gray-400 text-sm font-semibold mb-3">Dirección</h3>
+              <p className="text-gray-900 font-medium">Biblioteca Pública y Parque Cultural Débora Arango, Envigado</p>
+            </div>
+
+            {/* Email */}
+            <div>
+              <h3 className="text-gray-400 text-sm font-semibold mb-3">Email</h3>
+              <p className="text-blue-600 font-medium">info@cidenvigado.edu.co</p>
+            </div>
+
+            {/* Teléfono */}
+            <div>
+              <h3 className="text-gray-400 text-sm font-semibold mb-3">Teléfono</h3>
+              <p className="text-gray-900 font-medium">(+57) 301 2577662</p>
+            </div>
+          </div>
         </div>
 
-        {/* Botón SAC Grande */}
+        {/* Botón SAC */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8">Sistema de Atención al Ciudadano (SAC)</h2>
           <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-8 rounded-lg border-2 border-blue-300">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-shrink-0">
-                <img src="/logo-sac.png" alt="Logo SAC" className="h-32 w-auto" />
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+              <div>
+                <h3 className="text-2xl font-bold mb-3">Sistema de Atención al Ciudadano (SAC)</h3>
+                <p className="text-gray-700">Aquí puedes realizar tus trámites y consultas de forma digital.</p>
               </div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-3">Accede al Sistema de Atención al Ciudadano</h3>
-                <p className="text-gray-700 mb-6">Aquí puedes realizar tus trámites y consultas de forma digital. Ingresa con tu usuario y contraseña.</p>
+              <div className="flex-shrink-0">
                 <a href="https://sac2.gestionsecretariasdeeducacion.gov.co/app_Login/?sec=31" target="_blank" rel="noopener noreferrer">
                   <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg flex items-center gap-2">
                     Ingresar a SAC
@@ -71,7 +87,6 @@ export default function MesaAyuda() {
 
         {/* Preguntas Frecuentes */}
         <div className="mb-16">
-
           <div className="mb-8 rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 via-cyan-50 to-teal-50 p-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
@@ -95,26 +110,21 @@ export default function MesaAyuda() {
         </div>
 
         {/* Canales de Atención */}
-        <div>
-          <h2 className="text-3xl font-bold mb-8">Otros Canales de Atención</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {canales.map((canal, index) => {
-              const IconComponent = canal.icono;
-              return (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${canal.color}`}>
-                      <IconComponent className="h-6 w-6" />
-                    </div>
-                    <CardTitle className="text-lg">{canal.nombre}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-3">{canal.descripcion}</p>
-                    <p className="font-semibold text-primary">{canal.contacto}</p>
-                  </CardContent>
-                </Card>
-              );
-            })}
+      </div>
+
+      {/* Mapa Banner */}
+      <div className="w-full bg-gray-100">
+        <div className="container">
+          <div className="rounded-lg overflow-hidden shadow-lg h-[600px]">
+            <iframe
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521663942176!2d-75.59108397116457!3d6.172525366026548!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f15!3m3!1m2!1sMarcador%20CID!2s6.172525366026548%2C-75.59108397116461!5e0!3m2!1ses!2sco!4v1711425600000"
+            />
           </div>
         </div>
       </div>

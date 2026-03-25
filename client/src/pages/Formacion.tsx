@@ -41,9 +41,10 @@ export default function Formacion() {
   const { data: cursos = [], isLoading } = trpc.courses.list.useQuery();
 
   // Opciones de filtros
-  const tematicas = ["Robótica", "IA", "Inteligencia Artificial", "Alfabetización Digital", "Diseño", "Animación", "Música", "Ciencia", "Fotografía", "Medio ambiente", "Podcast", "Edición", "Cocina", "Analítica"];
+  const tematicas = ["Robótica", "Inteligencia Artificial", "Alfabetización Digital", "Diseño", "Animación", "Música", "Ciencia", "Fotografía", "Medio ambiente", "Podcast", "Edición", "Cocina", "Analítica", "Tecnología", "Creatividad", "Escritura"];
   const tematicaAliases: Record<string, string[]> = {
     "Robótica": ["Robótica", "Robotica"],
+    "Inteligencia Artificial": ["Inteligencia Artificial", "IA"],
     "Música": ["Música", "Musica"],
     "Fotografía": ["Fotografía", "Fotografia"],
     "Edición": ["Edición", "Edicion"],
@@ -578,6 +579,249 @@ export default function Formacion() {
       competencias: ["Analítica básica", "Visualización de datos", "Pensamiento lógico", "Comunicación de datos"],
       proyectoFinal: "Construcción de un tablero básico en Power BI con datos organizados en Excel.",
     },
+    {
+      id: "19",
+      titulo: "Navidad en movimiento",
+      tematica: "Animación",
+      estado: "Finalizado",
+      edad: "12 a 17 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["24 de noviembre - 2 de diciembre de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/cursos/Navidad%20en%20movimiento.jpg",
+      subtitulo: "Taller creativo para explorar stop motion con temáticas navideñas.",
+      descripcion: [
+        "El taller Navidad en movimiento fue una experiencia creativa en la que jóvenes exploraron la animación en stop motion a partir de temáticas navideñas. Durante las sesiones, los participantes crearon historias, personajes y escenas, dando vida a sus ideas cuadro a cuadro, mientras fortalecían habilidades como la creatividad, la narración audiovisual y el trabajo en equipo en un ambiente dinámico y festivo.",
+      ],
+      trabajado: [
+        "Creación de historias y guiones navideños",
+        "Diseño de personajes y escenas",
+        "Animación cuadro a cuadro en stop motion",
+        "Trabajo colaborativo en producción audiovisual",
+      ],
+      enfoque: "Aprendizaje creativo para narrar historias a través de la animación.",
+      metodologias: ["Aprendizaje basado en proyectos", "Producción colaborativa", "Exploración audiovisual"],
+      enfoqueCierre: "Fortalecimiento de creatividad y narración audiovisual en un entorno festivo.",
+      competencias: ["Creatividad", "Narrativa audiovisual", "Trabajo en equipo", "Resolución de problemas"],
+      proyectoFinal: "Producción de una pieza de stop motion con temática navideña.",
+    },
+    {
+      id: "20",
+      titulo: "Montaje Fotográfico",
+      tematica: "Edición",
+      estado: "Finalizado",
+      edad: "14 a 17 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["4 de diciembre - 5 de diciembre de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/cursos/Montaje%20Fotogr%C3%A1fico.jpg",
+      subtitulo: "Taller para crear composiciones surrealistas con celular.",
+      descripcion: [
+        "El taller Montaje Fotográfico fue una experiencia creativa en la que jóvenes exploraron la creación de imágenes surrealistas utilizando únicamente sus celulares. A través de técnicas como la levitación y la clonación, los participantes desarrollaron habilidades en composición visual, edición y creatividad, logrando resultados de apariencia profesional en un entorno dinámico y experimental.",
+      ],
+      trabajado: [
+        "Técnicas de levitación y clonación",
+        "Composición visual para montaje",
+        "Edición fotográfica en celular",
+        "Construcción de imágenes surrealistas",
+      ],
+      enfoque: "Exploración de la edición creativa para transformar imágenes cotidianas.",
+      metodologias: ["Experimentación práctica", "Producción guiada", "Creación visual"],
+      enfoqueCierre: "Desarrollo de piezas fotográficas con estética profesional desde dispositivos móviles.",
+      competencias: ["Edición fotográfica", "Composición visual", "Creatividad", "Pensamiento experimental"],
+      proyectoFinal: "Creación de una serie de montajes fotográficos surrealistas en celular.",
+    },
+    {
+      id: "21",
+      titulo: "Tarjeta Navideña",
+      tematica: "Diseño",
+      estado: "Finalizado",
+      edad: "11 a 17 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["4 de diciembre - 5 de diciembre de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/cursos/Tarjeta%20Navide%C3%B1a.jpg",
+      subtitulo: "Taller digital para diseñar tarjetas navideñas familiares.",
+      descripcion: [
+        "El taller Tarjeta Navideña fue una experiencia creativa en la que jóvenes diseñaron sus propias tarjetas familiares utilizando herramientas digitales. A través de la exploración del color, la composición y la creatividad, los participantes crearon piezas únicas, fortaleciendo sus habilidades de diseño y expresión visual en un ambiente práctico y dinámico.",
+      ],
+      trabajado: [
+        "Composición y jerarquía visual",
+        "Uso creativo del color",
+        "Diseño digital de tarjetas",
+        "Expresión visual para mensajes familiares",
+      ],
+      enfoque: "Diseño aplicado para comunicar emociones y mensajes en formatos visuales.",
+      metodologias: ["Taller práctico", "Diseño por proyectos", "Iteración creativa"],
+      enfoqueCierre: "Fortalecimiento de habilidades de diseño y comunicación visual.",
+      competencias: ["Diseño gráfico", "Creatividad", "Comunicación visual", "Expresión artística"],
+      proyectoFinal: "Creación de una tarjeta navideña digital personalizada.",
+    },
+    {
+      id: "22",
+      titulo: "Laboratorio Secreto de Navidad",
+      tematica: "Creatividad",
+      estado: "Finalizado",
+      edad: "7 a 11 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["24 de noviembre - 2 de diciembre de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/cursos/Laboratorio%20Secreto%20de%20Navidad.jpg",
+      subtitulo: "Espacio lúdico para imaginar y construir inventos navideños.",
+      descripcion: [
+        "El taller Laboratorio Secreto de Navidad fue una experiencia creativa en la que niños y niñas imaginaron, diseñaron y construyeron sus propios inventos navideños. A través del uso de materiales y actividades de animación, exploraron su creatividad, fortaleciendo habilidades de creación, experimentación y expresión en un ambiente lúdico y participativo.",
+      ],
+      trabajado: [
+        "Diseño y construcción de inventos navideños",
+        "Exploración de materiales creativos",
+        "Actividades de animación",
+        "Juego colaborativo y experimentación",
+      ],
+      enfoque: "Aprendizaje lúdico para potenciar la imaginación y la creación.",
+      metodologias: ["Juego guiado", "Exploración de materiales", "Creación colaborativa"],
+      enfoqueCierre: "Consolidación de habilidades creativas en un entorno participativo.",
+      competencias: ["Creatividad", "Experimentación", "Expresión", "Trabajo en equipo"],
+      proyectoFinal: "Presentación de inventos navideños creados por los participantes.",
+    },
+    {
+      id: "23",
+      titulo: "Navidad Creativa",
+      tematica: "Inteligencia Artificial",
+      estado: "Finalizado",
+      edad: "8 a 13 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["24 de noviembre - 2 de diciembre de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/cursos/Navidad%20Creativa.jpg",
+      subtitulo: "Curso para crear contenidos navideños con apoyo de inteligencia artificial.",
+      descripcion: [
+        "El curso Navidad Creativa fue una experiencia innovadora en la que niños y niñas exploraron la creatividad a través del uso de inteligencia artificial. Durante las sesiones, los participantes imaginaron, diseñaron y crearon contenidos digitales, fortaleciendo su pensamiento creativo y habilidades tecnológicas en un entorno lúdico que combinó juego, imaginación y herramientas digitales.",
+      ],
+      trabajado: [
+        "Introducción a herramientas de IA",
+        "Diseño y creación de contenidos digitales",
+        "Imaginación aplicada a proyectos navideños",
+        "Uso creativo de tecnologías emergentes",
+      ],
+      enfoque: "Innovación educativa para combinar creatividad infantil y tecnología.",
+      metodologias: ["Aprendizaje basado en proyectos", "Exploración digital", "Juego creativo"],
+      enfoqueCierre: "Fortalecimiento de pensamiento creativo y habilidades tecnológicas.",
+      competencias: ["Creatividad", "Alfabetización digital", "Pensamiento crítico", "Innovación"],
+      proyectoFinal: "Desarrollo de una pieza digital navideña con apoyo de IA.",
+    },
+    {
+      id: "24",
+      titulo: "Navidad en 3D",
+      tematica: "Diseño",
+      estado: "Finalizado",
+      edad: "12 a 16 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["24 de noviembre - 2 de diciembre de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/cursos/Navidad%20en%203D.jpg",
+      subtitulo: "Taller de diseño 3D con creación de objetos de temática navideña.",
+      descripcion: [
+        "Taller enfocado en el diseño 3D donde los participantes exploraron herramientas de creación digital para desarrollar objetos con temática navideña. A través de ejercicios prácticos, dieron forma a sus ideas utilizando volumen, color y creatividad en entornos tridimensionales.",
+      ],
+      trabajado: [
+        "Modelado de objetos en entornos 3D",
+        "Uso de volumen y color",
+        "Diseño digital con temática navideña",
+        "Desarrollo de prototipos creativos",
+      ],
+      enfoque: "Aprendizaje práctico de diseño tridimensional orientado a la creación.",
+      metodologias: ["Taller práctico", "Diseño iterativo", "Exploración digital"],
+      enfoqueCierre: "Consolidación de habilidades de modelado y visualización en 3D.",
+      competencias: ["Diseño 3D", "Creatividad", "Pensamiento espacial", "Resolución de problemas"],
+      proyectoFinal: "Creación de un objeto navideño original en formato 3D.",
+    },
+    {
+      id: "25",
+      titulo: "Crea con la naturaleza",
+      tematica: "Ciencia",
+      estado: "Finalizado",
+      edad: "7 a 11 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["24 de noviembre - 2 de diciembre de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/cursos/Crea%20con%20la%20naturaleza.jpg",
+      subtitulo: "Taller que integra ciencia y arte a partir de la naturaleza.",
+      descripcion: [
+        "Taller que integró la ciencia y el arte a través de actividades creativas inspiradas en la naturaleza. Los participantes exploraron materiales y conceptos para crear piezas artísticas, desarrollando su curiosidad y construyendo un pequeño espacio expositivo con sus creaciones.",
+      ],
+      trabajado: [
+        "Exploración de materiales naturales",
+        "Creación de piezas artísticas con enfoque científico",
+        "Curiosidad y observación del entorno",
+        "Montaje de mini espacio expositivo",
+      ],
+      enfoque: "Aprendizaje interdisciplinar entre ciencia, arte y exploración del entorno.",
+      metodologias: ["Exploración guiada", "Creación artística", "Aprendizaje experiencial"],
+      enfoqueCierre: "Desarrollo de curiosidad científica y expresión artística.",
+      competencias: ["Curiosidad científica", "Creatividad", "Observación", "Trabajo colaborativo"],
+      proyectoFinal: "Exposición de piezas artísticas inspiradas en la naturaleza.",
+    },
+    {
+      id: "26",
+      titulo: "Navidad en Pixel",
+      tematica: "Tecnología",
+      estado: "Finalizado",
+      edad: "10 a 17 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["24 de noviembre - 2 de diciembre de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/cursos/Navidad%20en%20Pixel.jpg",
+      subtitulo: "Taller para crear relatos y producciones visuales digitales con temática navideña.",
+      descripcion: [
+        "Taller orientado a la creación digital y la narrativa visual, donde los participantes desarrollaron historias navideñas en formato digital. A través de herramientas creativas, exploraron la construcción de relatos y producciones visuales para expresar sus ideas de forma innovadora.",
+      ],
+      trabajado: [
+        "Narrativa visual digital",
+        "Construcción de historias navideñas",
+        "Producción de piezas gráficas",
+        "Uso creativo de herramientas tecnológicas",
+      ],
+      enfoque: "Formación en creación digital para comunicar ideas de manera innovadora.",
+      metodologias: ["Aprendizaje por proyectos", "Narrativa digital", "Producción creativa"],
+      enfoqueCierre: "Fortalecimiento de expresión digital y pensamiento creativo.",
+      competencias: ["Tecnología creativa", "Narrativa visual", "Comunicación", "Creatividad"],
+      proyectoFinal: "Producción de una historia visual digital con temática navideña.",
+    },
+    {
+      id: "27",
+      titulo: "Reescribiendo la Navidad",
+      tematica: "Escritura",
+      estado: "Finalizado",
+      edad: "12 a 16 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["24 de noviembre - 2 de diciembre de 2025"],
+      sesiones: [],
+      ano: 2025,
+      imagen: "/cursos/Reescribiendo%20la%20Navidad.jpg",
+      subtitulo: "Taller de escritura y narración para crear relatos navideños propios.",
+      descripcion: [
+        "Taller centrado en la creación de historias navideñas a través de la escritura, el sonido y la narración. Los participantes exploraron formas de expresar emociones e ideas, construyendo relatos propios y desarrollando su creatividad narrativa.",
+      ],
+      trabajado: [
+        "Creación de historias navideñas",
+        "Narración y expresión oral",
+        "Exploración sonora aplicada al relato",
+        "Construcción de personajes y ambientes",
+      ],
+      enfoque: "Desarrollo de la creatividad narrativa desde la escritura y la oralidad.",
+      metodologias: ["Taller de escritura", "Narración guiada", "Creación colaborativa"],
+      enfoqueCierre: "Fortalecimiento de habilidades comunicativas y expresivas.",
+      competencias: ["Escritura creativa", "Narración", "Expresión emocional", "Comunicación"],
+      proyectoFinal: "Producción de un relato navideño original con componentes sonoros y narrativos.",
+    },
   ];
 
   const ecardTagStyles: Record<string, string> = {
@@ -727,22 +971,45 @@ export default function Formacion() {
     "Edición": "bg-orange-400",
     Cocina: "bg-red-400",
     "Analítica": "bg-teal-500",
+    "Tecnología": "bg-blue-500",
+    "Creatividad": "bg-rose-500",
+    "Escritura": "bg-slate-500",
   };
 
-  const wideCardWidthByTitle: Record<string, number> = {
-    "STEAMers Kids 2": 1.28,
-    "Stop Motion con Legos": 1.28,
-    "Música y Ciencia": 1.28,
-    "Explorando el territorio": 1.28,
-    "Let's Play Videopodcast Gamer": 1.28,
-    "Fotografía de retrato": 1.28,
-    "Fotografía Experimental": 1.28,
-    "CapCut Creativo": 1.28,
-    "A Fuego Lento": 1.28,
-    "Diseño Creativo en Canva": 1.28,
-    "Retratos con Alma": 1.28,
-    "Excel Power BI": 1.28,
-  };
+  const wideCardWidthMultiplier = 1.28;
+  const normalizeCourseTitle = (value: string) =>
+    value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+
+  const wideImageCourseTitles = new Set(
+    [
+      "STEAMers Kids 2",
+      "Stop Motion con Legos",
+      "Música y Ciencia",
+      "Explorando el territorio",
+      "Let's Play Videopodcast Gamer",
+      "Fotografía de retrato",
+      "Fotografía Experimental",
+      "CapCut Creativo",
+      "A Fuego Lento",
+      "Diseño Creativo en Canva",
+      "Retratos con Alma",
+      "Excel Power BI",
+      "Navidad en movimiento",
+      "Montaje Fotográfico",
+      "Tarjeta Navideña",
+      "Laboratorio Secreto de Navidad",
+      "Navidad Creativa",
+      "Navidad en 3D",
+      "Crea con la naturaleza",
+      "Navidad en Pixel",
+      "Reescribiendo la Navidad",
+    ].map(normalizeCourseTitle)
+  );
 
   // Componente de carrusel
   const Carousel = ({
@@ -758,6 +1025,40 @@ export default function Formacion() {
     const [pageCount, setPageCount] = useState(1);
     const [visibleCards, setVisibleCards] = useState(4);
     const gapPx = 24;
+
+    const getCardSnapPoints = () => {
+      const track = trackRef.current;
+      if (!track) return [] as number[];
+
+      const cards = Array.from(
+        track.querySelectorAll<HTMLButtonElement>("button[data-ecard-card='true']")
+      );
+
+      if (cards.length === 0) return [] as number[];
+
+      const maxScrollLeft = Math.max(0, track.scrollWidth - track.clientWidth);
+      const points = cards.map((card) => Math.min(maxScrollLeft, Math.max(0, card.offsetLeft)));
+
+      return Array.from(new Set(points));
+    };
+
+    const scrollByCard = (direction: -1 | 1) => {
+      const track = trackRef.current;
+      if (!track) return;
+
+      const points = getCardSnapPoints();
+      if (points.length === 0) return;
+
+      const current = track.scrollLeft;
+      const currentIndex = points.reduce((bestIdx, point, idx) => {
+        const bestDistance = Math.abs(points[bestIdx] - current);
+        const currentDistance = Math.abs(point - current);
+        return currentDistance < bestDistance ? idx : bestIdx;
+      }, 0);
+
+      const nextIndex = Math.min(points.length - 1, Math.max(0, currentIndex + direction));
+      track.scrollTo({ left: points[nextIndex], behavior: "smooth" });
+    };
 
     useEffect(() => {
       const updateVisibleCards = () => {
@@ -825,7 +1126,7 @@ export default function Formacion() {
           <div className="relative">
             <button
               type="button"
-              onClick={() => scrollToPage(Math.max(0, carouselIndex - 1))}
+              onClick={() => scrollByCard(-1)}
               aria-label={`Anterior en ${title}`}
               disabled={carouselIndex === 0}
               className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
@@ -835,7 +1136,7 @@ export default function Formacion() {
 
             <button
               type="button"
-              onClick={() => scrollToPage(Math.min(pageCount - 1, carouselIndex + 1))}
+              onClick={() => scrollByCard(1)}
               aria-label={`Siguiente en ${title}`}
               disabled={carouselIndex >= pageCount - 1}
               className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
@@ -845,7 +1146,7 @@ export default function Formacion() {
 
             <div
               ref={trackRef}
-              className="overflow-x-auto overflow-y-hidden px-6 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="snap-x snap-mandatory overflow-x-auto overflow-y-hidden px-6 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               <div
                 className="flex"
@@ -853,18 +1154,22 @@ export default function Formacion() {
                   gap: `${gapPx}px`,
                 }}
               >
-                {orderedItems.map((ecard) => (
+                {orderedItems.map((ecard) => {
+                  const isWideImageCourse = wideImageCourseTitles.has(normalizeCourseTitle(ecard.titulo));
+
+                  return (
                   <button
                     key={ecard.id}
+                    data-ecard-card="true"
                     type="button"
                     onClick={() => {
                       setSelectedEcard(ecard);
                       setEcardOpen(true);
                     }}
-                    className="group block h-full snap-start overflow-hidden rounded-2xl shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl text-left"
+                    className="group flex h-full snap-start snap-always flex-col overflow-hidden rounded-2xl text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
                     style={{
-                      flex: wideCardWidthByTitle[ecard.titulo]
-                        ? `0 0 calc(((100% - ${(visibleCards - 1) * gapPx}px) / ${visibleCards}) * ${wideCardWidthByTitle[ecard.titulo]})`
+                      flex: isWideImageCourse
+                        ? `0 0 calc(((100% - ${(visibleCards - 1) * gapPx}px) / ${visibleCards}) * ${wideCardWidthMultiplier})`
                         : `0 0 calc((100% - ${(visibleCards - 1) * gapPx}px) / ${visibleCards})`,
                     }}
                     aria-label={`Abrir ${ecard.titulo}`}
@@ -875,14 +1180,16 @@ export default function Formacion() {
                         alt={ecard.titulo}
                         loading="lazy"
                         decoding="async"
-                        className="h-full w-full object-contain object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                        className={`h-full w-full transition-transform duration-300 group-hover:scale-[1.02] ${
+                          isWideImageCourse ? "object-cover object-center" : "object-contain object-top"
+                        }`}
                       />
                     </div>
-                    <div className="bg-white px-3 py-3">
+                    <div className="flex min-h-[11.5rem] flex-1 flex-col bg-white px-3 py-3">
                       <p className="mb-2 text-sm font-bold text-slate-900 line-clamp-2">
                         {ecard.titulo}
                       </p>
-                      <div className="-ml-0.5 flex flex-wrap gap-1.5">
+                      <div className="-ml-0.5 mt-1 flex flex-wrap content-start gap-1.5">
                         <Badge variant="outline" className={`max-w-full whitespace-normal break-words text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.tematica}`}>
                           {ecard.tematica}
                         </Badge>
@@ -901,7 +1208,8 @@ export default function Formacion() {
                       </div>
                     </div>
                   </button>
-                ))}
+                  );
+                })}
               </div>
             </div>
 

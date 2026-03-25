@@ -1,4 +1,3 @@
-import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, HeadphonesIcon } from "lucide-react";
 
@@ -17,21 +16,10 @@ export default function ContactBanner() {
             </p>
           </div>
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
-            <Link href="/mesa-ayuda">
-              <Button size="lg" variant="secondary" className="w-full px-5 text-base sm:w-auto sm:px-8 sm:text-lg">
+            <Button size="lg" variant="secondary" className="w-full px-5 text-base sm:w-auto sm:px-8 sm:text-lg" asChild>
+              <a href="https://wa.me/573012577662" target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                 Mesa de Ayuda
-              </Button>
-            </Link>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="w-full bg-white/10 px-5 text-base text-white border-white hover:bg-white/20 sm:w-auto sm:px-8 sm:text-lg" 
-              asChild
-            >
-              <a href="https://wa.me/573001234567" target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                WhatsApp
               </a>
             </Button>
           </div>

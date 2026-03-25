@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Lightbulb, Palette, Leaf, ArrowRight, Sparkles, Calendar, MapPin, Users, ChevronLeft, ChevronRight } from "lucide-react";
+import { Lightbulb, Palette, Leaf, ArrowRight, Sparkles, Calendar, MapPin, Users, ChevronLeft, ChevronRight, Building2, GraduationCap, Handshake, MapPinned, Rocket, School, Waypoints } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import lineasTematicasImg from "@/assets/Líneas Temáticas.png";
 import serviciosImg from "@/assets/Servicios.png";
@@ -74,7 +74,6 @@ export default function Nosotros() {
   const [gestoresCarouselIndex, setGestoresCarouselIndex] = useState(0);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [timelineMobileIndex, setTimelineMobileIndex] = useState(0);
-  const [activeNosotrosSection, setActiveNosotrosSection] = useState<"direccion" | "gestores" | "cpa">("direccion");
 
   const quickSections = [
     { id: "lo-que-hacemos", title: "Lo que Hacemos y Cómo Impactamos" },
@@ -338,6 +337,61 @@ export default function Nosotros() {
     "Participación internacional de estudiantes en las Olimpiadas Latinoamericanas de Ciencia y Tecnología en Tlaxcala, México. (2024)",
   ];
 
+  const trabajoBloquesGestores = [
+    {
+      title: "Acompañamiento a instituciones educativas",
+      description: "Apoyan la implementación de estrategias STEM+ y procesos de innovación en contextos reales.",
+      icon: School,
+    },
+    {
+      title: "Fortalecimiento de capacidades",
+      description: "Orientan a docentes y estudiantes en metodologías, herramientas y pensamiento innovador.",
+      icon: GraduationCap,
+    },
+    {
+      title: "Gestión de proyectos",
+      description: "Promueven, estructuran y hacen seguimiento a iniciativas de ciencia, tecnología e innovación.",
+      icon: Rocket,
+    },
+    {
+      title: "Articulación del ecosistema",
+      description: "Conectan actores del sector público, privado, académico y comunitario.",
+      icon: Waypoints,
+    },
+    {
+      title: "Dinamización del territorio",
+      description: "Llevan la innovación a aulas, bibliotecas, parques culturales y espacios comunitarios.",
+      icon: MapPinned,
+    },
+  ];
+
+  const cursosCentroInnovacionGestores = [
+    "/Fotogestores.jpg",
+    "/Formacion/Ecard%20Explorando%20la%20IA.jpeg",
+    "/Formacion/Ecard%20Power%20Bi.jpeg",
+    "/cursos/laboratorio-secreto.jpg",
+    "/cursos/crea-naturaleza.jpg",
+    "/cursos/montaje-fotografico.jpg",
+  ];
+
+  const centrosInteresInstitucionesGestores = [
+    "/InstituciónEducativaComercialdeEnvigado.jpg",
+    "/InstituciónEducativaElSalado.jpg",
+    "/InstituciónEducativaLaPaz.jpg",
+    "/InstituciónEducativaNormalSuperiordeEnvigado.jpg",
+    "/InstituciónEducativaDaríodeBedout.jpg",
+    "/InstituciónEducativaManuelUribeÁngel.JPG",
+  ];
+
+  const cursosTerritorioGestores = [
+    "/STEM/1.webp",
+    "/STEM/2.webp",
+    "/STEM/3.webp",
+    "/STEM/4.webp",
+    "/ciudadaprendizaje/1.webp",
+    "/ciudadaprendizaje/2.webp",
+  ];
+
   useEffect(() => {
     const updateVisibleCards = () => {
       setIsMobileViewport(window.innerWidth < 768);
@@ -463,49 +517,6 @@ export default function Nosotros() {
           className="w-full h-auto object-contain md:h-full md:object-cover md:object-center"
         />
       </section>
-
-      <section className="bg-white pt-6 pb-3">
-        <div className="container">
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <Button
-              type="button"
-              onClick={() => setActiveNosotrosSection("direccion")}
-              className={
-                activeNosotrosSection === "direccion"
-                  ? "w-full bg-blue-600 text-white hover:bg-blue-700"
-                  : "w-full bg-slate-100 text-slate-700 hover:bg-slate-200"
-              }
-            >
-              Dirección de Innovación
-            </Button>
-            <Button
-              type="button"
-              onClick={() => setActiveNosotrosSection("gestores")}
-              className={
-                activeNosotrosSection === "gestores"
-                  ? "w-full bg-blue-600 text-white hover:bg-blue-700"
-                  : "w-full bg-slate-100 text-slate-700 hover:bg-slate-200"
-              }
-            >
-              Gestores
-            </Button>
-            <Button
-              type="button"
-              onClick={() => setActiveNosotrosSection("cpa")}
-              className={
-                activeNosotrosSection === "cpa"
-                  ? "w-full bg-blue-600 text-white hover:bg-blue-700"
-                  : "w-full bg-slate-100 text-slate-700 hover:bg-slate-200"
-              }
-            >
-              Centro de producción audiovisual (CPA)
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {activeNosotrosSection === "direccion" ? (
-        <>
 
       {/* Nuestro ADN */}
       <section className="pt-10 pb-2 bg-white">
@@ -641,13 +652,26 @@ export default function Nosotros() {
               </CardContent>
             </Card>
           </div>
-          <div className="bg-gray-100 rounded-2xl px-8 py-10 md:px-14 md:py-14 border-l-4 border-gray-400">
-            <p className="text-5xl md:text-7xl font-bold text-gray-800 leading-tight mb-4">
-              Somos el CID:
-            </p>
-            <p className="text-4xl md:text-7xl font-light text-gray-800 leading-tight">
-              un lugar donde la innovación cobra vida.
-            </p>
+        </div>
+      </section>
+
+      <section className="bg-[#023A34] py-10 md:py-14">
+        <div className="container">
+          <h2 className="mb-8 text-center text-4xl font-bold text-white md:mb-10 md:text-6xl">
+            Somos el CID
+          </h2>
+          <div className="mx-auto max-w-8xl overflow-hidden rounded-2xl shadow-2xl">
+            <div className="relative aspect-video w-full bg-black">
+              <iframe
+                src="https://www.youtube.com/embed/R6ffTBIieCw?autoplay=1&mute=1&loop=1&playlist=R6ffTBIieCw&playsinline=1"
+                title="Somos el CID - Video"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -667,25 +691,6 @@ export default function Nosotros() {
               <h2 className="text-2xl sm:text-4xl font-bold mb-6 whitespace-nowrap sm:whitespace-normal">Centro de Ciencia - MEN</h2>
               <p className="text-base sm:text-lg text-gray-700 mb-6">Los Centros de Ciencia, se definen como instituciones de carácter público, privado o mixto, sin ánimo de lucro, con personería jurídica o dependientes de otra organización, con una planta física abierta al público de manera permanente y que tienen la apropiación social del conocimiento como parte integral de su misión u objeto social.</p>
               <p className="text-base sm:text-lg text-gray-700">Asimismo, reconocen la diversidad cultural, económica y social de las comunidades, promueven los principios de acceso democrático a la información y al conocimiento, y contribuyen a fortalecer la cultura de ciencia y tecnología en el país mediante programas y actividades educativas.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Centro de Ciencia - MEN (Propuesta 2) */}
-      <section id="historia-detalle" className="pt-10 pb-2 bg-white scroll-mt-24">
-        <div className="container">
-          <div className="max-w-6xl mx-auto mb-10">
-            <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl">
-              <iframe
-                src="https://www.youtube.com/embed/R6ffTBIieCw?autoplay=1&mute=1&loop=1&playlist=R6ffTBIieCw&playsinline=1"
-                title="Centro de Ciencia - Video"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full"
-              />
             </div>
           </div>
         </div>
@@ -804,7 +809,7 @@ export default function Nosotros() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-80px" }}
                         transition={{ duration: 0.45, delay: yearIndex * 0.04 }}
-                        className="grid min-h-[480px] grid-rows-[1fr_auto_1fr]"
+                        className="grid min-h-[190px] grid-rows-[1fr_auto_1fr]"
                       >
                         <div className="flex h-full flex-col justify-end space-y-3 pb-3">
                           {showTopCards &&
@@ -834,7 +839,7 @@ export default function Nosotros() {
                           <div className="mt-2 h-4 w-4 rounded-full border-4 border-white bg-gradient-to-r from-blue-500 to-teal-500 shadow" />
                         </div>
 
-                        <div className="space-y-3 pt-4">
+                        <div className="space-y-3 pt-2">
                           {!showTopCards &&
                             yearEvents.map((event) => (
                               <motion.div
@@ -866,7 +871,7 @@ export default function Nosotros() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-center mt-6 pt-4 border-t border-gray-200"
+              className="-mt-10 border-t border-gray-200 text-center"
             >
               <p className="text-gray-600 text-lg font-semibold mb-4">
                 Continuamos innovando y creciendo cada día
@@ -886,7 +891,7 @@ export default function Nosotros() {
       </section>
 
       {/* Nuevo Grid de Imágenes */}
-      <section id="direccion-innovacion" className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-gray-100 scroll-mt-24">
+      <section id="direccion-innovacion" className="pt-2 sm:pt-4 pb-2 bg-gradient-to-br from-gray-50 to-gray-100 scroll-mt-24">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1120,171 +1125,6 @@ export default function Nosotros() {
           />
         </div>
       </div>
-
-      {/* Event Detail Modal */}
-      {selectedEvent && (
-        <div
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedEvent(null)}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-2xl p-8 max-w-2xl w-full shadow-2xl"
-          >
-            <div className="flex items-start justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-teal-600 flex items-center justify-center text-white font-bold text-lg">
-                  {selectedEvent.year}
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">{selectedEvent.title}</h3>
-                  {selectedEvent.category && (
-                    <span className="text-sm text-blue-600 font-semibold">{selectedEvent.category}</span>
-                  )}
-                </div>
-              </div>
-              <button
-                onClick={() => setSelectedEvent(null)}
-                className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
-              >
-                ×
-              </button>
-            </div>
-            <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              {selectedEvent.description}
-            </p>
-            {(selectedEvent.location || selectedEvent.participants) && (
-              <div className="flex gap-6 pt-4 border-t border-gray-200">
-                {selectedEvent.location && (
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <MapPin className="w-5 h-5" />
-                    <span>{selectedEvent.location}</span>
-                  </div>
-                )}
-                {selectedEvent.participants && (
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <Users className="w-5 h-5" />
-                    <span>{selectedEvent.participants} participantes</span>
-                  </div>
-                )}
-              </div>
-            )}
-          </motion.div>
-        </div>
-      )}
-
-      <section id="horizonte-estrategico" className="scroll-mt-24">
-        <ServicesSection />
-      </section>
-
-      {/* Líneas Estratégicas */}
-      <section className="pt-10 pb-2 bg-white">
-        <div className="container">
-          <h2 className="text-4xl font-bold mb-16 text-center">Líneas Estratégicas del Centro de Ciencia</h2>
-          <div className="grid md:grid-cols-2 gap-12 mb-16">
-            <Card className="border-0 bg-gradient-to-br from-teal-50 to-cyan-50 shadow-lg hover:shadow-xl transition-all">
-              <CardHeader>
-                <CardTitle className="text-2xl text-teal-600">Apropiación Social del Conocimiento</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">Busca conectar la investigación con las realidades y necesidades de la sociedad, haciendo que el conocimiento sea accesible y relevante para todos.</p>
-              </CardContent>
-            </Card>
-            <Card className="border-0 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg hover:shadow-xl transition-all">
-              <CardHeader>
-                <CardTitle className="text-2xl text-blue-600">Divulgación Pública de la Ciencia</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">Acercar la ciencia y la tecnología a la sociedad de manera clara, accesible y atractiva, fomentando una cultura científica en la comunidad.</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Placeholder - Comunidad Impactada */}
-        </div>
-      </section>
-
-
-
-
-      <section id="comunidad-impactada" className="scroll-mt-24">
-        <CommunityImpactSectionV1 />
-      </section>
-
-
-      {/* Lo que el mundo ve en nosotros */}
-      <section id="mundo-ve" className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-white scroll-mt-24">
-        <div className="container">
-          <h2 className="text-4xl font-bold mb-16 text-center">Lo que el Mundo Ve en Nosotros</h2>
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            {logrosData.map((logro, idx) => (
-              <div key={idx} className="flex gap-4 p-6 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 hover:border-green-300 transition-all">
-                <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-1">
-                  <span className="text-white font-bold text-sm">✓</span>
-                </div>
-                <p className="text-gray-700">{logro}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Placeholder - Líneas Temáticas */}
-        </div>
-      </section>
-
-      <section id="lineas-tematicas" className="scroll-mt-24">
-        <ThematicLines />
-      </section>
-
-      {/* El camino que soñamos */}
-      <section className="pt-10 pb-2 bg-gradient-to-br from-blue-600 via-teal-500 to-green-500 text-white">
-        <div className="container">
-          <h2 className="text-4xl font-bold mb-12 text-center">El Camino que Soñamos para el Centro de Ciencia</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 hover:border-white/40 transition-all">
-              <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-6">
-                <Lightbulb className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Consolidación Académica</h3>
-              <p>Contribuir con la consolidación del sector académico – científico para responder a los retos del siglo XXI.</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 hover:border-white/40 transition-all">
-              <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-6">
-                <Palette className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Articulación Sectorial</h3>
-              <p>Articular la ciencia, la tecnología y la innovación con el sector productivo de Envigado.</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 hover:border-white/40 transition-all">
-              <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-6">
-                <Leaf className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Territorio STEM+</h3>
-              <p>Incentivar la apropiación social de la CTI en actores clave para impulsar el territorio STEM+.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-        </>
-      ) : (
-        <section className="bg-white py-14">
-          <div className="container">
-            <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-slate-50 px-6 py-12 text-center">
-              <h2 className="mb-3 text-2xl font-bold text-slate-900">
-                {activeNosotrosSection === "gestores"
-                  ? "Gestores"
-                  : "Centro de producción audiovisual (CPA)"}
-              </h2>
-              <p className="text-slate-600">
-                Esta sección estará disponible próximamente.
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
     </div>
   );
 }
