@@ -825,11 +825,11 @@ export default function Formacion() {
   ];
 
   const ecardTagStyles: Record<string, string> = {
-    tematica: "border-cyan-200 bg-cyan-50 text-cyan-800",
-    fechas: "border-amber-200 bg-amber-50 text-amber-800",
-    estado: "border-rose-200 bg-rose-50 text-rose-800",
-    edad: "border-emerald-200 bg-emerald-50 text-emerald-800",
-    lugar: "border-violet-200 bg-violet-50 text-violet-800",
+    tematica: "border-[#11B2AA]/40 bg-[#11B2AA]/12 text-[#0D4B56]",
+    fechas: "border-[#FFDE07]/50 bg-[#FFDE07]/18 text-[#182130]",
+    estado: "border-[#EC6910]/45 bg-[#EC6910]/14 text-[#182130]",
+    edad: "border-[#023A34]/40 bg-[#023A34]/12 text-[#023A34]",
+    lugar: "border-[#2D3586]/40 bg-[#2D3586]/12 text-[#2D3586]",
   };
 
   // Funciones de filtrado
@@ -956,24 +956,24 @@ export default function Formacion() {
   });
 
   const tematicaColor: Record<string, string> = {
-    Robotica: "bg-cyan-400",
-    IA: "bg-violet-400",
-    "Inteligencia Artificial": "bg-violet-500",
-    "Animación": "bg-fuchsia-400",
-    Musica: "bg-pink-400",
-    "Diseño": "bg-indigo-400",
-    Ciencia: "bg-emerald-400",
-    Fotografia: "bg-amber-400",
-    "Fotografía": "bg-amber-400",
-    "Medio ambiente": "bg-lime-500",
-    Podcast: "bg-sky-500",
-    Edicion: "bg-orange-400",
-    "Edición": "bg-orange-400",
-    Cocina: "bg-red-400",
-    "Analítica": "bg-teal-500",
-    "Tecnología": "bg-blue-500",
-    "Creatividad": "bg-rose-500",
-    "Escritura": "bg-slate-500",
+    Robotica: "bg-[#11B2AA]",
+    IA: "bg-[#2D3586]",
+    "Inteligencia Artificial": "bg-[#2D3586]",
+    "Animación": "bg-[#EC6910]",
+    Musica: "bg-[#FFDE07]",
+    "Diseño": "bg-[#0D4B56]",
+    Ciencia: "bg-[#023A34]",
+    Fotografia: "bg-[#FFDE07]",
+    "Fotografía": "bg-[#FFDE07]",
+    "Medio ambiente": "bg-[#11B2AA]",
+    Podcast: "bg-[#2D3586]",
+    Edicion: "bg-[#EC6910]",
+    "Edición": "bg-[#EC6910]",
+    Cocina: "bg-[#182130]",
+    "Analítica": "bg-[#0D4B56]",
+    "Tecnología": "bg-[#2D3586]",
+    "Creatividad": "bg-[#EC6910]",
+    "Escritura": "bg-[#182130]",
   };
 
   const wideCardWidthMultiplier = 1.28;
@@ -1114,11 +1114,11 @@ export default function Formacion() {
 
     return (
       <div className="mb-12">
-        <h2 className="text-2xl font-bold mb-6 text-slate-900">{title}</h2>
+        <h2 className="mb-6 text-2xl font-bold text-[#182130]">{title}</h2>
         {orderedItems.length === 0 ? (
-          <div className="text-center py-12 bg-slate-50 rounded-lg">
-            <BookOpen className="h-12 w-12 mx-auto text-muted-foreground mb-2" />
-            <p className="text-muted-foreground">
+          <div className="rounded-lg bg-[#11B2AA]/8 py-12 text-center">
+            <BookOpen className="mx-auto mb-2 h-12 w-12 text-[#0D4B56]/70" />
+            <p className="text-[#0D4B56]/80">
               No hay cursos disponibles en esta categoría
             </p>
           </div>
@@ -1129,7 +1129,7 @@ export default function Formacion() {
               onClick={() => scrollByCard(-1)}
               aria-label={`Anterior en ${title}`}
               disabled={carouselIndex === 0}
-              className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+              className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -1139,7 +1139,7 @@ export default function Formacion() {
               onClick={() => scrollByCard(1)}
               aria-label={`Siguiente en ${title}`}
               disabled={carouselIndex >= pageCount - 1}
-              className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+              className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
@@ -1166,7 +1166,7 @@ export default function Formacion() {
                       setSelectedEcard(ecard);
                       setEcardOpen(true);
                     }}
-                    className="group flex h-full snap-start snap-always flex-col overflow-hidden rounded-2xl text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+                    className="group flex h-full snap-start snap-always flex-col overflow-hidden rounded-2xl border border-[#0D4B56]/15 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
                     style={{
                       flex: isWideImageCourse
                         ? `0 0 calc(((100% - ${(visibleCards - 1) * gapPx}px) / ${visibleCards}) * ${wideCardWidthMultiplier})`
@@ -1174,7 +1174,7 @@ export default function Formacion() {
                     }}
                     aria-label={`Abrir ${ecard.titulo}`}
                   >
-                    <div className="flex h-[22rem] items-start justify-center overflow-hidden bg-white pt-3 sm:h-[24rem] lg:h-[25rem]">
+                    <div className="flex h-[22rem] items-start justify-center overflow-hidden bg-[#11B2AA]/6 pt-3 sm:h-[24rem] lg:h-[25rem]">
                       <img
                         src={ecard.imagen}
                         alt={ecard.titulo}
@@ -1185,8 +1185,8 @@ export default function Formacion() {
                         }`}
                       />
                     </div>
-                    <div className="flex min-h-[11.5rem] flex-1 flex-col bg-white px-3 py-3">
-                      <p className="mb-2 text-sm font-bold text-slate-900 line-clamp-2">
+                    <div className="flex min-h-[11.5rem] flex-1 flex-col bg-[#0D4B56]/[0.04] px-3 py-3">
+                      <p className="mb-2 line-clamp-2 text-sm font-bold text-[#182130]">
                         {ecard.titulo}
                       </p>
                       <div className="-ml-0.5 mt-1 flex flex-wrap content-start gap-1.5">
@@ -1221,7 +1221,7 @@ export default function Formacion() {
                   onClick={() => scrollToPage(idx)}
                   aria-label={`Ir al bloque ${idx + 1} en ${title}`}
                   className={`h-2 rounded-full transition-all ${
-                    carouselIndex === idx ? "w-8 bg-slate-800" : "w-2 bg-slate-400"
+                    carouselIndex === idx ? "w-8 bg-[#182130]" : "w-2 bg-[#11B2AA]/50"
                   }`}
                 />
               ))}
@@ -1233,38 +1233,38 @@ export default function Formacion() {
   };
 
   return (
-    <div className="min-h-screen py-8 bg-slate-50">
+    <div className="min-h-screen bg-[#11B2AA]/8 py-8">
       <div className="container">
         <Breadcrumbs items={[{ label: "Formación" }]} />
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">Formación Continua</h1>
-          <p className="text-xl text-muted-foreground">
+          <h1 className="mb-4 text-4xl font-bold text-[#182130]">Formación Continua</h1>
+          <p className="text-xl text-[#0D4B56]/80">
             Cursos, talleres y diplomados para fortalecer competencias educativas
           </p>
         </div>
 
         {/* CALENDARIO DE SESIONES ACTIVAS */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-10">
+        <div className="mb-10 rounded-2xl border border-[#0D4B56]/20 bg-[#0D4B56]/[0.04] p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-lg font-bold text-slate-900">Próximas sesiones</h2>
-              <p className="text-sm text-slate-500">Días con cursos activos este mes</p>
+              <h2 className="text-lg font-bold text-[#182130]">Próximas sesiones</h2>
+              <p className="text-sm text-[#0D4B56]/75">Días con cursos activos este mes</p>
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setCalendarDate(new Date(calendarYear, calendarMonth - 1, 1))}
-                className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                className="rounded-lg p-2 transition-colors hover:bg-[#FFDE07]/18"
               >
-                <ChevronLeft className="h-4 w-4 text-slate-600" />
+                <ChevronLeft className="h-4 w-4 text-[#182130]" />
               </button>
-              <span className="text-sm font-semibold text-slate-800 w-36 text-center">
+              <span className="w-36 text-center text-sm font-semibold text-[#182130]">
                 {monthNames[calendarMonth]} {calendarYear}
               </span>
               <button
                 onClick={() => setCalendarDate(new Date(calendarYear, calendarMonth + 1, 1))}
-                className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                className="rounded-lg p-2 transition-colors hover:bg-[#FFDE07]/18"
               >
-                <ChevronRight className="h-4 w-4 text-slate-600" />
+                <ChevronRight className="h-4 w-4 text-[#182130]" />
               </button>
             </div>
           </div>
@@ -1272,7 +1272,7 @@ export default function Formacion() {
           {/* Encabezados de días */}
           <div className="grid grid-cols-7 mb-1">
             {dayNames.map((d) => (
-              <div key={d} className="text-center text-xs font-semibold text-slate-400 py-2">{d}</div>
+              <div key={d} className="py-2 text-center text-xs font-semibold text-[#0D4B56]/60">{d}</div>
             ))}
           </div>
 
@@ -1294,17 +1294,17 @@ export default function Formacion() {
                 <div
                   key={day}
                   title={sessions ? sessions.map((s) => s.titulo).join(", ") : undefined}
-                  className={`relative flex flex-col items-center justify-start rounded-xl py-2 min-h-[3rem] ${
+                  className={`relative flex min-h-[3rem] flex-col items-center justify-start rounded-xl py-2 ${
                     sessions
-                      ? "bg-blue-50 ring-1 ring-blue-200"
+                      ? "bg-[#2D3586]/12 ring-1 ring-[#2D3586]/28"
                       : isToday
-                      ? "bg-slate-100"
-                      : "hover:bg-slate-50"
+                      ? "bg-[#FFDE07]/18"
+                      : "hover:bg-[#11B2AA]/10"
                   }`}
                 >
                   <span
                     className={`text-sm font-medium ${
-                      isToday ? "text-blue-600 font-bold" : sessions ? "text-blue-800" : "text-slate-700"
+                      isToday ? "font-bold text-[#EC6910]" : sessions ? "text-[#2D3586]" : "text-[#182130]"
                     }`}
                   >
                     {day}
@@ -1314,7 +1314,7 @@ export default function Formacion() {
                       {sessions.map((s, idx) => (
                         <span
                           key={idx}
-                          className={`h-1.5 w-1.5 rounded-full ${tematicaColor[s.tematica] ?? "bg-slate-400"}`}
+                          className={`h-1.5 w-1.5 rounded-full ${tematicaColor[s.tematica] ?? "bg-[#0D4B56]"}`}
                         />
                       ))}
                     </div>
@@ -1326,13 +1326,13 @@ export default function Formacion() {
 
           {/* Leyenda */}
           {activeSessions.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-4">
+            <div className="mt-4 flex flex-wrap gap-4 border-t border-[#0D4B56]/12 pt-4">
               {ecards
                 .filter((e) => e.estado === "En curso" || e.estado === "En inscripciones")
                 .map((e) => (
                   <div key={e.id} className="flex items-center gap-2">
-                    <span className={`h-2.5 w-2.5 rounded-full ${tematicaColor[e.tematica] ?? "bg-slate-400"}`} />
-                    <span className="text-xs text-slate-600">{e.titulo}</span>
+                    <span className={`h-2.5 w-2.5 rounded-full ${tematicaColor[e.tematica] ?? "bg-[#0D4B56]"}`} />
+                    <span className="text-xs text-[#0D4B56]/80">{e.titulo}</span>
                   </div>
                 ))}
             </div>
@@ -1343,29 +1343,29 @@ export default function Formacion() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* SIDEBAR DE FILTROS - IZQUIERDA */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-              <h2 className="text-lg font-bold text-slate-900 mb-6">Filtros</h2>
+            <div className="sticky top-8 rounded-2xl border border-[#0D4B56]/20 bg-[#0D4B56]/[0.04] p-6 shadow-sm">
+              <h2 className="mb-6 text-lg font-bold text-[#182130]">Filtros</h2>
 
               {/* Búsqueda */}
               <div className="mb-8">
-                <label className="text-sm font-semibold text-slate-900 mb-2 block">
+                <label className="mb-2 block text-sm font-semibold text-[#182130]">
                   Buscar
                 </label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#0D4B56]/55" />
                   <input
                     type="text"
                     placeholder="Nombre del curso..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-lg border border-[#0D4B56]/20 bg-[#11B2AA]/[0.05] py-2 pl-9 pr-3 text-sm text-[#182130] focus:border-[#2D3586] focus:outline-none focus:ring-2 focus:ring-[#2D3586]/25"
                   />
                 </div>
               </div>
 
               {/* Filtros por Temática */}
-              <div className="mb-8 pb-8 border-b border-slate-200">
-                <h3 className="text-sm font-semibold text-slate-900 mb-3">
+              <div className="mb-8 border-b border-[#0D4B56]/16 pb-8">
+                <h3 className="mb-3 text-sm font-semibold text-[#182130]">
                   Temática
                 </h3>
                 <div className="space-y-2">
@@ -1384,9 +1384,9 @@ export default function Formacion() {
                             setSelectedTematicas
                           )
                         }
-                        className="w-4 h-4 rounded border-slate-300 text-cyan-500 focus:ring-2 focus:ring-cyan-500"
+                        className="h-4 w-4 rounded border-[#0D4B56]/30 text-[#11B2AA] focus:ring-2 focus:ring-[#11B2AA]/35"
                       />
-                      <span className="text-sm text-slate-700 group-hover:text-slate-900">
+                      <span className="text-sm text-[#0D4B56] group-hover:text-[#182130]">
                         {tematica}
                       </span>
                     </label>
@@ -1395,8 +1395,8 @@ export default function Formacion() {
               </div>
 
               {/* Filtros por Estado */}
-              <div className="mb-8 pb-8 border-b border-slate-200">
-                <h3 className="text-sm font-semibold text-slate-900 mb-3">
+              <div className="mb-8 border-b border-[#0D4B56]/16 pb-8">
+                <h3 className="mb-3 text-sm font-semibold text-[#182130]">
                   Estado
                 </h3>
                 <div className="space-y-2">
@@ -1415,9 +1415,9 @@ export default function Formacion() {
                             setSelectedEstados
                           )
                         }
-                        className="w-4 h-4 rounded border-slate-300 text-rose-500 focus:ring-2 focus:ring-rose-500"
+                        className="h-4 w-4 rounded border-[#0D4B56]/30 text-[#EC6910] focus:ring-2 focus:ring-[#EC6910]/35"
                       />
-                      <span className="text-sm text-slate-700 group-hover:text-slate-900">
+                      <span className="text-sm text-[#0D4B56] group-hover:text-[#182130]">
                         {estado}
                       </span>
                     </label>
@@ -1426,8 +1426,8 @@ export default function Formacion() {
               </div>
 
               {/* Filtros por Edad */}
-              <div className="mb-8 pb-8 border-b border-slate-200">
-                <h3 className="text-sm font-semibold text-slate-900 mb-3">
+              <div className="mb-8 border-b border-[#0D4B56]/16 pb-8">
+                <h3 className="mb-3 text-sm font-semibold text-[#182130]">
                   Edad
                 </h3>
                 <div className="space-y-2">
@@ -1446,9 +1446,9 @@ export default function Formacion() {
                             setSelectedEdades
                           )
                         }
-                        className="w-4 h-4 rounded border-slate-300 text-emerald-500 focus:ring-2 focus:ring-emerald-500"
+                        className="h-4 w-4 rounded border-[#0D4B56]/30 text-[#023A34] focus:ring-2 focus:ring-[#023A34]/35"
                       />
-                      <span className="text-sm text-slate-700 group-hover:text-slate-900">
+                      <span className="text-sm text-[#0D4B56] group-hover:text-[#182130]">
                         {edad}
                       </span>
                     </label>
@@ -1458,7 +1458,7 @@ export default function Formacion() {
 
               {/* Filtros por Lugar */}
               <div className="mb-6">
-                <h3 className="text-sm font-semibold text-slate-900 mb-3">
+                <h3 className="mb-3 text-sm font-semibold text-[#182130]">
                   Lugar
                 </h3>
                 <div className="space-y-2">
@@ -1477,9 +1477,9 @@ export default function Formacion() {
                             setSelectedLugares
                           )
                         }
-                        className="w-4 h-4 rounded border-slate-300 text-violet-500 focus:ring-2 focus:ring-violet-500"
+                        className="h-4 w-4 rounded border-[#0D4B56]/30 text-[#2D3586] focus:ring-2 focus:ring-[#2D3586]/35"
                       />
-                      <span className="text-sm text-slate-700 group-hover:text-slate-900 line-clamp-2">
+                      <span className="line-clamp-2 text-sm text-[#0D4B56] group-hover:text-[#182130]">
                         {lugar}
                       </span>
                     </label>
@@ -1501,7 +1501,7 @@ export default function Formacion() {
                     setSelectedEdades([]);
                     setSelectedLugares([]);
                   }}
-                  className="w-full py-2 px-3 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors"
+                  className="w-full rounded-lg px-3 py-2 text-sm font-medium text-[#0D4B56] transition-colors hover:bg-[#FFDE07]/16 hover:text-[#182130]"
                 >
                   Limpiar filtros
                 </button>
@@ -1521,25 +1521,25 @@ export default function Formacion() {
       {/* MODAL DE DETALLE */}
       {ecardOpen && selectedEcard && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden bg-black/55 p-3 md:p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden bg-[#182130]/55 p-3 md:p-4"
           onClick={() => setEcardOpen(false)}
         >
           <div
-            className="max-h-[90vh] w-full max-w-5xl overflow-x-hidden overflow-y-auto rounded-3xl border border-slate-200 bg-white shadow-2xl"
+            className="max-h-[90vh] w-full max-w-5xl overflow-x-hidden overflow-y-auto rounded-3xl border border-[#0D4B56]/20 bg-[#11B2AA]/[0.06] shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="relative p-5 md:p-8">
               <button
                 type="button"
                 onClick={() => setEcardOpen(false)}
-                className="absolute right-4 top-4 rounded-full p-1.5 text-slate-600 hover:bg-slate-100"
+                className="absolute right-4 top-4 rounded-full p-1.5 text-[#0D4B56] hover:bg-[#FFDE07]/18"
                 aria-label="Cerrar información del curso"
               >
                 <X className="h-5 w-5" />
               </button>
 
               <div className="grid gap-6 md:grid-cols-[320px_minmax(0,1fr)] md:gap-8">
-                <div className="max-h-[320px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 md:max-h-none">
+                <div className="max-h-[320px] overflow-hidden rounded-2xl border border-[#0D4B56]/20 bg-[#0D4B56]/[0.04] md:max-h-none">
                   <img
                     src={selectedEcard.imagen}
                     alt={selectedEcard.titulo}
@@ -1550,7 +1550,7 @@ export default function Formacion() {
                 </div>
 
                 <div className="md:pr-8">
-                  <h3 className="text-2xl font-black text-slate-900 md:text-3xl">
+                  <h3 className="text-2xl font-black text-[#182130] md:text-3xl">
                     {selectedEcard.titulo}
                   </h3>
 
@@ -1587,11 +1587,11 @@ export default function Formacion() {
                     </Badge>
                   </div>
 
-                  <div className="mt-5 h-px w-full bg-slate-200" />
+                  <div className="mt-5 h-px w-full bg-[#0D4B56]/16" />
 
                   <div className="mt-5 space-y-4">
                     {selectedEcard.descripcion.map((parrafo) => (
-                      <p key={parrafo} className="text-base leading-7 text-slate-700">
+                      <p key={parrafo} className="text-base leading-7 text-[#0D4B56]">
                         {parrafo}
                       </p>
                     ))}

@@ -34,7 +34,7 @@ export default function Header() {
   const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [desktopMenuOpen, setDesktopMenuOpen] = useState<"" | "contenido" | "comunidad" | "recursos">("");
+  const [desktopMenuOpen, setDesktopMenuOpen] = useState<"" | "contenido" | "comunidad" | "recursos" | "quienes-somos">("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Array<{ path: string; label: string }>>([]);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
@@ -46,7 +46,10 @@ export default function Header() {
   const showProyectos = false;
   const mobileMenuItemClass = "px-4 py-2 rounded-md hover:bg-accent text-base font-medium leading-6";
   const mobileAccordionTriggerClass = "px-2 py-2 text-base font-medium leading-6";
-  const isTransparent = location === "/" || location === "/nosotros";
+  const normalizedLocation =
+    (location.split("?")[0]?.split("#")[0] ?? "/").replace(/\/+$/, "") || "/";
+  const transparentPaths = new Set(["/", "/nosotros", "/centro"]);
+  const isTransparent = transparentPaths.has(normalizedLocation.toLowerCase());
   const headerClassName = isTransparent
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
     : "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
@@ -200,7 +203,7 @@ export default function Header() {
             <NavigationMenu
               ref={desktopNavMenuRef}
               value={desktopMenuOpen}
-              onValueChange={(value) => setDesktopMenuOpen(value as "" | "contenido" | "comunidad" | "recursos")}
+              onValueChange={(value) => setDesktopMenuOpen(value as "" | "contenido" | "comunidad" | "recursos" | "quienes-somos")}
             >
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -211,12 +214,52 @@ export default function Header() {
                   </Link>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
-                  <Link href="/nosotros">
-                    <NavigationMenuLink className={topLevelNavLinkClass}>
-                      Nosotros
-                    </NavigationMenuLink>
-                  </Link>
+                <NavigationMenuItem value="quienes-somos">
+                  <NavigationMenuTrigger
+                    className={triggerClassName}
+                    onPointerEnter={(event) => event.preventDefault()}
+                    onPointerMove={(event) => event.preventDefault()}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setDesktopMenuOpen((prev) => (prev === "quienes-somos" ? "" : "quienes-somos"));
+                    }}
+                  >
+                    Quiénes somos
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
+                      <li>
+                        <Link href="/nosotros">
+                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                            <div className="text-sm font-medium leading-none">Nosotros</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Misión, visión y valores del CID
+                            </p>
+                          </NavigationMenuLink>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/Gestores">
+                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                            <div className="text-sm font-medium leading-none">Equipo de Gestores</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Equipo de Gestores de Innovación
+                            </p>
+                          </NavigationMenuLink>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/centro">
+                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                            <div className="text-sm font-medium leading-none">Centro de Ciencia</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Centro de Ciencia MEN
+                            </p>
+                          </NavigationMenuLink>
+                        </Link>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem value="contenido">
@@ -539,9 +582,19 @@ export default function Header() {
           <div className="lg:hidden border-t py-4 bg-white">
             <nav className="flex flex-col gap-2">
               <Link href="/" className={mobileMenuItemClass} onClick={closeMobileMenu}>Inicio</Link>
-              <Link href="/nosotros" className={mobileMenuItemClass} onClick={closeMobileMenu}>Nosotros</Link>
 
               <Accordion type="single" collapsible className="px-2">
+                <AccordionItem value="quienes-somos" className="border-b">
+                  <AccordionTrigger className={mobileAccordionTriggerClass}>Quiénes somos</AccordionTrigger>
+                  <AccordionContent className="pb-2">
+                    <div className="flex flex-col gap-1">
+                      <Link href="/nosotros" className={mobileMenuItemClass} onClick={closeMobileMenu}>Nosotros</Link>
+                      <Link href="/nosotros#gestores-innovacion" className={mobileMenuItemClass} onClick={closeMobileMenu}>Gestores</Link>
+                      <Link href="/centro" className={mobileMenuItemClass} onClick={closeMobileMenu}>Centro de Ciencia</Link>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
                 <AccordionItem value="contenido" className="border-b">
                   <AccordionTrigger className={mobileAccordionTriggerClass}>Contenido</AccordionTrigger>
                   <AccordionContent className="pb-2">

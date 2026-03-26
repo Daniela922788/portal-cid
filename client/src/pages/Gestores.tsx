@@ -1,241 +1,446 @@
+import { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
+  BrainCircuit,
   Building2,
+  CheckCircle2,
   GraduationCap,
   Handshake,
+  Landmark,
+  Lightbulb,
   MapPinned,
   Rocket,
   School,
   Sparkles,
+  Target,
+  Users,
   Waypoints,
+  type LucideIcon,
 } from "lucide-react";
 
-const trabajoBloques = [
+type Competencia = {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+};
+
+type FrenteTrabajo = {
+  id: string;
+  title: string;
+  summary: string;
+  icon: LucideIcon;
+  acciones: string[];
+  impacto: string;
+};
+
+const funcionesGenerales = [
+  "Acompañamiento pedagógico a docentes.",
+  "Diseño de experiencias de aprendizaje con metodologías activas.",
+  "Implementación del enfoque STEM+.",
+  "Formación en herramientas tecnológicas y digitales.",
+  "Gestión de proyectos educativos innovadores.",
+  "Articulación con instituciones, aliados y el ecosistema educativo.",
+];
+
+const competenciasSigloXXI = ["Conocimientos", "Habilidades", "Actitudes", "Valores"];
+
+const capacidadesCiudadanas = [
+  "Integrar conocimientos, habilidades, actitudes y valores.",
+  "Resolver problemas complejos.",
+  "Tomar decisiones informadas.",
+  "Aportar al desarrollo sostenible del territorio.",
+];
+
+const competenciasClave: Competencia[] = [
   {
-    title: "Acompañamiento a instituciones educativas",
-    description: "Apoyan la implementación de estrategias STEM+ y procesos de innovación en contextos reales.",
-    icon: School,
+    title: "Metodologías activas",
+    description: "Manejo de ABP, STEAM, Design Thinking y aprendizaje basado en retos.",
+    icon: BrainCircuit,
   },
   {
-    title: "Fortalecimiento de capacidades",
-    description: "Orientan a docentes y estudiantes en metodologías, herramientas y pensamiento innovador.",
+    title: "Liderazgo pedagógico",
+    description: "Capacidad para orientar y acompañar a docentes y directivos en procesos de transformación.",
     icon: GraduationCap,
   },
   {
-    title: "Gestión de proyectos",
-    description: "Promueven, estructuran y hacen seguimiento a iniciativas de ciencia, tecnología e innovación.",
+    title: "Habilidades tecnológicas",
+    description: "Uso de herramientas digitales, programación, robótica y producción multimedia.",
     icon: Rocket,
   },
   {
-    title: "Articulación del ecosistema",
-    description: "Conectan actores del sector público, privado, académico y comunitario.",
-    icon: Waypoints,
+    title: "Gestión de proyectos",
+    description: "Diseño, ejecución y evaluación de iniciativas educativas con seguimiento real.",
+    icon: Target,
   },
   {
-    title: "Dinamización del territorio",
-    description: "Llevan la innovación a aulas, bibliotecas, parques culturales y espacios comunitarios.",
-    icon: MapPinned,
+    title: "Habilidades blandas",
+    description: "Comunicación asertiva, trabajo colaborativo, pensamiento crítico y resolución de problemas.",
+    icon: Users,
+  },
+  {
+    title: "Enfoque ético y sostenible",
+    description: "Promoción de prácticas responsables con el entorno y orientadas al bien común.",
+    icon: CheckCircle2,
+  },
+  {
+    title: "Articulación institucional",
+    description: "Trabajo coordinado con instituciones educativas, centros de ciencia y aliados.",
+    icon: Waypoints,
   },
 ];
 
-const cursosCentroInnovacion = [
-  "/Fotogestores.jpg",
-  "/Formacion/Ecard%20Explorando%20la%20IA.jpeg",
-  "/Formacion/Ecard%20Power%20Bi.jpeg",
-  "/cursos/laboratorio-secreto.jpg",
-  "/cursos/crea-naturaleza.jpg",
-  "/cursos/montaje-fotografico.jpg",
-];
-
-const centrosInteresInstituciones = [
-  "/InstituciónEducativaComercialdeEnvigado.jpg",
-  "/InstituciónEducativaElSalado.jpg",
-  "/InstituciónEducativaLaPaz.jpg",
-  "/InstituciónEducativaNormalSuperiordeEnvigado.jpg",
-  "/InstituciónEducativaDaríodeBedout.jpg",
-  "/InstituciónEducativaManuelUribeÁngel.JPG",
-];
-
-const cursosTerritorio = [
-  "/STEM/1.webp",
-  "/STEM/2.webp",
-  "/STEM/3.webp",
-  "/STEM/4.webp",
-  "/ciudadaprendizaje/1.webp",
-  "/ciudadaprendizaje/2.webp",
+const frentesTrabajo: FrenteTrabajo[] = [
+  {
+    id: "cid",
+    title: "Trabajo en el Centro de Innovación (CID)",
+    summary:
+      "En el Centro de Innovación, los gestores desarrollan procesos formativos dirigidos a docentes, estudiantes y comunidad en general.",
+    icon: Lightbulb,
+    acciones: [
+      "Talleres formativos y cursos en tecnología, innovación y STEM.",
+      "Clubes y espacios de experimentación con enfoque práctico.",
+      "Procesos de alfabetización digital y apropiación del conocimiento.",
+      "Diseño de experiencias que luego se trasladan a las instituciones educativas.",
+    ],
+    impacto:
+      "El CID funciona como un laboratorio de aprendizaje donde se exploran metodologías, herramientas y rutas de innovación aplicables al territorio.",
+  },
+  {
+    id: "instituciones",
+    title: "Trabajo en Instituciones Educativas",
+    summary:
+      "En las instituciones educativas públicas fortalecen centros de interés, semilleros de investigación y proyectos STEM.",
+    icon: School,
+    acciones: [
+      "Acompañamiento a centros de interés y proyectos con enfoque territorial.",
+      "Impulso a procesos en tecnología, ciencia, robótica, medio ambiente y comunicación.",
+      "Planeación de actividades y seguimiento continuo a los procesos.",
+      "Promoción del aprendizaje basado en proyectos y la participación activa del estudiante.",
+    ],
+    impacto:
+      "Los estudiantes desarrollan intereses, capacidades y experiencias más significativas dentro de su contexto escolar.",
+  },
+  {
+    id: "docentes",
+    title: "Acompañamiento y asesoría a docentes",
+    summary:
+      "Uno de los pilares del trabajo de los gestores es el acompañamiento directo a docentes dentro del aula.",
+    icon: Handshake,
+    acciones: [
+      "Planeación conjunta de clases y proyectos.",
+      "Implementación de metodologías activas e integración del enfoque STEM en el currículo.",
+      "Apoyo en el uso de herramientas tecnológicas y evaluación de experiencias de aprendizaje.",
+      "Talleres de formación, mentorías personalizadas y espacios de aprendizaje colaborativo.",
+    ],
+    impacto:
+      "El docente gana confianza para innovar, incorporar tecnología y transformar sus dinámicas de enseñanza.",
+  },
+  {
+    id: "territorio",
+    title: "Trabajo en el territorio y la comunidad",
+    summary:
+      "Los gestores extienden su impacto más allá de la escuela, vinculando ciudadanía, comunidad y territorio.",
+    icon: MapPinned,
+    acciones: [
+      "Creación de comunidades de aprendizaje y formación abierta a la ciudadanía.",
+      "Procesos de alfabetización digital y diagnósticos sobre el uso de TIC.",
+      "Difusión de buenas prácticas educativas, ferias de ciencia y eventos del ecosistema.",
+      "Participación en redes de conocimiento que fortalecen el aprendizaje compartido.",
+    ],
+    impacto:
+      "Se consolida un ecosistema educativo innovador donde el conocimiento circula, se transforma y genera impacto social.",
+  },
+  {
+    id: "articulacion",
+    title: "Articulación y gestión del sistema educativo",
+    summary:
+      "También cumplen un rol estratégico en la articulación institucional y el seguimiento de procesos educativos.",
+    icon: Landmark,
+    acciones: [
+      "Apoyo a la transformación del PEI y la planeación de proyectos educativos.",
+      "Gestión de alianzas con actores del ecosistema y participación en comités.",
+      "Reportes periódicos, registro de actividades y seguimiento a indicadores.",
+      "Gestión administrativa que asegura continuidad, trazabilidad y mejora.",
+    ],
+    impacto:
+      "La innovación deja de depender de acciones aisladas y se integra a la gestión institucional con visión de sostenibilidad.",
+  },
 ];
 
 export default function Gestores() {
+  const [frenteActivo, setFrenteActivo] = useState(frentesTrabajo[0].id);
+
+  const frenteActual = frentesTrabajo.find((frente) => frente.id === frenteActivo) ?? frentesTrabajo[0];
+  const IconoFrenteActual = frenteActual.icon;
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-cyan-50/40 py-8">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,222,7,0.18),_transparent_22%),linear-gradient(180deg,_#ffffff_0%,_rgba(17,178,170,0.08)_45%,_rgba(13,75,86,0.08)_100%)] py-8">
       <div className="container">
         <Breadcrumbs items={[{ label: "Inicio", href: "/" }, { label: "Gestores de Innovación" }]} />
 
-        <section className="relative mt-6 overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 text-white shadow-2xl">
-          <img
-            src="/Fotogestores.jpg"
-            alt="Equipo de gestores de innovación"
-            className="h-[300px] w-full object-cover object-[50%_24%] opacity-35 md:h-[380px] md:object-[50%_20%]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/75 to-cyan-900/45" />
-          <div className="absolute inset-0 p-6 md:p-10 lg:p-14">
-            <Badge className="mb-4 bg-cyan-500 text-slate-900 hover:bg-cyan-400">
-              <Sparkles className="mr-2 h-4 w-4" /> Ecosistema STEM+
+        <section className="relative mt-6 overflow-hidden rounded-3xl border border-[#182130] bg-gradient-to-r from-[#182130] via-[#0D4B56] to-[#023A34] p-6 text-white shadow-2xl md:p-10 lg:p-14">
+          <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-[#11B2AA]/25 blur-2xl" />
+          <div className="absolute -bottom-16 left-1/3 h-52 w-52 rounded-full bg-[#2D3586]/25 blur-2xl" />
+          <div className="relative">
+            <Badge className="mb-4 bg-[#FFDE07] text-[#182130] hover:bg-[#FFDE07]/90">
+              <Sparkles className="mr-2 h-4 w-4" /> Innovación educativa y territorio STEM+
             </Badge>
-            <h1 className="max-w-3xl text-3xl font-black leading-tight md:text-5xl">Gestores de Innovación</h1>
-            <p className="mt-4 max-w-2xl text-sm text-cyan-50 md:text-lg">
-              Profesionales que impulsan procesos de transformación educativa, tecnológica y social en el territorio,
-              conectando instituciones, comunidad y estrategias de innovación.
+            <h1 className="max-w-4xl text-3xl font-black leading-tight md:text-5xl">
+              Gestores de Innovación Educativa
+            </h1>
+            <p className="mt-4 max-w-4xl text-sm text-cyan-50 md:text-lg">
+              Son profesionales que lideran procesos de transformación en las instituciones educativas,
+              promoviendo nuevas formas de enseñar y aprender a través del enfoque STEM+, la tecnología y la
+              innovación pedagógica.
             </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
+                Agentes de cambio
+              </Badge>
+              <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
+                Acompañamiento pedagógico
+              </Badge>
+              <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
+                Innovación con impacto territorial
+              </Badge>
+            </div>
           </div>
         </section>
 
         <section className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-          <Card className="border-slate-200 bg-white/95 shadow-lg">
+          <Card className="border-[#0D4B56]/30 bg-gradient-to-br from-white via-white to-[#11B2AA]/10 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-2xl text-slate-900">¿Quiénes son?</CardTitle>
+              <CardTitle className="text-2xl text-[#0D4B56]">¿Qué son los gestores?</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-slate-700">
               <p>
-                Son profesionales que impulsan procesos de transformación educativa, tecnológica y social en el
-                territorio. Actúan como puentes entre las instituciones, la comunidad y las estrategias del
-                ecosistema STEM+.
+                Se caracterizan por ser agentes de cambio con mentalidad innovadora, capaces de trascender los
+                modelos tradicionales de educación y acompañar nuevas formas de aprendizaje.
               </p>
               <p>
-                Su labor no se limita a acompañar proyectos: dinamizan ideas, conectan actores y promueven el
-                desarrollo de capacidades en estudiantes, docentes e instituciones.
+                Su enfoque multidisciplinario les permite integrar distintas áreas del conocimiento para trabajar de
+                la mano con docentes, directivos y estudiantes en experiencias educativas más dinámicas,
+                pertinentes y significativas.
+              </p>
+              <p>
+                Más que capacitadores externos, son aliados en el aula que fortalecen las prácticas pedagógicas
+                desde la realidad del territorio.
               </p>
             </CardContent>
           </Card>
 
-          <Card className="border-cyan-200 bg-gradient-to-br from-cyan-50 to-blue-50 shadow-lg">
+          <Card className="border-[#11B2AA]/40 bg-gradient-to-br from-[#FFDE07]/20 via-[#11B2AA]/10 to-[#2D3586]/15 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-2xl text-slate-900">¿Por qué son importantes?</CardTitle>
+              <CardTitle className="text-2xl text-[#182130]">Propósito de los gestores</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3 text-slate-700">
-              <p>Traducen las políticas y estrategias en acciones concretas.</p>
-              <p>Aseguran continuidad en los procesos.</p>
-              <p>Generan impacto directo en las comunidades educativas.</p>
-              <p>Promueven una cultura de innovación sostenible.</p>
+            <CardContent className="space-y-4 text-slate-700">
+              <p>
+                Su propósito se enmarca en el trabajo de la Dirección de Innovación, que busca liderar, coordinar y
+                promover el desarrollo científico, tecnológico y de innovación como motor del progreso social,
+                educativo, económico y cultural del municipio.
+              </p>
+              <p>
+                En ese sentido, los gestores conectan conocimiento, comunidad y soluciones a problemáticas reales,
+                impulsando procesos educativos alineados con la sostenibilidad y el enfoque de Territorio STEM+
+                SMART.
+              </p>
+              <div className="rounded-2xl border border-[#EC6910]/40 bg-gradient-to-r from-[#EC6910]/15 to-[#FFDE07]/15 p-4">
+                <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#EC6910]">
+                  Su labor contribuye a formar ciudadanos capaces de:
+                </p>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {capacidadesCiudadanas.map((capacidad) => (
+                    <div key={capacidad} className="rounded-xl border border-[#FFDE07]/40 bg-white/90 p-3 text-sm text-slate-700 shadow-sm">
+                      {capacidad}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </CardContent>
           </Card>
         </section>
 
-        <section className="mt-10">
-          <h2 className="mb-5 text-2xl font-bold text-slate-900 md:text-3xl">¿Qué hacen?</h2>
+        <section className="mt-12 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+          <Card className="border-[#11B2AA]/40 bg-gradient-to-br from-white to-[#11B2AA]/10 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl text-[#182130]">¿Qué hacen los gestores?</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="mb-5 text-slate-700">
+                Diseñan, implementan y acompañan procesos educativos innovadores que impactan diferentes niveles del
+                sistema educativo y la comunidad.
+              </p>
+              <div className="grid gap-3 md:grid-cols-2">
+                {funcionesGenerales.map((funcion) => (
+                  <div key={funcion} className="rounded-2xl border border-[#11B2AA]/25 bg-gradient-to-br from-white to-[#11B2AA]/10 p-4 text-sm text-slate-700 shadow-sm">
+                    {funcion}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-[#2D3586]/30 bg-gradient-to-br from-[#2D3586]/15 via-white to-[#FFDE07]/10 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl text-[#182130]">Competencias que promueven</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {competenciasSigloXXI.map((competencia) => (
+                <div key={competencia} className="rounded-2xl border border-[#2D3586]/20 bg-gradient-to-r from-white to-[#2D3586]/10 p-4 text-slate-700 shadow-sm">
+                  <p className="font-semibold text-[#182130]">{competencia}</p>
+                  <p className="text-sm text-[#0D4B56]">
+                    Desarrollo integral para aprender, hacer, convivir y actuar con criterio.
+                  </p>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </section>
+
+        <section className="mt-12 rounded-[2rem] border border-[#11B2AA]/20 bg-gradient-to-b from-white to-[#11B2AA]/5 p-1">
+          <div className="rounded-[1.7rem] bg-white/80 p-5 md:p-6">
+          <div className="mb-5 flex items-center gap-3">
+            <BrainCircuit className="h-7 w-7 text-[#0D4B56]" />
+            <div>
+              <h2 className="text-2xl font-bold text-[#182130] md:text-3xl">Perfil y competencias del gestor</h2>
+              <p className="text-slate-600">
+                El gestor de innovación educativa combina capacidades pedagógicas, tecnológicas y sociales para
+                generar impacto real en el entorno educativo.
+              </p>
+            </div>
+          </div>
+
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {trabajoBloques.map((bloque) => {
-              const Icon = bloque.icon;
+            {competenciasClave.map((competencia) => {
+              const Icon = competencia.icon;
+
               return (
-                <Card key={bloque.title} className="border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
-                  <CardHeader>
-                    <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-100 text-cyan-700">
+                <Card key={competencia.title} className="border-transparent bg-gradient-to-br from-white via-white to-[#11B2AA]/10 shadow-sm ring-1 ring-[#11B2AA]/15">
+                  <CardContent className="p-5">
+                    <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FFDE07] to-[#EC6910] text-[#182130] shadow-sm">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <CardTitle className="text-lg leading-snug text-slate-900">{bloque.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm leading-relaxed text-slate-600">{bloque.description}</p>
+                    <h3 className="text-lg font-bold text-[#182130]">{competencia.title}</h3>
+                    <p className="mt-2 text-sm text-slate-600">{competencia.description}</p>
                   </CardContent>
                 </Card>
               );
             })}
           </div>
+          </div>
         </section>
 
-        <section className="mt-10 rounded-3xl border border-emerald-200 bg-gradient-to-r from-emerald-50 to-cyan-50 p-6 shadow-sm md:p-8">
+        <section className="mt-14 rounded-3xl border border-[#023A34]/20 bg-gradient-to-r from-[#023A34]/15 via-[#11B2AA]/12 to-[#FFDE07]/12 p-6 shadow-sm md:p-8">
           <div className="flex items-start gap-3">
-            <Handshake className="mt-1 h-6 w-6 shrink-0 text-emerald-700" />
+            <Handshake className="mt-1 h-6 w-6 shrink-0 text-[#023A34]" />
             <div>
-              <h3 className="text-xl font-bold text-slate-900">Presencia en el territorio</h3>
-              <p className="mt-2 text-slate-700">
-                Los gestores de innovación tienen presencia en el territorio, priorizando inicialmente las
-                instituciones educativas oficiales, para garantizar un acceso equitativo a los procesos de formación,
-                innovación y apropiación del conocimiento en todo el municipio.
+              <h3 className="text-xl font-bold text-[#182130]">¿Cómo trabajan los gestores?</h3>
+              <p className="mt-2 max-w-4xl text-slate-700">
+                Su trabajo combina formación, acompañamiento, trabajo en red y gestión institucional. A continuación
+                puedes explorar los principales escenarios en los que desarrollan su labor.
               </p>
             </div>
           </div>
         </section>
 
-        <section className="mt-14 space-y-14">
-          <div>
-            <div className="mb-5 flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">1</div>
-              <h3 className="text-2xl font-bold text-slate-900">Trabajo en el Centro de Innovación con los cursos que se dan</h3>
-            </div>
-            <p className="mb-6 max-w-4xl text-slate-600">
-              En el Centro de Innovación, los gestores diseñan y acompañan experiencias formativas para distintos
-              públicos, fortaleciendo habilidades STEM+, pensamiento creativo y apropiación tecnológica.
-            </p>
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:gap-4">
-              {cursosCentroInnovacion.map((src, idx) => (
-                <div key={src} className={`overflow-hidden rounded-2xl border border-slate-200 bg-white ${idx === 0 ? "col-span-2 row-span-2" : ""}`}>
-                  <img src={src} alt={`Curso en centro de innovación ${idx + 1}`} className="h-full w-full object-cover" loading="lazy" decoding="async" />
-                </div>
-              ))}
-            </div>
-          </div>
+        <section className="mt-8 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+          <Card className="border-[#2D3586]/20 bg-gradient-to-b from-white to-[#2D3586]/5 shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg text-[#182130]">Frentes de trabajo</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              {frentesTrabajo.map((frente) => {
+                const Icon = frente.icon;
 
-          <div>
-            <div className="mb-5 flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-600 text-sm font-bold text-white">2</div>
-              <h3 className="text-2xl font-bold text-slate-900">Centros de interés en las instituciones públicas de Envigado</h3>
-            </div>
-            <p className="mb-6 max-w-4xl text-slate-600">
-              Los gestores acompañan procesos en instituciones educativas oficiales, articulando centros de interés
-              con estrategias pedagógicas para llevar la innovación a la escuela y fortalecer el aprendizaje con
-              sentido territorial.
-            </p>
-            <div className="grid gap-3 md:grid-cols-12 lg:gap-4">
-              <div className="overflow-hidden rounded-2xl border border-slate-200 md:col-span-7">
-                <img src={centrosInteresInstituciones[0]} alt="Instituciones educativas públicas" className="h-[260px] w-full object-cover" loading="lazy" decoding="async" />
-              </div>
-              <div className="overflow-hidden rounded-2xl border border-slate-200 md:col-span-5">
-                <img src={centrosInteresInstituciones[1]} alt="Trabajo en instituciones" className="h-[260px] w-full object-cover" loading="lazy" decoding="async" />
-              </div>
-              {centrosInteresInstituciones.slice(2).map((src, idx) => (
-                <div key={src} className="overflow-hidden rounded-2xl border border-slate-200 md:col-span-3">
-                  <img src={src} alt={`Centro de interés ${idx + 1}`} className="h-[180px] w-full object-cover" loading="lazy" decoding="async" />
-                </div>
-              ))}
-            </div>
-          </div>
+                return (
+                  <button
+                    key={frente.id}
+                    type="button"
+                    onClick={() => setFrenteActivo(frente.id)}
+                    className={`flex w-full items-start gap-3 rounded-2xl border px-4 py-4 text-left transition-colors ${
+                      frenteActivo === frente.id
+                        ? "border-[#2D3586] bg-gradient-to-r from-[#2D3586]/15 to-[#11B2AA]/10 text-[#182130]"
+                        : "border-slate-200 bg-white text-slate-700 hover:border-[#2D3586]/40 hover:bg-[#2D3586]/5"
+                    }`}
+                  >
+                    <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#2D3586] to-[#0D4B56] text-white shadow-sm">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">{frente.title}</p>
+                      <p className="mt-1 text-sm text-slate-600">{frente.summary}</p>
+                    </div>
+                  </button>
+                );
+              })}
+            </CardContent>
+          </Card>
 
-          <div>
-            <div className="mb-5 flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-purple-600 text-sm font-bold text-white">3</div>
-              <h3 className="text-2xl font-bold text-slate-900">Los cursos que se dan en territorio</h3>
-            </div>
-            <p className="mb-6 max-w-4xl text-slate-600">
-              La formación también llega a escenarios comunitarios del territorio para ampliar oportunidades,
-              democratizar el acceso al conocimiento y consolidar una cultura de innovación sostenible.
-            </p>
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6 lg:gap-4">
-              {cursosTerritorio.map((src, idx) => (
-                <Card key={src} className="overflow-hidden border-slate-200 shadow-sm">
-                  <img src={src} alt={`Curso territorial ${idx + 1}`} className="h-40 w-full object-cover" loading="lazy" decoding="async" />
-                </Card>
-              ))}
-            </div>
-          </div>
+          <Card className="border-[#2D3586]/30 bg-[linear-gradient(135deg,rgba(45,53,134,0.16)_0%,rgba(255,255,255,0.96)_38%,rgba(17,178,170,0.16)_72%,rgba(255,222,7,0.14)_100%)] shadow-sm">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FFDE07] to-[#EC6910] text-[#182130] shadow-sm">
+                  <IconoFrenteActual className="h-5 w-5" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl text-[#182130]">{frenteActual.title}</CardTitle>
+                  <p className="mt-1 text-sm text-slate-600">{frenteActual.summary}</p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#2D3586]">Acciones destacadas</p>
+              <div className="grid gap-3 md:grid-cols-2">
+                {frenteActual.acciones.map((accion) => (
+                  <div key={accion} className="rounded-2xl border border-[#11B2AA]/20 bg-white/90 p-4 text-sm text-slate-700 shadow-sm">
+                    {accion}
+                  </div>
+                ))}
+              </div>
+              <div className="mt-5 rounded-2xl border border-[#EC6910]/40 bg-gradient-to-r from-[#EC6910]/15 to-[#FFDE07]/20 p-4 text-sm text-[#182130]">
+                <span className="font-bold text-[#EC6910]">Impacto:</span> {frenteActual.impacto}
+              </div>
+            </CardContent>
+          </Card>
         </section>
 
-        <section className="mt-16 rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-            <Building2 className="h-6 w-6" />
-          </div>
-          <h3 className="text-2xl font-bold text-slate-900">Innovación con impacto real</h3>
-          <p className="mx-auto mt-3 max-w-3xl text-slate-600">
-            Los gestores son la fuerza articuladora que convierte la visión STEM+ en experiencias concretas para
-            estudiantes, docentes e instituciones de Envigado.
-          </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-            <Badge variant="secondary" className="px-3 py-1">Transformación educativa</Badge>
-            <Badge variant="secondary" className="px-3 py-1">Ciencia y tecnología</Badge>
-            <Badge variant="secondary" className="px-3 py-1">Trabajo en red</Badge>
-            <Badge variant="secondary" className="px-3 py-1">Territorio STEM+</Badge>
+        <section className="mt-16 rounded-3xl border border-[#182130]/10 bg-[linear-gradient(145deg,rgba(24,33,48,0.98)_0%,rgba(13,75,86,0.98)_45%,rgba(2,58,52,0.96)_100%)] p-8 text-white shadow-sm">
+          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+            <div>
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FFDE07] to-[#EC6910] text-[#182130]">
+                <Building2 className="h-6 w-6" />
+              </div>
+              <h3 className="text-2xl font-bold text-white">Cierre</h3>
+              <p className="mt-3 text-cyan-50">
+                Los Gestores de Innovación Educativa son actores clave en la transformación del sistema educativo,
+                conectando la escuela con la tecnología, la innovación y las necesidades del territorio.
+              </p>
+              <p className="mt-3 text-cyan-50">
+                Su trabajo no solo impacta el aula; fortalece el ecosistema educativo en su conjunto y promueve una
+                educación más pertinente, creativa y orientada al futuro.
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
+                <p className="font-semibold text-[#FFDE07]">Transformación educativa</p>
+                <p className="mt-1 text-sm text-cyan-50">Acompañan procesos que cambian la práctica pedagógica.</p>
+              </div>
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
+                <p className="font-semibold text-[#11B2AA]">Tecnología con sentido</p>
+                <p className="mt-1 text-sm text-cyan-50">Integran herramientas y metodologías según las necesidades reales.</p>
+              </div>
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
+                <p className="font-semibold text-[#EC6910]">Trabajo en red</p>
+                <p className="mt-1 text-sm text-cyan-50">Articulan comunidad, instituciones y aliados del ecosistema.</p>
+              </div>
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
+                <p className="font-semibold text-[#2D3586]">Proyección territorial</p>
+                <p className="mt-1 text-sm text-cyan-50">Impulsan una educación conectada con el futuro del municipio.</p>
+              </div>
+            </div>
           </div>
         </section>
       </div>

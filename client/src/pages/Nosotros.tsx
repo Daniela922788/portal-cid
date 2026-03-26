@@ -521,11 +521,11 @@ export default function Nosotros() {
       {/* Nuestro ADN */}
       <section className="pt-10 pb-2 bg-white">
         <div className="container">
-          <h2 className="text-4xl font-bold mb-12 text-center">Nuestro ADN</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center text-[#2D3586]">Nuestro ADN</h2>
           
           {/* Dirección de Innovación */}
           <div className="mb-16">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-blue-600">La Dirección de Innovación</h3>
+            <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-[#0D4B56]">Dirección de Innovación</h3>
             <p className="text-base sm:text-lg text-gray-700 mb-6">
               La Dirección de Innovación es una dependencia estratégica de la Secretaría de Educación de Envigado, cuyo propósito principal es liderar, coordinar y promover el desarrollo científico, tecnológico y de innovación como motores del progreso social, económico, educativo y cultural.
             </p>
@@ -594,63 +594,6 @@ export default function Nosotros() {
                 </CardContent>
               </Card>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Lo que hacemos */}
-      <section id="lo-que-hacemos" className="pt-6 sm:pt-20 pb-2 bg-gradient-to-br from-gray-50 to-white scroll-mt-24">
-        <div className="container">
-          <h2 className="text-4xl font-bold mb-10 text-center">Lo que Hacemos y Cómo Impactamos</h2>
-          <div className="grid md:grid-cols-2 gap-4 mb-10">
-            <Card className="overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all">
-              <CardContent className="p-0">
-                <div className="flex h-full">
-                  <div className="w-2 bg-blue-500" />
-                  <div className="p-4">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-blue-600/80 mb-2">Linea de accion</p>
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">Innovación Educativa</h3>
-                    <p className="text-sm text-slate-700 leading-snug">Transformación de las dinámicas educativas, desde la implementación del enfoque STEM y desarrollos propios.</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all">
-              <CardContent className="p-0">
-                <div className="flex h-full">
-                  <div className="w-2 bg-cyan-500" />
-                  <div className="p-4">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-cyan-700/80 mb-2">Linea de accion</p>
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">Investigación Digital</h3>
-                    <p className="text-sm text-slate-700 leading-snug">Proceso de innovación disruptiva que busca soluciones digitales más eficientes y pertinentes.</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all">
-              <CardContent className="p-0">
-                <div className="flex h-full">
-                  <div className="w-2 bg-emerald-500" />
-                  <div className="p-4">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-700/80 mb-2">Linea de accion</p>
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">Investigación Educativa</h3>
-                    <p className="text-sm text-slate-700 leading-snug">Fortalecimiento de los procesos educativos en las instituciones educativas.</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all">
-              <CardContent className="p-0">
-                <div className="flex h-full">
-                  <div className="w-2 bg-teal-500" />
-                  <div className="p-4">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-teal-700/80 mb-2">Linea de accion</p>
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">Centro de Ciencia</h3>
-                    <p className="text-sm text-slate-700 leading-snug">Busca la transformación del territorio con base en la ciencia, la tecnología y la innovación.</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>

@@ -43,10 +43,10 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/Envigado%20se%20suma%20a%20la%20Red%20Nacional%20de%20Ciudades%20del%20Aprendizaje/1.jpeg",
-      "/Noticias/Envigado%20se%20suma%20a%20la%20Red%20Nacional%20de%20Ciudades%20del%20Aprendizaje/2.jpeg",
-      "/Noticias/Envigado%20se%20suma%20a%20la%20Red%20Nacional%20de%20Ciudades%20del%20Aprendizaje/3.jpeg",
-      "/Noticias/Envigado%20se%20suma%20a%20la%20Red%20Nacional%20de%20Ciudades%20del%20Aprendizaje/4.jpeg",
+      "/Noticias/envigado-red-ciudades-aprendizaje/1.jpeg",
+      "/Noticias/envigado-red-ciudades-aprendizaje/2.jpeg",
+      "/Noticias/envigado-red-ciudades-aprendizaje/3.jpeg",
+      "/Noticias/envigado-red-ciudades-aprendizaje/4.jpeg",
     ],
     autor: "Municipio de Envigado",
   },
@@ -64,15 +64,15 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/Estudiantes%20de%20la%20I.%20E.%20El%20Salado,%20en%20Envigado,%20estrenaron%20computadores/151822_estudiantes-de-la-i-e-el-salado-en-envigado-estrenaron_1024x600.jpeg",
-      "/Noticias/Estudiantes%20de%20la%20I.%20E.%20El%20Salado,%20en%20Envigado,%20estrenaron%20computadores/151823_whatsapp-image-20260129-at-23459-pm_1024x600.jpeg",
-      "/Noticias/Estudiantes%20de%20la%20I.%20E.%20El%20Salado,%20en%20Envigado,%20estrenaron%20computadores/151824_whatsapp-image-20260129-at-23502-pm_1024x600.jpeg",
-      "/Noticias/Estudiantes%20de%20la%20I.%20E.%20El%20Salado,%20en%20Envigado,%20estrenaron%20computadores/151825_whatsapp-image-20260129-at-23459-pm-1_1024x600.jpeg",
-      "/Noticias/Estudiantes%20de%20la%20I.%20E.%20El%20Salado,%20en%20Envigado,%20estrenaron%20computadores/151826_whatsapp-image-20260129-at-23459-pm-2_1024x600.jpeg",
-      "/Noticias/Estudiantes%20de%20la%20I.%20E.%20El%20Salado,%20en%20Envigado,%20estrenaron%20computadores/151827_whatsapp-image-20260129-at-23500-pm-2_1024x600.jpeg",
-      "/Noticias/Estudiantes%20de%20la%20I.%20E.%20El%20Salado,%20en%20Envigado,%20estrenaron%20computadores/151828_whatsapp-image-20260129-at-23500-pm-1_1024x600.jpeg",
-      "/Noticias/Estudiantes%20de%20la%20I.%20E.%20El%20Salado,%20en%20Envigado,%20estrenaron%20computadores/151829_whatsapp-image-20260129-at-23501-pm_1024x600.jpeg",
-      "/Noticias/Estudiantes%20de%20la%20I.%20E.%20El%20Salado,%20en%20Envigado,%20estrenaron%20computadores/151830_whatsapp-image-20260129-at-23500-pm-3_1024x600.jpeg",
+      "/Noticias/estudiantes-el-salado-computadores/151822_estudiantes-de-la-i-e-el-salado-en-envigado-estrenaron_1024x600.jpeg",
+      "/Noticias/estudiantes-el-salado-computadores/151823_whatsapp-image-20260129-at-23459-pm_1024x600.jpeg",
+      "/Noticias/estudiantes-el-salado-computadores/151824_whatsapp-image-20260129-at-23502-pm_1024x600.jpeg",
+      "/Noticias/estudiantes-el-salado-computadores/151825_whatsapp-image-20260129-at-23459-pm-1_1024x600.jpeg",
+      "/Noticias/estudiantes-el-salado-computadores/151826_whatsapp-image-20260129-at-23459-pm-2_1024x600.jpeg",
+      "/Noticias/estudiantes-el-salado-computadores/151827_whatsapp-image-20260129-at-23500-pm-2_1024x600.jpeg",
+      "/Noticias/estudiantes-el-salado-computadores/151828_whatsapp-image-20260129-at-23500-pm-1_1024x600.jpeg",
+      "/Noticias/estudiantes-el-salado-computadores/151829_whatsapp-image-20260129-at-23501-pm_1024x600.jpeg",
+      "/Noticias/estudiantes-el-salado-computadores/151830_whatsapp-image-20260129-at-23500-pm-3_1024x600.jpeg",
     ],
     autor: "Alcaldía de Envigado",
   },
@@ -90,8 +90,8 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/Envigado,%20ganador%20del%20Reto%20Nacional%20por%20la%20Educaci%C3%B3n%202025/1.jpeg",
-      "/Noticias/Envigado,%20ganador%20del%20Reto%20Nacional%20por%20la%20Educaci%C3%B3n%202025/2.jpg",
+      "/Noticias/envigado-ganador-reto-nacional/1.jpeg",
+      "/Noticias/envigado-ganador-reto-nacional/2.jpg",
     ],
     autor: "Alcaldía de Envigado",
   },
@@ -108,10 +108,10 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/Envigado%20recibi%C3%B3%20reconocimiento%20por%20sus%20buenas%20pr%C3%A1cticas%20en%20Foro%20Latinoamericano%20de%20Ciudades%20del%20Aprendizaje/1.jpeg",
-      "/Noticias/Envigado%20recibi%C3%B3%20reconocimiento%20por%20sus%20buenas%20pr%C3%A1cticas%20en%20Foro%20Latinoamericano%20de%20Ciudades%20del%20Aprendizaje/2.jpeg",
-      "/Noticias/Envigado%20recibi%C3%B3%20reconocimiento%20por%20sus%20buenas%20pr%C3%A1cticas%20en%20Foro%20Latinoamericano%20de%20Ciudades%20del%20Aprendizaje/3.jpeg",
-      "/Noticias/Envigado%20recibi%C3%B3%20reconocimiento%20por%20sus%20buenas%20pr%C3%A1cticas%20en%20Foro%20Latinoamericano%20de%20Ciudades%20del%20Aprendizaje/4.jpeg",
+      "/Noticias/envigado-reconocimiento-foro-latinoamericano/1.jpeg",
+      "/Noticias/envigado-reconocimiento-foro-latinoamericano/2.jpeg",
+      "/Noticias/envigado-reconocimiento-foro-latinoamericano/3.jpeg",
+      "/Noticias/envigado-reconocimiento-foro-latinoamericano/4.jpeg",
     ],
     autor: "Municipio de Envigado",
   },
@@ -137,14 +137,14 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/Envigado%20exalt%C3%B3%20a%20los%20mejores%20docentes%20de%202025%20en%20la%20Gala%20del%20Maestro/145681_envigado-exalto-a-los-mejores-docentes-de-2025-en-la_1024x600.jpeg",
-      "/Noticias/Envigado%20exalt%C3%B3%20a%20los%20mejores%20docentes%20de%202025%20en%20la%20Gala%20del%20Maestro/145683_whatsapp-image-20251014-at-104909-am_1024x600.jpeg",
-      "/Noticias/Envigado%20exalt%C3%B3%20a%20los%20mejores%20docentes%20de%202025%20en%20la%20Gala%20del%20Maestro/145684_whatsapp-image-20251014-at-104911-am-1_1024x600.jpeg",
-      "/Noticias/Envigado%20exalt%C3%B3%20a%20los%20mejores%20docentes%20de%202025%20en%20la%20Gala%20del%20Maestro/145685_whatsapp-image-20251014-at-104911-am_1024x600.jpeg",
-      "/Noticias/Envigado%20exalt%C3%B3%20a%20los%20mejores%20docentes%20de%202025%20en%20la%20Gala%20del%20Maestro/145686_whatsapp-image-20251014-at-104912-am-1_1024x600.jpeg",
-      "/Noticias/Envigado%20exalt%C3%B3%20a%20los%20mejores%20docentes%20de%202025%20en%20la%20Gala%20del%20Maestro/145687_whatsapp-image-20251014-at-104912-am-2_1024x600.jpeg",
-      "/Noticias/Envigado%20exalt%C3%B3%20a%20los%20mejores%20docentes%20de%202025%20en%20la%20Gala%20del%20Maestro/145688_whatsapp-image-20251014-at-104913-am_1024x600.jpeg",
-      "/Noticias/Envigado%20exalt%C3%B3%20a%20los%20mejores%20docentes%20de%202025%20en%20la%20Gala%20del%20Maestro/145690_whatsapp-image-20251014-at-104914-am-2_1024x600.jpeg",
+      "/Noticias/gala-maestro-2025/145681_envigado-exalto-a-los-mejores-docentes-de-2025-en-la_1024x600.jpeg",
+      "/Noticias/gala-maestro-2025/145683_whatsapp-image-20251014-at-104909-am_1024x600.jpeg",
+      "/Noticias/gala-maestro-2025/145684_whatsapp-image-20251014-at-104911-am-1_1024x600.jpeg",
+      "/Noticias/gala-maestro-2025/145685_whatsapp-image-20251014-at-104911-am_1024x600.jpeg",
+      "/Noticias/gala-maestro-2025/145686_whatsapp-image-20251014-at-104912-am-1_1024x600.jpeg",
+      "/Noticias/gala-maestro-2025/145687_whatsapp-image-20251014-at-104912-am-2_1024x600.jpeg",
+      "/Noticias/gala-maestro-2025/145688_whatsapp-image-20251014-at-104913-am_1024x600.jpeg",
+      "/Noticias/gala-maestro-2025/145690_whatsapp-image-20251014-at-104914-am-2_1024x600.jpeg",
     ],
     autor: "Alcaldía de Envigado",
   },
@@ -163,9 +163,9 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/La%20I.E.%20Comercial%20de%20Envigado%20gan%C3%B3%20el%20Premio%20Santillana%20al%20mejor%20proyecto%20de%20sostenibilidad%20ambiental%20en%20Colombia/145363_la-ie-comercial-de-envi.jpeg",
-      "/Noticias/La%20I.E.%20Comercial%20de%20Envigado%20gan%C3%B3%20el%20Premio%20Santillana%20al%20mejor%20proyecto%20de%20sostenibilidad%20ambiental%20en%20Colombia/145364_whatsapp-image-2025.jpeg",
-      "/Noticias/La%20I.E.%20Comercial%20de%20Envigado%20gan%C3%B3%20el%20Premio%20Santillana%20al%20mejor%20proyecto%20de%20sostenibilidad%20ambiental%20en%20Colombia/145365_whatsapp-image-20251003.jpeg",
+      "/Noticias/premio-santillana-ie-comercial/145363_la-ie-comercial-de-envi.jpeg",
+      "/Noticias/premio-santillana-ie-comercial/145364_whatsapp-image-2025.jpeg",
+      "/Noticias/premio-santillana-ie-comercial/145365_whatsapp-image-20251003.jpeg",
     ],
     autor: "Alcaldía de Envigado",
   },
@@ -184,13 +184,13 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/Envigado%20llev%C3%B3%20su%20innovaci%C3%B3n%20educativa%20al%20Congreso%20Internacional%20de%20Gesti%C3%B3n%20del%20Riesgo/145349_envigado-lleva-su-innova.jpg",
-      "/Noticias/Envigado%20llev%C3%B3%20su%20innovaci%C3%B3n%20educativa%20al%20Congreso%20Internacional%20de%20Gesti%C3%B3n%20del%20Riesgo/145350_315a0044_1024x600.jpg",
-      "/Noticias/Envigado%20llev%C3%B3%20su%20innovaci%C3%B3n%20educativa%20al%20Congreso%20Internacional%20de%20Gesti%C3%B3n%20del%20Riesgo/145351_315a0050_1024x600.jpg",
-      "/Noticias/Envigado%20llev%C3%B3%20su%20innovaci%C3%B3n%20educativa%20al%20Congreso%20Internacional%20de%20Gesti%C3%B3n%20del%20Riesgo/145352_315a0024_1024x600.jpg",
-      "/Noticias/Envigado%20llev%C3%B3%20su%20innovaci%C3%B3n%20educativa%20al%20Congreso%20Internacional%20de%20Gesti%C3%B3n%20del%20Riesgo/145353_315a0074_1024x600.jpg",
-      "/Noticias/Envigado%20llev%C3%B3%20su%20innovaci%C3%B3n%20educativa%20al%20Congreso%20Internacional%20de%20Gesti%C3%B3n%20del%20Riesgo/145354_whatsapp-image-20251002-at-10837-pm-1_1024x600.jpeg",
-      "/Noticias/Envigado%20llev%C3%B3%20su%20innovaci%C3%B3n%20educativa%20al%20Congreso%20Internacional%20de%20Gesti%C3%B3n%20del%20Riesgo/145355_whatsapp-image-20251002-at-10836-pm_1024x600.jpeg",
+      "/Noticias/congreso-gestion-riesgo-2025/145349_envigado-lleva-su-innova.jpg",
+      "/Noticias/congreso-gestion-riesgo-2025/145350_315a0044_1024x600.jpg",
+      "/Noticias/congreso-gestion-riesgo-2025/145351_315a0050_1024x600.jpg",
+      "/Noticias/congreso-gestion-riesgo-2025/145352_315a0024_1024x600.jpg",
+      "/Noticias/congreso-gestion-riesgo-2025/145353_315a0074_1024x600.jpg",
+      "/Noticias/congreso-gestion-riesgo-2025/145354_whatsapp-image-20251002-at-10837-pm-1_1024x600.jpeg",
+      "/Noticias/congreso-gestion-riesgo-2025/145355_whatsapp-image-20251002-at-10836-pm_1024x600.jpeg",
     ],
     autor: "Alcaldía de Envigado",
   },
@@ -208,12 +208,12 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/Envigado%20da%20inicio%20a%20la%20Semana%20STEM%2B%202025%20con%20foro%20sobre%20educaci%C3%B3n%2C%20tecnolog%C3%ADa%20y%20%C3%A9tica/144974_envigado-da-inicio-a-la-semana-stem-2025-con-foro-.jpeg",
-      "/Noticias/Envigado%20da%20inicio%20a%20la%20Semana%20STEM%2B%202025%20con%20foro%20sobre%20educaci%C3%B3n%2C%20tecnolog%C3%ADa%20y%20%C3%A9tica/144975_whatsapp-image-20250923-at-104322-am_1024x600.jpeg",
-      "/Noticias/Envigado%20da%20inicio%20a%20la%20Semana%20STEM%2B%202025%20con%20foro%20sobre%20educaci%C3%B3n%2C%20tecnolog%C3%ADa%20y%20%C3%A9tica/144976_whatsapp-image-20250923-at-104319-am_1024x600.jpeg",
-      "/Noticias/Envigado%20da%20inicio%20a%20la%20Semana%20STEM%2B%202025%20con%20foro%20sobre%20educaci%C3%B3n%2C%20tecnolog%C3%ADa%20y%20%C3%A9tica/144977_whatsapp-image-20250923-at-104322-am-1_1024x600.jpeg",
-      "/Noticias/Envigado%20da%20inicio%20a%20la%20Semana%20STEM%2B%202025%20con%20foro%20sobre%20educaci%C3%B3n%2C%20tecnolog%C3%ADa%20y%20%C3%A9tica/144978_315a9767_1024x600.jpg",
-      "/Noticias/Envigado%20da%20inicio%20a%20la%20Semana%20STEM%2B%202025%20con%20foro%20sobre%20educaci%C3%B3n%2C%20tecnolog%C3%ADa%20y%20%C3%A9tica/144979_whatsapp-image-20250922-at-103714-am_1024x600.jpeg",
+      "/Noticias/semana-stem-2025-foro/144974_envigado-da-inicio-a-la-semana-stem-2025-con-foro-.jpeg",
+      "/Noticias/semana-stem-2025-foro/144975_whatsapp-image-20250923-at-104322-am_1024x600.jpeg",
+      "/Noticias/semana-stem-2025-foro/144976_whatsapp-image-20250923-at-104319-am_1024x600.jpeg",
+      "/Noticias/semana-stem-2025-foro/144977_whatsapp-image-20250923-at-104322-am-1_1024x600.jpeg",
+      "/Noticias/semana-stem-2025-foro/144978_315a9767_1024x600.jpg",
+      "/Noticias/semana-stem-2025-foro/144979_whatsapp-image-20250922-at-103714-am_1024x600.jpeg",
     ],
     autor: "Alcaldía de Envigado",
   },
@@ -239,15 +239,15 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/Envigado%20canta%20y%20cuenta%20su%20historia%20con%20creatividad%20estudiantil/145310_envigado-canta-y-cuenta-su-historia-con-creativida.jpeg",
-      "/Noticias/Envigado%20canta%20y%20cuenta%20su%20historia%20con%20creatividad%20estudiantil/145311_whatsapp-image-20250930-at-44558-pm-1_1024x600.jpeg",
-      "/Noticias/Envigado%20canta%20y%20cuenta%20su%20historia%20con%20creatividad%20estudiantil/145312_whatsapp-image-20250930-at-44600-pm_1024x600.jpeg",
-      "/Noticias/Envigado%20canta%20y%20cuenta%20su%20historia%20con%20creatividad%20estudiantil/145313_whatsapp-image-20250930-at-44602-pm-1_1024x600.jpeg",
-      "/Noticias/Envigado%20canta%20y%20cuenta%20su%20historia%20con%20creatividad%20estudiantil/145314_whatsapp-image-20250930-at-44559-pm_1024x600.jpeg",
-      "/Noticias/Envigado%20canta%20y%20cuenta%20su%20historia%20con%20creatividad%20estudiantil/145315_whatsapp-image-20250930-at-44602-pm_1024x600.jpeg",
-      "/Noticias/Envigado%20canta%20y%20cuenta%20su%20historia%20con%20creatividad%20estudiantil/145316_whatsapp-image-20250930-at-44559-pm-1_1024x600.jpeg",
-      "/Noticias/Envigado%20canta%20y%20cuenta%20su%20historia%20con%20creatividad%20estudiantil/145317_whatsapp-image-20250930-at-44605-pm_1024x600.jpeg",
-      "/Noticias/Envigado%20canta%20y%20cuenta%20su%20historia%20con%20creatividad%20estudiantil/145318_whatsapp-image-20250930-at-44604-pm_1024x600.jpeg",
+      "/Noticias/envigado-canta-cuenta/145310_envigado-canta-y-cuenta-su-historia-con-creativida.jpeg",
+      "/Noticias/envigado-canta-cuenta/145311_whatsapp-image-20250930-at-44558-pm-1_1024x600.jpeg",
+      "/Noticias/envigado-canta-cuenta/145312_whatsapp-image-20250930-at-44600-pm_1024x600.jpeg",
+      "/Noticias/envigado-canta-cuenta/145313_whatsapp-image-20250930-at-44602-pm-1_1024x600.jpeg",
+      "/Noticias/envigado-canta-cuenta/145314_whatsapp-image-20250930-at-44559-pm_1024x600.jpeg",
+      "/Noticias/envigado-canta-cuenta/145315_whatsapp-image-20250930-at-44602-pm_1024x600.jpeg",
+      "/Noticias/envigado-canta-cuenta/145316_whatsapp-image-20250930-at-44559-pm-1_1024x600.jpeg",
+      "/Noticias/envigado-canta-cuenta/145317_whatsapp-image-20250930-at-44605-pm_1024x600.jpeg",
+      "/Noticias/envigado-canta-cuenta/145318_whatsapp-image-20250930-at-44604-pm_1024x600.jpeg",
     ],
     autor: "Alcaldía de Envigado",
   },
@@ -267,10 +267,10 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/Envigado%20recibi%C3%B3%20visita%20para%20avanzar%20en%20su%20certificaci%C3%B3n%20como%20Centro%20de%20Ciencia/140823_envigado-recibio-visita-para-avanzar-en-su-certificacion_1024x600.jpg",
-      "/Noticias/Envigado%20recibi%C3%B3%20visita%20para%20avanzar%20en%20su%20certificaci%C3%B3n%20como%20Centro%20de%20Ciencia/140824_315a4208_1024x600.jpg",
-      "/Noticias/Envigado%20recibi%C3%B3%20visita%20para%20avanzar%20en%20su%20certificaci%C3%B3n%20como%20Centro%20de%20Ciencia/140826_315a4071_1024x600.jpg",
-      "/Noticias/Envigado%20recibi%C3%B3%20visita%20para%20avanzar%20en%20su%20certificaci%C3%B3n%20como%20Centro%20de%20Ciencia/140828_315a4182_1024x600.jpg",
+      "/Noticias/envigado-certificacion-centro-ciencia/140823_envigado-recibio-visita-para-avanzar-en-su-certificacion_1024x600.jpg",
+      "/Noticias/envigado-certificacion-centro-ciencia/140824_315a4208_1024x600.jpg",
+      "/Noticias/envigado-certificacion-centro-ciencia/140826_315a4071_1024x600.jpg",
+      "/Noticias/envigado-certificacion-centro-ciencia/140828_315a4182_1024x600.jpg",
     ],
     autor: "Alcaldía de Envigado",
   },
@@ -291,14 +291,14 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/Alcald%C3%ADa%20de%20Envigado%20entregar%C3%A1%20kits%20escolares,%20tecnolog%C3%ADa%20y%20mobiliario%20para%20colegios%20p%C3%BAblicos/131105_alcaldia-de-envigado-invierte-mas-de-3000-millones-en_102.jpeg",
-      "/Noticias/Alcald%C3%ADa%20de%20Envigado%20entregar%C3%A1%20kits%20escolares,%20tecnolog%C3%ADa%20y%20mobiliario%20para%20colegios%20p%C3%BAblicos/131109_img_1440_1024x600.jpeg",
-      "/Noticias/Alcald%C3%ADa%20de%20Envigado%20entregar%C3%A1%20kits%20escolares,%20tecnolog%C3%ADa%20y%20mobiliario%20para%20colegios%20p%C3%BAblicos/131110_img_1432_1024x600.jpeg",
-      "/Noticias/Alcald%C3%ADa%20de%20Envigado%20entregar%C3%A1%20kits%20escolares,%20tecnolog%C3%ADa%20y%20mobiliario%20para%20colegios%20p%C3%BAblicos/131111_img_1435_1024x600.jpeg",
-      "/Noticias/Alcald%C3%ADa%20de%20Envigado%20entregar%C3%A1%20kits%20escolares,%20tecnolog%C3%ADa%20y%20mobiliario%20para%20colegios%20p%C3%BAblicos/131112_img_1377_1024x600.jpeg",
-      "/Noticias/Alcald%C3%ADa%20de%20Envigado%20entregar%C3%A1%20kits%20escolares,%20tecnolog%C3%ADa%20y%20mobiliario%20para%20colegios%20p%C3%BAblicos/131113_img_9309_1024x600.jpeg",
-      "/Noticias/Alcald%C3%ADa%20de%20Envigado%20entregar%C3%A1%20kits%20escolares,%20tecnolog%C3%ADa%20y%20mobiliario%20para%20colegios%20p%C3%BAblicos/131114_img_1413_1024x600.jpeg",
-      "/Noticias/Alcald%C3%ADa%20de%20Envigado%20entregar%C3%A1%20kits%20escolares,%20tecnolog%C3%ADa%20y%20mobiliario%20para%20colegios%20p%C3%BAblicos/131116_img_1442_1024x600.jpeg",
+      "/Noticias/kits-escolares-2025/131105_alcaldia-de-envigado-invierte-mas-de-3000-millones-en_102.jpeg",
+      "/Noticias/kits-escolares-2025/131109_img_1440_1024x600.jpeg",
+      "/Noticias/kits-escolares-2025/131110_img_1432_1024x600.jpeg",
+      "/Noticias/kits-escolares-2025/131111_img_1435_1024x600.jpeg",
+      "/Noticias/kits-escolares-2025/131112_img_1377_1024x600.jpeg",
+      "/Noticias/kits-escolares-2025/131113_img_9309_1024x600.jpeg",
+      "/Noticias/kits-escolares-2025/131114_img_1413_1024x600.jpeg",
+      "/Noticias/kits-escolares-2025/131116_img_1442_1024x600.jpeg",
     ],
     autor: "Alcaldía de Envigado",
   },
@@ -318,8 +318,7 @@ const fuentesOficialesById: Record<string, string> = {
   "envigado-red-nacional-ciudades-aprendizaje": "https://www.envigado.gov.co/noticias/envigado-se-suma-a-la-red-nacional-de-ciudades-del-aprendizaje",
 };
 
-const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
-const getPreferredImageSrc = (src: string) => (/\.(jpe?g|png)$/i.test(src) ? toWebp(src) : src);
+const getPreferredImageSrc = (src: string) => src;
 
 export default function Noticias() {
   const [selectedNews, setSelectedNews] = useState<NoticiaUI | null>(null);
@@ -394,7 +393,7 @@ export default function Noticias() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {noticiasFiltradas.map((noticia) => (
               <Card key={noticia.id} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative h-48 overflow-hidden bg-slate-100">
+                <div className="relative h-48 overflow-hidden bg-[#11B2AA]/10">
                   <img
                     src={getPreferredImageSrc(noticia.imagenes[getCurrentImageIndex(noticia.id)])}
                     alt={noticia.titulo}
@@ -410,7 +409,7 @@ export default function Noticias() {
                         type="button"
                         aria-label="Imagen anterior"
                         onClick={() => prevImage(noticia.id, noticia.imagenes.length)}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/45 p-1.5 text-white"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-1.5 text-[#FFDE07] hover:bg-[#023A34]"
                       >
                         <ChevronLeft className="h-4 w-4" />
                       </button>
@@ -418,7 +417,7 @@ export default function Noticias() {
                         type="button"
                         aria-label="Siguiente imagen"
                         onClick={() => nextImage(noticia.id, noticia.imagenes.length)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/45 p-1.5 text-white"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-1.5 text-[#FFDE07] hover:bg-[#023A34]"
                       >
                         <ChevronRight className="h-4 w-4" />
                       </button>
@@ -426,12 +425,12 @@ export default function Noticias() {
                   )}
                 </div>
                 <CardHeader>
-                  <Badge variant="secondary">
+                  <Badge variant="secondary" className="border-[#11B2AA]/40 bg-[#11B2AA]/20 text-[#0D4B56]">
                     Noticia Externa
                   </Badge>
                   <CardTitle className="line-clamp-2">{noticia.titulo}</CardTitle>
                   <CardDescription className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
+                    <Calendar className="h-4 w-4 text-[#0D4B56]" />
                     <span className="font-medium">Fecha de publicación:</span>
                     {new Date(noticia.fecha).toLocaleDateString('es-CO')}
                     {noticia.autor && <span className="ml-2">• {noticia.autor}</span>}
@@ -439,7 +438,11 @@ export default function Noticias() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground line-clamp-3 mb-4">{noticia.resumen}</p>
-                  <Button variant="outline" className="w-full" onClick={() => setSelectedNews(noticia)}>
+                  <Button
+                    variant="outline"
+                    className="w-full border-[#0D4B56] bg-[#FFDE07]/20 text-[#182130] hover:bg-[#FFDE07]/35"
+                    onClick={() => setSelectedNews(noticia)}
+                  >
                     Leer más
                   </Button>
                 </CardContent>
@@ -450,7 +453,7 @@ export default function Noticias() {
 
         {selectedNews && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#182130]/70 p-4"
             onClick={() => setSelectedNews(null)}
           >
             <div
@@ -463,14 +466,14 @@ export default function Noticias() {
                   type="button"
                   aria-label="Cerrar noticia"
                   onClick={() => setSelectedNews(null)}
-                  className="rounded-full p-1 text-slate-600 hover:bg-slate-100"
+                  className="rounded-full p-1 text-[#0D4B56] hover:bg-[#11B2AA]/15"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
               <div className="p-6">
-                <div className="relative mb-6 overflow-hidden rounded-xl bg-slate-100">
+                <div className="relative mb-6 overflow-hidden rounded-xl bg-[#11B2AA]/10">
                   <img
                     src={getPreferredImageSrc(selectedNews.imagenes[getCurrentImageIndex(selectedNews.id)])}
                     alt={selectedNews.titulo}
@@ -486,7 +489,7 @@ export default function Noticias() {
                         type="button"
                         aria-label="Imagen anterior"
                         onClick={() => prevImage(selectedNews.id, selectedNews.imagenes.length)}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/45 p-2 text-white"
+                        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-2 text-[#FFDE07] hover:bg-[#023A34]"
                       >
                         <ChevronLeft className="h-5 w-5" />
                       </button>
@@ -494,7 +497,7 @@ export default function Noticias() {
                         type="button"
                         aria-label="Siguiente imagen"
                         onClick={() => nextImage(selectedNews.id, selectedNews.imagenes.length)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/45 p-2 text-white"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-2 text-[#FFDE07] hover:bg-[#023A34]"
                       >
                         <ChevronRight className="h-5 w-5" />
                       </button>
@@ -502,12 +505,12 @@ export default function Noticias() {
                   )}
                 </div>
 
-                <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-slate-600">
-                  <Badge variant="secondary">
+                <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-[#023A34]">
+                  <Badge variant="secondary" className="border-[#11B2AA]/40 bg-[#11B2AA]/20 text-[#0D4B56]">
                     Noticia Externa
                   </Badge>
                   <span className="inline-flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
+                    <Calendar className="h-4 w-4 text-[#0D4B56]" />
                     <span className="font-medium">Fecha de publicación:</span>
                     {new Date(selectedNews.fecha).toLocaleDateString("es-CO")}
                   </span>
@@ -516,7 +519,7 @@ export default function Noticias() {
 
                 {getFuenteOficialUrl(selectedNews.id) && (
                   <div className="mb-5">
-                    <Button asChild>
+                    <Button asChild className="bg-[#0D4B56] text-[#FFDE07] hover:bg-[#023A34]">
                       <a
                         href={getFuenteOficialUrl(selectedNews.id)}
                         target="_blank"

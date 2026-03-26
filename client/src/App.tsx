@@ -26,6 +26,7 @@ import SemanaStemComplete from "./pages/SemanaSTEM-Complete";
 import Aliados from "./pages/Aliados";
 import Premios from "./pages/Premios";
 import CentroCiencia from "./pages/CentroCiencia";
+import Centro from "./pages/Centro";
 import Publicaciones from "./pages/Publicaciones";
 import Testimonios from "./pages/Testimonios";
 import Nosotros from "./pages/Nosotros";
@@ -76,6 +77,8 @@ function Router() {
           <Route path="/aliados" component={Aliados} />
           <Route path="/premios" component={Premios} />
           <Route path="/centro-ciencia" component={CentroCiencia} />
+          <Route path="/centro" component={Centro} />
+          <Route path="/Centro" component={Centro} />
           <Route path="/publicaciones" component={Publicaciones} />
           <Route path="/testimonios" component={Testimonios} />
           <Route path="/reconocimientos" component={Reconocimientos} />
