@@ -61,6 +61,7 @@ export default function Reconocimientos() {
   const [selectedNews, setSelectedNews] = useState<Noticia | null>(null);
   const [currentImage, setCurrentImage] = useState(0);
   const toWebp = (imagePath: string) => imagePath.replace(/\.(jpe?g|png|jfif)$/i, ".webp");
+  const getOptimizedImageSrc = (imagePath: string) => toWebp(imagePath);
   const extractYouTubeVideoId = (url: string) => {
     try {
       const parsed = new URL(url);
@@ -91,7 +92,6 @@ export default function Reconocimientos() {
     });
     return `https://www.youtube.com/embed/${id}?${params.toString()}`;
   };
-  const shouldUseWebp = (newsId: string) => newsId !== "nuevo-reconocimiento";
   const getImageFitClass = (newsId: string, imageIndex: number, isModal = false) => {
     if (newsId === "nuevo-reconocimiento") {
       return "object-cover";
@@ -203,21 +203,27 @@ export default function Reconocimientos() {
         <>
           <strong>I.E. Manuel Uribe Ángel - Sede Marceliano Vélez. Medalla de Bronce - Categoría A Senior. Proyecto: Agrigirls STEM.</strong>
           <img
-            src="/Olimpiadas%20STEM/I.E.%20Manuel%20Uribe%20%C3%81ngel.jpg"
+            src="/Olimpiadas%20STEM/I.E.%20Manuel%20Uribe%20%C3%81ngel.webp"
             alt="I.E. Manuel Uribe Ángel"
             loading="lazy"
             decoding="async"
             className="mt-3 w-full max-w-4xl rounded-lg border border-slate-200"
+            onError={(e) => {
+              e.currentTarget.src = "/Olimpiadas%20STEM/I.E.%20Manuel%20Uribe%20%C3%81ngel.jpg";
+            }}
           />
         </>,
         <>
           <strong>I.E. Comercial de Envigado. Medalla de Bronce - Categoría B Senior. Proyecto: Defensores del Aire.</strong>
           <img
-            src="/Olimpiadas%20STEM/I.E.%20Comercial%20de%20Envigado.jpg"
+            src="/Olimpiadas%20STEM/I.E.%20Comercial%20de%20Envigado.webp"
             alt="I.E. Comercial de Envigado"
             loading="lazy"
             decoding="async"
             className="mt-3 w-full max-w-4xl rounded-lg border border-slate-200"
+            onError={(e) => {
+              e.currentTarget.src = "/Olimpiadas%20STEM/I.E.%20Comercial%20de%20Envigado.jpg";
+            }}
           />
         </>,
         <>
@@ -318,7 +324,7 @@ export default function Reconocimientos() {
   };
 
   const openNoticia = (news: Noticia) => {
-    news.imagenes.forEach((src) => preloadImage(src));
+    news.imagenes.forEach((src) => preloadImage(getOptimizedImageSrc(src)));
     setCurrentImage(0);
     setSelectedNews(news);
   };
@@ -330,8 +336,8 @@ export default function Reconocimientos() {
     const nextIndex = (currentImage + 1) % total;
     const prevIndex = (currentImage - 1 + total) % total;
 
-    preloadImage(selectedNews.imagenes[nextIndex]);
-    preloadImage(selectedNews.imagenes[prevIndex]);
+    preloadImage(getOptimizedImageSrc(selectedNews.imagenes[nextIndex]));
+    preloadImage(getOptimizedImageSrc(selectedNews.imagenes[prevIndex]));
   }, [selectedNews, currentImage]);
 
   return (
@@ -339,7 +345,7 @@ export default function Reconocimientos() {
       <div className="container">
         <div className="mb-10">
           <h1 className="text-4xl font-bold mb-3">Reconocimientos</h1>
-          <p className="text-lg text-muted-foreground">Logros destacados del territorio.</p>
+          <p className="text-lg text-[#023A34]">Logros destacados del territorio.</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -351,29 +357,27 @@ export default function Reconocimientos() {
             >
               <div className="h-56 bg-muted overflow-hidden">
                 <picture>
-                  {shouldUseWebp(noticia.id) ? (
-                    <source srcSet={toWebp(noticia.imagenes[0])} type="image/webp" />
-                  ) : null}
+                  <source srcSet={getOptimizedImageSrc(noticia.imagenes[0])} type="image/webp" />
                   <img
-                    src={noticia.imagenes[0]}
+                    src={getOptimizedImageSrc(noticia.imagenes[0])}
                     alt={noticia.titulo}
                     loading="lazy"
                     decoding="async"
                     fetchPriority="low"
                     className={`w-full h-full ${getImageFitClass(noticia.id, 0)} ${getImagePositionClass(noticia.id, 0)}`}
                     onError={(e) => {
-                      e.currentTarget.src = "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=700&fit=crop";
+                      e.currentTarget.src = noticia.imagenes[0];
                     }}
                   />
                 </picture>
               </div>
               <div className="p-5 space-y-2">
-                <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">{noticia.categoria}</span>
-                <h2 className="text-xl font-bold text-slate-900 leading-snug">{noticia.titulo}</h2>
-                <p className="text-sm text-slate-600">
+                <span className="text-xs font-bold text-[#EC6910] uppercase tracking-wider">{noticia.categoria}</span>
+                <h2 className="text-xl font-bold text-[#182130] leading-snug">{noticia.titulo}</h2>
+                <p className="text-sm text-[#023A34]">
                   <span className="font-medium">Fecha de publicación:</span> {noticia.fecha}
                 </p>
-                <p className="text-sm text-blue-700 font-semibold pt-1">Abrir noticia</p>
+                <p className="text-sm text-[#2D3586] font-semibold pt-1">Abrir noticia</p>
               </div>
             </button>
           ))}
@@ -393,38 +397,36 @@ export default function Reconocimientos() {
 
               <div className="p-6 md:p-8 max-h-[85vh] overflow-y-auto">
                 <div className="mb-4">
-                  <span className="text-sm font-bold text-amber-600 uppercase tracking-wider">{selectedNews.categoria}</span>
+                  <span className="text-sm font-bold text-[#EC6910] uppercase tracking-wider">{selectedNews.categoria}</span>
                 </div>
-                <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">{selectedNews.titulo}</h1>
-                <p className="text-lg text-slate-600 mb-6 leading-relaxed">{selectedNews.resumen}</p>
+                <h1 className="text-3xl md:text-4xl font-bold text-[#182130] mb-4 leading-tight">{selectedNews.titulo}</h1>
+                <p className="text-lg text-[#023A34] mb-6 leading-relaxed">{selectedNews.resumen}</p>
 
-                <div className="flex items-center gap-6 text-sm text-slate-500 border-t border-b border-slate-300 py-4 mb-8">
-                  <span className="font-semibold text-slate-700">{selectedNews.autor}</span>
+                <div className="flex items-center gap-6 text-sm text-[#0D4B56] border-t border-b border-slate-300 py-4 mb-8">
+                  <span className="font-semibold text-[#182130]">{selectedNews.autor}</span>
                   <span>
-                    <span className="font-medium text-slate-700">Fecha de publicación:</span> {selectedNews.fecha}
+                    <span className="font-medium text-[#182130]">Fecha de publicación:</span> {selectedNews.fecha}
                   </span>
                 </div>
 
                 <div className="mb-8 rounded-lg overflow-hidden shadow-xl bg-muted relative">
                   {selectedNews.imagenes.length > 1 && (
                     <div className="hidden" aria-hidden="true">
-                      <img src={selectedNews.imagenes[(currentImage + 1) % selectedNews.imagenes.length]} alt="" />
-                      <img src={selectedNews.imagenes[(currentImage - 1 + selectedNews.imagenes.length) % selectedNews.imagenes.length]} alt="" />
+                      <img src={getOptimizedImageSrc(selectedNews.imagenes[(currentImage + 1) % selectedNews.imagenes.length])} alt="" />
+                      <img src={getOptimizedImageSrc(selectedNews.imagenes[(currentImage - 1 + selectedNews.imagenes.length) % selectedNews.imagenes.length])} alt="" />
                     </div>
                   )}
                   <picture>
-                    {shouldUseWebp(selectedNews.id) ? (
-                      <source srcSet={toWebp(selectedNews.imagenes[currentImage])} type="image/webp" />
-                    ) : null}
+                    <source srcSet={getOptimizedImageSrc(selectedNews.imagenes[currentImage])} type="image/webp" />
                     <img
-                      src={selectedNews.imagenes[currentImage]}
+                      src={getOptimizedImageSrc(selectedNews.imagenes[currentImage])}
                       alt={selectedNews.titulo}
                       loading="eager"
                       decoding="async"
                       fetchPriority="high"
                       className={`w-full ${getModalImageHeightClass(selectedNews.id, currentImage)} ${getImageFitClass(selectedNews.id, currentImage, true)} ${getImagePositionClass(selectedNews.id, currentImage)}`}
                       onError={(e) => {
-                        e.currentTarget.src = "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=700&fit=crop";
+                        e.currentTarget.src = selectedNews.imagenes[currentImage];
                       }}
                     />
                   </picture>
@@ -461,11 +463,11 @@ export default function Reconocimientos() {
                 <div className="bg-white rounded-lg shadow-lg p-8 space-y-6">
                   {selectedNews.contenido.map((parrafo, idx) =>
                     typeof parrafo === "string" ? (
-                      <p key={idx} className="text-lg text-slate-700 leading-relaxed">
+                      <p key={idx} className="text-lg text-[#0D4B56] leading-relaxed">
                         {parrafo}
                       </p>
                     ) : (
-                      <div key={idx} className="text-lg text-slate-700 leading-relaxed">
+                      <div key={idx} className="text-lg text-[#0D4B56] leading-relaxed">
                         {parrafo}
                       </div>
                     )
@@ -473,7 +475,7 @@ export default function Reconocimientos() {
 
                   {selectedNews.video && (
                     <div className="pt-4">
-                      <h4 className="font-semibold text-slate-900 mb-3">Video relacionado</h4>
+                      <h4 className="font-semibold text-[#182130] mb-3">Video relacionado</h4>
                       <div className="rounded-lg overflow-hidden border border-slate-200 shadow-sm w-full max-w-4xl">
                         <div className="w-full h-[320px] md:h-[520px]">
                           <iframe

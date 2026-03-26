@@ -7,15 +7,31 @@ import { BookOpen, GraduationCap, Video, ChevronLeft, ChevronRight, MessageCircl
 const WHATSAPP_ADMIN = "https://wa.me/573012577662";
 
 const aulaNaranjaImages = [
-  "/centro/aula-naranja-1.jpg",
-  "/centro/aula-naranja-2.jpg",
-  "/centro/aula-naranja-3.jpg",
+  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0526.jpg",
+  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0672.jpg",
+  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0682.jpg",
+  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0694.jpg",
 ];
 
 const infraestructuraImages = [
-  "/centro/aula-naranja.jpg",
-  "/centro/sala-control.jpg",
-  "/centro/estudio.jpg",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/2025-08-25-RECORRIDO%20PEDAGOGICO%20MARIE%20POUSSEPAN_1.jpg",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/2025-08-25-RECORRIDO%20PEDAGOGICO%20MARIE%20POUSSEPAN_5.jpg",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1034.jpg",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1047.jpg",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1343.jpg",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1346.jpg",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A4231.jpg",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A4264.jpg",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A4274.jpg",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A9734.jpg",
+];
+
+const paraQuienesGalleryImages = [
+  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A0251.jpg",
+  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A0258.jpg",
+  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1147.jpg",
+  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1185.jpg",
+  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1322.jpg",
 ];
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -67,15 +83,26 @@ const perfiles = [
   },
 ];
 
-function AutoCarousel({ images, altPrefix }: { images: string[]; altPrefix: string }) {
+function AutoCarousel({
+  images,
+  altPrefix,
+  interval = 2000,
+  imageClassName,
+}: {
+  images: string[];
+  altPrefix: string;
+  interval?: number;
+  imageClassName?: string;
+}) {
   const [current, setCurrent] = useState(0);
+  const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
 
   useEffect(() => {
     const id = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
-    }, 2000);
+    }, interval);
     return () => clearInterval(id);
-  }, [images.length]);
+  }, [images.length, interval]);
 
   const prev = () => setCurrent((c) => (c - 1 + images.length) % images.length);
   const next = () => setCurrent((c) => (c + 1) % images.length);
@@ -87,14 +114,16 @@ function AutoCarousel({ images, altPrefix }: { images: string[]; altPrefix: stri
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {images.map((src, i) => (
-          <img
-            key={src}
-            src={src}
-            alt={`${altPrefix} ${i + 1}`}
-            className="min-w-full h-72 object-cover"
-            loading="lazy"
-            decoding="async"
-          />
+          <picture key={src} className="min-w-full">
+            <source srcSet={toWebp(src)} type="image/webp" />
+            <img
+              src={src}
+              alt={`${altPrefix} ${i + 1}`}
+              className={`min-w-full ${imageClassName ?? "h-72 object-cover"}`}
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         ))}
       </div>
 
@@ -134,22 +163,70 @@ function AutoCarousel({ images, altPrefix }: { images: string[]; altPrefix: stri
 
 export default function Centro() {
   const infraRef = useRef<HTMLElement>(null);
+  const heroVideoRef = useRef<HTMLIFrameElement>(null);
+
+  const forceHeroVideoPlayback = () => {
+    const iframe = heroVideoRef.current;
+    if (!iframe?.contentWindow) return;
+
+    const command = (func: string, args: unknown[] = []) =>
+      iframe.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func, args }),
+        "*"
+      );
+
+    command("mute");
+    command("playVideo");
+    command("setLoop", [true]);
+    command("setPlaybackQuality", ["hd1080"]);
+  };
+
+  useEffect(() => {
+    // Retry a few times to improve autoplay reliability on mobile browsers.
+    const timers = [150, 500, 1200, 2500].map((delay) =>
+      window.setTimeout(forceHeroVideoPlayback, delay)
+    );
+
+    return () => {
+      timers.forEach((id) => window.clearTimeout(id));
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white text-[#182130]">
 
       {/* ─── 1. HERO ───────────────────────────────────────────────────── */}
       <section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden">
-        {/* Fondo degradado de marca mientras no haya video/foto */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#182130] via-[#0D4B56] to-[#023A34]" />
+        <img
+          src="/Centro%20Audiovisual/1_VIDEO_CORTO_FULL/banner-centro-audiovisual.jpg"
+          alt="Banner Centro Audiovisual"
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />
+        <div className="absolute inset-0 overflow-hidden">
+          <iframe
+            ref={heroVideoRef}
+            src="https://www.youtube-nocookie.com/embed/zfpCuxxymuA?autoplay=1&mute=1&controls=0&loop=1&playlist=zfpCuxxymuA&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&fs=0&enablejsapi=1&widget_referrer=https%3A%2F%2Fportal-cid.vercel.app"
+            title="Video de fondo Centro Audiovisual"
+            className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2"
+            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
+            loading="eager"
+            onLoad={forceHeroVideoPlayback}
+          />
+        </div>
+        <div className="absolute inset-0 bg-[#182130]/45" />
 
         {/* Orbes decorativos */}
         <div className="absolute -left-20 top-1/4 h-80 w-80 rounded-full bg-[#11B2AA]/20 blur-3xl" />
         <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-[#2D3586]/25 blur-3xl" />
         <div className="absolute left-1/2 top-0 h-48 w-48 -translate-x-1/2 rounded-full bg-[#FFDE07]/15 blur-3xl" />
 
-        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <h1 className="text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
+        <div className="relative z-10 mx-auto max-w-none px-6 text-center">
+          <h1 className="text-4xl font-black leading-tight text-white sm:text-5xl lg:text-7xl xl:text-8xl lg:whitespace-nowrap">
             Centro Audiovisual
           </h1>
         </div>
@@ -196,7 +273,7 @@ export default function Centro() {
       {/* ─── 2. ¿QUÉ ES EL AULA? ───────────────────────────────────────── */}
       <section className="py-20">
         <div className="container mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-2 lg:items-center">
-          <AutoCarousel images={aulaNaranjaImages} altPrefix="Aula Naranja" />
+          <AutoCarousel images={aulaNaranjaImages} altPrefix="Aula Naranja" interval={6000} />
 
           <div className="space-y-6">
             <Badge className="bg-[#11B2AA]/15 text-[#0D4B56] hover:bg-[#11B2AA]/25">
@@ -223,7 +300,7 @@ export default function Centro() {
       >
         <div className="container mx-auto max-w-6xl px-6">
           <div className="mb-12 text-center">
-            <Badge className="mb-4 bg-[#FFDE07] text-[#182130]">La Infraestructura</Badge>
+            <Badge className="mb-4 bg-[#FFDE07] text-[#182130]">Infraestructura</Badge>
             <h2 className="text-3xl font-black sm:text-4xl">Espacios diseñados para crear</h2>
             <p className="mt-3 text-white/70">
               Tres ambientes profesionales que integran tecnología, creatividad y pedagogía.
@@ -231,7 +308,12 @@ export default function Centro() {
           </div>
 
           <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
-            <AutoCarousel images={infraestructuraImages} altPrefix="Infraestructura" />
+            <AutoCarousel
+              images={infraestructuraImages}
+              altPrefix="Infraestructura"
+              interval={8000}
+              imageClassName="h-96 sm:h-[28rem] object-cover object-center"
+            />
 
             <div className="flex flex-col justify-center gap-4">
               {[
@@ -325,6 +407,15 @@ export default function Centro() {
             <p className="mt-3 max-w-xl mx-auto text-slate-500">
               El Aula de Experimentación Audiovisual está pensada para la diversidad del territorio.
             </p>
+          </div>
+
+          <div className="mb-10">
+            <AutoCarousel
+              images={paraQuienesGalleryImages}
+              altPrefix="Galería para quiénes"
+              interval={6000}
+              imageClassName="h-[28rem] sm:h-[34rem] object-cover"
+            />
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

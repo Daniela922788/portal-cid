@@ -239,7 +239,7 @@ export default function Header() {
                         </Link>
                       </li>
                       <li>
-                        <Link href="/Gestores">
+                        <Link href="/gestores">
                           <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                             <div className="text-sm font-medium leading-none">Equipo de Gestores</div>
                             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -589,7 +589,7 @@ export default function Header() {
                   <AccordionContent className="pb-2">
                     <div className="flex flex-col gap-1">
                       <Link href="/nosotros" className={mobileMenuItemClass} onClick={closeMobileMenu}>Nosotros</Link>
-                      <Link href="/nosotros#gestores-innovacion" className={mobileMenuItemClass} onClick={closeMobileMenu}>Gestores</Link>
+                      <Link href="/gestores" className={mobileMenuItemClass} onClick={closeMobileMenu}>Gestores</Link>
                       <Link href="/centro" className={mobileMenuItemClass} onClick={closeMobileMenu}>Centro de Ciencia</Link>
                     </div>
                   </AccordionContent>

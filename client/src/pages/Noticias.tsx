@@ -318,7 +318,8 @@ const fuentesOficialesById: Record<string, string> = {
   "envigado-red-nacional-ciudades-aprendizaje": "https://www.envigado.gov.co/noticias/envigado-se-suma-a-la-red-nacional-de-ciudades-del-aprendizaje",
 };
 
-const getPreferredImageSrc = (src: string) => src;
+const getPreferredImageSrc = (src: string) =>
+  src.replace(/\.(jpe?g|png)$/i, '.webp');
 
 export default function Noticias() {
   const [selectedNews, setSelectedNews] = useState<NoticiaUI | null>(null);

@@ -736,7 +736,7 @@ export default function SemanaSTEM() {
           {/* Hero Section */}
           <section className="relative w-full overflow-hidden">
             <img
-              src="/banners/Banner-semana.png"
+              src="/banners/Banner-semana.webp"
               alt="Banner principal Semana STEM+ Envigado 2025"
               loading="eager"
               fetchPriority="high"
@@ -905,14 +905,17 @@ export default function SemanaSTEM() {
             <div>
               <section className="px-4 py-8 bg-white">
                 <div className="max-w-6xl mx-auto overflow-hidden rounded-2xl shadow-lg">
-                  <img
-                    src="/Semana%20STEM/24/portada-miercoles.jpeg"
-                    alt="Portada miércoles Semana STEM"
-                    loading="lazy"
-                    decoding="async"
-                    fetchPriority="low"
-                    className="w-full h-auto object-cover"
-                  />
+                  <picture>
+                    <source srcSet="/Semana%20STEM/24/portada-miercoles.webp" type="image/webp" />
+                    <img
+                      src="/Semana%20STEM/24/portada-miercoles.jpeg"
+                      alt="Portada miércoles Semana STEM"
+                      loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
+                      className="w-full h-auto object-cover"
+                    />
+                  </picture>
                 </div>
               </section>
 
@@ -1167,14 +1170,17 @@ export default function SemanaSTEM() {
                           viewport={{ once: true }}
                           className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
                         >
-                          <img
-                            src={image}
-                            alt={`Foto miércoles ${idx + 1}`}
-                            loading={idx < 6 ? "eager" : "lazy"}
-                            decoding={idx < 6 ? "sync" : "async"}
-                            fetchPriority={idx < 6 ? "high" : "low"}
-                            className="w-full h-64 object-cover hover:scale-105 transition-transform"
-                          />
+                          <picture>
+                            <source srcSet={toWebp(image)} type="image/webp" />
+                            <img
+                              src={image}
+                              alt={`Foto miércoles ${idx + 1}`}
+                              loading={idx < 6 ? "eager" : "lazy"}
+                              decoding={idx < 6 ? "sync" : "async"}
+                              fetchPriority={idx < 6 ? "high" : "low"}
+                              className="w-full h-64 object-cover hover:scale-105 transition-transform"
+                            />
+                          </picture>
                         </motion.div>
                       ))}
                     </div>
@@ -1205,14 +1211,17 @@ export default function SemanaSTEM() {
             <div>
               <section className="px-4 py-8 bg-white">
                 <div className="max-w-6xl mx-auto overflow-hidden rounded-2xl shadow-lg">
-                  <img
-                    src="/Semana%20STEM/25/portada-jueves.jpeg"
-                    alt="Portada jueves Semana STEM"
-                    loading="lazy"
-                    decoding="async"
-                    fetchPriority="low"
-                    className="w-full h-auto object-cover"
-                  />
+                  <picture>
+                    <source srcSet="/Semana%20STEM/25/portada-jueves.webp" type="image/webp" />
+                    <img
+                      src="/Semana%20STEM/25/portada-jueves.jpeg"
+                      alt="Portada jueves Semana STEM"
+                      loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
+                      className="w-full h-auto object-cover"
+                    />
+                  </picture>
                 </div>
               </section>
 
@@ -1251,18 +1260,24 @@ export default function SemanaSTEM() {
                               </ul>
                             </div>
                             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                              <img
-                                src="/Semana%20STEM/25/Profes%201.jpg"
-                                alt="Foro docentes - imagen 1"
-                                loading="lazy"
-                                className="w-full rounded-lg object-cover shadow-md"
-                              />
-                              <img
-                                src="/Semana%20STEM/25/Profes%202.jpg"
-                                alt="Foro docentes - imagen 2"
-                                loading="lazy"
-                                className="w-full rounded-lg object-cover shadow-md"
-                              />
+                              <picture>
+                                <source srcSet="/Semana%20STEM/25/Profes%201.webp" type="image/webp" />
+                                <img
+                                  src="/Semana%20STEM/25/Profes%201.jpg"
+                                  alt="Foro docentes - imagen 1"
+                                  loading="lazy"
+                                  className="w-full rounded-lg object-cover shadow-md"
+                                />
+                              </picture>
+                              <picture>
+                                <source srcSet="/Semana%20STEM/25/Profes%202.webp" type="image/webp" />
+                                <img
+                                  src="/Semana%20STEM/25/Profes%202.jpg"
+                                  alt="Foro docentes - imagen 2"
+                                  loading="lazy"
+                                  className="w-full rounded-lg object-cover shadow-md"
+                                />
+                              </picture>
                             </div>
                           </>
                         ) : null}
@@ -1414,14 +1429,17 @@ export default function SemanaSTEM() {
             <div>
               <section className="px-4 py-8 bg-white">
                 <div className="max-w-6xl mx-auto overflow-hidden rounded-2xl shadow-lg">
-                  <img
-                    src="/Semana%20STEM/26/portada-viernes.jpeg"
-                    alt="Portada viernes Semana STEM"
-                    loading="lazy"
-                    decoding="async"
-                    fetchPriority="low"
-                    className="w-full h-auto object-cover"
-                  />
+                  <picture>
+                    <source srcSet="/Semana%20STEM/26/portada-viernes.webp" type="image/webp" />
+                    <img
+                      src="/Semana%20STEM/26/portada-viernes.jpeg"
+                      alt="Portada viernes Semana STEM"
+                      loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
+                      className="w-full h-auto object-cover"
+                    />
+                  </picture>
                 </div>
               </section>
 
@@ -1586,14 +1604,17 @@ export default function SemanaSTEM() {
                           viewport={{ once: true }}
                           className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
                         >
-                          <img
-                            src={image}
-                            alt={`Foto viernes ${idx + 1}`}
-                            loading={idx < 6 ? "eager" : "lazy"}
-                            decoding={idx < 6 ? "sync" : "async"}
-                            fetchPriority={idx < 6 ? "high" : "low"}
-                            className="w-full h-64 object-cover hover:scale-105 transition-transform"
-                          />
+                          <picture>
+                            <source srcSet={toWebp(image)} type="image/webp" />
+                            <img
+                              src={image}
+                              alt={`Foto viernes ${idx + 1}`}
+                              loading={idx < 6 ? "eager" : "lazy"}
+                              decoding={idx < 6 ? "sync" : "async"}
+                              fetchPriority={idx < 6 ? "high" : "low"}
+                              className="w-full h-64 object-cover hover:scale-105 transition-transform"
+                            />
+                          </picture>
                         </motion.div>
                       ))}
                     </div>

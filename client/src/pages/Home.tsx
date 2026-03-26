@@ -33,10 +33,11 @@ export default function Home() {
         <picture>
           <source
             media="(max-width: 767px)"
-            srcSet="/banners/banner%20principal%20cel.png"
+            srcSet="/banners/banner%20principal%20cel.webp"
+            type="image/webp"
           />
           <img
-            src="/banners/banner%20principal.png"
+            src="/banners/banner%20principal.webp"
             alt="Banner principal Portal de Innovación Educativa CID"
             loading="eager"
             fetchPriority="high"
@@ -49,7 +50,7 @@ export default function Home() {
       {/* Banner Trancion de fondo debajo del principal y debajo de los cuadros */}
       <div className="relative w-full">
         <img
-          src="/Home/banner%20trancion.png"
+          src="/Home/banner%20trancion.webp"
           alt="Banner Trancion"
           loading="lazy"
           decoding="async"
@@ -63,7 +64,7 @@ export default function Home() {
               <div className="overflow-hidden rounded-2xl shadow-md">
                 <div className="relative overflow-hidden rounded-2xl">
                   <img
-                    src="/banners/banner%202.png"
+                    src="/banners/banner%202.webp"
                     alt="Banner Nosotros"
                     loading="lazy"
                     decoding="async"
@@ -81,7 +82,7 @@ export default function Home() {
               <div className="overflow-hidden rounded-2xl shadow-md">
                 <div className="relative overflow-hidden rounded-2xl">
                   <img
-                    src="/banners/banner%204.png"
+                    src="/banners/banner%204.webp"
                     alt="Banner Formación"
                     loading="lazy"
                     decoding="async"
@@ -98,7 +99,7 @@ export default function Home() {
             <div className="overflow-hidden rounded-2xl shadow-md">
               <div className="overflow-hidden rounded-2xl">
                 <img
-                  src="/banners/banner%203.png"
+                  src="/banners/banner%203.webp"
                   alt="Banner Convocatorias"
                   loading="lazy"
                   decoding="async"
@@ -122,7 +123,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Territorio STEM */}
               <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
-                <img src="/Home/1.png" alt="Territorio STEM" className="w-full h-auto object-contain bg-white" />
+                <img src="/Home/1.webp" alt="Territorio STEM" className="w-full h-auto object-contain bg-white" />
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Territorio STEM</h3>
                   <p className="text-gray-700 text-base mb-2">Conoce el ecosistema STEM de Envigado, sus actores, proyectos y oportunidades para estudiantes y docentes.</p>
@@ -130,7 +131,7 @@ export default function Home() {
               </div>
               {/* Premios y reconocimientos */}
               <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
-                <img src="/Home/2.png" alt="Premios y reconocimientos" className="w-full h-auto object-contain bg-white" />
+                <img src="/Home/2.webp" alt="Premios y reconocimientos" className="w-full h-auto object-contain bg-white" />
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Premios y reconocimientos</h3>
                   <p className="text-gray-700 text-base mb-2">Explora los reconocimientos que reflejan nuestro compromiso con la excelencia.</p>
@@ -138,7 +139,7 @@ export default function Home() {
               </div>
               {/* Aliados */}
               <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
-                <img src="/Home/3.png" alt="Aliados" className="w-full h-auto object-contain bg-white" />
+                <img src="/Home/3.webp" alt="Aliados" className="w-full h-auto object-contain bg-white" />
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Aliados</h3>
                   <p className="text-gray-700 text-base mb-2">Descubre a nuestros aliados estratégicos que impulsan la innovación educativa en nuestra comunidad.</p>
@@ -156,7 +157,7 @@ export default function Home() {
           <Link href="/semana-stem-complete" aria-label="Ir a la sección Semana STEM" className="group block cursor-pointer">
             <div className="overflow-hidden rounded-2xl shadow-md">
               <img
-                src="/banners/banner-semana-click.png"
+                src="/banners/banner-semana-click.webp"
                 alt="Banner Semana STEM"
                 loading="lazy"
                 fetchPriority="high"
@@ -171,7 +172,7 @@ export default function Home() {
             <div className="overflow-hidden rounded-2xl shadow-md">
               <div className="relative overflow-hidden rounded-2xl">
                 <img
-                  src="/banners/banner-semana-click.png"
+                  src="/banners/banner-semana-click.webp"
                   alt="Banner Semana STEM"
                   loading="lazy"
                   fetchPriority="high"
