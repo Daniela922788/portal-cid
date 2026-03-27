@@ -50,7 +50,7 @@ const servicios = [
   },
   {
     icon: Video,
-    titulo: "Producción Propia",
+    titulo: "Producción audiovisual",
     descripcion:
       "Uso del estudio y la infraestructura para materializar proyectos de comunidades, instituciones y emprendedores.",
   },
@@ -88,11 +88,13 @@ function AutoCarousel({
   altPrefix,
   interval = 2000,
   imageClassName,
+  containerClassName,
 }: {
   images: string[];
   altPrefix: string;
   interval?: number;
   imageClassName?: string;
+  containerClassName?: string;
 }) {
   const [current, setCurrent] = useState(0);
   const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
@@ -108,22 +110,24 @@ function AutoCarousel({
   const next = () => setCurrent((c) => (c + 1) % images.length);
 
   return (
-    <div className="relative overflow-hidden rounded-2xl">
+    <div className={`relative overflow-hidden ${containerClassName ?? "rounded-2xl"}`}>
       <div
         className="flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {images.map((src, i) => (
-          <picture key={src} className="min-w-full">
-            <source srcSet={toWebp(src)} type="image/webp" />
-            <img
-              src={src}
-              alt={`${altPrefix} ${i + 1}`}
-              className={`min-w-full ${imageClassName ?? "h-72 object-cover"}`}
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
+          <div key={src} className="min-w-full shrink-0">
+            <picture className="contents">
+              <source srcSet={toWebp(src)} type="image/webp" />
+              <img
+                src={src}
+                alt={`${altPrefix} ${i + 1}`}
+                className={`w-full ${imageClassName ?? "h-72 object-cover"}`}
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
+          </div>
         ))}
       </div>
 
@@ -237,24 +241,38 @@ export default function Centro() {
         </div>
       </section>
 
-      <section className="bg-white py-12 sm:py-14">
-        <div className="container mx-auto max-w-4xl px-6 text-center">
-          <Badge className="mb-5 bg-[#FFDE07] text-[#182130] hover:bg-[#FFDE07]/90 text-sm font-semibold px-4 py-1">
-            Centro de Ciencia · Secretaría de Educación de Envigado
-          </Badge>
-          <p className="text-2xl font-light text-[#0D4B56] sm:text-3xl">
-            Aula de Experimentación Audiovisual
-          </p>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-            Un espacio abierto para crear, aprender y transformar a Envigado a través de
-            la ciencia y la innovación.
-          </p>
-          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+      {/* ─── 2. ¿QUÉ ES EL AULA? ───────────────────────────────────────── */}
+      <section className="py-20">
+        <div className="container mx-auto max-w-[96rem] px-6">
+          <div className="grid gap-12 lg:grid-cols-[2.1fr_0.7fr] lg:items-center">
+            <AutoCarousel
+              images={aulaNaranjaImages}
+              altPrefix="Aula Naranja"
+              interval={6000}
+              containerClassName="rounded-[2rem]"
+              imageClassName="h-[27rem] sm:h-[32rem] object-contain"
+            />
+
+            <div className="space-y-6">
+              <h2 className="text-3xl font-black leading-snug text-[#023A34] sm:text-4xl lg:whitespace-nowrap">
+                Aula de Experimentación Audiovisual
+              </h2>
+              <h2 className="text-xl font-black leading-snug text-[#11B2AA] sm:text-2xl">
+                Un laboratorio de creación con enfoque colaborativo
+              </h2>
+              <p className="text-base leading-loose text-slate-600 sm:text-lg">
+                El Aula de Experimentación Audiovisual es un espacio pedagógico, didáctico y dinámico del Centro de Ciencia de la Secretaría de Educación de Envigado. Nuestro objetivo es fortalecer la creatividad, la innovación educativa y la capacidad de producción de contenidos de la comunidad. Democratizamos el acceso a la tecnología, brindando herramientas profesionales y el acompañamiento técnico necesario para que las personas den vida a sus ideas. No solo somos un lugar físico; somos un entorno de aprendizaje colaborativo diseñado para transformar la realidad local a través de la apropiación social del conocimiento.
+              </p>
+              <div className="h-1 w-16 rounded-full bg-[#EC6910]" />
+            </div>
+          </div>
+
+          <div className="mt-5 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <a
               href={WHATSAPP_ADMIN}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[#FFDE07] px-8 py-3 text-base font-bold text-[#182130] shadow-lg transition-transform hover:scale-105 hover:bg-[#FFDE07]/90"
+              className="inline-flex items-center gap-2 rounded-full bg-[#FFDE07] px-8 py-2.5 text-base font-bold text-[#182130] shadow-lg transition-transform hover:scale-105 hover:bg-[#FFDE07]/90"
             >
               <MessageCircle className="h-5 w-5" />
               Reserva un turno
@@ -262,33 +280,10 @@ export default function Centro() {
             <button
               type="button"
               onClick={() => infraRef.current?.scrollIntoView({ behavior: "smooth" })}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0D4B56]/30 px-8 py-3 text-base font-semibold text-[#0D4B56] transition-colors hover:border-[#0D4B56] hover:bg-[#0D4B56]/5"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0D4B56]/30 px-8 py-2.5 text-base font-semibold text-[#0D4B56] transition-colors hover:border-[#0D4B56] hover:bg-[#0D4B56]/5"
             >
               Descubre el espacio
             </button>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── 2. ¿QUÉ ES EL AULA? ───────────────────────────────────────── */}
-      <section className="py-20">
-        <div className="container mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-2 lg:items-center">
-          <AutoCarousel images={aulaNaranjaImages} altPrefix="Aula Naranja" interval={6000} />
-
-          <div className="space-y-6">
-            <Badge className="bg-[#11B2AA]/15 text-[#0D4B56] hover:bg-[#11B2AA]/25">
-              ¿Qué es el Aula?
-            </Badge>
-            <h2 className="text-3xl font-black leading-snug text-[#182130] sm:text-4xl">
-              Un laboratorio de creación <span className="text-[#11B2AA]">con enfoque colaborativo</span>
-            </h2>
-            <p className="text-base leading-loose text-slate-600 sm:text-lg">
-              Somos un entorno pedagógico, abierto y dinámico del Centro de Ciencia de la
-              Secretaría de Educación de Envigado. Democratizamos la producción audiovisual
-              para que cualquier persona, sin importar su experiencia, pueda crear contenido
-              con calidad y propósito.
-            </p>
-            <div className="h-1 w-16 rounded-full bg-[#EC6910]" />
           </div>
         </div>
       </section>
@@ -298,21 +293,21 @@ export default function Centro() {
         ref={infraRef}
         className="bg-gradient-to-br from-[#182130] to-[#0D4B56] py-20 text-white"
       >
-        <div className="container mx-auto max-w-6xl px-6">
+        <div className="container mx-auto max-w-[96rem] px-6">
           <div className="mb-12 text-center">
-            <Badge className="mb-4 bg-[#FFDE07] text-[#182130]">Infraestructura</Badge>
             <h2 className="text-3xl font-black sm:text-4xl">Espacios diseñados para crear</h2>
             <p className="mt-3 text-white/70">
               Tres ambientes profesionales que integran tecnología, creatividad y pedagogía.
             </p>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
+          <div className="grid gap-8 lg:grid-cols-[2.1fr_0.7fr] lg:items-center">
             <AutoCarousel
               images={infraestructuraImages}
               altPrefix="Infraestructura"
               interval={8000}
-              imageClassName="h-96 sm:h-[28rem] object-cover object-center"
+              containerClassName="rounded-[2rem]"
+              imageClassName="h-[27rem] sm:h-[32rem] object-cover"
             />
 
             <div className="flex flex-col justify-center gap-4">
@@ -342,8 +337,8 @@ export default function Centro() {
                     style={{ backgroundColor: espacio.color }}
                   />
                   <div>
-                    <p className="font-bold text-white">{espacio.nombre}</p>
-                    <p className="mt-0.5 text-sm leading-relaxed text-white/65">{espacio.desc}</p>
+                    <p className="text-lg font-bold text-white sm:text-xl">{espacio.nombre}</p>
+                    <p className="mt-0.5 text-base leading-relaxed text-white/65 sm:text-lg">{espacio.desc}</p>
                   </div>
                 </div>
               ))}
@@ -356,11 +351,8 @@ export default function Centro() {
       <section className="py-20">
         <div className="container mx-auto max-w-6xl px-6">
           <div className="mb-12 text-center">
-            <Badge className="mb-4 bg-[#2D3586]/15 text-[#2D3586] hover:bg-[#2D3586]/25">
-              Nuestros Servicios
-            </Badge>
             <h2 className="text-3xl font-black text-[#182130] sm:text-4xl">
-              ¿Cómo podemos ayudarte?
+              Cómo podemos ayudarte
             </h2>
             <p className="mt-3 max-w-xl mx-auto text-slate-500">
               Tres líneas de trabajo para potenciar tu proceso creativo y comunicativo.
@@ -384,8 +376,8 @@ export default function Centro() {
                     >
                       <Icon className="h-7 w-7" style={{ color: colors[idx] }} />
                     </div>
-                    <h3 className="mb-2 text-lg font-bold text-[#182130]">{servicio.titulo}</h3>
-                    <p className="text-sm leading-relaxed text-slate-500">{servicio.descripcion}</p>
+                    <h3 className="mb-2 text-xl font-bold text-[#182130] sm:text-2xl">{servicio.titulo}</h3>
+                    <p className="text-base leading-relaxed text-slate-500 sm:text-lg">{servicio.descripcion}</p>
                   </CardContent>
                 </Card>
               );
@@ -394,13 +386,10 @@ export default function Centro() {
         </div>
       </section>
 
-      {/* ─── 5. ¿PARA QUIÉN ES? ────────────────────────────────────────── */}
+      {/* ─── 5. UN ESPACIO PARA TODOS ────────────────────────────────────────── */}
       <section className="bg-gradient-to-br from-[#023A34]/5 to-[#11B2AA]/5 py-20">
         <div className="container mx-auto max-w-6xl px-6">
           <div className="mb-12 text-center">
-            <Badge className="mb-4 bg-[#023A34]/15 text-[#023A34] hover:bg-[#023A34]/25">
-              ¿Para quién es?
-            </Badge>
             <h2 className="text-3xl font-black text-[#182130] sm:text-4xl">
               Un espacio para todos
             </h2>
@@ -432,12 +421,12 @@ export default function Centro() {
                     {perfil.emoji}
                   </div>
                   <h3
-                    className="mb-2 text-base font-bold"
+                    className="mb-2 text-lg font-bold sm:text-xl"
                     style={{ color: perfil.color }}
                   >
                     {perfil.titulo}
                   </h3>
-                  <p className="text-sm leading-relaxed text-slate-500">{perfil.descripcion}</p>
+                  <p className="text-base leading-relaxed text-slate-500 sm:text-lg">{perfil.descripcion}</p>
                 </CardContent>
               </Card>
             ))}

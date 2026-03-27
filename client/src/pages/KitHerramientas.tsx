@@ -33,13 +33,13 @@ const recursosDestacados = [
 
 export default function KitHerramientas() {
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#fff7f4_0%,#ffffff_24%,#fff8ef_100%)] py-8 sm:py-10">
+    <div className="min-h-screen bg-[linear-gradient(180deg,rgba(17,178,170,0.08)_0%,#ffffff_26%,rgba(45,53,134,0.06)_100%)] py-8 sm:py-10">
       <div className="container space-y-8 sm:space-y-10">
         <Breadcrumbs items={[{ label: "Kit de Herramientas" }]} />
 
-        <section className="relative overflow-hidden rounded-[32px] border border-orange-100 bg-[radial-gradient(circle_at_top_left,_rgba(255,96,52,0.24),_transparent_30%),linear-gradient(135deg,#ff4f87_0%,#7a3df0_42%,#2f2c98_100%)] px-6 py-8 text-white shadow-[0_24px_80px_rgba(122,61,240,0.24)] sm:px-8 sm:py-10 lg:px-12 lg:py-12">
+        <section className="relative overflow-hidden rounded-[32px] border border-[#0D4B56]/25 bg-[radial-gradient(circle_at_top_left,_rgba(236,105,16,0.18),_transparent_28%),linear-gradient(135deg,#182130_0%,#2D3586_42%,#11B2AA_100%)] px-6 py-8 text-white shadow-[0_24px_80px_rgba(24,33,48,0.24)] sm:px-8 sm:py-10 lg:px-12 lg:py-12">
           <div className="absolute -right-10 top-6 h-36 w-36 rounded-full bg-white/10 blur-2xl" />
-          <div className="absolute bottom-0 left-1/2 h-28 w-28 -translate-x-1/2 rounded-full bg-orange-300/20 blur-2xl" />
+          <div className="absolute bottom-0 left-1/2 h-28 w-28 -translate-x-1/2 rounded-full bg-[#FFDE07]/18 blur-2xl" />
           <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div className="space-y-5">
               <Badge className="rounded-full border border-white/20 bg-white/12 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white hover:bg-white/12">
@@ -57,7 +57,7 @@ export default function KitHerramientas() {
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Button asChild size="lg" className="h-12 rounded-full bg-white px-6 text-sm font-semibold text-[#2f2c98] hover:bg-white/90">
+                <Button asChild size="lg" className="h-12 rounded-full bg-white px-6 text-sm font-semibold text-[#2D3586] hover:bg-white/90">
                   <a href={TOOLBOX_URL} target="_blank" rel="noopener noreferrer">
                     Ir a la caja de herramientas
                     <ExternalLink className="h-4 w-4" />
@@ -74,7 +74,7 @@ export default function KitHerramientas() {
 
             <Card className="border-white/12 bg-white/10 text-white shadow-none backdrop-blur-sm">
               <CardContent className="p-5 sm:p-6">
-                <div className="overflow-hidden rounded-[24px] border border-white/12 bg-[linear-gradient(160deg,rgba(91,29,155,0.92)_0%,rgba(69,33,136,0.96)_55%,rgba(45,27,102,1)_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:p-6">
+                <div className="overflow-hidden rounded-[24px] border border-white/12 bg-[linear-gradient(160deg,rgba(24,33,48,0.94)_0%,rgba(45,53,134,0.96)_58%,rgba(13,75,86,1)_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:p-6">
                   <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.22em] text-white/70">
                     <span>Centro de innovación</span>
                     <Sparkles className="h-4 w-4" />
@@ -98,20 +98,20 @@ export default function KitHerramientas() {
 
         <section className="grid gap-5 md:grid-cols-3">
           {beneficios.map(({ icon: Icon, title, description }) => (
-            <Card key={title} className="border-orange-100 bg-white/90 shadow-[0_12px_32px_rgba(15,23,42,0.05)]">
+            <Card key={title} className="border-[#11B2AA]/15 bg-white/90 shadow-[0_12px_32px_rgba(24,33,48,0.05)]">
               <CardContent className="p-6">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#ffedd5_0%,#ffe4e6_100%)] text-[#e6513e]">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,rgba(255,222,7,0.26)_0%,rgba(17,178,170,0.16)_100%)] text-[#EC6910]">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h2 className="text-xl font-bold text-slate-900">{title}</h2>
-                <p className="mt-3 text-sm leading-6 text-slate-600">{description}</p>
+                <h2 className="text-xl font-bold text-[#182130]">{title}</h2>
+                <p className="mt-3 text-sm leading-6 text-[#0D4B56]">{description}</p>
               </CardContent>
             </Card>
           ))}
         </section>
 
         <section id="recursos-destacados" className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <Card className="overflow-hidden border-0 bg-[linear-gradient(145deg,#1f285f_0%,#322978_52%,#5b1d9b_100%)] text-white shadow-[0_20px_64px_rgba(49,46,129,0.24)]">
+          <Card className="overflow-hidden border-0 bg-[linear-gradient(145deg,#182130_0%,#2D3586_54%,#0D4B56_100%)] text-white shadow-[0_20px_64px_rgba(24,33,48,0.24)]">
             <CardContent className="p-6 sm:p-8">
               <Badge className="rounded-full bg-white/12 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white hover:bg-white/12">
                 Vista previa
@@ -133,37 +133,37 @@ export default function KitHerramientas() {
             </CardContent>
           </Card>
 
-          <Card className="border-orange-100 bg-white shadow-[0_18px_48px_rgba(15,23,42,0.07)]">
+          <Card className="border-[#EC6910]/20 bg-white shadow-[0_18px_48px_rgba(24,33,48,0.07)]">
             <CardContent className="p-6 sm:p-8">
               <div className="flex flex-wrap items-center gap-3">
-                <Badge variant="secondary" className="rounded-full bg-orange-100 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-700 hover:bg-orange-100">
+                <Badge variant="secondary" className="rounded-full bg-[#FFDE07]/20 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#EC6910] hover:bg-[#FFDE07]/20">
                   Recomendado
                 </Badge>
-                <span className="text-sm text-slate-500">Actualizado y pensado para consulta rápida</span>
+                <span className="text-sm text-[#0D4B56]">Actualizado y pensado para consulta rápida</span>
               </div>
 
-              <h2 className="mt-5 text-3xl font-black tracking-tight text-slate-900">
+              <h2 className="mt-5 text-3xl font-black tracking-tight text-[#182130]">
                 Abre la herramienta completa
               </h2>
-              <p className="mt-4 text-base leading-7 text-slate-600">
+              <p className="mt-4 text-base leading-7 text-[#0D4B56]">
                 Desde aquí puedes enviar al usuario a la página externa real de la caja de herramientas con un acceso visible, elegante y fácil de encontrar.
               </p>
 
-              <div className="mt-6 rounded-[28px] border border-dashed border-orange-200 bg-[linear-gradient(180deg,#fff7ed_0%,#ffffff_100%)] p-5">
-                <div className="rounded-[24px] border border-orange-100 bg-white p-5 shadow-sm">
+              <div className="mt-6 rounded-[28px] border border-dashed border-[#11B2AA]/30 bg-[linear-gradient(180deg,rgba(17,178,170,0.08)_0%,#ffffff_100%)] p-5">
+                <div className="rounded-[24px] border border-[#11B2AA]/15 bg-white p-5 shadow-sm">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-500">Caja de herramientas</p>
-                      <p className="mt-2 text-2xl font-black text-slate-900">Recursos pedagógicos para docentes</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#EC6910]">Caja de herramientas</p>
+                      <p className="mt-2 text-2xl font-black text-[#182130]">Recursos pedagógicos para docentes</p>
                     </div>
-                    <div className="rounded-2xl bg-orange-50 p-3 text-orange-600">
+                    <div className="rounded-2xl bg-[#11B2AA]/12 p-3 text-[#0D4B56]">
                       <BookOpenCheck className="h-6 w-6" />
                     </div>
                   </div>
-                  <p className="mt-4 text-sm leading-6 text-slate-600">
+                  <p className="mt-4 text-sm leading-6 text-[#0D4B56]">
                     Úsala como acceso principal a contenidos, guías y materiales que complementan el trabajo en aula y los procesos de innovación educativa.
                   </p>
-                  <Button asChild className="mt-6 h-11 rounded-full px-5 text-sm font-semibold">
+                  <Button asChild className="mt-6 h-11 rounded-full bg-[#182130] px-5 text-sm font-semibold text-white hover:bg-[#0D4B56]">
                     <a href={TOOLBOX_URL} target="_blank" rel="noopener noreferrer">
                       Abrir recurso externo
                       <ExternalLink className="h-4 w-4" />
@@ -172,7 +172,7 @@ export default function KitHerramientas() {
                 </div>
               </div>
 
-              <p className="mt-5 text-xs leading-6 text-slate-500">
+              <p className="mt-5 text-xs leading-6 text-[#0D4B56]">
                 Solo te queda reemplazar la constante <strong>TOOLBOX_URL</strong> por el enlace final de la caja de herramientas.
               </p>
             </CardContent>

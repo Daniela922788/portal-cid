@@ -35,6 +35,11 @@ type FrenteTrabajo = {
   impacto: string;
 };
 
+type GestorGalleryImage = {
+  src: string;
+  alt: string;
+};
+
 const funcionesGenerales = [
   "Acompañamiento pedagógico a docentes.",
   "Diseño de experiencias de aprendizaje con metodologías activas.",
@@ -169,42 +174,131 @@ const frentesTrabajo: FrenteTrabajo[] = [
   },
 ];
 
+const gestoresGalleryImages: GestorGalleryImage[] = [
+  { src: "/Seccion Gestores/1.jpg", alt: "Gestores de innovación en actividad formativa 1" },
+  { src: "/Seccion Gestores/2.jpg", alt: "Gestores de innovación en actividad formativa 2" },
+  { src: "/Seccion Gestores/3.jpg", alt: "Gestores de innovación en actividad formativa 3" },
+  { src: "/Seccion Gestores/4.jpg", alt: "Gestores de innovación en actividad formativa 4" },
+  { src: "/Seccion Gestores/5.jpg", alt: "Gestores de innovación en actividad formativa 5" },
+  { src: "/Seccion Gestores/6.jpg", alt: "Gestores de innovación en actividad formativa 6" },
+  { src: "/Seccion Gestores/7.jpg", alt: "Gestores de innovación en actividad formativa 7" },
+  { src: "/Seccion Gestores/8.jpg", alt: "Gestores de innovación en actividad formativa 8" },
+  { src: "/Seccion Gestores/9.jpg", alt: "Gestores de innovación en actividad formativa 9" },
+  { src: "/Seccion Gestores/10.jpg", alt: "Gestores de innovación en actividad formativa 10" },
+  { src: "/Seccion Gestores/11.jpg", alt: "Gestores de innovación en actividad formativa 11" },
+  { src: "/Seccion Gestores/12.jpg", alt: "Gestores de innovación en actividad formativa 12" },
+  { src: "/Seccion Gestores/13.jpg", alt: "Gestores de innovación en actividad formativa 13" },
+  { src: "/Seccion Gestores/14.jpg", alt: "Gestores de innovación en actividad formativa 14" },
+];
+
+const heroImages = gestoresGalleryImages.slice(0, 3);
+const stripImages = gestoresGalleryImages.slice(3, 6);
+const cierreImages = gestoresGalleryImages.slice(12, 14);
+
+const frenteImagenes: Record<string, GestorGalleryImage> = {
+  cid: gestoresGalleryImages[6],
+  instituciones: gestoresGalleryImages[7],
+  docentes: gestoresGalleryImages[8],
+  territorio: gestoresGalleryImages[9],
+  articulacion: gestoresGalleryImages[10],
+};
+
+const bannerImagen = gestoresGalleryImages[11];
+
+const competenciaAccentStyles = [
+  {
+    cardClass: "bg-gradient-to-br from-white via-white to-[#11B2AA]/10 ring-[#11B2AA]/15",
+    iconClass: "bg-gradient-to-br from-[#11B2AA] to-[#0D4B56] text-white",
+  },
+  {
+    cardClass: "bg-gradient-to-br from-white via-white to-[#2D3586]/10 ring-[#2D3586]/15",
+    iconClass: "bg-gradient-to-br from-[#2D3586] to-[#0D4B56] text-white",
+  },
+];
+
+const cierreEtiquetas = [
+  { title: "Transformación educativa", color: "text-[#FFDE07]", body: "Acompañan procesos que cambian la práctica pedagógica." },
+  { title: "Tecnología con sentido", color: "text-[#11B2AA]", body: "Integran herramientas y metodologías según las necesidades reales." },
+  { title: "Trabajo en red", color: "text-[#EC6910]", body: "Articulan comunidad, instituciones y aliados del ecosistema." },
+  { title: "Proyección territorial", color: "text-[#7E8BFF]", body: "Impulsan una educación conectada con el futuro del municipio." },
+];
+
+const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
+
+function GestoresImageCard({
+  image,
+  className,
+  imageClassName,
+}: {
+  image: GestorGalleryImage;
+  className?: string;
+  imageClassName?: string;
+}) {
+  return (
+    <div className={`overflow-hidden rounded-[1.75rem] border border-white/12 bg-white/10 shadow-lg ${className ?? ""}`}>
+      <picture className="contents">
+        <source srcSet={toWebp(image.src)} type="image/webp" />
+        <img
+          src={image.src}
+          alt={image.alt}
+          className={`h-full w-full object-cover ${imageClassName ?? ""}`}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+    </div>
+  );
+}
+
 export default function Gestores() {
   const [frenteActivo, setFrenteActivo] = useState(frentesTrabajo[0].id);
 
   const frenteActual = frentesTrabajo.find((frente) => frente.id === frenteActivo) ?? frentesTrabajo[0];
   const IconoFrenteActual = frenteActual.icon;
+  const imagenFrenteActual = frenteImagenes[frenteActivo] ?? gestoresGalleryImages[6];
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,222,7,0.18),_transparent_22%),linear-gradient(180deg,_#ffffff_0%,_rgba(17,178,170,0.08)_45%,_rgba(13,75,86,0.08)_100%)] py-8">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(17,178,170,0.16),_transparent_24%),linear-gradient(180deg,_#ffffff_0%,_rgba(17,178,170,0.08)_45%,_rgba(13,75,86,0.08)_100%)] py-8">
       <div className="container">
         <Breadcrumbs items={[{ label: "Inicio", href: "/" }, { label: "Gestores de Innovación" }]} />
 
         <section className="relative mt-6 overflow-hidden rounded-3xl border border-[#182130] bg-gradient-to-r from-[#182130] via-[#0D4B56] to-[#023A34] p-6 text-white shadow-2xl md:p-10 lg:p-14">
           <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-[#11B2AA]/25 blur-2xl" />
           <div className="absolute -bottom-16 left-1/3 h-52 w-52 rounded-full bg-[#2D3586]/25 blur-2xl" />
-          <div className="relative">
-            <Badge className="mb-4 bg-[#FFDE07] text-[#182130] hover:bg-[#FFDE07]/90">
-              <Sparkles className="mr-2 h-4 w-4" /> Innovación educativa y territorio STEM+
-            </Badge>
-            <h1 className="max-w-4xl text-3xl font-black leading-tight md:text-5xl">
-              Gestores de Innovación Educativa
-            </h1>
-            <p className="mt-4 max-w-4xl text-sm text-cyan-50 md:text-lg">
-              Son profesionales que lideran procesos de transformación en las instituciones educativas,
-              promoviendo nuevas formas de enseñar y aprender a través del enfoque STEM+, la tecnología y la
-              innovación pedagógica.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
-                Agentes de cambio
+          <div className="relative grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <div>
+              <Badge className="mb-4 bg-[#EC6910] text-white hover:bg-[#d75f0f]">
+                <Sparkles className="mr-2 h-4 w-4" /> Innovación educativa y territorio STEM+
               </Badge>
-              <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
-                Acompañamiento pedagógico
-              </Badge>
-              <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
-                Innovación con impacto territorial
-              </Badge>
+              <h1 className="max-w-4xl text-3xl font-black leading-tight md:text-5xl">
+                Gestores de Innovación Educativa
+              </h1>
+              <p className="mt-4 max-w-4xl text-sm text-cyan-50 md:text-lg">
+                Son profesionales que lideran procesos de transformación en las instituciones educativas,
+                promoviendo nuevas formas de enseñar y aprender a través del enfoque STEM+, la tecnología y la
+                innovación pedagógica.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
+                  Agentes de cambio
+                </Badge>
+                <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
+                  Acompañamiento pedagógico
+                </Badge>
+                <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
+                  Innovación con impacto territorial
+                </Badge>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 sm:grid-rows-[12rem_12rem] lg:grid-rows-[13rem_13rem]">
+              <GestoresImageCard
+                image={heroImages[0]}
+                className="sm:row-span-2"
+                imageClassName="min-h-[18rem] sm:min-h-full"
+              />
+              <GestoresImageCard image={heroImages[1]} imageClassName="min-h-[12rem]" />
+              <GestoresImageCard image={heroImages[2]} imageClassName="min-h-[12rem]" />
             </div>
           </div>
         </section>
@@ -231,7 +325,7 @@ export default function Gestores() {
             </CardContent>
           </Card>
 
-          <Card className="border-[#11B2AA]/40 bg-gradient-to-br from-[#FFDE07]/20 via-[#11B2AA]/10 to-[#2D3586]/15 shadow-lg">
+          <Card className="border-[#EC6910]/35 bg-gradient-to-br from-[#EC6910]/12 via-white to-[#11B2AA]/12 shadow-lg">
             <CardHeader>
               <CardTitle className="text-2xl text-[#182130]">Propósito de los gestores</CardTitle>
             </CardHeader>
@@ -246,13 +340,13 @@ export default function Gestores() {
                 impulsando procesos educativos alineados con la sostenibilidad y el enfoque de Territorio STEM+
                 SMART.
               </p>
-              <div className="rounded-2xl border border-[#EC6910]/40 bg-gradient-to-r from-[#EC6910]/15 to-[#FFDE07]/15 p-4">
+              <div className="rounded-2xl border border-[#EC6910]/25 bg-gradient-to-r from-[#EC6910]/8 to-[#11B2AA]/10 p-4">
                 <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#EC6910]">
                   Su labor contribuye a formar ciudadanos capaces de:
                 </p>
                 <div className="grid gap-2 sm:grid-cols-2">
                   {capacidadesCiudadanas.map((capacidad) => (
-                    <div key={capacidad} className="rounded-xl border border-[#FFDE07]/40 bg-white/90 p-3 text-sm text-slate-700 shadow-sm">
+                    <div key={capacidad} className="rounded-xl border border-[#EC6910]/15 bg-white/90 p-3 text-sm text-slate-700 shadow-sm">
                       {capacidad}
                     </div>
                   ))}
@@ -263,7 +357,7 @@ export default function Gestores() {
         </section>
 
         <section className="mt-12 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-          <Card className="border-[#11B2AA]/40 bg-gradient-to-br from-white to-[#11B2AA]/10 shadow-lg">
+          <Card className="border-[#0D4B56]/30 bg-gradient-to-br from-white via-white to-[#023A34]/10 shadow-lg">
             <CardHeader>
               <CardTitle className="text-2xl text-[#182130]">¿Qué hacen los gestores?</CardTitle>
             </CardHeader>
@@ -274,7 +368,7 @@ export default function Gestores() {
               </p>
               <div className="grid gap-3 md:grid-cols-2">
                 {funcionesGenerales.map((funcion) => (
-                  <div key={funcion} className="rounded-2xl border border-[#11B2AA]/25 bg-gradient-to-br from-white to-[#11B2AA]/10 p-4 text-sm text-slate-700 shadow-sm">
+                  <div key={funcion} className="rounded-2xl border border-[#023A34]/15 bg-gradient-to-br from-white to-[#11B2AA]/8 p-4 text-sm text-slate-700 shadow-sm">
                     {funcion}
                   </div>
                 ))}
@@ -282,7 +376,7 @@ export default function Gestores() {
             </CardContent>
           </Card>
 
-          <Card className="border-[#2D3586]/30 bg-gradient-to-br from-[#2D3586]/15 via-white to-[#FFDE07]/10 shadow-lg">
+          <Card className="border-[#2D3586]/30 bg-gradient-to-br from-[#2D3586]/15 via-white to-[#EC6910]/8 shadow-lg">
             <CardHeader>
               <CardTitle className="text-2xl text-[#182130]">Competencias que promueven</CardTitle>
             </CardHeader>
@@ -299,6 +393,17 @@ export default function Gestores() {
           </Card>
         </section>
 
+        <section className="mt-12 grid gap-4 md:grid-cols-3">
+          {stripImages.map((image, index) => (
+            <GestoresImageCard
+              key={image.src}
+              image={image}
+              className={index === 1 ? "md:-translate-y-3" : ""}
+              imageClassName="h-64 md:h-72"
+            />
+          ))}
+        </section>
+
         <section className="mt-12 rounded-[2rem] border border-[#11B2AA]/20 bg-gradient-to-b from-white to-[#11B2AA]/5 p-1">
           <div className="rounded-[1.7rem] bg-white/80 p-5 md:p-6">
           <div className="mb-5 flex items-center gap-3">
@@ -313,13 +418,14 @@ export default function Gestores() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {competenciasClave.map((competencia) => {
+            {competenciasClave.map((competencia, index) => {
               const Icon = competencia.icon;
+              const accent = competenciaAccentStyles[index % competenciaAccentStyles.length];
 
               return (
-                <Card key={competencia.title} className="border-transparent bg-gradient-to-br from-white via-white to-[#11B2AA]/10 shadow-sm ring-1 ring-[#11B2AA]/15">
+                <Card key={competencia.title} className={`border-transparent shadow-sm ring-1 ${accent.cardClass}`}>
                   <CardContent className="p-5">
-                    <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FFDE07] to-[#EC6910] text-[#182130] shadow-sm">
+                    <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-2xl shadow-sm ${accent.iconClass}`}>
                       <Icon className="h-5 w-5" />
                     </div>
                     <h3 className="text-lg font-bold text-[#182130]">{competencia.title}</h3>
@@ -328,91 +434,106 @@ export default function Gestores() {
                 </Card>
               );
             })}
-          </div>
-          </div>
-        </section>
-
-        <section className="mt-14 rounded-3xl border border-[#023A34]/20 bg-gradient-to-r from-[#023A34]/15 via-[#11B2AA]/12 to-[#FFDE07]/12 p-6 shadow-sm md:p-8">
-          <div className="flex items-start gap-3">
-            <Handshake className="mt-1 h-6 w-6 shrink-0 text-[#023A34]" />
-            <div>
-              <h3 className="text-xl font-bold text-[#182130]">¿Cómo trabajan los gestores?</h3>
-              <p className="mt-2 max-w-4xl text-slate-700">
-                Su trabajo combina formación, acompañamiento, trabajo en red y gestión institucional. A continuación
-                puedes explorar los principales escenarios en los que desarrollan su labor.
-              </p>
             </div>
-          </div>
-        </section>
+            </div>
+          </section>
 
-        <section className="mt-8 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-          <Card className="border-[#2D3586]/20 bg-gradient-to-b from-white to-[#2D3586]/5 shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg text-[#182130]">Frentes de trabajo</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {frentesTrabajo.map((frente) => {
-                const Icon = frente.icon;
-
-                return (
-                  <button
-                    key={frente.id}
-                    type="button"
-                    onClick={() => setFrenteActivo(frente.id)}
-                    className={`flex w-full items-start gap-3 rounded-2xl border px-4 py-4 text-left transition-colors ${
-                      frenteActivo === frente.id
-                        ? "border-[#2D3586] bg-gradient-to-r from-[#2D3586]/15 to-[#11B2AA]/10 text-[#182130]"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-[#2D3586]/40 hover:bg-[#2D3586]/5"
-                    }`}
-                  >
-                    <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#2D3586] to-[#0D4B56] text-white shadow-sm">
-                      <Icon className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <p className="font-semibold">{frente.title}</p>
-                      <p className="mt-1 text-sm text-slate-600">{frente.summary}</p>
-                    </div>
-                  </button>
-                );
-              })}
-            </CardContent>
-          </Card>
-
-          <Card className="border-[#2D3586]/30 bg-[linear-gradient(135deg,rgba(45,53,134,0.16)_0%,rgba(255,255,255,0.96)_38%,rgba(17,178,170,0.16)_72%,rgba(255,222,7,0.14)_100%)] shadow-sm">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FFDE07] to-[#EC6910] text-[#182130] shadow-sm">
-                  <IconoFrenteActual className="h-5 w-5" />
-                </div>
+          <section className="mt-14 rounded-3xl border border-[#023A34]/20 bg-gradient-to-r from-[#023A34]/15 via-[#11B2AA]/12 to-[#2D3586]/10 p-6 shadow-sm md:p-8">
+            <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+              <div className="flex items-start gap-3">
+                <Handshake className="mt-1 h-6 w-6 shrink-0 text-[#023A34]" />
                 <div>
-                  <CardTitle className="text-xl text-[#182130]">{frenteActual.title}</CardTitle>
-                  <p className="mt-1 text-sm text-slate-600">{frenteActual.summary}</p>
+                  <h3 className="text-xl font-bold text-[#182130]">¿Cómo trabajan los gestores?</h3>
+                  <p className="mt-2 max-w-4xl text-slate-700">
+                    Su trabajo combina formación, acompañamiento, trabajo en red y gestión institucional. A continuación
+                    puedes explorar los principales escenarios en los que desarrollan su labor.
+                  </p>
                 </div>
               </div>
-            </CardHeader>
-            <CardContent>
-              <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#2D3586]">Acciones destacadas</p>
-              <div className="grid gap-3 md:grid-cols-2">
-                {frenteActual.acciones.map((accion) => (
-                  <div key={accion} className="rounded-2xl border border-[#11B2AA]/20 bg-white/90 p-4 text-sm text-slate-700 shadow-sm">
-                    {accion}
+
+              <GestoresImageCard
+                image={bannerImagen}
+                className="border-[#023A34]/10 bg-white/40"
+                imageClassName="h-64 lg:h-72"
+              />
+            </div>
+          </section>
+
+          <section className="mt-8 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+            <Card className="border-[#2D3586]/20 bg-gradient-to-b from-white to-[#2D3586]/5 shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-lg text-[#182130]">Frentes de trabajo</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {frentesTrabajo.map((frente) => {
+                        const Icon = frente.icon;
+
+                        return (
+                          <button
+                            key={frente.id}
+                            type="button"
+                            onClick={() => setFrenteActivo(frente.id)}
+                            className={`flex w-full items-start gap-3 rounded-2xl border px-4 py-4 text-left transition-colors ${
+                              frenteActivo === frente.id
+                                ? "border-[#2D3586]/35 bg-gradient-to-r from-[#2D3586]/15 to-[#11B2AA]/10 text-[#182130]"
+                                : "border-slate-200 bg-white text-slate-700 hover:border-[#2D3586]/40 hover:bg-[#2D3586]/5"
+                            }`}
+                          >
+                            <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#2D3586] to-[#0D4B56] text-white shadow-sm">
+                              <Icon className="h-4 w-4" />
+                            </div>
+                            <div>
+                              <p className="font-semibold">{frente.title}</p>
+                              <p className="mt-1 text-sm text-slate-600">{frente.summary}</p>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </CardContent>
+                  </Card>
+
+                  <div className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr]">
+                    <Card className="border-[#2D3586]/30 bg-[linear-gradient(135deg,rgba(45,53,134,0.16)_0%,rgba(255,255,255,0.96)_38%,rgba(17,178,170,0.16)_100%)] shadow-sm">
+                      <CardHeader>
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#11B2AA] to-[#2D3586] text-white shadow-sm">
+                            <IconoFrenteActual className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <CardTitle className="text-xl text-[#182130]">{frenteActual.title}</CardTitle>
+                            <p className="mt-1 text-sm text-slate-600">{frenteActual.summary}</p>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#2D3586]">Acciones destacadas</p>
+                        <div className="grid gap-3 md:grid-cols-2">
+                          {frenteActual.acciones.map((accion) => (
+                            <div key={accion} className="rounded-2xl border border-[#11B2AA]/20 bg-white/90 p-4 text-sm text-slate-700 shadow-sm">
+                              {accion}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="mt-5 rounded-2xl border border-[#0D4B56]/25 bg-gradient-to-r from-[#0D4B56]/10 to-[#11B2AA]/10 p-4 text-sm text-[#182130]">
+                          <span className="font-bold text-[#EC6910]">Impacto:</span> {frenteActual.impacto}
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <GestoresImageCard
+                      image={imagenFrenteActual}
+                      className="border-[#2D3586]/15 bg-white/40"
+                      imageClassName="h-80 xl:h-full"
+                    />
                   </div>
-                ))}
-              </div>
-              <div className="mt-5 rounded-2xl border border-[#EC6910]/40 bg-gradient-to-r from-[#EC6910]/15 to-[#FFDE07]/20 p-4 text-sm text-[#182130]">
-                <span className="font-bold text-[#EC6910]">Impacto:</span> {frenteActual.impacto}
-              </div>
-            </CardContent>
-          </Card>
-        </section>
+                </section>
 
         <section className="mt-16 rounded-3xl border border-[#182130]/10 bg-[linear-gradient(145deg,rgba(24,33,48,0.98)_0%,rgba(13,75,86,0.98)_45%,rgba(2,58,52,0.96)_100%)] p-8 text-white shadow-sm">
           <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
             <div>
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FFDE07] to-[#EC6910] text-[#182130]">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#11B2AA] to-[#2D3586] text-white">
                 <Building2 className="h-6 w-6" />
               </div>
-              <h3 className="text-2xl font-bold text-white">Cierre</h3>
               <p className="mt-3 text-cyan-50">
                 Los Gestores de Innovación Educativa son actores clave en la transformación del sistema educativo,
                 conectando la escuela con la tecnología, la innovación y las necesidades del territorio.
@@ -424,22 +545,22 @@ export default function Gestores() {
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
-                <p className="font-semibold text-[#FFDE07]">Transformación educativa</p>
-                <p className="mt-1 text-sm text-cyan-50">Acompañan procesos que cambian la práctica pedagógica.</p>
-              </div>
-              <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
-                <p className="font-semibold text-[#11B2AA]">Tecnología con sentido</p>
-                <p className="mt-1 text-sm text-cyan-50">Integran herramientas y metodologías según las necesidades reales.</p>
-              </div>
-              <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
-                <p className="font-semibold text-[#EC6910]">Trabajo en red</p>
-                <p className="mt-1 text-sm text-cyan-50">Articulan comunidad, instituciones y aliados del ecosistema.</p>
-              </div>
-              <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
-                <p className="font-semibold text-[#2D3586]">Proyección territorial</p>
-                <p className="mt-1 text-sm text-cyan-50">Impulsan una educación conectada con el futuro del municipio.</p>
-              </div>
+              {cierreEtiquetas.slice(0, 2).map((item) => (
+                <div key={item.title} className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
+                  <p className={`font-semibold ${item.color}`}>{item.title}</p>
+                  <p className="mt-1 text-sm text-cyan-50">{item.body}</p>
+                </div>
+              ))}
+              <GestoresImageCard
+                image={cierreImages[0]}
+                className="border-white/15 bg-white/10"
+                imageClassName="h-52"
+              />
+              <GestoresImageCard
+                image={cierreImages[1]}
+                className="border-white/15 bg-white/10"
+                imageClassName="h-52"
+              />
             </div>
           </div>
         </section>

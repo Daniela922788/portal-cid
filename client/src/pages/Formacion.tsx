@@ -29,6 +29,8 @@ interface ECard {
   proyectoFinal: string;
 }
 
+const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
+
 export default function Formacion() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTematicas, setSelectedTematicas] = useState<string[]>([]);
@@ -1175,15 +1177,18 @@ export default function Formacion() {
                     aria-label={`Abrir ${ecard.titulo}`}
                   >
                     <div className="flex h-[22rem] items-start justify-center overflow-hidden bg-[#11B2AA]/6 pt-3 sm:h-[24rem] lg:h-[25rem]">
-                      <img
-                        src={ecard.imagen}
-                        alt={ecard.titulo}
-                        loading="lazy"
-                        decoding="async"
-                        className={`h-full w-full transition-transform duration-300 group-hover:scale-[1.02] ${
-                          isWideImageCourse ? "object-cover object-center" : "object-contain object-top"
-                        }`}
-                      />
+                      <picture className="contents">
+                        <source srcSet={toWebp(ecard.imagen)} type="image/webp" />
+                        <img
+                          src={ecard.imagen}
+                          alt={ecard.titulo}
+                          loading="lazy"
+                          decoding="async"
+                          className={`h-full w-full transition-transform duration-300 group-hover:scale-[1.02] ${
+                            isWideImageCourse ? "object-cover object-center" : "object-contain object-top"
+                          }`}
+                        />
+                      </picture>
                     </div>
                     <div className="flex min-h-[11.5rem] flex-1 flex-col bg-[#0D4B56]/[0.04] px-3 py-3">
                       <p className="mb-2 line-clamp-2 text-sm font-bold text-[#182130]">
@@ -1540,13 +1545,16 @@ export default function Formacion() {
 
               <div className="grid gap-6 md:grid-cols-[320px_minmax(0,1fr)] md:gap-8">
                 <div className="max-h-[320px] overflow-hidden rounded-2xl border border-[#0D4B56]/20 bg-[#0D4B56]/[0.04] md:max-h-none">
-                  <img
-                    src={selectedEcard.imagen}
-                    alt={selectedEcard.titulo}
-                    loading="eager"
-                    decoding="async"
-                    className="h-full w-full object-contain"
-                  />
+                  <picture className="contents">
+                    <source srcSet={toWebp(selectedEcard.imagen)} type="image/webp" />
+                    <img
+                      src={selectedEcard.imagen}
+                      alt={selectedEcard.titulo}
+                      loading="eager"
+                      decoding="async"
+                      className="h-full w-full object-contain"
+                    />
+                  </picture>
                 </div>
 
                 <div className="md:pr-8">

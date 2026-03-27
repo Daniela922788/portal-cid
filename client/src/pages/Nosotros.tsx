@@ -59,6 +59,8 @@ interface Gestor {
   foto: string;
 }
 
+const toWebp = (src: string) => (typeof src === "string" ? src.replace(/\.(jpe?g|png)$/i, ".webp") : src);
+
 export default function Nosotros() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -894,13 +896,16 @@ export default function Nosotros() {
                     }}
                   >
                     <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
-                      <img
-                        src={persona.foto}
-                        alt={persona.nombre}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-3 sm:py-6"
-                      />
+                      <picture className="contents">
+                        <source srcSet={toWebp(persona.foto)} type="image/webp" />
+                        <img
+                          src={persona.foto}
+                          alt={persona.nombre}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-3 sm:py-6"
+                        />
+                      </picture>
                     </div>
 
                     <div className="px-4 py-4 text-center sm:px-6 sm:py-6">
@@ -1000,14 +1005,17 @@ export default function Nosotros() {
                     }}
                   >
                     <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
-                      <img
-                        src={gestor.foto}
-                        alt={gestor.nombre}
-                        loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
-                        fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
-                        decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
-                        className="h-[170px] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105 sm:h-auto sm:object-contain sm:py-6"
-                      />
+                      <picture className="contents">
+                        <source srcSet={toWebp(gestor.foto)} type="image/webp" />
+                        <img
+                          src={gestor.foto}
+                          alt={gestor.nombre}
+                          loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
+                          fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
+                          decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
+                          className="h-[170px] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105 sm:h-auto sm:object-contain sm:py-6"
+                        />
+                      </picture>
                     </div>
 
                     <div className="px-3 py-3 text-center sm:px-6 sm:py-6">

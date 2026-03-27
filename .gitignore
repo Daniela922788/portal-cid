@@ -30,6 +30,10 @@ build/
 ehthumbs.db
 Thumbs.db
 
+# Large video files (exceeds GitHub 100MB limit)
+client/public/Testimonios/*.mp4
+client/public/**/*.mp4
+
 # Logs
 logs
 *.log
