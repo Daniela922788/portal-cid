@@ -44,8 +44,8 @@ export default function Header() {
   const showKitHerramientas = true;
   const showCidKids = false;
   const showProyectos = false;
-  const mobileMenuItemClass = "px-4 py-2 rounded-md hover:bg-accent text-base font-medium leading-6";
-  const mobileAccordionTriggerClass = "px-2 py-2 text-base font-medium leading-6";
+  const mobileMenuItemClass = "px-5 py-2.5 rounded-md hover:bg-accent text-lg font-medium leading-7";
+  const mobileAccordionTriggerClass = "px-3 py-2.5 text-lg font-medium leading-7";
   const normalizedLocation =
     (location.split("?")[0]?.split("#")[0] ?? "/").replace(/\/+$/, "") || "/";
   const transparentPaths = new Set(["/", "/nosotros", "/centro", "/gestores"]);
@@ -54,10 +54,10 @@ export default function Header() {
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
     : "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
   const topLevelNavLinkClass = isTransparent
-    ? "group inline-flex h-11 w-max items-center justify-center rounded-md bg-black/35 px-5 py-2 text-base font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-    : "group inline-flex h-11 w-max items-center justify-center rounded-md bg-background px-5 py-2 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
+    ? "group inline-flex h-12 w-max items-center justify-center rounded-md bg-black/35 px-6 py-2 text-lg font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+    : "group inline-flex h-12 w-max items-center justify-center rounded-md bg-background px-6 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
   const triggerClassName = isTransparent
-    ? "h-11 rounded-md bg-black/35 px-5 text-base font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
+    ? "h-12 rounded-md bg-black/35 px-6 text-lg font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
     : "";
 
   useEffect(() => {
@@ -189,17 +189,14 @@ export default function Header() {
   return (
     <header className={headerClassName}>
       <div className="container">
-        <div className="flex h-[4.5rem] items-center justify-between">
+        <div className="flex h-20 items-center justify-between">
           {/* Logo y título */}
-          <Link href="/" className="flex min-w-0 items-center gap-3 hover:opacity-80 transition-opacity">
-            <img src="/logo-colores.png" alt="Logo CID" className="h-10 w-10" />
-            <span className={`whitespace-nowrap text-[11px] font-bold leading-none sm:text-lg sm:leading-normal ${isTransparent ? "text-white drop-shadow" : "text-primary"}`}>
-              {APP_TITLE}
-            </span>
+          <Link href="/" className="flex min-w-0 items-center transition-opacity hover:opacity-80 lg:-ml-10 mt-13">
+            <img src="/LOGO_CID.png" alt="Logo CID" className="h-12 w-auto sm:h-14 lg:h-20" />
           </Link>
 
           {/* Navegación desktop */}
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-7 mt-13">
             <NavigationMenu
               ref={desktopNavMenuRef}
               value={desktopMenuOpen}
@@ -491,7 +488,7 @@ export default function Header() {
                   setSearchOpen(true);
                   setSearchResults([]);
                 }}
-                className="hidden md:inline-flex"
+                className="hidden md:inline-flex mt-13 translate-x-40"
                 aria-label="Abrir busqueda"
               >
                 <Search className="h-5 w-5" />

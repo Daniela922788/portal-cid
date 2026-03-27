@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { 
   Lightbulb, 
   Users, 
+  ChevronLeft,
   BookOpen, 
   Award, 
   Newspaper, 
@@ -31,13 +32,9 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative w-full overflow-hidden md:h-screen">
         <picture>
-          <source
-            media="(max-width: 767px)"
-            srcSet="/banners/banner%20principal%20cel.webp"
-            type="image/webp"
-          />
+          <source srcSet="/banners/Banner_principal.webp" type="image/webp" />
           <img
-            src="/banners/banner%20principal.webp"
+            src="/banners/Banner_principal.png"
             alt="Banner principal Portal de Innovación Educativa CID"
             loading="eager"
             fetchPriority="high"
@@ -45,6 +42,21 @@ export default function Home() {
             className="w-full h-auto object-contain md:h-full md:object-cover md:object-center"
           />
         </picture>
+        <div className="absolute inset-0 bg-[#182130]/35" />
+        <div className="absolute left-14 top-[62%] z-10 -translate-y-1/2 text-left md:left-28 md:top-[58%] lg:left-[6.5rem] lg:top-[56%]">
+          <h1 className="text-2xl font-black leading-tight text-white sm:text-4xl lg:text-6xl xl:text-7xl">
+            <span className="block">Somos el CID</span>
+            <span className="block">donde la ciencia</span>
+            <span className="block">y la innovación</span>
+            <span className="block">transforman</span>
+            <span className="block">el territorio.</span>
+          </h1>
+        </div>
+        
+                {/* Flecha scroll-down */}
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/50">
+                  <ChevronLeft className="h-6 w-6 rotate-[-90deg]" />
+                </div>
       </section>
 
       {/* Banner Trancion de fondo debajo del principal y debajo de los cuadros */}

@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import AlejandraImg from "@/assets/Alejandra.webp";
+import IsabelImg from "@/assets/Isabel.webp";
+import JulianImg from "@/assets/Julian.webp";
+import KarenImg from "@/assets/Karen.webp";
+import MauricioImg from "@/assets/Mauricio.webp";
+import MonicaImg from "@/assets/Mònica.webp";
+import NicolasImg from "@/assets/Nicolas.webp";
+import SantiagoImg from "@/assets/Santiago.webp";
+import TaniaImg from "@/assets/Tania.webp";
+import VictorImg from "@/assets/Victor.webp";
+import WilmarImg from "@/assets/Wilmar.webp";
 import {
   BrainCircuit,
   Building2,
   CheckCircle2,
   ChevronLeft,
+  ChevronRight,
   GraduationCap,
   Handshake,
   Landmark,
@@ -39,6 +52,14 @@ type FrenteTrabajo = {
 type GestorGalleryImage = {
   src: string;
   alt: string;
+};
+
+type Gestor = {
+  id: number;
+  nombre: string;
+  profesion: string;
+  tipo: "STEM" | "Pedagógica" | "Administrativo" | "Investigación";
+  foto: string;
 };
 
 const funcionesGenerales = [
@@ -226,6 +247,116 @@ const cierreEtiquetas = [
 
 const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
 
+const fotosGaleriaGestores = gestoresGalleryImages.map((image) => image.src);
+
+  const gestoresData: Gestor[] = [
+    {
+      id: 1,
+      nombre: "Alejandra Mora",
+      profesion: "Bióloga con Maestría en Conservación y uso de la Biodiversidad",
+      tipo: "Investigación",
+      foto: AlejandraImg
+    },
+    {
+      id: 2,
+      nombre: "Isabel Vega",
+      profesion: "Ingeniera Física, Magister en Ingeniería",
+      tipo: "STEM",
+      foto: IsabelImg
+    },
+    {
+      id: 3,
+      nombre: "Julián Parra",
+      profesion: "Ingeniero de Petróleos",
+      tipo: "STEM",
+      foto: JulianImg
+    },
+    {
+      id: 4,
+      nombre: "Karen Palacio",
+      profesion: "Licenciada Básica con énfasis en Ciencias Sociales",
+      tipo: "Investigación",
+      foto: KarenImg
+    },
+    {
+      id: 5,
+      nombre: "Mauricio Valencia",
+      profesion: "Licenciado en Educación Básica con énfasis en Matemáticas",
+      tipo: "STEM",
+      foto: MauricioImg
+    },
+    {
+      id: 6,
+      nombre: "Mónica Quiceno",
+      profesion: "Licenciada en Ed. Básica con énfasis en Ciencias Naturales y Educación Ambiental",
+      tipo: "STEM",
+      foto: MonicaImg
+    },
+    {
+      id: 7,
+      nombre: "Nicolás Bernal",
+      profesion: "Ecólogo y Magister en Turismo Sostenible",
+      tipo: "STEM",
+      foto: NicolasImg
+    },
+    {
+      id: 8,
+      nombre: "Santiago Sierra",
+      profesion: "Astronomo",
+      tipo: "STEM",
+      foto: SantiagoImg
+    },
+    {
+      id: 9,
+      nombre: "Tania Carmona",
+      profesion: "Licenciada en Artes Plásticas",
+      tipo: "STEM",
+      foto: TaniaImg
+    },
+    {
+      id: 10,
+      nombre: "Víctor Tobón",
+      profesion: "Ciencias Política Politólogo",
+      tipo: "STEM",
+      foto: VictorImg
+    },
+    {
+      id: 11,
+      nombre: "William Pomares",
+      profesion: "Ingeniero Electrónico Especialista en Educación",
+      tipo: "STEM",
+      foto: WilmarImg
+    },
+    {
+      id: 12,
+      nombre: "Angela María Mejía Celis",
+      profesion: "Licenciada en Humanidades y Lengua Castellana",
+      tipo: "STEM",
+      foto: "/gestores/Angela%202.png"
+    },
+    {
+      id: 13,
+      nombre: "Erika Atehortúa Argaez",
+      profesion: "Sociología, Magíster en Innovación y Educación",
+      tipo: "STEM",
+      foto: "/gestores/Erika.png"
+    },
+    {
+      id: 14,
+      nombre: "Mateo Vásquez Correa",
+      profesion: "Ingeniero de Sistemas",
+      tipo: "STEM",
+      foto: "/gestores/Mateo.png"
+    },
+    {
+      id: 15,
+      nombre: "Ronald Eduardo Gaitán Gelvez",
+      profesion: "Ing. Mecatrónico, Ing. Eléctrico, Esp.Telecomunicaciones",
+      tipo: "STEM",
+      foto: "/gestores/Ronald.png"
+    },
+  ];
+
 function GestoresImageCard({
   image,
   className,
@@ -253,10 +384,42 @@ function GestoresImageCard({
 
 export default function Gestores() {
   const [frenteActivo, setFrenteActivo] = useState(frentesTrabajo[0].id);
+  const [gestoresCarouselIndex, setGestoresCarouselIndex] = useState(0);
+  const [gestoresGaleriaIndex, setGestoresGaleriaIndex] = useState(0);
+  const directionVisibleCards = 3;
+  const gestoresGapPx = 32;
+  const gestoresTotal = gestoresData.length;
+  const gestoresMaxStart = Math.max(0, gestoresTotal - directionVisibleCards);
 
   const frenteActual = frentesTrabajo.find((frente) => frente.id === frenteActivo) ?? frentesTrabajo[0];
   const IconoFrenteActual = frenteActual.icon;
   const imagenFrenteActual = frenteImagenes[frenteActivo] ?? gestoresGalleryImages[6];
+
+  const goGestoresPrev = () => {
+    setGestoresCarouselIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const goGestoresNext = () => {
+    setGestoresCarouselIndex((prev) => Math.min(gestoresMaxStart, prev + 1));
+  };
+
+  const goGaleriaGestoresPrev = () => {
+    setGestoresGaleriaIndex((prev) =>
+      (prev - 1 + fotosGaleriaGestores.length) % fotosGaleriaGestores.length
+    );
+  };
+
+  const goGaleriaGestoresNext = () => {
+    setGestoresGaleriaIndex((prev) => (prev + 1) % fotosGaleriaGestores.length);
+  };
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setGestoresGaleriaIndex((prev) => (prev + 1) % fotosGaleriaGestores.length);
+    }, 5000);
+
+    return () => window.clearInterval(id);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(17,178,170,0.16),_transparent_24%),linear-gradient(180deg,_#ffffff_0%,_rgba(17,178,170,0.08)_45%,_rgba(13,75,86,0.08)_100%)]">
@@ -590,6 +753,131 @@ export default function Gestores() {
             </div>
           </div>
         </section>
+
+
+
+      {/* Gestores de Innovación */}
+      <section id="gestores-innovacion" className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-gray-100 scroll-mt-24">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-teal-100 border border-blue-300 rounded-full px-4 py-2 mb-4">
+              <Users className="w-4 h-4 text-blue-600" />
+              <span className="text-blue-700 text-sm font-semibold">Nuestro Equipo</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Gestores de Innovación - Dirección de Innovación
+            </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Conoce a los docentes y profesionales que lideran la innovación educativa en nuestras instituciones
+            </p>
+          </motion.div>
+
+          {/* Carrusel de fotos de los gestores */}
+          <div className="relative mb-16 overflow-hidden rounded-2xl shadow-2xl">
+            <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+              {fotosGaleriaGestores.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setGestoresGaleriaIndex(idx)}
+                  aria-label={`Ir a imagen ${idx + 1} de la galería de gestores`}
+                  className={`h-2 rounded-full transition-all ${
+                    gestoresGaleriaIndex === idx ? "w-8 bg-white" : "w-2 bg-white/55"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={goGestoresPrev}
+              aria-label="Anterior en Gestores de Innovación"
+              disabled={gestoresCarouselIndex === 0}
+              className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+
+            <button
+              type="button"
+              onClick={goGestoresNext}
+              aria-label="Siguiente en Gestores de Innovación"
+              disabled={gestoresCarouselIndex >= gestoresMaxStart}
+              className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+
+            <div className="overflow-hidden px-6">
+              <motion.div
+                animate={{
+                  x: `calc(-${gestoresCarouselIndex} * ((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards} + ${gestoresGapPx}px))`,
+                }}
+                transition={{ type: "spring", stiffness: 90, damping: 20, mass: 0.8 }}
+                className="flex"
+                style={{ gap: `${gestoresGapPx}px` }}
+              >
+                {gestoresData.map((gestor, index) => (
+                  <div
+                    key={gestor.id}
+                    className="group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
+                    style={{
+                      flex: `0 0 calc((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards})`,
+                    }}
+                  >
+                    <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
+                      <picture className="contents">
+                        <source srcSet={toWebp(gestor.foto)} type="image/webp" />
+                        <img
+                          src={gestor.foto}
+                          alt={gestor.nombre}
+                          loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
+                          fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
+                          decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
+                          className="h-[170px] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105 sm:h-auto sm:object-contain sm:py-6"
+                        />
+                      </picture>
+                    </div>
+
+                    <div className="px-3 py-3 text-center sm:px-6 sm:py-6">
+                      <h3 className="mb-1 text-base font-bold leading-tight text-gray-900 sm:text-lg">{gestor.nombre}</h3>
+                      <p className="mb-2 line-clamp-4 text-xs leading-snug text-gray-600 sm:mb-3 sm:line-clamp-none sm:text-sm">{gestor.profesion}</p>
+                      <div className="flex justify-center">
+                        <Badge variant={gestor.tipo === "STEM" ? "default" : "secondary"}>
+                          {gestor.tipo}
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+
+            <div className="mt-8 flex justify-center gap-2">
+              {Array.from({ length: gestoresMaxStart + 1 }, (_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setGestoresCarouselIndex(idx)}
+                  aria-label={`Ir al bloque de gestores ${idx + 1}`}
+                  className={`h-2 rounded-full transition-all ${
+                    gestoresCarouselIndex === idx ? "w-8 bg-slate-800" : "w-2 bg-slate-400"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       </div>
     </div>
   );
