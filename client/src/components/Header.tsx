@@ -48,16 +48,16 @@ export default function Header() {
   const mobileAccordionTriggerClass = "px-2 py-2 text-base font-medium leading-6";
   const normalizedLocation =
     (location.split("?")[0]?.split("#")[0] ?? "/").replace(/\/+$/, "") || "/";
-  const transparentPaths = new Set(["/", "/nosotros", "/centro"]);
+  const transparentPaths = new Set(["/", "/nosotros", "/centro", "/gestores"]);
   const isTransparent = transparentPaths.has(normalizedLocation.toLowerCase());
   const headerClassName = isTransparent
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
     : "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
   const topLevelNavLinkClass = isTransparent
-    ? "group inline-flex h-10 w-max items-center justify-center rounded-md bg-black/35 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-    : "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
+    ? "group inline-flex h-11 w-max items-center justify-center rounded-md bg-black/35 px-5 py-2 text-base font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+    : "group inline-flex h-11 w-max items-center justify-center rounded-md bg-background px-5 py-2 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
   const triggerClassName = isTransparent
-    ? "h-10 rounded-md bg-black/35 px-4 text-sm font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
+    ? "h-11 rounded-md bg-black/35 px-5 text-base font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
     : "";
 
   useEffect(() => {
@@ -189,11 +189,11 @@ export default function Header() {
   return (
     <header className={headerClassName}>
       <div className="container">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-[4.5rem] items-center justify-between">
           {/* Logo y título */}
           <Link href="/" className="flex min-w-0 items-center gap-3 hover:opacity-80 transition-opacity">
             <img src="/logo-colores.png" alt="Logo CID" className="h-10 w-10" />
-            <span className={`line-clamp-2 max-w-[185px] text-xs font-bold leading-tight sm:max-w-none sm:text-lg sm:leading-normal ${isTransparent ? "text-white drop-shadow" : "text-primary"}`}>
+            <span className={`whitespace-nowrap text-[11px] font-bold leading-none sm:text-lg sm:leading-normal ${isTransparent ? "text-white drop-shadow" : "text-primary"}`}>
               {APP_TITLE}
             </span>
           </Link>
@@ -512,12 +512,6 @@ export default function Header() {
               {searchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
             </Button>
 
-            <Link href="/login">
-              <Button variant="default" size="sm" className="hidden md:inline-flex">
-                Iniciar Sesión
-              </Button>
-            </Link>
-
             <Button
               variant="ghost"
               size="icon"
@@ -635,7 +629,6 @@ export default function Header() {
               <Link href="/formacion" className={mobileMenuItemClass} onClick={closeMobileMenu}>Formación</Link>
               {showCidKids && <Link href="/cid-kids" className={mobileMenuItemClass} onClick={closeMobileMenu}>CID Kids</Link>}
               <Link href="/mesa-ayuda" className={mobileMenuItemClass} onClick={closeMobileMenu}>Mesa de Ayuda</Link>
-              <Link href="/login" className={`${mobileMenuItemClass} text-primary`} onClick={closeMobileMenu}>Iniciar Sesión</Link>
             </nav>
           </div>
         )}

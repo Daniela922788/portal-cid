@@ -6,6 +6,7 @@ import {
   BrainCircuit,
   Building2,
   CheckCircle2,
+  ChevronLeft,
   GraduationCap,
   Handshake,
   Landmark,
@@ -258,8 +259,33 @@ export default function Gestores() {
   const imagenFrenteActual = frenteImagenes[frenteActivo] ?? gestoresGalleryImages[6];
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(17,178,170,0.16),_transparent_24%),linear-gradient(180deg,_#ffffff_0%,_rgba(17,178,170,0.08)_45%,_rgba(13,75,86,0.08)_100%)] py-8">
-      <div className="container">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(17,178,170,0.16),_transparent_24%),linear-gradient(180deg,_#ffffff_0%,_rgba(17,178,170,0.08)_45%,_rgba(13,75,86,0.08)_100%)]">
+      <section className="relative h-screen w-full overflow-hidden">
+        <picture>
+          <source srcSet="/banners/Banner%20gestores.webp" type="image/webp" />
+          <img
+            src="/banners/Banner%20gestores.png"
+            alt="Banner principal Gestores de Innovación"
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
+            className="h-full w-full object-cover object-center"
+          />
+        </picture>
+        <div className="absolute inset-0 bg-[#182130]/35" />
+        <div className="absolute inset-0 z-10 flex items-center justify-center px-6 text-center">
+          <h1 className="text-4xl font-black leading-tight text-white sm:text-5xl lg:text-7xl xl:text-8xl lg:whitespace-nowrap">
+            Gestores de Innovación
+          </h1>
+        </div>
+
+        {/* Flecha scroll-down */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/50">
+          <ChevronLeft className="h-6 w-6 rotate-[-90deg]" />
+        </div>
+      </section>
+
+      <div className="container py-8">
         <Breadcrumbs items={[{ label: "Inicio", href: "/" }, { label: "Gestores de Innovación" }]} />
 
         <section className="relative mt-6 overflow-hidden rounded-3xl border border-[#182130] bg-gradient-to-r from-[#182130] via-[#0D4B56] to-[#023A34] p-6 text-white shadow-2xl md:p-10 lg:p-14">
