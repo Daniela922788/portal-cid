@@ -7,31 +7,31 @@ import { BookOpen, GraduationCap, Video, ChevronLeft, ChevronRight, MessageCircl
 const WHATSAPP_ADMIN = "https://wa.me/573012577662";
 
 const aulaNaranjaImages = [
-  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0526.jpg",
-  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0672.jpg",
-  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0682.jpg",
-  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0694.jpg",
+  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0526.webp",
+  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0672.webp",
+  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0682.webp",
+  "/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0694.webp",
 ];
 
 const infraestructuraImages = [
-  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/2025-08-25-RECORRIDO%20PEDAGOGICO%20MARIE%20POUSSEPAN_1.jpg",
-  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/2025-08-25-RECORRIDO%20PEDAGOGICO%20MARIE%20POUSSEPAN_5.jpg",
-  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1034.jpg",
-  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1047.jpg",
-  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1343.jpg",
-  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1346.jpg",
-  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A4231.jpg",
-  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A4264.jpg",
-  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A4274.jpg",
-  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A9734.jpg",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/2025-08-25-RECORRIDO%20PEDAGOGICO%20MARIE%20POUSSEPAN_1.webp",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/2025-08-25-RECORRIDO%20PEDAGOGICO%20MARIE%20POUSSEPAN_5.webp",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1034.webp",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1047.webp",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1343.webp",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A1346.webp",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A4231.webp",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A4264.webp",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A4274.webp",
+  "/Centro%20Audiovisual/3_FOTOS_INFRAESTRUCTURA/315A9734.webp",
 ];
 
 const paraQuienesGalleryImages = [
-  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A0251.jpg",
-  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A0258.jpg",
-  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1147.jpg",
-  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1185.jpg",
-  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1322.jpg",
+  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A0251.webp",
+  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A0258.webp",
+  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1147.webp",
+  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1185.webp",
+  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1322.webp",
 ];
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -97,7 +97,6 @@ function AutoCarousel({
   containerClassName?: string;
 }) {
   const [current, setCurrent] = useState(0);
-  const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -117,16 +116,13 @@ function AutoCarousel({
       >
         {images.map((src, i) => (
           <div key={src} className="min-w-full shrink-0">
-            <picture className="contents">
-              <source srcSet={toWebp(src)} type="image/webp" />
-              <img
-                src={src}
-                alt={`${altPrefix} ${i + 1}`}
-                className={`w-full ${imageClassName ?? "h-72 object-cover"}`}
-                loading="eager"
-                decoding="async"
-              />
-            </picture>
+            <img
+              src={src}
+              alt={`${altPrefix} ${i + 1}`}
+              className={`w-full ${imageClassName ?? "h-72 object-cover"}`}
+              loading="eager"
+              decoding="async"
+            />
           </div>
         ))}
       </div>
@@ -202,7 +198,7 @@ export default function Centro() {
       {/* ─── 1. HERO ───────────────────────────────────────────────────── */}
       <section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden">
         <img
-          src="/Centro%20Audiovisual/1_VIDEO_CORTO_FULL/banner-centro-audiovisual.jpg"
+          src="/Centro%20Audiovisual/1_VIDEO_CORTO_FULL/banner-centro-audiovisual.webp"
           alt="Banner Centro Audiovisual"
           className="absolute inset-0 h-full w-full object-cover"
           loading="eager"

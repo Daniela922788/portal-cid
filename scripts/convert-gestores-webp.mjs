@@ -4,15 +4,6 @@ import sharp from 'sharp';
 
 const baseDir = path.resolve(process.cwd(), 'client', 'public', 'Seccion Gestores');
 
-async function exists(filePath) {
-  try {
-    await fs.access(filePath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 async function convertDir(dir) {
   const entries = await fs.readdir(dir, { withFileTypes: true });
 
@@ -31,13 +22,9 @@ async function convertDir(dir) {
 
     const webpPath = fullPath.replace(/\.(jpe?g|png)$/i, '.webp');
 
-    if (await exists(webpPath)) {
-      console.log(`  skip (ya existe): ${path.relative(baseDir, webpPath)}`);
-      continue;
-    }
-
     await sharp(fullPath)
-      .webp({ quality: 82 })
+      .resize({ width: 720, withoutEnlargement: true })
+      .webp({ quality: 68, effort: 6 })
       .toFile(webpPath);
 
     console.log(`  ✓ convertido: ${path.relative(baseDir, webpPath)}`);

@@ -4,15 +4,6 @@ import sharp from 'sharp';
 
 const baseDir = path.resolve(process.cwd(), 'client', 'public', 'Centro Audiovisual');
 
-async function exists(filePath) {
-  try {
-    await fs.access(filePath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 async function convertDir(dir) {
   const entries = await fs.readdir(dir, { withFileTypes: true });
 
@@ -31,20 +22,9 @@ async function convertDir(dir) {
 
     const webpPath = fullPath.replace(/\.(jpg|jpeg|png)$/i, '.webp');
 
-    const sourceStat = await fs.stat(fullPath);
-    const webpAlreadyExists = await exists(webpPath);
-
-    if (webpAlreadyExists) {
-      const webpStat = await fs.stat(webpPath);
-      if (webpStat.mtimeMs >= sourceStat.mtimeMs) {
-        console.log(`Skipped (up to date): ${path.relative(baseDir, fullPath)}`);
-        continue;
-      }
-    }
-
     await sharp(fullPath)
-      .resize({ width: 1400, withoutEnlargement: true })
-      .webp({ quality: 78, effort: 5 })
+      .resize({ width: 1200, withoutEnlargement: true })
+      .webp({ quality: 72, effort: 6 })
       .toFile(webpPath);
 
     const relPath = path.relative(baseDir, fullPath);
