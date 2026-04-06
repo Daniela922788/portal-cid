@@ -260,7 +260,7 @@ export default function Centro() {
         <div className="hidden md:block absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-[#2D3586]/25 blur-3xl" />
         <div className="hidden md:block absolute left-1/2 top-0 h-48 w-48 -translate-x-1/2 rounded-full bg-[#FFDE07]/15 blur-3xl" />
 
-        <div className="absolute left-4 top-[62%] z-10 -translate-y-1/2 text-left md:left-1/2 md:-translate-x-1/2 md:top-1/2 md:text-center">
+        <div className="absolute left-1/2 top-[50%] z-10 -translate-x-1/2 -translate-y-1/2 text-center md:left-1/2 md:-translate-x-1/2 md:top-1/2 md:text-center">
           <h1 className="text-lg font-black leading-tight text-white sm:text-5xl lg:text-7xl xl:text-8xl lg:whitespace-nowrap">
             Centro Audiovisual
           </h1>
