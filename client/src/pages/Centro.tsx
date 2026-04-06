@@ -26,8 +26,6 @@ const infraestructuraImages = [
 ];
 
 const paraQuienesGalleryImages = [
-  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A0251.webp",
-  "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A0258.webp",
   "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1147.webp",
   "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1185.webp",
   "/Centro%20Audiovisual/5_FOTOS_PARA%20QUIENES/315A1322.webp",

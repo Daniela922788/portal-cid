@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, Search, ChevronDown } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import { APP_TITLE } from "@/const";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,11 +30,17 @@ const SEARCH_RESULT_LABELS = new Map<string, string>(
   SEARCH_RESULT_SECTIONS.map((item) => [item.path, item.label])
 );
 
+// Clases compartidas para los items del dropdown — tamaño fijo consistente
+const dropdownItemClass =
+  "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground";
+
 export default function Header() {
   const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [desktopMenuOpen, setDesktopMenuOpen] = useState<"" | "contenido" | "comunidad" | "recursos" | "quienes-somos">("");
+  const [desktopMenuOpen, setDesktopMenuOpen] = useState<
+    "" | "contenido" | "comunidad" | "recursos" | "quienes-somos"
+  >("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Array<{ path: string; label: string }>>([]);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
@@ -44,7 +50,8 @@ export default function Header() {
   const showKitHerramientas = true;
   const showCidKids = false;
   const showProyectos = false;
-  const mobileMenuItemClass = "px-5 py-2.5 rounded-md hover:bg-accent text-lg font-medium leading-7";
+  const mobileMenuItemClass =
+    "px-5 py-2.5 rounded-md hover:bg-accent text-lg font-medium leading-7";
   const mobileAccordionTriggerClass = "px-3 py-2.5 text-lg font-medium leading-7";
   const normalizedLocation =
     (location.split("?")[0]?.split("#")[0] ?? "/").replace(/\/+$/, "") || "/";
@@ -57,12 +64,13 @@ export default function Header() {
     ? "group inline-flex h-12 w-max items-center justify-center rounded-md bg-black/35 px-6 py-2 text-lg font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
     : "group inline-flex h-12 w-max items-center justify-center rounded-md bg-background px-6 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
   const triggerClassName = isTransparent
-    ? "h-12 rounded-md bg-black/35 px-6 text-lg font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
-    : "";
+    ? "h-12 w-max rounded-md bg-black/35 px-6 text-lg font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
+    : "h-12 w-max rounded-md bg-background px-6 text-lg font-medium text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground";
 
   useEffect(() => {
     if (searchOpen) {
-      const isDesktop = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
+      const isDesktop =
+        typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
       if (isDesktop) {
         desktopSearchInputRef.current?.focus();
       } else {
@@ -72,47 +80,38 @@ export default function Header() {
   }, [searchOpen]);
 
   useEffect(() => {
-    if (!desktopMenuOpen) {
-      return;
-    }
-
+    if (!desktopMenuOpen) return;
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
       if (desktopNavMenuRef.current && !desktopNavMenuRef.current.contains(target)) {
         setDesktopMenuOpen("");
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [desktopMenuOpen]);
 
   const runBrowserFind = (value: string) => {
-    if (typeof window === "undefined") {
-      return false;
-    }
-
-    const browserFind = (window as Window & {
-      find?: (
-        text: string,
-        caseSensitive?: boolean,
-        backwards?: boolean,
-        wrapAround?: boolean,
-        wholeWord?: boolean,
-        searchInFrames?: boolean,
-        showDialog?: boolean
-      ) => boolean;
-    }).find;
-
+    if (typeof window === "undefined") return false;
+    const browserFind = (
+      window as Window & {
+        find?: (
+          text: string,
+          caseSensitive?: boolean,
+          backwards?: boolean,
+          wrapAround?: boolean,
+          wholeWord?: boolean,
+          searchInFrames?: boolean,
+          showDialog?: boolean
+        ) => boolean;
+      }
+    ).find;
     return browserFind?.(value, false, false, true, false, false, false) ?? false;
   };
 
   const goToSearchResult = (path: string, query: string) => {
     const value = query.trim();
-    if (!value) {
-      return;
-    }
-
+    if (!value) return;
     if (path !== location) {
       sessionStorage.setItem("global-search-query", value);
       setLocation(path);
@@ -120,7 +119,6 @@ export default function Header() {
       setMobileMenuOpen(false);
       return;
     }
-
     const found = runBrowserFind(value);
     if (!found) {
       window.alert(`Se abrio la seccion relacionada, pero no se encontro el texto exacto: ${value}`);
@@ -128,59 +126,42 @@ export default function Header() {
   };
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
+    if (typeof window === "undefined") return;
     const pendingQuery = sessionStorage.getItem("global-search-query");
-    if (!pendingQuery) {
-      return;
-    }
-
+    if (!pendingQuery) return;
     const timeoutId = window.setTimeout(() => {
       const found = runBrowserFind(pendingQuery);
       if (!found) {
-        window.alert(`Se abrio la seccion relacionada, pero no se encontro el texto exacto: ${pendingQuery}`);
+        window.alert(
+          `Se abrio la seccion relacionada, pero no se encontro el texto exacto: ${pendingQuery}`
+        );
       }
       sessionStorage.removeItem("global-search-query");
     }, 250);
-
     return () => window.clearTimeout(timeoutId);
   }, [location]);
 
   const handleSearchSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const value = searchQuery.trim();
-
-    if (!value || typeof window === "undefined") {
-      return;
-    }
-
+    if (!value || typeof window === "undefined") return;
     try {
       const response = await fetch(`/api/site-search?q=${encodeURIComponent(value)}`);
-      if (!response.ok) {
-        throw new Error("Search API request failed");
-      }
-
+      if (!response.ok) throw new Error("Search API request failed");
       const data = (await response.json()) as { matches?: Array<{ path: string }> };
       const allowedPaths = new Set<string>(SEARCH_RESULT_SECTIONS.map((item) => item.path));
       const uniqueMatches = Array.from(
-        new Set((data.matches ?? []).map((match) => match.path).filter((path) => allowedPaths.has(path)))
+        new Set(
+          (data.matches ?? []).map((match) => match.path).filter((path) => allowedPaths.has(path))
+        )
       );
-
       const topResults = uniqueMatches
         .map((path) => ({ path, label: SEARCH_RESULT_LABELS.get(path) ?? path }))
         .slice(0, 5);
-
       setSearchResults(topResults);
-
       if (topResults.length === 0) {
         window.alert(`No se encontraron resultados para: ${value}`);
-        return;
       }
-
-      // Keep the list visible so user can choose the destination section.
-      return;
     } catch {
       window.alert("No fue posible buscar en este momento. Intenta de nuevo.");
     }
@@ -190,9 +171,12 @@ export default function Header() {
     <header className={headerClassName}>
       <div className="container">
         <div className="flex h-20 items-center justify-between">
-          {/* Logo y título */}
-          <Link href="/" className="mt-0 flex min-w-0 items-center transition-opacity hover:opacity-80 lg:-ml-10 lg:mt-13">
-            <img src="/LOGO_CID.png" alt="Logo CID" className="h-12 w-auto sm:h-14 lg:h-20" />
+          {/* Logo */}
+          <Link
+            href="/"
+            className="mt-0 flex min-w-0 items-center transition-opacity hover:opacity-80 lg:-ml-10 lg:mt-13"
+          >
+            <img src="/LOGO_CID.png" alt="Logo CID" className="h-[3.75rem] w-auto sm:h-[4.25rem] lg:h-[6.5rem]" />
           </Link>
 
           {/* Navegación desktop */}
@@ -200,246 +184,189 @@ export default function Header() {
             <NavigationMenu
               ref={desktopNavMenuRef}
               value={desktopMenuOpen}
-              onValueChange={(value) => setDesktopMenuOpen(value as "" | "contenido" | "comunidad" | "recursos" | "quienes-somos")}
+              onValueChange={(value) =>
+                setDesktopMenuOpen(
+                  value as "" | "contenido" | "comunidad" | "recursos" | "quienes-somos"
+                )
+              }
             >
               <NavigationMenuList>
+                {/* Inicio */}
                 <NavigationMenuItem>
                   <Link href="/">
-                    <NavigationMenuLink className={topLevelNavLinkClass}>
-                      Inicio
-                    </NavigationMenuLink>
+                    <NavigationMenuLink className={topLevelNavLinkClass}>Inicio</NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
 
+                {/* ── Quiénes somos ── */}
                 <NavigationMenuItem value="quienes-somos">
                   <NavigationMenuTrigger
                     className={triggerClassName}
-                    onPointerEnter={(event) => event.preventDefault()}
-                    onPointerMove={(event) => event.preventDefault()}
-                    onClick={(event) => {
-                      event.preventDefault();
+                    onPointerEnter={(e) => e.preventDefault()}
+                    onPointerMove={(e) => e.preventDefault()}
+                    onClick={(e) => {
+                      e.preventDefault();
                       setDesktopMenuOpen((prev) => (prev === "quienes-somos" ? "" : "quienes-somos"));
                     }}
                   >
                     Quiénes somos
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
-                      <li>
-                        <Link href="/nosotros">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Nosotros</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Misión, visión y valores del CID
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/gestores">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Equipo de Gestores</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Equipo de Gestores de Innovación
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/centro">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Centro Audiovisual</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Centro de Experimentación Audiovisual del CID
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
+                    {/*
+                      w-[500px] va aquí, en el <ul>, no en <NavigationMenuContent>.
+                      grid-cols-2 + ítems con h-full aseguran que todas las celdas
+                      tengan la misma altura y el panel siempre mida lo mismo.
+                    */}
+                    <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
+                      {[
+                        { href: "/nosotros", title: "Nosotros", desc: "Misión, visión y valores del CID" },
+                        { href: "/gestores", title: "Equipo de Gestores", desc: "Equipo de Gestores de Innovación" },
+                        { href: "/centro", title: "Centro Audiovisual", desc: "Centro de Experimentación Audiovisual del CID" },
+                      ].map(({ href, title, desc }) => (
+                        <li key={href}>
+                          <Link href={href}>
+                            <NavigationMenuLink className={dropdownItemClass}>
+                              <div className="text-sm font-medium leading-none">{title}</div>
+                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                {desc}
+                              </p>
+                            </NavigationMenuLink>
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
+                {/* ── Contenido ── */}
                 <NavigationMenuItem value="contenido">
                   <NavigationMenuTrigger
                     className={triggerClassName}
-                    onPointerEnter={(event) => event.preventDefault()}
-                    onPointerMove={(event) => event.preventDefault()}
-                    onClick={(event) => {
-                      event.preventDefault();
+                    onPointerEnter={(e) => e.preventDefault()}
+                    onPointerMove={(e) => e.preventDefault()}
+                    onClick={(e) => {
+                      e.preventDefault();
                       setDesktopMenuOpen((prev) => (prev === "contenido" ? "" : "contenido"));
                     }}
                   >
                     Contenido
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
-                      <li>
-                        <Link href="/noticias">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Noticias</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Noticias y menciones del CID
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
-                      {showProyectos && (
-                        <li>
-                          <Link href="/proyectos">
-                            <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                              <div className="text-sm font-medium leading-none">Proyectos</div>
-                              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                Proyectos STEM e investigación
+                    <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
+                      {[
+                        { href: "/noticias", title: "Noticias", desc: "Noticias y menciones del CID" },
+                        ...(showProyectos
+                          ? [{ href: "/proyectos", title: "Proyectos", desc: "Proyectos STEM e investigación" }]
+                          : []),
+                        { href: "/semana-stem-complete", title: "Semana STEM", desc: "Programa completo de la Semana STEM+" },
+                        { href: "/publicaciones", title: "Publicaciones", desc: "Libros y revistas" },
+                        { href: "/reconocimientos", title: "Reconocimientos", desc: "Premios y logros destacados" },
+                      ].map(({ href, title, desc }) => (
+                        <li key={href}>
+                          <Link href={href}>
+                            <NavigationMenuLink className={dropdownItemClass}>
+                              <div className="text-sm font-medium leading-none">{title}</div>
+                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                {desc}
                               </p>
                             </NavigationMenuLink>
                           </Link>
                         </li>
-                      )}
-                      <li>
-                        <Link href="/semana-stem-complete">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Semana STEM</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Programa completo de la Semana STEM+
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/publicaciones">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Publicaciones</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Libros y revistas
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/reconocimientos">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Reconocimientos</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Premios y logros destacados
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
+                      ))}
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
+                {/* ── Comunidad ── */}
                 <NavigationMenuItem value="comunidad">
                   <NavigationMenuTrigger
                     className={triggerClassName}
-                    onPointerEnter={(event) => event.preventDefault()}
-                    onPointerMove={(event) => event.preventDefault()}
-                    onClick={(event) => {
-                      event.preventDefault();
+                    onPointerEnter={(e) => e.preventDefault()}
+                    onPointerMove={(e) => e.preventDefault()}
+                    onClick={(e) => {
+                      e.preventDefault();
                       setDesktopMenuOpen((prev) => (prev === "comunidad" ? "" : "comunidad"));
                     }}
                   >
                     Comunidad
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
-                      <li>
-                        <Link href="/ie-oficiales">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">IE Oficiales</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Instituciones Educativas
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/territorio-stem">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Territorio STEM</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Proyectos y actores STEM Envigado
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/aliados">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Aliados</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Aliados estratégicos
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
+                    <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
+                      {[
+                        { href: "/ie-oficiales", title: "IE Oficiales", desc: "Instituciones Educativas" },
+                        { href: "/territorio-stem", title: "Territorio STEM", desc: "Proyectos y actores STEM Envigado" },
+                        { href: "/aliados", title: "Aliados", desc: "Aliados estratégicos" },
+                      ].map(({ href, title, desc }) => (
+                        <li key={href}>
+                          <Link href={href}>
+                            <NavigationMenuLink className={dropdownItemClass}>
+                              <div className="text-sm font-medium leading-none">{title}</div>
+                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                {desc}
+                              </p>
+                            </NavigationMenuLink>
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
+                {/* ── Recursos ── */}
                 <NavigationMenuItem value="recursos">
                   <NavigationMenuTrigger
                     className={triggerClassName}
-                    onPointerEnter={(event) => event.preventDefault()}
-                    onPointerMove={(event) => event.preventDefault()}
-                    onClick={(event) => {
-                      event.preventDefault();
+                    onPointerEnter={(e) => e.preventDefault()}
+                    onPointerMove={(e) => e.preventDefault()}
+                    onClick={(e) => {
+                      e.preventDefault();
                       setDesktopMenuOpen((prev) => (prev === "recursos" ? "" : "recursos"));
                     }}
                   >
                     Recursos
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
-                      {showKitHerramientas && (
-                        <li>
-                          <Link href="/kit-herramientas">
-                            <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                              <div className="text-sm font-medium leading-none">Kit Herramientas</div>
-                              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                Recursos para docentes
+                    <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
+                      {[
+                        ...(showKitHerramientas
+                          ? [{ href: "/kit-herramientas", title: "Kit Herramientas", desc: "Recursos para docentes" }]
+                          : []),
+                        { href: "/normatividad", title: "Normatividad", desc: "Acuerdos, leyes, resoluciones y circulares" },
+                      ].map(({ href, title, desc }) => (
+                        <li key={href}>
+                          <Link href={href}>
+                            <NavigationMenuLink className={dropdownItemClass}>
+                              <div className="text-sm font-medium leading-none">{title}</div>
+                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                {desc}
                               </p>
                             </NavigationMenuLink>
                           </Link>
                         </li>
-                      )}
-                      <li>
-                        <Link href="/normatividad">
-                          <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Normatividad</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Acuerdos, leyes, resoluciones y circulares
-                            </p>
-                          </NavigationMenuLink>
-                        </Link>
-                      </li>
+                      ))}
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
+                {/* Formación */}
                 <NavigationMenuItem>
                   <Link href="/formacion">
-                    <NavigationMenuLink className={topLevelNavLinkClass}>
-                      Formación
-                    </NavigationMenuLink>
+                    <NavigationMenuLink className={topLevelNavLinkClass}>Formación</NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
 
                 {showCidKids && (
                   <NavigationMenuItem>
                     <Link href="/cid-kids">
-                      <NavigationMenuLink className={topLevelNavLinkClass}>
-                        CID Kids
-                      </NavigationMenuLink>
+                      <NavigationMenuLink className={topLevelNavLinkClass}>CID Kids</NavigationMenuLink>
                     </Link>
                   </NavigationMenuItem>
                 )}
 
+                {/* Contáctanos */}
                 <NavigationMenuItem>
                   <Link href="/mesa-ayuda">
-                    <NavigationMenuLink className={topLevelNavLinkClass}>
-                      Contáctanos
-                    </NavigationMenuLink>
+                    <NavigationMenuLink className={topLevelNavLinkClass}>Contáctanos</NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
               </NavigationMenuList>
@@ -453,8 +380,8 @@ export default function Header() {
                 <input
                   ref={desktopSearchInputRef}
                   value={searchQuery}
-                  onChange={(event) => {
-                    setSearchQuery(event.target.value);
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
                     setSearchResults([]);
                   }}
                   type="text"
@@ -533,8 +460,8 @@ export default function Header() {
               <input
                 ref={mobileSearchInputRef}
                 value={searchQuery}
-                onChange={(event) => {
-                  setSearchQuery(event.target.value);
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
                   setSearchResults([]);
                 }}
                 type="text"
@@ -572,11 +499,15 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="lg:hidden border-t py-4 bg-white">
             <nav className="flex flex-col gap-2">
-              <Link href="/" className={mobileMenuItemClass} onClick={closeMobileMenu}>Inicio</Link>
+              <Link href="/" className={mobileMenuItemClass} onClick={closeMobileMenu}>
+                Inicio
+              </Link>
 
               <Accordion type="single" collapsible className="px-2">
                 <AccordionItem value="quienes-somos" className="border-b">
-                  <AccordionTrigger className={mobileAccordionTriggerClass}>Quiénes somos</AccordionTrigger>
+                  <AccordionTrigger className={mobileAccordionTriggerClass}>
+                    Quiénes somos
+                  </AccordionTrigger>
                   <AccordionContent className="pb-2">
                     <div className="flex flex-col gap-1">
                       <Link href="/nosotros" className={mobileMenuItemClass} onClick={closeMobileMenu}>Nosotros</Link>
@@ -591,7 +522,9 @@ export default function Header() {
                   <AccordionContent className="pb-2">
                     <div className="flex flex-col gap-1">
                       <Link href="/noticias" className={mobileMenuItemClass} onClick={closeMobileMenu}>Noticias</Link>
-                      {showProyectos && <Link href="/proyectos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Proyectos</Link>}
+                      {showProyectos && (
+                        <Link href="/proyectos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Proyectos</Link>
+                      )}
                       <Link href="/semana-stem-complete" className={mobileMenuItemClass} onClick={closeMobileMenu}>Semana STEM</Link>
                       <Link href="/publicaciones" className={mobileMenuItemClass} onClick={closeMobileMenu}>Publicaciones</Link>
                       <Link href="/reconocimientos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Reconocimientos</Link>
@@ -624,7 +557,9 @@ export default function Header() {
               </Accordion>
 
               <Link href="/formacion" className={mobileMenuItemClass} onClick={closeMobileMenu}>Formación</Link>
-              {showCidKids && <Link href="/cid-kids" className={mobileMenuItemClass} onClick={closeMobileMenu}>CID Kids</Link>}
+              {showCidKids && (
+                <Link href="/cid-kids" className={mobileMenuItemClass} onClick={closeMobileMenu}>CID Kids</Link>
+              )}
               <Link href="/mesa-ayuda" className={mobileMenuItemClass} onClick={closeMobileMenu}>Mesa de Ayuda</Link>
             </nav>
           </div>

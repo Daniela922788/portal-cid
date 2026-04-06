@@ -101,39 +101,20 @@ export default function TerritorioStem() {
     },
   ];
 
-  // Datos de testimonios
+  // Datos del carrusel de testimonios en video
   const testimonies = [
     {
-      name: 'María González',
-      role: 'Docente de Ciencias',
-      institution: 'Institución Educativa Envigado',
-      text: 'El enfoque STEM+ ha transformado mi forma de enseñar. Mis estudiantes ahora ven la ciencia como algo vivo y aplicable a su realidad.',
-      color: pastelColors.pink,
-      icon: '👩‍🏫',
+      title: 'Testimonio de:',
+      embedUrl: 'https://www.youtube.com/embed/LZgiyBqGILc?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1',
+      lines: ['Luz Ester Pérez M. - Estudiante de fotografía'],
     },
     {
-      name: 'Carlos Mendoza',
-      role: 'Estudiante de Ingeniería',
-      institution: 'Centro de Innovación y Desarrollo',
-      text: 'Participar en proyectos STEM+ me permitió descubrir mi pasión por la tecnología y la innovación. Es increíble ver cómo puedo impactar mi territorio.',
-      color: pastelColors.blue,
-      icon: '👨‍💻',
-    },
-    {
-      name: 'Laura Rodríguez',
-      role: 'Directora de Empresa Tecnológica',
-      institution: 'TechSolutions Envigado',
-      text: 'Envigado como territorio STEM+ nos permite acceder a talento joven preparado y comprometido. Es una oportunidad única para crecer juntos.',
-      color: pastelColors.green,
-      icon: '👩‍💼',
-    },
-    {
-      name: 'Juan Pérez',
-      role: 'Estudiante de Primaria',
-      institution: 'Colegio Envigado',
-      text: 'Me encanta participar en los clubes STEM+. Aprendemos haciendo cosas divertidas y entiendo por qué es importante la tecnología.',
-      color: pastelColors.yellow,
-      icon: '👦',
+      title: 'Testimonios de:',
+      embedUrl: 'https://www.youtube.com/embed/0boej4mKxB4?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1',
+      lines: [
+        'Temuujin Parra - Estudiante',
+        'Alejandro Manjarrés - Estudiante',
+      ],
     },
   ];
 
@@ -766,29 +747,29 @@ export default function TerritorioStem() {
       >
         <div className="max-w-6xl mx-auto">
           <motion.h2 variants={itemVariants} className="text-4xl font-bold text-center mb-4 text-gray-800">
-            Testimonios STEM+
+            Testimonios STEM+ en video
           </motion.h2>
           <motion.p variants={itemVariants} className="text-center text-gray-600 mb-12 text-lg">
-            Historias de transformación desde el territorio
+            Recorre los testimonios en formato carrusel
           </motion.p>
 
-          <div className="relative">
+          <div className="relative mx-auto w-full max-w-[620px]">
             <button
               type="button"
               onClick={goToPreviousTestimony}
               aria-label="Testimonio anterior"
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 h-10 w-10 rounded-full border border-slate-300 bg-white/95 text-slate-700 shadow-md hover:bg-white"
+              className="absolute left-0 top-[42%] z-10 h-11 w-11 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white text-slate-700 shadow-md hover:bg-indigo-50"
             >
-              <ChevronLeft className="h-5 w-5 mx-auto" />
+              <ChevronLeft className="mx-auto h-5 w-5" />
             </button>
 
             <button
               type="button"
               onClick={goToNextTestimony}
               aria-label="Siguiente testimonio"
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 h-10 w-10 rounded-full border border-slate-300 bg-white/95 text-slate-700 shadow-md hover:bg-white"
+              className="absolute right-0 top-[42%] z-10 h-11 w-11 translate-x-1/2 -translate-y-1/2 rounded-full bg-white text-slate-700 shadow-md hover:bg-indigo-50"
             >
-              <ChevronRight className="h-5 w-5 mx-auto" />
+              <ChevronRight className="mx-auto h-5 w-5" />
             </button>
 
             <motion.div
@@ -797,20 +778,29 @@ export default function TerritorioStem() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.5 }}
-              className="rounded-3xl p-12 shadow-2xl bg-white border border-slate-200"
+              className="rounded-[2.2rem] bg-white p-3 shadow-2xl sm:p-4"
             >
-              <div className="flex items-start gap-6 mb-6">
-                <div className="text-6xl">{testimonies[activeTestimony].icon}</div>
-                <div>
-                  <h3 className="text-3xl font-bold text-gray-800 mb-1">{testimonies[activeTestimony].name}</h3>
-                  <p className="text-gray-800 font-semibold">{testimonies[activeTestimony].role}</p>
-                  <p className="text-gray-700 text-sm">{testimonies[activeTestimony].institution}</p>
-                </div>
+              <div className="mx-auto w-full max-w-[500px] overflow-hidden rounded-[1.8rem] bg-black">
+                <iframe
+                  src={testimonies[activeTestimony].embedUrl}
+                  title={`Video testimonio ${activeTestimony + 1}`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="aspect-[9/16] w-full"
+                />
               </div>
 
-              <p className="text-lg text-gray-800 leading-relaxed italic">
-                "{testimonies[activeTestimony].text}"
-              </p>
+              <div className="mt-5 min-h-[120px] px-2 text-center sm:min-h-[132px]">
+                <p className="text-lg font-semibold leading-snug text-gray-800">{testimonies[activeTestimony].title}</p>
+                {testimonies[activeTestimony].lines.length > 0 && (
+                  <div className="mt-2 space-y-1">
+                    {testimonies[activeTestimony].lines.map((line) => (
+                      <p key={line} className="text-sm text-gray-700">- {line}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
             </motion.div>
 
             {/* Indicadores de progreso */}
