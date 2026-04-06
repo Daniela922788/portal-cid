@@ -968,7 +968,7 @@ export default function Gestores() {
                           loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
                           fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
                           decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
-                          className="h-[150px] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105 sm:h-[250px] sm:object-cover sm:py-0 lg:h-[280px]"
+                          className="h-[330px] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105 sm:h-[250px] sm:object-cover sm:py-0 lg:h-[280px]"
                         />
                       </picture>
                       <div className="pointer-events-none absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
