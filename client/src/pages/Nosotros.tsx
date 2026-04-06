@@ -74,7 +74,6 @@ export default function Nosotros() {
   const [directionCarouselIndex, setDirectionCarouselIndex] = useState(0);
   const [directionVisibleCards, setDirectionVisibleCards] = useState(4);
   const [gestoresCarouselIndex, setGestoresCarouselIndex] = useState(0);
-  const [gestoresGaleriaIndex, setGestoresGaleriaIndex] = useState(0);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [timelineMobileIndex, setTimelineMobileIndex] = useState(0);
 
@@ -368,23 +367,6 @@ export default function Nosotros() {
     },
   ];
 
-  const fotosGaleriaGestores = [
-    "/Seccion Gestores/1.webp",
-    "/Seccion Gestores/2.webp",
-    "/Seccion Gestores/3.webp",
-    "/Seccion Gestores/4.webp",
-    "/Seccion Gestores/5.webp",
-    "/Seccion Gestores/6.webp",
-    "/Seccion Gestores/7.webp",
-    "/Seccion Gestores/8.webp",
-    "/Seccion Gestores/9.webp",
-    "/Seccion Gestores/10.webp",
-    "/Seccion Gestores/11.webp",
-    "/Seccion Gestores/12.webp",
-    "/Seccion Gestores/13.webp",
-    "/Seccion Gestores/14.webp",
-  ];
-
   const centrosInteresInstitucionesGestores = [
     "/InstituciónEducativaComercialdeEnvigado.jpg",
     "/InstituciónEducativaElSalado.jpg",
@@ -463,16 +445,6 @@ export default function Nosotros() {
     setTimelineMobileIndex((prev) => Math.min(timelineMobileMaxIndex, prev + 1));
   };
 
-  const goGaleriaGestoresPrev = () => {
-    setGestoresGaleriaIndex((prev) =>
-      (prev - 1 + fotosGaleriaGestores.length) % fotosGaleriaGestores.length
-    );
-  };
-
-  const goGaleriaGestoresNext = () => {
-    setGestoresGaleriaIndex((prev) => (prev + 1) % fotosGaleriaGestores.length);
-  };
-
   useEffect(() => {
     setDirectionCarouselIndex((prev) => Math.min(prev, directionMaxStart));
   }, [directionMaxStart]);
@@ -484,14 +456,6 @@ export default function Nosotros() {
   useEffect(() => {
     setTimelineMobileIndex((prev) => Math.min(prev, timelineMobileMaxIndex));
   }, [timelineMobileMaxIndex]);
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setGestoresGaleriaIndex((prev) => (prev + 1) % fotosGaleriaGestores.length);
-    }, 5000);
-
-    return () => window.clearInterval(id);
-  }, [fotosGaleriaGestores.length]);
 
   useEffect(() => {
     const priorityGestores = [
@@ -983,60 +947,15 @@ export default function Nosotros() {
             </p>
           </motion.div>
 
-          {/* Carrusel de fotos de los gestores */}
-          <div className="relative mb-16 overflow-hidden rounded-2xl shadow-2xl">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${gestoresGaleriaIndex * 100}%)` }}
-            >
-              {fotosGaleriaGestores.map((foto, idx) => (
-                <div key={foto} className="min-w-full">
-                  <picture className="contents">
-                    <source srcSet={toWebp(foto)} type="image/webp" />
-                    <img
-                      src={foto}
-                      alt={`Gestores CID ${idx + 1}`}
-                      loading={idx === 0 ? "eager" : "lazy"}
-                      fetchPriority={idx === 0 ? "high" : "auto"}
-                      decoding="async"
-                      className="h-auto w-full object-cover sm:h-[690px] md:h-[770px] lg:h-[830px]"
-                    />
-                  </picture>
-                </div>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={goGaleriaGestoresPrev}
-              aria-label="Imagen anterior de la galería de gestores"
-              className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-2 text-[#FFDE07] hover:bg-[#023A34]"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-
-            <button
-              type="button"
-              onClick={goGaleriaGestoresNext}
-              aria-label="Siguiente imagen de la galería de gestores"
-              className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-2 text-[#FFDE07] hover:bg-[#023A34]"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-
-            <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-              {fotosGaleriaGestores.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setGestoresGaleriaIndex(idx)}
-                  aria-label={`Ir a imagen ${idx + 1} de la galería de gestores`}
-                  className={`h-2 rounded-full transition-all ${
-                    gestoresGaleriaIndex === idx ? "w-8 bg-white" : "w-2 bg-white/55"
-                  }`}
-                />
-              ))}
-            </div>
+          {/* Imagen del equipo de gestores */}
+          <div className="mb-16 overflow-hidden rounded-2xl shadow-2xl">
+            <img
+              src="/Fotogestores.jpg"
+              alt="Equipo de gestores de innovación"
+              loading="lazy"
+              decoding="async"
+              className="h-auto w-full object-cover"
+            />
           </div>
 
           <div className="relative">

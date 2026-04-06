@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { BookOpen, GraduationCap, Video, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
 
 // ─── Actualiza estas rutas cuando tengas las imágenes del aula ───────────────
@@ -178,17 +177,24 @@ export default function Centro() {
     command("mute");
     command("playVideo");
     command("setLoop", [true]);
-    command("setPlaybackQuality", ["hd1080"]);
   };
 
   useEffect(() => {
-    // Retry a few times to improve autoplay reliability on mobile browsers.
-    const timers = [150, 500, 1200, 2500].map((delay) =>
-      window.setTimeout(forceHeroVideoPlayback, delay)
+    const triggerPlayback = () => forceHeroVideoPlayback();
+
+    // Reintentos escalonados para mejorar la fiabilidad en móvil
+    const timers = [300, 800, 2000, 4000].map((delay) =>
+      window.setTimeout(triggerPlayback, delay)
     );
+
+    // Solo una vez por tipo de evento para no acumular llamadas
+    document.addEventListener("touchstart", triggerPlayback, { once: true, passive: true });
+    document.addEventListener("click", triggerPlayback, { once: true });
 
     return () => {
       timers.forEach((id) => window.clearTimeout(id));
+      document.removeEventListener("touchstart", triggerPlayback);
+      document.removeEventListener("click", triggerPlayback);
     };
   }, []);
 
@@ -196,37 +202,66 @@ export default function Centro() {
     <div className="min-h-screen bg-white text-[#182130]">
 
       {/* ─── 1. HERO ───────────────────────────────────────────────────── */}
-      <section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden">
+      {/*
+        Usamos un único iframe para móvil y desktop.
+        - youtube-nocookie.com: menos restricciones de privacidad/autoplay
+        - controls=1: el usuario puede dar play manualmente si el autoplay falla en móvil
+        - playsinline=1: evita que iOS abra el video en pantalla completa
+        - La imagen de fondo actúa como fallback mientras carga el video
+      */}
+      <section
+        className="relative w-full overflow-hidden"
+        style={{ minHeight: "100svh" }}
+      >
+        {/* Imagen de fallback — visible debajo del iframe */}
         <img
-          src="/Centro%20Audiovisual/1_VIDEO_CORTO_FULL/banner-centro-audiovisual.webp"
+          src="/Centro%20Audiovisual/2_FOTOS_QUE_ES_EL_AULA/315A0526.webp"
           alt="Banner Centro Audiovisual"
           className="absolute inset-0 h-full w-full object-cover"
           loading="eager"
           fetchPriority="high"
           decoding="async"
         />
-        <div className="absolute inset-0 overflow-hidden">
+
+        {/* Contenedor del iframe */}
+        <div className="absolute inset-0">
           <iframe
             ref={heroVideoRef}
-            src="https://www.youtube-nocookie.com/embed/zfpCuxxymuA?autoplay=1&mute=1&controls=0&loop=1&playlist=zfpCuxxymuA&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&fs=0&enablejsapi=1&widget_referrer=https%3A%2F%2Fportal-cid.vercel.app"
+            /*
+              Parámetros importantes:
+              - autoplay=1 + mute=1: necesarios para autoplay sin interacción
+              - controls=1: muestra controles en móvil para que el usuario pueda dar play si falla
+              - loop=1 + playlist=ID: necesario para loopear en la API de YT
+              - playsinline=1: evita fullscreen automático en iOS
+              - enablejsapi=1: permite enviar comandos postMessage
+              - origin=...: requerido por la API de YT cuando se usa enablejsapi
+            */
+            src="https://www.youtube-nocookie.com/embed/zfpCuxxymuA?autoplay=1&mute=1&controls=1&loop=1&playlist=zfpCuxxymuA&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&origin=https://portal-cid.vercel.app"
             title="Video de fondo Centro Audiovisual"
-            className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2"
-            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+            /*
+              El truco del aspect-ratio 16:9 centrado:
+              - Se posiciona en el centro
+              - Tiene ancho mínimo de 177.78vh y alto mínimo de 56.25vw
+              - Así cubre toda la pantalla sin importar el tamaño
+            */
+            className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-full min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             referrerPolicy="strict-origin-when-cross-origin"
             loading="eager"
             onLoad={forceHeroVideoPlayback}
           />
         </div>
-        <div className="absolute inset-0 bg-[#182130]/45" />
+
+        <div className="pointer-events-none absolute inset-0 bg-[#182130]/45" />
 
         {/* Orbes decorativos */}
-        <div className="absolute -left-20 top-1/4 h-80 w-80 rounded-full bg-[#11B2AA]/20 blur-3xl" />
-        <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-[#2D3586]/25 blur-3xl" />
-        <div className="absolute left-1/2 top-0 h-48 w-48 -translate-x-1/2 rounded-full bg-[#FFDE07]/15 blur-3xl" />
+        <div className="hidden md:block absolute -left-20 top-1/4 h-80 w-80 rounded-full bg-[#11B2AA]/20 blur-3xl" />
+        <div className="hidden md:block absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-[#2D3586]/25 blur-3xl" />
+        <div className="hidden md:block absolute left-1/2 top-0 h-48 w-48 -translate-x-1/2 rounded-full bg-[#FFDE07]/15 blur-3xl" />
 
-        <div className="relative z-10 mx-auto max-w-none px-6 text-center">
-          <h1 className="text-4xl font-black leading-tight text-white sm:text-5xl lg:text-7xl xl:text-8xl lg:whitespace-nowrap">
+        <div className="absolute left-4 top-[62%] z-10 -translate-y-1/2 text-left md:left-1/2 md:-translate-x-1/2 md:top-1/2 md:text-center">
+          <h1 className="text-lg font-black leading-tight text-white sm:text-5xl lg:text-7xl xl:text-8xl lg:whitespace-nowrap">
             Centro Audiovisual
           </h1>
         </div>
@@ -273,13 +308,6 @@ export default function Centro() {
               <MessageCircle className="h-5 w-5" />
               Reserva un turno
             </a>
-            <button
-              type="button"
-              onClick={() => infraRef.current?.scrollIntoView({ behavior: "smooth" })}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0D4B56]/30 px-8 py-2.5 text-base font-semibold text-[#0D4B56] transition-colors hover:border-[#0D4B56] hover:bg-[#0D4B56]/5"
-            >
-              Descubre el espacio
-            </button>
           </div>
         </div>
       </section>

@@ -43,8 +43,8 @@ export default function Home() {
           />
         </picture>
         <div className="absolute inset-0 bg-[#182130]/35" />
-        <div className="absolute left-14 top-[62%] z-10 -translate-y-1/2 text-left md:left-28 md:top-[58%] lg:left-[6.5rem] lg:top-[56%]">
-          <h1 className="text-2xl font-black leading-tight text-white sm:text-4xl lg:text-6xl xl:text-7xl">
+        <div className="absolute left-4 top-[62%] z-10 -translate-y-1/2 text-left md:left-28 md:top-[58%] lg:left-[6.5rem] lg:top-[56%]">
+          <h1 className="text-sm font-black leading-tight text-white sm:text-4xl lg:text-6xl xl:text-7xl">
             <span className="block">Somos el CID</span>
             <span className="block">donde la ciencia</span>
             <span className="block">y la innovación</span>

@@ -25,6 +25,7 @@ import {
   Landmark,
   Lightbulb,
   MapPinned,
+  MousePointerClick,
   Rocket,
   School,
   Sparkles,
@@ -60,6 +61,7 @@ type Gestor = {
   profesion: string;
   tipo: "STEM" | "Pedagógica" | "Administrativo" | "Investigación";
   foto: string;
+  institucionAsignada?: string | string[];
 };
 
 const funcionesGenerales = [
@@ -249,111 +251,152 @@ const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
 
 const fotosGaleriaGestores = gestoresGalleryImages.map((image) => image.src);
 
+const institutionImageByName: Record<string, string> = {
+  "Institución Educativa La Paz": "/InstituciónEducativaLaPaz.jpg",
+  "Institución Educativa Manuel Uribe Ángel": "/InstituciónEducativaManuelUribeÁngel.JPG",
+  "Institución Educativa Las Palmas": "/InstituciónEducativaLasPalmas.JPG",
+  "Institución Educativa Comercial de Envigado": "/InstituciónEducativaComercialdeEnvigado.jpg",
+  "Institución Educativa San Vicente Alto de las Flores": "/InstituciónEducativaSanVicenteAltodelasFlores.jpg",
+  "Institución Educativa San Vicente Alto de Las Flores": "/InstituciónEducativaSanVicenteAltodelasFlores.jpg",
+  "Institución Educativa El Salado": "/InstituciónEducativaElSalado.jpg",
+  "Institución Educativa El Salado Sede Principal": "/InstituciónEducativaElSalado.jpg",
+  "Institución Educativa José Manuel Restrepo Vélez": "/InstituciónEducativaJoséManuelRestrepoVélez.jpg",
+  "Institución Educativa José Manuel Restrepo": "/InstituciónEducativaJoséManuelRestrepoVélez.jpg",
+  "Institución Educativa Darío de Bedout": "/InstituciónEducativaDaríodeBedout.jpg",
+  "Institución Educativa Normal Superior de Envigado": "/InstituciónEducativaNormalSuperiordeEnvigado.jpg",
+  "Institución Educativa Martín Eduardo Ríos Llano": "/InstituciónEducativaMartínEduardoRíosLlanos.png",
+  "Institución Educativa María Poussepin": "/InstituciónEducativaMaríaPoussepin.JPG",
+  "Institución Educativa Leticia Arango De Avendaño": "/InstituciónEducativaLeticiaArangodeAvendaño.JPG",
+  "Institución Educativa José Miguel de La Calle": "/InstituciónEducativaJoséMigueldelaCalle.png",
+  "Institución Educativa Alejandro Vélez Barrientos": "/InstituciónEducativaAlejandroVélezBarrientos.jpg",
+};
+
   const gestoresData: Gestor[] = [
     {
       id: 1,
-      nombre: "Alejandra Mora",
+      nombre: "Alejandra Mora Poveda",
       profesion: "Bióloga con Maestría en Conservación y uso de la Biodiversidad",
       tipo: "Investigación",
-      foto: AlejandraImg
+      foto: AlejandraImg,
+      institucionAsignada: ["Institución Educativa La Paz", "Institución Educativa Manuel Uribe Ángel", "Institución Educativa Las Palmas", "Institución Educativa Comercial de Envigado"]
     },
     {
       id: 2,
-      nombre: "Isabel Vega",
+      nombre: "Isabel Vega Rodríguez",
       profesion: "Ingeniera Física, Magister en Ingeniería",
       tipo: "STEM",
-      foto: IsabelImg
+      foto: IsabelImg,
+      institucionAsignada: "Institución Educativa José Manuel Restrepo"
     },
     {
       id: 3,
-      nombre: "Julián Parra",
+      nombre: "Julián Darío Parra Gómez",
       profesion: "Ingeniero de Petróleos",
       tipo: "STEM",
-      foto: JulianImg
+      foto: JulianImg,
+      institucionAsignada: "Institución Educativa San Vicente Alto de Las Flores"
     },
     {
       id: 4,
-      nombre: "Karen Palacio",
+      nombre: "Karen Palacio Úsuga",
       profesion: "Licenciada Básica con énfasis en Ciencias Sociales",
       tipo: "Investigación",
-      foto: KarenImg
+      foto: KarenImg,
+      institucionAsignada: [
+        "Institución Educativa San Vicente Alto de las Flores",
+        "Institución Educativa El Salado",
+        "Institución Educativa José Manuel Restrepo Vélez",
+        "Institución Educativa José Manuel Restrepo Vélez",
+        "Institución Educativa Darío de Bedout",
+      ]
     },
     {
       id: 5,
-      nombre: "Mauricio Valencia",
+      nombre: "Mauricio Valencia Cifuentes",
       profesion: "Licenciado en Educación Básica con énfasis en Matemáticas",
       tipo: "STEM",
-      foto: MauricioImg
+      foto: MauricioImg,
+      institucionAsignada: "Institución Educativa Darío de Bedout"
     },
     {
       id: 6,
-      nombre: "Mónica Quiceno",
+      nombre: "Mónica María Quiceno Taborda",
       profesion: "Licenciada en Ed. Básica con énfasis en Ciencias Naturales y Educación Ambiental",
       tipo: "STEM",
-      foto: MonicaImg
+      foto: MonicaImg,
+      institucionAsignada: "Institución Educativa El Salado Sede Principal"
     },
     {
       id: 7,
-      nombre: "Nicolás Bernal",
+      nombre: "Javier Nicolás Bernal Restrepo",
       profesion: "Ecólogo y Magister en Turismo Sostenible",
       tipo: "STEM",
-      foto: NicolasImg
+      foto: NicolasImg,
+      institucionAsignada: "Institución Educativa Normal Superior de Envigado"
     },
     {
       id: 8,
-      nombre: "Santiago Sierra",
+      nombre: "Santiago Sierra Yaber",
       profesion: "Astronomo",
       tipo: "STEM",
-      foto: SantiagoImg
+      foto: SantiagoImg,
+      institucionAsignada: "Institución Educativa La Paz"
     },
     {
       id: 9,
-      nombre: "Tania Carmona",
+      nombre: "Tania Carmona Vasco",
       profesion: "Licenciada en Artes Plásticas",
       tipo: "STEM",
-      foto: TaniaImg
+      foto: TaniaImg,
+      institucionAsignada: "Institución Educativa José Miguel de La Calle"
     },
     {
       id: 10,
-      nombre: "Víctor Tobón",
+      nombre: "Víctor Tobón Restrepo",
       profesion: "Ciencias Política Politólogo",
       tipo: "STEM",
-      foto: VictorImg
+      foto: VictorImg,
+      institucionAsignada: "Institución Educativa Martín Eduardo Ríos Llano"
     },
     {
       id: 11,
-      nombre: "William Pomares",
+      nombre: "William José Pomares Durango",
       profesion: "Ingeniero Electrónico Especialista en Educación",
       tipo: "STEM",
-      foto: WilmarImg
+      foto: WilmarImg,
+      institucionAsignada: "Institución Educativa Comercial de Envigado"
     },
     {
       id: 12,
       nombre: "Angela María Mejía Celis",
       profesion: "Licenciada en Humanidades y Lengua Castellana",
       tipo: "STEM",
-      foto: "/gestores/Angela%202.png"
+      foto: "/gestores/Angela%202.png",
+      institucionAsignada: "Institución Educativa María Poussepin"
     },
     {
       id: 13,
       nombre: "Erika Atehortúa Argaez",
       profesion: "Sociología, Magíster en Innovación y Educación",
       tipo: "STEM",
-      foto: "/gestores/Erika.png"
+      foto: "/gestores/Erika.png",
+      institucionAsignada: "Institución Educativa Las Palmas"
     },
     {
       id: 14,
       nombre: "Mateo Vásquez Correa",
       profesion: "Ingeniero de Sistemas",
       tipo: "STEM",
-      foto: "/gestores/Mateo.png"
+      foto: "/gestores/Mateo.png",
+      institucionAsignada: "Institución Educativa Manuel Uribe Ángel"
     },
     {
       id: 15,
       nombre: "Ronald Eduardo Gaitán Gelvez",
       profesion: "Ing. Mecatrónico, Ing. Eléctrico, Esp.Telecomunicaciones",
       tipo: "STEM",
-      foto: "/gestores/Ronald.png"
+      foto: "/gestores/Ronald.png",
+      institucionAsignada: "Institución Educativa Leticia Arango De Avendaño"
     },
   ];
 
@@ -386,8 +429,10 @@ export default function Gestores() {
   const [frenteActivo, setFrenteActivo] = useState(frentesTrabajo[0].id);
   const [gestoresCarouselIndex, setGestoresCarouselIndex] = useState(0);
   const [gestoresGaleriaIndex, setGestoresGaleriaIndex] = useState(0);
-  const directionVisibleCards = 3;
-  const gestoresGapPx = 32;
+  const [gestorSeleccionado, setGestorSeleccionado] = useState<Gestor | null>(null);
+  const [institucionModalIndex, setInstitucionModalIndex] = useState(0);
+  const [directionVisibleCards, setDirectionVisibleCards] = useState(4);
+  const [gestoresGapPx, setGestoresGapPx] = useState(20);
   const gestoresTotal = gestoresData.length;
   const gestoresMaxStart = Math.max(0, gestoresTotal - directionVisibleCards);
 
@@ -413,6 +458,29 @@ export default function Gestores() {
     setGestoresGaleriaIndex((prev) => (prev + 1) % fotosGaleriaGestores.length);
   };
 
+  const institucionesGestorSeleccionado = gestorSeleccionado
+    ? Array.isArray(gestorSeleccionado.institucionAsignada)
+      ? gestorSeleccionado.institucionAsignada
+      : gestorSeleccionado.institucionAsignada
+        ? [gestorSeleccionado.institucionAsignada]
+        : []
+    : [];
+
+  const institucionModalActual = institucionesGestorSeleccionado[institucionModalIndex];
+  const institucionModalImage = institucionModalActual ? institutionImageByName[institucionModalActual] : undefined;
+
+  const goInstitucionModalPrev = () => {
+    if (institucionesGestorSeleccionado.length <= 1) return;
+    setInstitucionModalIndex((prev) =>
+      (prev - 1 + institucionesGestorSeleccionado.length) % institucionesGestorSeleccionado.length
+    );
+  };
+
+  const goInstitucionModalNext = () => {
+    if (institucionesGestorSeleccionado.length <= 1) return;
+    setInstitucionModalIndex((prev) => (prev + 1) % institucionesGestorSeleccionado.length);
+  };
+
   useEffect(() => {
     const id = window.setInterval(() => {
       setGestoresGaleriaIndex((prev) => (prev + 1) % fotosGaleriaGestores.length);
@@ -421,9 +489,59 @@ export default function Gestores() {
     return () => window.clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    const updateVisibleCards = () => {
+      if (window.innerWidth >= 1536) {
+        setDirectionVisibleCards(5);
+        setGestoresGapPx(20);
+        return;
+      }
+
+      if (window.innerWidth >= 1280) {
+        setDirectionVisibleCards(4);
+        setGestoresGapPx(20);
+        return;
+      }
+
+      if (window.innerWidth >= 1024) {
+        setDirectionVisibleCards(3);
+        setGestoresGapPx(16);
+        return;
+      }
+
+      if (window.innerWidth >= 768) {
+        setDirectionVisibleCards(2);
+        setGestoresGapPx(14);
+        return;
+      }
+
+      setDirectionVisibleCards(1);
+      setGestoresGapPx(12);
+    };
+
+    updateVisibleCards();
+    window.addEventListener("resize", updateVisibleCards);
+    return () => window.removeEventListener("resize", updateVisibleCards);
+  }, []);
+
+  useEffect(() => {
+    setGestoresCarouselIndex((prev) => Math.min(prev, gestoresMaxStart));
+  }, [gestoresMaxStart]);
+
+  useEffect(() => {
+    const handleEscClose = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setGestorSeleccionado(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscClose);
+    return () => window.removeEventListener("keydown", handleEscClose);
+  }, []);
+
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(17,178,170,0.16),_transparent_24%),linear-gradient(180deg,_#ffffff_0%,_rgba(17,178,170,0.08)_45%,_rgba(13,75,86,0.08)_100%)]">
-      <section className="relative h-screen w-full overflow-hidden">
+      <section className="relative w-full overflow-hidden md:h-screen">
         <picture>
           <source srcSet="/banners/Banner%20gestores.webp" type="image/webp" />
           <img
@@ -432,12 +550,12 @@ export default function Gestores() {
             loading="eager"
             fetchPriority="high"
             decoding="sync"
-            className="h-full w-full object-cover object-center"
+            className="h-auto w-full object-contain md:h-full md:object-cover md:object-center"
           />
         </picture>
         <div className="absolute inset-0 bg-[#182130]/35" />
         <div className="absolute inset-0 z-10 flex items-center justify-center px-6 text-center">
-          <h1 className="text-4xl font-black leading-tight text-white sm:text-5xl lg:text-7xl xl:text-8xl lg:whitespace-nowrap">
+          <h1 className="text-lg font-black leading-tight text-white sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl lg:whitespace-nowrap">
             Gestores de Innovación
           </h1>
         </div>
@@ -764,7 +882,7 @@ export default function Gestores() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-3"
           >
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-teal-100 border border-blue-300 rounded-full px-4 py-2 mb-4">
               <Users className="w-4 h-4 text-blue-600" />
@@ -774,12 +892,12 @@ export default function Gestores() {
               Gestores de Innovación - Dirección de Innovación
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Conoce a los docentes y profesionales que lideran la innovación educativa en nuestras instituciones
+              Conoce a los profesionales que lideran la innovación educativa en nuestras instituciones
             </p>
           </motion.div>
 
           {/* Carrusel de fotos de los gestores */}
-          <div className="relative mb-16 overflow-hidden rounded-2xl shadow-2xl">
+          <div className="relative mb-2 overflow-hidden rounded-2xl shadow-2xl">
             <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
               {fotosGaleriaGestores.map((_, idx) => (
                 <button
@@ -833,7 +951,15 @@ export default function Gestores() {
                       flex: `0 0 calc((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards})`,
                     }}
                   >
-                    <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setGestorSeleccionado(gestor);
+                        setInstitucionModalIndex(0);
+                      }}
+                      className="relative w-full overflow-hidden bg-gray-50 text-left shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] flex items-center justify-center"
+                      aria-label={`Ver institución asignada de ${gestor.nombre}`}
+                    >
                       <picture className="contents">
                         <source srcSet={toWebp(gestor.foto)} type="image/webp" />
                         <img
@@ -842,14 +968,18 @@ export default function Gestores() {
                           loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
                           fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
                           decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
-                          className="h-[170px] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105 sm:h-auto sm:object-contain sm:py-6"
+                          className="h-[150px] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105 sm:h-[250px] sm:object-cover sm:py-0 lg:h-[280px]"
                         />
                       </picture>
-                    </div>
+                      <div className="pointer-events-none absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+                        <MousePointerClick className="h-3.5 w-3.5" />
+                        <span>Toca aqui</span>
+                      </div>
+                    </button>
 
-                    <div className="px-3 py-3 text-center sm:px-6 sm:py-6">
-                      <h3 className="mb-1 text-base font-bold leading-tight text-gray-900 sm:text-lg">{gestor.nombre}</h3>
-                      <p className="mb-2 line-clamp-4 text-xs leading-snug text-gray-600 sm:mb-3 sm:line-clamp-none sm:text-sm">{gestor.profesion}</p>
+                    <div className="px-3 py-2 text-center sm:px-4 sm:py-4">
+                      <h3 className="mb-1 text-sm font-bold leading-tight text-gray-900 sm:text-base">{gestor.nombre}</h3>
+                      <p className="mb-2 line-clamp-3 text-xs leading-snug text-gray-600 sm:mb-2 sm:line-clamp-3 sm:text-xs">{gestor.profesion}</p>
                       <div className="flex justify-center">
                         <Badge variant={gestor.tipo === "STEM" ? "default" : "secondary"}>
                           {gestor.tipo}
@@ -877,6 +1007,103 @@ export default function Gestores() {
           </div>
         </div>
       </section>
+
+      {gestorSeleccionado && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-4"
+          onClick={() => {
+            setGestorSeleccionado(null);
+            setInstitucionModalIndex(0);
+          }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Institución asignada del gestor"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={(event) => event.stopPropagation()}
+            className="w-full max-w-sm rounded-2xl border border-[#0D4B56]/25 bg-white p-5 shadow-2xl"
+          >
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#0D4B56]">Institución asignada</p>
+            <h3 className="mt-2 text-lg font-bold text-[#182130]">{gestorSeleccionado.nombre}</h3>
+
+            {institucionesGestorSeleccionado.length > 0 ? (
+              <div className="mt-3">
+                <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+                  {institucionModalImage ? (
+                    <img
+                      src={institucionModalImage}
+                      alt={institucionModalActual}
+                      className="h-40 w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div className="flex h-40 w-full items-center justify-center text-sm text-slate-500">
+                      Sin foto disponible
+                    </div>
+                  )}
+
+                  {institucionesGestorSeleccionado.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={goInstitucionModalPrev}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/55 p-1.5 text-white"
+                        aria-label="Institución anterior"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={goInstitucionModalNext}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/55 p-1.5 text-white"
+                        aria-label="Siguiente institución"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                    </>
+                  )}
+                </div>
+
+                <p className="mt-3 text-sm font-medium leading-relaxed text-slate-700">{institucionModalActual}</p>
+
+                {institucionesGestorSeleccionado.length > 1 && (
+                  <div className="mt-2 flex items-center justify-center gap-1.5">
+                    {institucionesGestorSeleccionado.map((institucion, index) => (
+                      <button
+                        key={`${gestorSeleccionado.id}-${institucion}-${index}`}
+                        type="button"
+                        onClick={() => setInstitucionModalIndex(index)}
+                        className={`h-2 rounded-full transition-all ${
+                          institucionModalIndex === index ? "w-6 bg-[#0D4B56]" : "w-2 bg-slate-300"
+                        }`}
+                        aria-label={`Ver institución ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="mt-3 text-sm leading-relaxed text-slate-700">Institución por confirmar</p>
+            )}
+            <div className="mt-5 flex justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  setGestorSeleccionado(null);
+                  setInstitucionModalIndex(0);
+                }}
+                className="rounded-lg bg-[#0D4B56] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#023A34]"
+              >
+                Cerrar
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
       </div>
     </div>

@@ -191,7 +191,7 @@ export default function Header() {
       <div className="container">
         <div className="flex h-20 items-center justify-between">
           {/* Logo y título */}
-          <Link href="/" className="flex min-w-0 items-center transition-opacity hover:opacity-80 lg:-ml-10 mt-13">
+          <Link href="/" className="mt-0 flex min-w-0 items-center transition-opacity hover:opacity-80 lg:-ml-10 lg:mt-13">
             <img src="/LOGO_CID.png" alt="Logo CID" className="h-12 w-auto sm:h-14 lg:h-20" />
           </Link>
 
@@ -447,7 +447,7 @@ export default function Header() {
           </nav>
 
           {/* Acciones */}
-          <div className="flex items-center gap-2">
+          <div className="mt-0 flex items-center gap-2 md:mt-0">
             {searchOpen ? (
               <form onSubmit={handleSearchSubmit} className="hidden md:flex items-center gap-2">
                 <input
@@ -503,7 +503,7 @@ export default function Header() {
                 setMobileMenuOpen(false);
                 setSearchResults([]);
               }}
-              className="md:hidden"
+              className={isTransparent ? "md:hidden text-white hover:bg-black/25" : "md:hidden"}
               aria-label={searchOpen ? "Cerrar busqueda" : "Abrir busqueda"}
             >
               {searchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
@@ -512,7 +512,7 @@ export default function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
+              className={isTransparent ? "lg:hidden text-white hover:bg-black/25" : "lg:hidden"}
               onClick={() => {
                 setSearchOpen(false);
                 setMobileMenuOpen(!mobileMenuOpen);
