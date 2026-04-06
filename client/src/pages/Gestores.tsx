@@ -252,23 +252,23 @@ const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
 const fotosGaleriaGestores = gestoresGalleryImages.map((image) => image.src);
 
 const institutionImageByName: Record<string, string> = {
-  "Institución Educativa La Paz": "/InstituciónEducativaLaPaz.jpg",
-  "Institución Educativa Manuel Uribe Ángel": "/InstituciónEducativaManuelUribeÁngel.JPG",
-  "Institución Educativa Las Palmas": "/InstituciónEducativaLasPalmas.JPG",
-  "Institución Educativa Comercial de Envigado": "/InstituciónEducativaComercialdeEnvigado.jpg",
-  "Institución Educativa San Vicente Alto de las Flores": "/InstituciónEducativaSanVicenteAltodelasFlores.jpg",
-  "Institución Educativa San Vicente Alto de Las Flores": "/InstituciónEducativaSanVicenteAltodelasFlores.jpg",
-  "Institución Educativa El Salado": "/InstituciónEducativaElSalado.jpg",
-  "Institución Educativa El Salado Sede Principal": "/InstituciónEducativaElSalado.jpg",
-  "Institución Educativa José Manuel Restrepo Vélez": "/InstituciónEducativaJoséManuelRestrepoVélez.jpg",
-  "Institución Educativa José Manuel Restrepo": "/InstituciónEducativaJoséManuelRestrepoVélez.jpg",
-  "Institución Educativa Darío de Bedout": "/InstituciónEducativaDaríodeBedout.jpg",
-  "Institución Educativa Normal Superior de Envigado": "/InstituciónEducativaNormalSuperiordeEnvigado.jpg",
-  "Institución Educativa Martín Eduardo Ríos Llano": "/InstituciónEducativaMartínEduardoRíosLlanos.png",
-  "Institución Educativa María Poussepin": "/InstituciónEducativaMaríaPoussepin.JPG",
-  "Institución Educativa Leticia Arango De Avendaño": "/InstituciónEducativaLeticiaArangodeAvendaño.JPG",
-  "Institución Educativa José Miguel de La Calle": "/InstituciónEducativaJoséMigueldelaCalle.png",
-  "Institución Educativa Alejandro Vélez Barrientos": "/InstituciónEducativaAlejandroVélezBarrientos.jpg",
+  "Institución Educativa La Paz": "/InstituciónEducativaLaPaz.webp",
+  "Institución Educativa Manuel Uribe Ángel": "/InstituciónEducativaManuelUribeÁngel.webp",
+  "Institución Educativa Las Palmas": "/InstituciónEducativaLasPalmas.webp",
+  "Institución Educativa Comercial de Envigado": "/InstituciónEducativaComercialdeEnvigado.webp",
+  "Institución Educativa San Vicente Alto de las Flores": "/InstituciónEducativaSanVicenteAltodelasFlores.webp",
+  "Institución Educativa San Vicente Alto de Las Flores": "/InstituciónEducativaSanVicenteAltodelasFlores.webp",
+  "Institución Educativa El Salado": "/InstituciónEducativaElSalado.webp",
+  "Institución Educativa El Salado Sede Principal": "/InstituciónEducativaElSalado.webp",
+  "Institución Educativa José Manuel Restrepo Vélez": "/InstituciónEducativaJoséManuelRestrepoVélez.webp",
+  "Institución Educativa José Manuel Restrepo": "/InstituciónEducativaJoséManuelRestrepoVélez.webp",
+  "Institución Educativa Darío de Bedout": "/InstituciónEducativaDaríodeBedout.webp",
+  "Institución Educativa Normal Superior de Envigado": "/InstituciónEducativaNormalSuperiordeEnvigado.webp",
+  "Institución Educativa Martín Eduardo Ríos Llano": "/InstituciónEducativaMartínEduardoRíosLlanos.webp",
+  "Institución Educativa María Poussepin": "/InstituciónEducativaMaríaPoussepin.webp",
+  "Institución Educativa Leticia Arango De Avendaño": "/InstituciónEducativaLeticiaArangodeAvendaño.webp",
+  "Institución Educativa José Miguel de La Calle": "/InstituciónEducativaJoséMigueldelaCalle.webp",
+  "Institución Educativa Alejandro Vélez Barrientos": "/InstituciónEducativaAlejandroVélezBarrientos.webp",
 };
 
   const gestoresData: Gestor[] = [
@@ -371,7 +371,7 @@ const institutionImageByName: Record<string, string> = {
       nombre: "Angela María Mejía Celis",
       profesion: "Licenciada en Humanidades y Lengua Castellana",
       tipo: "STEM",
-      foto: "/gestores/Angela%202.png",
+      foto: "/gestores/Angela%202.webp",
       institucionAsignada: "Institución Educativa María Poussepin"
     },
     {
@@ -379,7 +379,7 @@ const institutionImageByName: Record<string, string> = {
       nombre: "Erika Atehortúa Argaez",
       profesion: "Sociología, Magíster en Innovación y Educación",
       tipo: "STEM",
-      foto: "/gestores/Erika.png",
+      foto: "/gestores/Erika.webp",
       institucionAsignada: "Institución Educativa Las Palmas"
     },
     {
@@ -387,7 +387,7 @@ const institutionImageByName: Record<string, string> = {
       nombre: "Mateo Vásquez Correa",
       profesion: "Ingeniero de Sistemas",
       tipo: "STEM",
-      foto: "/gestores/Mateo.png",
+      foto: "/gestores/Mateo.webp",
       institucionAsignada: "Institución Educativa Manuel Uribe Ángel"
     },
     {
@@ -395,7 +395,7 @@ const institutionImageByName: Record<string, string> = {
       nombre: "Ronald Eduardo Gaitán Gelvez",
       profesion: "Ing. Mecatrónico, Ing. Eléctrico, Esp.Telecomunicaciones",
       tipo: "STEM",
-      foto: "/gestores/Ronald.png",
+      foto: "/gestores/Ronald.webp",
       institucionAsignada: "Institución Educativa Leticia Arango De Avendaño"
     },
   ];
@@ -545,7 +545,7 @@ export default function Gestores() {
         <picture>
           <source srcSet="/banners/Banner%20gestores.webp" type="image/webp" />
           <img
-            src="/banners/Banner%20gestores.png"
+            src="/banners/Banner%20gestores.webp"
             alt="Banner principal Gestores de Innovación"
             loading="eager"
             fetchPriority="high"
