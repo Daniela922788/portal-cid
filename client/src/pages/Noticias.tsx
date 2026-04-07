@@ -338,6 +338,16 @@ export default function Noticias() {
   }));
   
   const noticiasFiltradas: NoticiaUI[] = [...noticiasLocales, ...noticiasMapeadas];
+  const latestNewsTimestamp = noticiasFiltradas.length
+    ? Math.max(...noticiasFiltradas.map((item) => new Date(item.fecha).getTime()))
+    : null;
+  const latestNewsLabel = latestNewsTimestamp
+    ? new Date(latestNewsTimestamp).toLocaleDateString("es-CO", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      })
+    : "Sin publicaciones";
 
   const getCurrentImageIndex = (newsId: string) => currentImageByNews[newsId] ?? 0;
   const nextImage = (newsId: string, total: number) => {
@@ -364,10 +374,34 @@ export default function Noticias() {
     <div className="min-h-screen py-8">
       <div className="container">
         <Breadcrumbs items={[{ label: "Noticias" }]} />
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">Noticias</h1>
-          <p className="text-xl text-muted-foreground">Mantente informado sobre las últimas actividades del CID</p>
-        </div>
+        <section className="relative mb-10 overflow-hidden rounded-[2rem] border border-[#0D4B56]/20 bg-[linear-gradient(125deg,#182130_0%,#0D4B56_45%,#11B2AA_100%)] p-6 text-white shadow-xl sm:p-8 lg:p-10">
+          <div className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-[#FFDE07]/25 blur-2xl" />
+          <div className="pointer-events-none absolute -left-14 bottom-0 h-40 w-40 rounded-full bg-[#EC6910]/20 blur-2xl" />
+
+          <div className="relative z-10 max-w-3xl">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em]">
+              <Newspaper className="h-4 w-4" />
+              Boletin CID
+            </div>
+
+            <h1 className="text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
+              Noticias
+            </h1>
+            <p className="mt-3 text-sm leading-relaxed text-cyan-50 sm:text-base lg:text-lg">
+              Mantente al dia con los avances, reconocimientos y actividades que fortalecen la innovacion educativa en Envigado.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-3 text-sm">
+              <div className="rounded-full border border-white/35 bg-white/12 px-4 py-2 font-medium">
+                {noticiasFiltradas.length} noticias publicadas
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/12 px-4 py-2 font-medium">
+                <Calendar className="h-4 w-4" />
+                Ultima publicacion: {latestNewsLabel}
+              </div>
+            </div>
+          </div>
+        </section>
         {isLoading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (

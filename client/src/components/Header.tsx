@@ -55,11 +55,19 @@ export default function Header() {
   const mobileAccordionTriggerClass = "px-3 py-2.5 text-lg font-medium leading-7";
   const normalizedLocation =
     (location.split("?")[0]?.split("#")[0] ?? "/").replace(/\/+$/, "") || "/";
-  const transparentPaths = new Set(["/", "/nosotros", "/centro", "/gestores"]);
-  const isTransparent = transparentPaths.has(normalizedLocation.toLowerCase());
+  const normalizedLocationLower = normalizedLocation.toLowerCase();
+  const isBlackLogoRoute =
+    normalizedLocationLower === "/noticias" ||
+    normalizedLocationLower === "/reconocimientos" ||
+    normalizedLocationLower === "/semana-stem" ||
+    normalizedLocationLower === "/semana-stem-complete" ||
+    normalizedLocationLower === "/mesa-ayuda";
+  const transparentPaths = new Set(["/", "/nosotros", "/centro", "/gestores", "/territorio-stem", "/ie-oficiales", "/normatividad", "/formacion"]);
+  const isTransparent = transparentPaths.has(normalizedLocationLower);
+  const logoSrc = isBlackLogoRoute ? "/LOGO_CID_negro.png" : "/LOGO_CID.png";
   const headerClassName = isTransparent
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
-    : "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
+    : "sticky top-0 z-50 w-full border-b-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
   const topLevelNavLinkClass = isTransparent
     ? "group inline-flex h-12 w-max items-center justify-center rounded-md bg-black/35 px-6 py-2 text-lg font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
     : "group inline-flex h-12 w-max items-center justify-center rounded-md bg-background px-6 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
@@ -176,7 +184,7 @@ export default function Header() {
             href="/"
             className="mt-0 flex min-w-0 items-center transition-opacity hover:opacity-80 lg:-ml-10 lg:mt-13"
           >
-            <img src="/LOGO_CID.png" alt="Logo CID" className="h-[3.75rem] w-auto sm:h-[4.25rem] lg:h-[6.5rem]" />
+            <img src={logoSrc} alt="Logo CID" className="h-[3.75rem] w-auto sm:h-[4.25rem] lg:h-[6.5rem]" />
           </Link>
 
           {/* Navegación desktop */}

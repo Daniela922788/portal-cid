@@ -57,15 +57,42 @@ export default function IEOficiales() {
   };
 
   return (
-    <div className="min-h-screen py-8">
-      <div className="container">
-        <Breadcrumbs items={[{ label: "IE Oficiales" }]} />
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">Instituciones Educativas Oficiales</h1>
-          <p className="text-xl text-muted-foreground">
-            Conoce las instituciones educativas oficiales del municipio de Envigado
-          </p>
+    <div className="min-h-screen">
+      {/* Hero Banner */}
+      <section className="relative w-full h-[560px] overflow-hidden">
+        <img
+          src="/4S8A1959.jpg"
+          alt="Instituciones Educativas Oficiales de Envigado"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#182130]/90 via-[#0D4B56]/80 to-[#0D4B56]/30" />
+        <div className="absolute inset-0 flex items-end pb-16">
+          <div className="container">
+            <div className="max-w-2xl text-white">
+              <div className="flex items-center gap-2 mb-3">
+                <School className="h-6 w-6 text-[#FFDE07]" />
+                <span className="text-sm font-semibold uppercase tracking-widest text-[#FFDE07]">Municipio de Envigado</span>
+              </div>
+              <h1 className="text-5xl font-extrabold leading-tight mb-4">
+                Instituciones Educativas Oficiales
+              </h1>
+              <p className="text-lg text-white/85 max-w-lg">
+                Conoce las instituciones educativas oficiales del municipio de Envigado
+              </p>
+              <div className="flex flex-wrap gap-3 mt-6">
+                <span className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm border border-white/25 text-white px-4 py-1.5 rounded-full text-sm font-medium">
+                  <School className="h-4 w-4" />
+                  {iesData.length} Instituciones
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
+
+      <div className="py-8">
+        <div className="container">
+          <Breadcrumbs items={[{ label: "IE Oficiales" }]} />
 
         {/* Instituciones Educativas */}
         <div>
@@ -178,5 +205,6 @@ export default function IEOficiales() {
         </div>
       </div>
     </div>
+  </div>
   );
 }

@@ -2,7 +2,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye } from "lucide-react";
+import { Eye, BookOpen, FileText, Scale } from "lucide-react";
 
 interface Norma {
   tipo: "Ley" | "Acuerdo" | "Resolución" | "Circular" | "Normatividad";
@@ -139,11 +139,42 @@ const renderNormas = (normas: Norma[]) => (
 
 export default function Normatividad() {
   return (
-    <div className="min-h-screen py-8">
-      <div className="container">
-        <Breadcrumbs items={[{ label: "Normatividad" }]} />
-        <h1 className="text-4xl font-bold mb-8">Normatividad</h1>
-        {renderNormas(todasLasNormas)}
+    <div className="min-h-screen">
+      {/* Hero Banner */}
+      <section className="relative w-full overflow-hidden bg-[linear-gradient(122deg,#182130_0%,#0D4B56_52%,#11B2AA_100%)] text-white">
+        <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[#FFDE07]/20 blur-3xl" />
+        <div className="pointer-events-none absolute -left-16 bottom-0 h-48 w-48 rounded-full bg-[#EC6910]/15 blur-3xl" />
+        <div className="pointer-events-none absolute right-1/3 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-[#11B2AA]/20 blur-2xl" />
+
+        <div className="relative z-10 container flex min-h-[480px] flex-col justify-end pb-10">
+          <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/35 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em]">
+            <Scale className="h-4 w-4 text-[#FFDE07]" />
+            Marco legal CID
+          </div>
+
+          <h1 className="text-5xl font-extrabold leading-tight lg:text-6xl">Normatividad</h1>
+          <p className="mt-3 max-w-xl text-base leading-relaxed text-white/80 lg:text-lg">
+            Leyes, documentos CONPES, políticas públicas y lineamientos que enmarcan la labor del Centro de Innovación y Desarrollo.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-3 text-sm">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/12 px-4 py-2 font-medium backdrop-blur-sm">
+              <FileText className="h-4 w-4" />
+              {todasLasNormas.length} documentos
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/12 px-4 py-2 font-medium backdrop-blur-sm">
+              <BookOpen className="h-4 w-4" />
+              Acceso libre
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <div className="py-8">
+        <div className="container">
+          <Breadcrumbs items={[{ label: "Normatividad" }]} />
+          {renderNormas(todasLasNormas)}
+        </div>
       </div>
     </div>
   );

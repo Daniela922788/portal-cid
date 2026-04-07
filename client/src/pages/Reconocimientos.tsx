@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { X } from "lucide-react";
+import { Award, Sparkles, X } from "lucide-react";
 
 function AutoPlayShortsEmbed({ videoId, title }: { videoId: string; title: string }) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -312,6 +312,8 @@ export default function Reconocimientos() {
   const orderedNoticias = orderedNewsIds
     .map((id) => noticias.find((noticia) => noticia.id === id))
     .filter((noticia): noticia is Noticia => Boolean(noticia));
+  const categoriesCount = new Set(orderedNoticias.map((item) => item.categoria)).size;
+  const featuredCategoria = orderedNoticias[0]?.categoria ?? "Reconocimientos";
 
   const goPrevImage = () => {
     if (!selectedNews) return;
@@ -343,10 +345,77 @@ export default function Reconocimientos() {
   return (
     <div className="min-h-screen py-8">
       <div className="container">
-        <div className="mb-10">
-          <h1 className="text-4xl font-bold mb-3">Reconocimientos</h1>
-          <p className="text-lg text-[#023A34]">Logros destacados del territorio.</p>
-        </div>
+        <section className="relative mb-10 min-h-[460px] overflow-hidden rounded-[2.5rem] text-white shadow-2xl sm:min-h-[500px]">
+          {/* Fondo degradado con textura */}
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,#0D2137_0%,#0D4B56_45%,#0A7A72_100%)]" />
+
+          {/* Puntos decorativos */}
+          <div className="pointer-events-none absolute inset-0 opacity-10"
+            style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+
+          {/* Brillo superior izquierdo */}
+          <div className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-[#FFDE07]/20 blur-3xl" />
+          {/* Brillo inferior derecho */}
+          <div className="pointer-events-none absolute -bottom-16 right-1/4 h-56 w-56 rounded-full bg-[#EC6910]/25 blur-3xl" />
+          {/* Brillo centro */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#11B2AA]/30 blur-2xl" />
+
+          {/* Línea decorativa dorada */}
+          <div className="pointer-events-none absolute left-0 top-0 h-1.5 w-full bg-[linear-gradient(90deg,#FFDE07_0%,#EC6910_50%,transparent_100%)] opacity-80" />
+
+          {/* Imagen del trofeo - desktop */}
+          <div className="absolute inset-y-0 right-0 hidden w-[45%] items-end justify-center md:flex">
+            <img
+              src="/imagen_premio.png"
+              alt="Trofeo Reconocimientos"
+              className="h-[105%] w-auto object-contain drop-shadow-[0_0_40px_rgba(255,222,7,0.35)]"
+              onError={(e) => { e.currentTarget.src = "/premio.png"; }}
+            />
+          </div>
+
+          {/* Imagen del trofeo - móvil (fondo tenue) */}
+          <div className="absolute inset-0 opacity-15 md:hidden">
+            <img
+              src="/imagen_premio.png"
+              alt=""
+              className="h-full w-full object-contain object-right"
+              onError={(e) => { e.currentTarget.src = "/premio.png"; }}
+            />
+          </div>
+
+          {/* Contenido texto */}
+          <div className="relative z-10 flex min-h-[460px] w-full flex-col justify-center px-8 sm:min-h-[500px] sm:px-12 md:max-w-[58%] lg:px-16">
+            {/* Chip */}
+            <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-[#FFDE07]/50 bg-[#FFDE07]/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[#FFDE07]">
+              <Award className="h-3.5 w-3.5" />
+              Reconocimientos CID
+            </div>
+
+            <h1 className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+              Reconoci&shy;mientos
+            </h1>
+
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/75 sm:text-base lg:text-[1.05rem]">
+              Un recorrido por los logros que posicionan a Envigado como referente en innovación, educación y transformación territorial.
+            </p>
+
+            {/* Estadísticas */}
+            <div className="mt-8 flex flex-wrap gap-3">
+              <div className="flex flex-col rounded-2xl border border-white/20 bg-white/10 px-5 py-3 backdrop-blur-sm">
+                <span className="text-2xl font-black text-[#FFDE07]">{orderedNoticias.length}</span>
+                <span className="text-xs font-medium text-white/70">Historias destacadas</span>
+              </div>
+              <div className="flex flex-col rounded-2xl border border-white/20 bg-white/10 px-5 py-3 backdrop-blur-sm">
+                <span className="text-2xl font-black text-[#11B2AA]">{categoriesCount}</span>
+                <span className="text-xs font-medium text-white/70">Categorías</span>
+              </div>
+              <div className="flex items-center gap-2 rounded-2xl border border-white/20 bg-white/10 px-5 py-3 backdrop-blur-sm">
+                <Sparkles className="h-4 w-4 text-[#EC6910]" />
+                <span className="text-sm font-semibold text-white/90">{featuredCategoria}</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <div className="grid md:grid-cols-2 gap-6">
           {orderedNoticias.map((noticia) => (

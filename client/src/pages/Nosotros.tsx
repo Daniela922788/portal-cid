@@ -948,15 +948,20 @@ export default function Nosotros() {
           </motion.div>
 
           {/* Imagen del equipo de gestores */}
-          <div className="mb-16 overflow-hidden rounded-2xl shadow-2xl">
+          <Link
+            href="/Gestores"
+            aria-label="Ir a la sección Gestores"
+            onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "auto" })}
+            className="group mb-16 block overflow-hidden rounded-2xl shadow-2xl"
+          >
             <img
               src="/Fotogestores.jpg"
               alt="Equipo de gestores de innovación"
               loading="lazy"
               decoding="async"
-              className="h-auto w-full object-cover"
+              className="h-auto w-full object-cover transition-all duration-300 group-hover:brightness-90"
             />
-          </div>
+          </Link>
 
           <div className="relative">
             <button

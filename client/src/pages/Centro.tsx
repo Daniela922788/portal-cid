@@ -55,25 +55,21 @@ const servicios = [
 
 const perfiles = [
   {
-    emoji: "🎒",
     titulo: "Instituciones Educativas",
     descripcion: "Integra la producción audiovisual como herramienta pedagógica en el aula.",
     color: "#2D3586",
   },
   {
-    emoji: "🌱",
     titulo: "La Comunidad",
     descripcion: "Accede a un espacio profesional para aprender, crear y comunicar.",
     color: "#023A34",
   },
   {
-    emoji: "💡",
     titulo: "Emprendedores",
     descripcion: "Desarrolla contenido de calidad para impulsar tu proyecto o idea.",
     color: "#EC6910",
   },
   {
-    emoji: "🏛️",
     titulo: "Sector Público",
     descripcion: "Produce piezas comunicativas con infraestructura profesional.",
     color: "#0D4B56",
@@ -433,22 +429,28 @@ export default function Centro() {
             {perfiles.map((perfil) => (
               <Card
                 key={perfil.titulo}
-                className="border border-slate-100 bg-white shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-200"
+                className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white/95 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
+                <div
+                  className="h-1.5 w-full"
+                  style={{ backgroundColor: perfil.color }}
+                />
                 <CardContent className="p-6 text-center">
-                  <div
-                    className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl text-3xl"
-                    style={{ backgroundColor: perfil.color + "1A" }}
+                  <p
+                    className="mb-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em]"
+                    style={{
+                      color: perfil.color,
+                      backgroundColor: perfil.color + "1A",
+                    }}
                   >
-                    {perfil.emoji}
-                  </div>
+                  </p>
                   <h3
-                    className="mb-2 text-lg font-bold sm:text-xl"
+                    className="mb-3 text-lg font-extrabold leading-tight sm:text-xl"
                     style={{ color: perfil.color }}
                   >
                     {perfil.titulo}
                   </h3>
-                  <p className="text-base leading-relaxed text-slate-500 sm:text-lg">{perfil.descripcion}</p>
+                  <p className="text-[15px] leading-relaxed text-slate-600 sm:text-base">{perfil.descripcion}</p>
                 </CardContent>
               </Card>
             ))}
