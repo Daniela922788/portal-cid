@@ -54,8 +54,8 @@ export default function Home() {
         </div>
         
                 {/* Flecha scroll-down */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/50">
-                  <ChevronLeft className="h-6 w-6 rotate-[-90deg]" />
+                <div className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 animate-bounce text-white/50 md:bottom-8 md:block">
+                  <ChevronLeft className="h-5 w-5 rotate-[-90deg] md:h-6 md:w-6" />
                 </div>
       </section>
 

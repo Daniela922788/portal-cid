@@ -386,13 +386,14 @@ export default function Reconocimientos() {
           {/* Contenido texto */}
           <div className="relative z-10 flex min-h-[460px] w-full flex-col justify-center px-8 sm:min-h-[500px] sm:px-12 md:max-w-[58%] lg:px-16">
             {/* Chip */}
-            <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-[#FFDE07]/50 bg-[#FFDE07]/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[#FFDE07]">
+            <div className="mb-5 hidden w-fit items-center gap-2 rounded-full border border-[#FFDE07]/50 bg-[#FFDE07]/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[#FFDE07] md:inline-flex">
               <Award className="h-3.5 w-3.5" />
               Reconocimientos CID
             </div>
 
-            <h1 className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-              Reconoci&shy;mientos
+            <h1 className="text-3xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+              <span className="md:hidden">Reconocimientos</span>
+              <span className="hidden md:inline">Reconoci&shy;mientos</span>
             </h1>
 
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/75 sm:text-base lg:text-[1.05rem]">

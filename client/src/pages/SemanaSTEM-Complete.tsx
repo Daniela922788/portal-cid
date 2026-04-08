@@ -748,14 +748,14 @@ export default function SemanaSTEM() {
           {/* Days Navigation */}
           <section className="py-12 px-4 bg-white border-b border-gray-200">
             <div className="max-w-6xl mx-auto">
-              <div className="mx-auto flex max-w-3xl flex-wrap justify-center gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-2">
+              <div className="mx-auto grid max-w-3xl grid-cols-2 gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-2 md:flex md:flex-wrap md:justify-center">
                 {daysNavigation.map((dayNav) => (
                   <motion.button
                     key={dayNav.index}
                     whileHover={{ y: -1 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setActiveDay(dayNav.index)}
-                    className={`min-w-[150px] rounded-xl px-5 py-3 text-left transition-all ${
+                    className={`w-full rounded-xl px-4 py-3 text-left transition-all md:w-auto md:min-w-[150px] md:px-5 ${
                       activeDay === dayNav.index
                         ? 'bg-white text-gray-900 shadow-sm ring-1 ring-gray-300'
                         : 'text-gray-600 hover:bg-white/80 hover:text-gray-800'

@@ -131,7 +131,7 @@ export default function IEOficiales() {
                     )}
                     
                     {/* Overlay para cambiar imagen */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                    <div className="hidden">
                       <label className="cursor-pointer">
                         <div className="bg-white rounded-lg p-3 hover:bg-gray-100">
                           <Upload className="h-5 w-5 text-primary" />

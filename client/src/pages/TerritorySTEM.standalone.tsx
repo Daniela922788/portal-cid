@@ -118,9 +118,9 @@ export default function TerritorioStem() {
   ];
 
   const manifestoImages = [
-    { src: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&auto=format&fit=crop&q=80', alt: 'Estudiantes colaborando en actividad STEM+', caption: 'Aprendizaje colaborativo' },
-    { src: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1200&auto=format&fit=crop&q=80', alt: 'Trabajo articulado entre actores del territorio', caption: 'Articulacion territorial' },
-    { src: 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=1200&auto=format&fit=crop&q=80', alt: 'Innovacion educativa en entorno escolar', caption: 'Innovacion educativa' },
+    { src: '/Territorio/1.jpg', alt: 'Estudiantes colaborando en actividad STEM+', caption: 'Aprendizaje colaborativo' },
+    { src: '/Territorio/2.jpg', alt: 'Trabajo articulado entre actores del territorio', caption: 'Articulacion territorial' },
+    { src: '/Territorio/3.jpg', alt: 'Innovacion educativa en entorno escolar', caption: 'Innovacion educativa' },
   ];
 
   const manifestoParagraphs = [
@@ -220,7 +220,7 @@ export default function TerritorioStem() {
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            className="w-full h-auto object-cover"
+            className="w-full h-[150px] object-cover object-center md:h-auto"
           />
         </section>
       </div>

@@ -61,7 +61,10 @@ export default function Header() {
     normalizedLocationLower === "/reconocimientos" ||
     normalizedLocationLower === "/semana-stem" ||
     normalizedLocationLower === "/semana-stem-complete" ||
-    normalizedLocationLower === "/mesa-ayuda";
+    normalizedLocationLower === "/mesa-ayuda" ||
+    normalizedLocationLower === "/publicaciones" ||
+    normalizedLocationLower === "/aliados" ||
+    normalizedLocationLower === "/kit-herramientas";
   const transparentPaths = new Set(["/", "/nosotros", "/centro", "/gestores", "/territorio-stem", "/ie-oficiales", "/normatividad", "/formacion"]);
   const isTransparent = transparentPaths.has(normalizedLocationLower);
   const logoSrc = isBlackLogoRoute ? "/LOGO_CID_negro.png" : "/LOGO_CID.png";

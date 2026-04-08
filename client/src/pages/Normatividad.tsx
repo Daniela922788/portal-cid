@@ -146,7 +146,7 @@ export default function Normatividad() {
         <div className="pointer-events-none absolute -left-16 bottom-0 h-48 w-48 rounded-full bg-[#EC6910]/15 blur-3xl" />
         <div className="pointer-events-none absolute right-1/3 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-[#11B2AA]/20 blur-2xl" />
 
-        <div className="relative z-10 container flex min-h-[480px] flex-col justify-end pb-10">
+        <div className="relative z-10 container flex min-h-[480px] flex-col justify-start pb-3 pt-28 md:justify-end md:pt-0 md:pb-10">
           <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/35 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em]">
             <Scale className="h-4 w-4 text-[#FFDE07]" />
             Marco legal CID
