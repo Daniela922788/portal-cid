@@ -959,90 +959,9 @@ export default function Nosotros() {
               alt="Equipo de gestores de innovación"
               loading="lazy"
               decoding="async"
-              className="h-auto w-full object-cover transition-all duration-300 group-hover:brightness-90"
+              className="h-[420px] w-full object-cover object-top transition-all duration-300 group-hover:brightness-90 sm:h-[820px] lg:h-[820px]"
             />
           </Link>
-
-          <div className="relative">
-            <button
-              type="button"
-              onClick={goGestoresPrev}
-              aria-label="Anterior en Gestores de Innovación"
-              disabled={gestoresCarouselIndex === 0}
-              className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-
-            <button
-              type="button"
-              onClick={goGestoresNext}
-              aria-label="Siguiente en Gestores de Innovación"
-              disabled={gestoresCarouselIndex >= gestoresMaxStart}
-              className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-
-            <div className="overflow-hidden px-6">
-              <motion.div
-                animate={{
-                  x: `calc(-${gestoresCarouselIndex} * ((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards} + ${gestoresGapPx}px))`,
-                }}
-                transition={{ type: "spring", stiffness: 90, damping: 20, mass: 0.8 }}
-                className="flex"
-                style={{ gap: `${gestoresGapPx}px` }}
-              >
-                {gestoresData.map((gestor, index) => (
-                  <div
-                    key={gestor.id}
-                    className="group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
-                    style={{
-                      flex: `0 0 calc((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards})`,
-                    }}
-                  >
-                    <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
-                      <picture className="contents">
-                        <source srcSet={toWebp(gestor.foto)} type="image/webp" />
-                        <img
-                          src={gestor.foto}
-                          alt={gestor.nombre}
-                          loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
-                          fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
-                          decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
-                          className="h-[170px] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105 sm:h-auto sm:object-contain sm:py-6"
-                        />
-                      </picture>
-                    </div>
-
-                    <div className="px-3 py-3 text-center sm:px-6 sm:py-6">
-                      <h3 className="mb-1 text-base font-bold leading-tight text-gray-900 sm:text-lg">{gestor.nombre}</h3>
-                      <p className="mb-2 line-clamp-4 text-xs leading-snug text-gray-600 sm:mb-3 sm:line-clamp-none sm:text-sm">{gestor.profesion}</p>
-                      <div className="flex justify-center">
-                        <Badge variant={gestor.tipo === "STEM" ? "default" : "secondary"}>
-                          {gestor.tipo}
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            <div className="mt-8 flex justify-center gap-2">
-              {Array.from({ length: gestoresMaxStart + 1 }, (_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setGestoresCarouselIndex(idx)}
-                  aria-label={`Ir al bloque de gestores ${idx + 1}`}
-                  className={`h-2 rounded-full transition-all ${
-                    gestoresCarouselIndex === idx ? "w-8 bg-slate-800" : "w-2 bg-slate-400"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 

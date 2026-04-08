@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Gamepad2, Brain, Rocket, Lightbulb } from "lucide-react";
+import { Sparkles, Gamepad2, Brain, Rocket, MapPinned } from "lucide-react";
 
 export default function CIDKids() {
   return (
@@ -23,8 +23,8 @@ export default function CIDKids() {
         </div>
 
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-6 text-center">🎮 Juegos Educativos</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <h2 className="text-3xl font-bold mb-6 text-center">🎮 Juegos Educativos Interactivos</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Card className="hover:shadow-xl transition-shadow border-2 border-primary/20">
               <CardHeader>
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mb-3 mx-auto">
@@ -32,7 +32,7 @@ export default function CIDKids() {
                 </div>
                 <CardTitle className="text-center">Viaje al Espacio</CardTitle>
                 <CardDescription className="text-center">
-                  Aprende sobre el sistema solar mientras viajas por el espacio
+                  Misión astronómica por fases: orden planetario + quiz estelar
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -52,7 +52,7 @@ export default function CIDKids() {
                 </div>
                 <CardTitle className="text-center">Retos Matemáticos</CardTitle>
                 <CardDescription className="text-center">
-                  Resuelve problemas matemáticos de forma divertida
+                  Operaciones, secuencias y geometría con tiempo, puntaje y vidas
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -67,12 +67,12 @@ export default function CIDKids() {
 
             <Card className="hover:shadow-xl transition-shadow border-2 border-green-500/20">
               <CardHeader>
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-2xl">🌿</span>
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center mb-3 mx-auto">
+                  <MapPinned className="h-8 w-8 text-white" />
                 </div>
-                <CardTitle className="text-center">Envigado Curioso</CardTitle>
+                <CardTitle className="text-center">Territorio de Envigado</CardTitle>
                 <CardDescription className="text-center">
-                  Descubre la fauna y biodiversidad de Envigado
+                  Aprende zonas, barrios y veredas con un mapa por colores interactivo
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -85,25 +85,6 @@ export default function CIDKids() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-xl transition-shadow border-2 border-accent/20">
-              <CardHeader>
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mb-3 mx-auto">
-                  <Lightbulb className="h-8 w-8 text-white" />
-                </div>
-                <CardTitle className="text-center">Fábrica de Inventos</CardTitle>
-                <CardDescription className="text-center">
-                  Construye máquinas increíbles y creativas
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Link href="/juegos/fabrica-inventos">
-                  <Button className="w-full" variant="default">
-                    <Gamepad2 className="h-4 w-4 mr-2" />
-                    Jugar Ahora
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
           </div>
         </section>
 

@@ -1,7 +1,7 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, MapPin, Phone, ExternalLink } from "lucide-react";
+import { Mail, MapPin, Phone, ExternalLink, LifeBuoy } from "lucide-react";
 
 const canales = [
   {
@@ -14,7 +14,7 @@ const canales = [
   {
     nombre: "Correo Electrónico",
     descripcion: "Para consultas generales",
-    contacto: "info@cidenvigado.edu.co",
+    contacto: "Innovacion@envigado.edu.co",
     icono: Mail,
     color: "bg-purple-100 text-purple-700"
   },
@@ -28,16 +28,47 @@ const canales = [
 ];
 
 export default function MesaAyuda() {
+  const totalCanales = 2;
+
   return (
-    <div className="min-h-screen py-8">
-      <div className="container">
-        <Breadcrumbs items={[{ label: "Contactanos" }]} />
+    <div className="min-h-screen">
+      <section className="relative w-full overflow-hidden bg-[linear-gradient(122deg,#182130_0%,#0D4B56_52%,#11B2AA_100%)] text-white">
+        <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[#FFDE07]/20 blur-3xl" />
+        <div className="pointer-events-none absolute -left-16 bottom-0 h-48 w-48 rounded-full bg-[#EC6910]/15 blur-3xl" />
+
+        <div className="relative z-10 container flex min-h-[480px] flex-col justify-end pb-8 md:pb-10">
+          <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/35 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em]">
+            <LifeBuoy className="h-4 w-4 text-[#FFDE07]" />
+            Mesa de ayuda CID
+          </div>
+
+          <h1 className="text-5xl font-extrabold leading-tight lg:text-6xl">Contactanos</h1>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-white/85 lg:text-lg">
+            Estamos para apoyarte. Resuelve tus dudas y gestiona tus solicitudes mediante nuestros canales de atencion.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-3 text-sm">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/12 px-4 py-2 font-medium backdrop-blur-sm">
+              <Phone className="h-4 w-4" />
+              {totalCanales} canales disponibles
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/12 px-4 py-2 font-medium backdrop-blur-sm">
+              <ExternalLink className="h-4 w-4" />
+              Atencion digital SAC
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <div className="py-8">
+        <div className="container">
+          <Breadcrumbs items={[{ label: "Contactanos" }]} />
 
         {/* Bloque de Contacto Superior */}
-        <div className="grid md:grid-cols-2 gap-12 mb-16 py-12 border-b border-gray-200">
+        <div className="grid md:grid-cols-2 gap-12 mb-16 py-10 border-b border-gray-200">
           {/* Izquierda - Título y descripción */}
           <div>
-            <h1 className="text-5xl font-bold mb-6">Contáctanos</h1>
+            <h2 className="text-4xl font-bold mb-6 text-[#182130]">Canales de contacto</h2>
             <p className="text-gray-600 leading-relaxed">
               Estamos aquí para ayudarte. Resuelve tus dudas o comunícate con nosotros a través de nuestros múltiples canales de atención. Nuestro equipo está disponible para brindarte el apoyo que necesitas.
             </p>
@@ -54,7 +85,7 @@ export default function MesaAyuda() {
             {/* Email */}
             <div>
               <h3 className="text-gray-400 text-sm font-semibold mb-3">Email</h3>
-              <p className="text-blue-600 font-medium">info@cidenvigado.edu.co</p>
+              <p className="text-blue-600 font-medium">innovacion@envigado.edu.co</p>
             </div>
 
             {/* Teléfono */}
@@ -110,6 +141,7 @@ export default function MesaAyuda() {
         </div>
 
         {/* Canales de Atención */}
+        </div>
       </div>
 
       {/* Mapa Banner */}

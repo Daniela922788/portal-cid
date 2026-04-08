@@ -252,23 +252,26 @@ const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
 const fotosGaleriaGestores = gestoresGalleryImages.map((image) => image.src);
 
 const institutionImageByName: Record<string, string> = {
-  "Institución Educativa La Paz": "/InstituciónEducativaLaPaz.webp",
-  "Institución Educativa Manuel Uribe Ángel": "/InstituciónEducativaManuelUribeÁngel.webp",
-  "Institución Educativa Las Palmas": "/InstituciónEducativaLasPalmas.webp",
-  "Institución Educativa Comercial de Envigado": "/InstituciónEducativaComercialdeEnvigado.webp",
-  "Institución Educativa San Vicente Alto de las Flores": "/InstituciónEducativaSanVicenteAltodelasFlores.webp",
-  "Institución Educativa San Vicente Alto de Las Flores": "/InstituciónEducativaSanVicenteAltodelasFlores.webp",
-  "Institución Educativa El Salado": "/InstituciónEducativaElSalado.webp",
-  "Institución Educativa El Salado Sede Principal": "/InstituciónEducativaElSalado.webp",
-  "Institución Educativa José Manuel Restrepo Vélez": "/InstituciónEducativaJoséManuelRestrepoVélez.webp",
-  "Institución Educativa José Manuel Restrepo": "/InstituciónEducativaJoséManuelRestrepoVélez.webp",
-  "Institución Educativa Darío de Bedout": "/InstituciónEducativaDaríodeBedout.webp",
-  "Institución Educativa Normal Superior de Envigado": "/InstituciónEducativaNormalSuperiordeEnvigado.webp",
-  "Institución Educativa Martín Eduardo Ríos Llano": "/InstituciónEducativaMartínEduardoRíosLlanos.webp",
-  "Institución Educativa María Poussepin": "/InstituciónEducativaMaríaPoussepin.webp",
-  "Institución Educativa Leticia Arango De Avendaño": "/InstituciónEducativaLeticiaArangodeAvendaño.webp",
-  "Institución Educativa José Miguel de La Calle": "/InstituciónEducativaJoséMigueldelaCalle.webp",
-  "Institución Educativa Alejandro Vélez Barrientos": "/InstituciónEducativaAlejandroVélezBarrientos.webp",
+  "Institución Educativa La Paz": "/instituciones-foto/institucion-la-paz.webp",
+  "Institución Educativa Manuel Uribe Ángel": "/instituciones-foto/institucion-manuel-uribe-angel.webp",
+  "Institución Educativa Las Palmas": "/instituciones-foto/institucion-las-palmas.webp",
+  "Institución Educativa Comercial de Envigado": "/instituciones-foto/institucion-comercial-envigado.webp",
+  "Institución Educativa San Vicente Alto de las Flores": "/instituciones-foto/institucion-san-vicente-flores.webp",
+  "Institución Educativa San Vicente Alto de Las Flores": "/instituciones-foto/institucion-san-vicente-flores.webp",
+  "Institución Educativa El Salado": "/instituciones-foto/institucion-el-salado.webp",
+  "Institución Educativa El Salado Sede Principal": "/instituciones-foto/institucion-el-salado.webp",
+  "Institución Educativa José Manuel Restrepo Vélez": "/instituciones-foto/institucion-jose-manuel-restrepo-velez.webp",
+  "Institución Educativa José Manuel Restrepo": "/instituciones-foto/institucion-jose-manuel-restrepo-velez.webp",
+  "Institución Educativa Darío de Bedout": "/instituciones-foto/institucion-dario-de-bedout.webp",
+  "Institución Educativa Normal Superior de Envigado": "/instituciones-foto/institucion-normal-superior-envigado.webp",
+  "Institución Educativa Martín Eduardo Ríos Llano": "/instituciones-foto/institucion-martin-eduardo-rios-llanos.webp",
+  "Institución Educativa Martín Eduardo Ríos Llanos": "/instituciones-foto/institucion-martin-eduardo-rios-llanos.webp",
+  "Institución Educativa María Poussepin": "/instituciones-foto/institucion-maria-poussepin.webp",
+  "Institución Educativa Leticia Arango De Avendaño": "/instituciones-foto/institucion-leticia-arango-avendano.webp",
+  "Institución Educativa Leticia Arango de Avendaño": "/instituciones-foto/institucion-leticia-arango-avendano.webp",
+  "Institución Educativa José Miguel de La Calle": "/instituciones-foto/institucion-jose-miguel-calle.webp",
+  "Institución Educativa José Miguel de la Calle": "/instituciones-foto/institucion-jose-miguel-calle.webp",
+  "Institución Educativa Alejandro Vélez Barrientos": "/instituciones-foto/institucion-alejandro-velez-barrientos.webp",
 };
 
   const gestoresData: Gestor[] = [
@@ -305,7 +308,6 @@ const institutionImageByName: Record<string, string> = {
       institucionAsignada: [
         "Institución Educativa San Vicente Alto de las Flores",
         "Institución Educativa El Salado",
-        "Institución Educativa José Manuel Restrepo Vélez",
         "Institución Educativa José Manuel Restrepo Vélez",
         "Institución Educativa Darío de Bedout",
       ]
@@ -968,7 +970,7 @@ export default function Gestores() {
                           loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
                           fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
                           decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
-                          className="h-[300px] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105 sm:h-[250px] sm:object-cover sm:py-0 lg:h-[280px]"
+                          className="h-[380px] w-full object-cover object-[center_14%] transition-transform duration-300 group-hover:scale-105 sm:h-[320px] sm:object-[center_14%] sm:py-0 lg:h-[350px]"
                         />
                       </picture>
                       <div className="pointer-events-none absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
@@ -1024,7 +1026,7 @@ export default function Gestores() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.2 }}
             onClick={(event) => event.stopPropagation()}
-            className="w-full max-w-sm rounded-2xl border border-[#0D4B56]/25 bg-white p-5 shadow-2xl"
+            className="w-full max-w-2xl rounded-2xl border border-[#0D4B56]/25 bg-white p-6 shadow-2xl"
           >
             <p className="text-xs font-semibold uppercase tracking-wide text-[#0D4B56]">Institución asignada</p>
             <h3 className="mt-2 text-lg font-bold text-[#182130]">{gestorSeleccionado.nombre}</h3>
@@ -1036,12 +1038,12 @@ export default function Gestores() {
                     <img
                       src={institucionModalImage}
                       alt={institucionModalActual}
-                      className="h-40 w-full object-cover"
+                      className="h-64 w-full object-cover"
                       loading="lazy"
                       decoding="async"
                     />
                   ) : (
-                    <div className="flex h-40 w-full items-center justify-center text-sm text-slate-500">
+                    <div className="flex h-64 w-full items-center justify-center text-sm text-slate-500">
                       Sin foto disponible
                     </div>
                   )}

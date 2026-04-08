@@ -4,7 +4,6 @@ import { APP_TITLE } from "@/const";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const showProyectos = false;
 
   return (
     <footer className="bg-muted/50 border-t mt-auto">
@@ -14,7 +13,7 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4 text-primary">{APP_TITLE}</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Centro de Innovación Educativa dedicado a promover la innovación, la investigación y el desarrollo STEM en las instituciones educativas.
+              Centro de Innovación y Desarrollo dedicado a promover la innovación, la investigación y el desarrollo STEM.
             </p>
             <div className="flex gap-3">
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
@@ -36,31 +35,24 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Enlaces Rápidos</h4>
             <ul className="space-y-2 text-sm">
-              {showProyectos && (
-                <li>
-                  <Link href="/proyectos" className="text-muted-foreground hover:text-primary transition-colors">
-                    Proyectos
-                  </Link>
-                </li>
-              )}
+              <li>
+                <Link href="/formacion" className="text-muted-foreground hover:text-primary transition-colors">
+                  Formación
+                </Link>
+              </li>
               <li>
                 <Link href="/noticias" className="text-muted-foreground hover:text-primary transition-colors">
                   Noticias
                 </Link>
               </li>
               <li>
-                <Link href="/eventos" className="text-muted-foreground hover:text-primary transition-colors">
-                  Eventos
+                <Link href="/semana-stem" className="text-muted-foreground hover:text-primary transition-colors">
+                  Semana STEM
                 </Link>
               </li>
               <li>
-                <Link href="/convocatorias" className="text-muted-foreground hover:text-primary transition-colors">
-                  Convocatorias
-                </Link>
-              </li>
-              <li>
-                <Link href="/centro-ciencia" className="text-muted-foreground hover:text-primary transition-colors">
-                  Centro de Ciencia
+                <Link href="/nosotros" className="text-muted-foreground hover:text-primary transition-colors">
+                  Nosotros
                 </Link>
               </li>
             </ul>
@@ -105,18 +97,18 @@ export default function Footer() {
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 mt-1 text-primary flex-shrink-0" />
                 <span className="text-muted-foreground">
-                  Calle 37 Sur # 39-45<br />
+                  Cl. 37 Sur # 45 B-27, Zona 8<br />
                   Envigado, Antioquia, Colombia
                 </span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary flex-shrink-0" />
-                <span className="text-muted-foreground">+57 (4) 339 3000</span>
+                <span className="text-muted-foreground">(+57) 301 2577662</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary flex-shrink-0" />
-                <a href="mailto:cid@envigado.gov.co" className="text-muted-foreground hover:text-primary transition-colors">
-                  cid@envigado.gov.co
+                <a href="mailto:innovacion@envigado.edu.co" className="text-muted-foreground hover:text-primary transition-colors">
+                  Innovacion@envigado.edu.co
                 </a>
               </li>
             </ul>

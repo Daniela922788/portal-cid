@@ -61,13 +61,10 @@ export default function Header() {
     normalizedLocationLower === "/reconocimientos" ||
     normalizedLocationLower === "/semana-stem" ||
     normalizedLocationLower === "/semana-stem-complete" ||
-    normalizedLocationLower === "/mesa-ayuda" ||
-    normalizedLocationLower === "/publicaciones" ||
-    normalizedLocationLower === "/aliados" ||
     normalizedLocationLower === "/kit-herramientas";
-  const transparentPaths = new Set(["/", "/nosotros", "/centro", "/gestores", "/territorio-stem", "/ie-oficiales", "/normatividad", "/formacion"]);
+  const transparentPaths = new Set(["/", "/nosotros", "/centro", "/gestores", "/territorio-stem", "/ie-oficiales", "/normatividad", "/formacion", "/mesa-ayuda", "/aliados", "/publicaciones", "/salas"]);
   const isTransparent = transparentPaths.has(normalizedLocationLower);
-  const logoSrc = isBlackLogoRoute ? "/LOGO_CID_negro.png" : "/LOGO_CID.png";
+  const logoSrc = isBlackLogoRoute ? "/LOGO-NUEVO-CID-NEGRO.png" : "/LOGO-NUEVO-CID-BLANCO.png";
   const headerClassName = isTransparent
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
     : "sticky top-0 z-50 w-full border-b-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
@@ -185,9 +182,9 @@ export default function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="mt-0 flex min-w-0 items-center transition-opacity hover:opacity-80 lg:-ml-10 lg:mt-13"
+            className="mt-0 flex min-w-0 items-center transition-opacity hover:opacity-80 lg:-ml-40 lg:mt-13"
           >
-            <img src={logoSrc} alt="Logo CID" className="h-[3.75rem] w-auto sm:h-[4.25rem] lg:h-[6.5rem]" />
+            <img src={logoSrc} alt="Logo CID" className="h-[5rem] w-auto sm:h-[5.5rem] lg:h-[8rem]" />
           </Link>
 
           {/* Navegación desktop */}
@@ -231,7 +228,8 @@ export default function Header() {
                     <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
                       {[
                         { href: "/nosotros", title: "Nosotros", desc: "Misión, visión y valores del CID" },
-                        { href: "/gestores", title: "Equipo de Gestores", desc: "Equipo de Gestores de Innovación" },
+                        { href: "/gestores", title: "Gestores de Innovación", desc: "Equipo de Gestores de Innovación" },
+                        { href: "/salas", title: "Salas", desc: "Espacios educativos y ambientes de aprendizaje" },
                         { href: "/centro", title: "Centro Audiovisual", desc: "Centro de Experimentación Audiovisual del CID" },
                       ].map(({ href, title, desc }) => (
                         <li key={href}>
@@ -364,6 +362,18 @@ export default function Header() {
                   <Link href="/formacion">
                     <NavigationMenuLink className={topLevelNavLinkClass}>Formación</NavigationMenuLink>
                   </Link>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild className={topLevelNavLinkClass}>
+                    <a
+                      href="https://www.envigado.gov.co/transparencia"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Transparencia
+                    </a>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
 
                 {showCidKids && (
@@ -523,6 +533,7 @@ export default function Header() {
                     <div className="flex flex-col gap-1">
                       <Link href="/nosotros" className={mobileMenuItemClass} onClick={closeMobileMenu}>Nosotros</Link>
                       <Link href="/gestores" className={mobileMenuItemClass} onClick={closeMobileMenu}>Gestores</Link>
+                      <Link href="/salas" className={mobileMenuItemClass} onClick={closeMobileMenu}>Salas</Link>
                       <Link href="/centro" className={mobileMenuItemClass} onClick={closeMobileMenu}>Centro de Ciencia</Link>
                     </div>
                   </AccordionContent>
@@ -568,6 +579,15 @@ export default function Header() {
               </Accordion>
 
               <Link href="/formacion" className={mobileMenuItemClass} onClick={closeMobileMenu}>Formación</Link>
+              <a
+                href="https://www.envigado.gov.co/transparencia"
+                target="_blank"
+                rel="noreferrer"
+                className={mobileMenuItemClass}
+                onClick={closeMobileMenu}
+              >
+                Transparencia
+              </a>
               {showCidKids && (
                 <Link href="/cid-kids" className={mobileMenuItemClass} onClick={closeMobileMenu}>CID Kids</Link>
               )}

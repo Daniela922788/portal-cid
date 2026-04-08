@@ -18,6 +18,7 @@ import CIDKids from "./pages/CIDKids";
 import MesaAyuda from "./pages/MesaAyuda";
 import Convocatorias from "./pages/Convocatorias";
 import Formacion from "./pages/Formacion";
+import Salas from "./pages/Salas";
 import KitHerramientas from "./pages/KitHerramientas";
 import Enlaces from "./pages/Enlaces";
 import Normatividad from "./pages/Normatividad";
@@ -37,12 +38,12 @@ import CRMNew from "./pages/CRMNew";
 import LoadData from "./pages/LoadData";
 import EventosDetalle from "./pages/EventosDetalle";
 import Reconocimientos from "./pages/Reconocimientos";
-import SistemaSolar from "./pages/juegos/SistemaSolar";
+import SistemaSolar from "./pages/juegos/SistemaSolar.tsx";
 import Matematicas from "./pages/juegos/Matematicas";
 import FabricaInventos from "./pages/juegos/FabricaInventos";
-import EnvigadoCurioso from "./pages/juegos/EnvigadoCurioso";
+import EnvigadoCurioso from "./pages/juegos/EnvigadoCurioso.tsx";
 
-const ENABLE_CID_KIDS = false;
+const ENABLE_CID_KIDS = true;
 const ENABLE_PROYECTOS = false;
 
 function Router() {
@@ -69,6 +70,7 @@ function Router() {
           <Route path="/mesa-ayuda" component={MesaAyuda} />
           <Route path="/convocatorias" component={Convocatorias} />
           <Route path="/formacion" component={Formacion} />
+          <Route path="/salas" component={Salas} />
           <Route path="/kit-herramientas" component={KitHerramientas} />
           <Route path="/enlaces" component={Enlaces} />
           <Route path="/normatividad" component={Normatividad} />
