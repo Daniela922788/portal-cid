@@ -1,7 +1,8 @@
+import { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, MapPin, Phone, ExternalLink, LifeBuoy } from "lucide-react";
+import { Mail, MapPin, Phone, ExternalLink, LifeBuoy, ChevronDown } from "lucide-react";
 
 const canales = [
   {
@@ -27,8 +28,37 @@ const canales = [
   }
 ];
 
+const preguntasFrecuentes = [
+  {
+    pregunta: "¿Cómo puedo radicar una solicitud en el SAC?",
+    respuesta:
+      "Ingresa al botón 'Ingresar a SAC', inicia sesión y selecciona el tipo de solicitud. Completa los datos solicitados y guarda el número de radicado para seguimiento.",
+  },
+  {
+    pregunta: "¿Cuánto tarda la respuesta a una solicitud?",
+    respuesta:
+      "El tiempo depende del tipo de trámite. Generalmente recibirás una respuesta dentro de los tiempos establecidos por la normativa de atención al ciudadano.",
+  },
+  {
+    pregunta: "¿Puedo hacer seguimiento a mi caso?",
+    respuesta:
+      "Sí. Con el número de radicado puedes revisar el estado de tu solicitud directamente en la plataforma SAC.",
+  },
+  {
+    pregunta: "¿Qué información debo tener antes de contactarlos?",
+    respuesta:
+      "Te recomendamos tener documento de identidad, datos de contacto y una descripción clara de la solicitud. Si aplica, adjunta soportes en formato digital.",
+  },
+  {
+    pregunta: "¿Atienden de forma presencial?",
+    respuesta:
+      "Sí. También puedes visitarnos en la Biblioteca Pública y Parque Cultural Débora Arango, Envigado, para recibir orientación presencial.",
+  },
+];
+
 export default function MesaAyuda() {
   const totalCanales = 2;
+  const [faqAbierta, setFaqAbierta] = useState<number | null>(0);
 
   return (
     <div className="min-h-screen">
@@ -96,49 +126,65 @@ export default function MesaAyuda() {
           </div>
         </div>
 
-        {/* Botón SAC */}
-        <div className="mb-16">
-          <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-8 rounded-lg border-2 border-blue-300">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-              <div>
-                <h3 className="text-2xl font-bold mb-3">Sistema de Atención al Ciudadano (SAC)</h3>
-                <p className="text-gray-700">Aquí puedes realizar tus trámites y consultas de forma digital.</p>
-              </div>
-              <div className="flex-shrink-0">
-                <a href="https://sac2.gestionsecretariasdeeducacion.gov.co/app_Login/?sec=31" target="_blank" rel="noopener noreferrer">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg flex items-center gap-2">
-                    Ingresar a SAC
-                    <ExternalLink className="h-5 w-5" />
-                  </Button>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Preguntas Frecuentes */}
-        <div className="mb-16">
-          <div className="mb-8 rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 via-cyan-50 to-teal-50 p-6">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h3 className="text-xl font-semibold text-blue-900">Preguntas Frecuentes</h3>
-                <p className="mt-1 text-sm text-blue-800">
-                  Consulta el banco oficial de preguntas frecuentes del SAC.
-                </p>
-              </div>
-              <a
-                href="https://sac2.gestionsecretariasdeeducacion.gov.co/Ciu_PreguntasFrecuentesAreas_Busqueda/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button className="bg-blue-600 text-white hover:bg-blue-700">
-                  Ver preguntas frecuentes
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </Button>
-              </a>
+        <section className="mb-16">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <h3 className="text-3xl font-bold text-[#182130]">Preguntas frecuentes</h3>
+              <p className="mt-2 text-gray-600">
+                Resuelve las dudas más comunes antes de usar los canales de contacto.
+              </p>
             </div>
+            <a
+              href="https://sac2.gestionsecretariasdeeducacion.gov.co/Ciu_PreguntasFrecuentesAreas_Busqueda/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:inline-flex"
+            >
+            </a>
           </div>
-        </div>
+
+          <div className="space-y-3">
+            {preguntasFrecuentes.map((item, index) => (
+              <div
+                key={item.pregunta}
+                className={`rounded-xl border bg-white p-5 shadow-sm transition-colors ${
+                  faqAbierta === index ? "border-[#0D4B56]/35 bg-[#F8FBFB]" : "border-slate-200"
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setFaqAbierta((prev) => (prev === index ? null : index))}
+                  className="flex w-full items-center justify-between gap-4 text-left"
+                  aria-expanded={faqAbierta === index}
+                >
+                  <span className="pr-2 text-base font-semibold text-[#182130]">{item.pregunta}</span>
+                  <ChevronDown
+                    className={`h-5 w-5 shrink-0 text-[#0D4B56] transition-transform ${
+                      faqAbierta === index ? "rotate-180" : "rotate-0"
+                    }`}
+                  />
+                </button>
+
+                {faqAbierta === index && (
+                  <p className="mt-3 text-sm leading-relaxed text-slate-700">{item.respuesta}</p>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <a
+            href="https://sac2.gestionsecretariasdeeducacion.gov.co/Ciu_PreguntasFrecuentesAreas_Busqueda/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex md:hidden"
+          >
+            <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-50">
+              Banco oficial SAC
+              <ExternalLink className="ml-2 h-4 w-4" />
+            </Button>
+          </a>
+        </section>
 
         {/* Canales de Atención */}
         </div>

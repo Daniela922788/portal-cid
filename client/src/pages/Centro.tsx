@@ -256,7 +256,7 @@ export default function Centro() {
 
         <div className="absolute left-1/2 top-[50%] z-10 -translate-x-1/2 -translate-y-1/2 text-center md:left-1/2 md:-translate-x-1/2 md:top-1/2 md:text-center">
           <h1 className="text-lg font-black leading-tight text-white sm:text-5xl lg:text-7xl xl:text-8xl lg:whitespace-nowrap">
-            Centro Audiovisual
+            Aula de Experimentación Audiovisual
           </h1>
         </div>
 

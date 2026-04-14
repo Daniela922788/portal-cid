@@ -182,15 +182,16 @@ export default function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="mt-0 flex min-w-0 items-center transition-opacity hover:opacity-80 lg:-ml-40 lg:mt-13"
+            className="-ml-6 mt-0 flex min-w-0 items-center transition-opacity hover:opacity-80 lg:-ml-40 lg:mt-13"
           >
-            <img src={logoSrc} alt="Logo CID" className="h-[5rem] w-auto sm:h-[5.5rem] lg:h-[8rem]" />
+            <img src={logoSrc} alt="Logo CID" className="h-[3.75rem] w-auto md:h-[5.5rem] lg:h-[8rem]" />
           </Link>
 
           {/* Navegación desktop */}
           <nav className="hidden lg:flex items-center gap-7 mt-13">
             <NavigationMenu
               ref={desktopNavMenuRef}
+              viewport={false}
               value={desktopMenuOpen}
               onValueChange={(value) =>
                 setDesktopMenuOpen(
@@ -219,7 +220,7 @@ export default function Header() {
                   >
                     Quiénes somos
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent>
+                  <NavigationMenuContent className="md:left-1/2 md:-translate-x-1/2">
                     {/*
                       w-[500px] va aquí, en el <ul>, no en <NavigationMenuContent>.
                       grid-cols-2 + ítems con h-full aseguran que todas las celdas
@@ -230,7 +231,7 @@ export default function Header() {
                         { href: "/nosotros", title: "Nosotros", desc: "Misión, visión y valores del CID" },
                         { href: "/gestores", title: "Gestores de Innovación", desc: "Equipo de Gestores de Innovación" },
                         { href: "/salas", title: "Salas", desc: "Espacios educativos y ambientes de aprendizaje" },
-                        { href: "/centro", title: "Centro Audiovisual", desc: "Centro de Experimentación Audiovisual del CID" },
+                        { href: "/centro", title: "Aula de Experimentación Audiovisual", desc: "Aula de Experimentación Audiovisual del CID" },
                       ].map(({ href, title, desc }) => (
                         <li key={href}>
                           <Link href={href}>
@@ -260,7 +261,7 @@ export default function Header() {
                   >
                     Contenido
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent>
+                  <NavigationMenuContent className="md:left-1/2 md:-translate-x-1/2">
                     <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
                       {[
                         { href: "/noticias", title: "Noticias", desc: "Noticias y menciones del CID" },
@@ -299,7 +300,7 @@ export default function Header() {
                   >
                     Comunidad
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent>
+                  <NavigationMenuContent className="md:left-1/2 md:-translate-x-1/2">
                     <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
                       {[
                         { href: "/ie-oficiales", title: "IE Oficiales", desc: "Instituciones Educativas" },
@@ -334,7 +335,7 @@ export default function Header() {
                   >
                     Recursos
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent>
+                  <NavigationMenuContent className="md:left-1/2 md:-translate-x-1/2">
                     <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
                       {[
                         ...(showKitHerramientas

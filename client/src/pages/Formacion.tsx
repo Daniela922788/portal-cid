@@ -43,7 +43,7 @@ export default function Formacion() {
   const { data: cursos = [], isLoading } = trpc.courses.list.useQuery();
 
   // Opciones de filtros
-  const tematicas = ["Robótica", "Inteligencia Artificial", "Alfabetización Digital", "Diseño", "Animación", "Música", "Ciencia", "Fotografía", "Medio ambiente", "Podcast", "Edición", "Cocina", "Analítica", "Tecnología", "Creatividad", "Escritura"];
+  const tematicas = ["Robótica", "Inteligencia Artificial", "Alfabetización Digital", "Diseño", "Animación", "Música", "Ciencia", "Fotografía", "Medio ambiente", "Podcast", "Edición", "Cocina", "Analítica", "Tecnología", "Creatividad", "Escritura", "Audiovisual"];
   const tematicaAliases: Record<string, string[]> = {
     "Robótica": ["Robótica", "Robotica"],
     "Inteligencia Artificial": ["Inteligencia Artificial", "IA"],
@@ -51,7 +51,7 @@ export default function Formacion() {
     "Fotografía": ["Fotografía", "Fotografia"],
     "Edición": ["Edición", "Edicion"],
   };
-  const estados = ["En inscripciones", "En curso", "Finalizado"];
+  const estados = ["Abierto", "En inscripciones", "En curso", "Finalizado"];
   const edades = ["8 - 12", "12 a 18", "+18", "+60"];
   const edadBuckets: Record<string, { min: number; max: number }> = {
     "8 - 12": { min: 8, max: 12 },
@@ -114,32 +114,6 @@ export default function Formacion() {
       sesiones: [],
       proyectoFinal:
         "Como cierre del semillero, los estudiantes diseñaron, construyeron y perfeccionaron robots artesanales, los cuales fueron puestos a prueba en una actividad colaborativa donde aplicaron los conocimientos adquiridos durante las sesiones.",
-    },
-    {
-      id: "2",
-      titulo: "IA para Educadores",
-      tematica: "IA",
-      estado: "En curso",
-      edad: "18+ años",
-      lugar: "Lugar X",
-      fechas: ["15 de marzo - 30 de abril de 2026"],
-      sesiones: [
-        "2026-03-20",
-        "2026-03-27",
-        "2026-04-03",
-        "2026-04-17",
-        "2026-04-24",
-      ],
-      ano: 2026,
-      imagen: "/Formacion/Ecard%20STEAMER%20KIDS.jpeg",
-      subtitulo: "Curso sobre aplicaciones de inteligencia artificial en educación.",
-      descripcion: ["Contenido del curso..."],
-      trabajado: ["Tema 1", "Tema 2"],
-      enfoque: "Enfoque pedagógico...",
-      metodologias: ["Método 1", "Método 2"],
-      enfoqueCierre: "Conclusión...",
-      competencias: ["Competencia 1"],
-      proyectoFinal: "Proyecto final...",
     },
     {
       id: "3",
@@ -824,6 +798,240 @@ export default function Formacion() {
       competencias: ["Escritura creativa", "Narración", "Expresión emocional", "Comunicación"],
       proyectoFinal: "Producción de un relato navideño original con componentes sonoros y narrativos.",
     },
+    {
+      id: "2026-1",
+      titulo: "De Jugador a Creador",
+      tematica: "Tecnología",
+      estado: "Abierto",
+      edad: "6 a 8 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["21 de abril de 2026"],
+      sesiones: ["2026-04-21"],
+      ano: 2026,
+      imagen: "/Formación 2026/De Jugador a Creador.png",
+      subtitulo: "Curso enfocado en la creación de videojuegos para primeras infancias.",
+      descripcion: [
+        "Curso enfocado en la creación de videojuegos, donde los participantes aprendieron fundamentos de diseño, lógica de programación y desarrollo de entornos interactivos. A través de herramientas digitales, pasaron de jugar a construir sus propias experiencias.",
+      ],
+      trabajado: [
+        "Fundamentos de diseño de videojuegos",
+        "Lógica de programación",
+        "Desarrollo de entornos interactivos",
+      ],
+      enfoque: "Aprendizaje creativo para transformar el juego en experiencias digitales propias.",
+      metodologias: ["Aprendizaje basado en retos", "Exploración guiada", "Creación digital"],
+      enfoqueCierre: "Fortalecimiento de pensamiento lógico y creatividad desde el diseño de videojuegos.",
+      competencias: ["Pensamiento lógico", "Creatividad", "Resolución de problemas", "Competencias digitales"],
+      proyectoFinal: "Construcción de una experiencia básica de videojuego.",
+    },
+    {
+      id: "2026-2",
+      titulo: "Docentes que enseñan con IA",
+      tematica: "Tecnología",
+      estado: "Abierto",
+      edad: "Adultos",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["15 de abril de 2026"],
+      sesiones: ["2026-04-15"],
+      ano: 2026,
+      imagen: "/Formación 2026/Docentes que enseñan con IA.png",
+      subtitulo: "Bootcamp orientado al uso pedagógico de herramientas de inteligencia artificial.",
+      descripcion: [
+        "Bootcamp orientado a docentes para el uso pedagógico de herramientas de inteligencia artificial en el aula. Durante las sesiones, exploraron aplicaciones prácticas para innovar en sus metodologías de enseñanza y fortalecer sus procesos educativos.",
+      ],
+      trabajado: [
+        "Uso pedagógico de herramientas de IA",
+        "Aplicaciones prácticas para el aula",
+        "Innovación en metodologías de enseñanza",
+      ],
+      enfoque: "Integración pedagógica de la inteligencia artificial en contextos educativos.",
+      metodologias: ["Bootcamp", "Laboratorio práctico", "Aplicación a casos pedagógicos"],
+      enfoqueCierre: "Diseño de experiencias de aula apoyadas por IA.",
+      competencias: ["Innovación educativa", "Competencia digital docente", "Diseño pedagógico"],
+      proyectoFinal: "Diseño de una estrategia de enseñanza con apoyo de IA.",
+    },
+    {
+      id: "2026-3",
+      titulo: "Emprende en video",
+      tematica: "Audiovisual",
+      estado: "Abierto",
+      edad: "Adultos",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["21 de abril de 2026"],
+      sesiones: ["2026-04-21"],
+      ano: 2026,
+      imagen: "/Formación 2026/Emprende en video.png",
+      subtitulo: "Curso práctico de creación y edición de video para emprendimientos.",
+      descripcion: [
+        "Curso práctico enfocado en la creación y edición de videos para fortalecer la presencia digital de emprendimientos. Los participantes aprendieron a producir contenido audiovisual con fines comerciales, potenciando sus estrategias de comunicación y ventas.",
+      ],
+      trabajado: [
+        "Creación de contenido audiovisual",
+        "Edición de video para fines comerciales",
+        "Estrategias de comunicación y ventas",
+      ],
+      enfoque: "Producción audiovisual aplicada al fortalecimiento de emprendimientos.",
+      metodologias: ["Taller práctico", "Producción guiada", "Aplicación comercial"],
+      enfoqueCierre: "Potenciación de la presencia digital a través del video.",
+      competencias: ["Producción audiovisual", "Comunicación digital", "Creatividad aplicada"],
+      proyectoFinal: "Producción de una pieza de video para promocionar un emprendimiento.",
+    },
+    {
+      id: "2026-4",
+      titulo: "Ciudadanos del Cosmos: el cielo de Envigado",
+      tematica: "Ciencia",
+      estado: "Abierto",
+      edad: "14 a 17 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["23 de abril de 2026"],
+      sesiones: ["2026-04-23"],
+      ano: 2026,
+      imagen: "/Formación 2026/Ciudadanos del Cosmos el cielo de Envigado.png",
+      subtitulo: "Curso teórico-práctico para explorar el universo desde una mirada científica.",
+      descripcion: [
+        "Curso teórico-práctico enfocado en la exploración del universo, donde los participantes desarrollaron habilidades científicas para comprender fenómenos astronómicos. A través de actividades formativas, pasaron de la observación a la validación de conceptos físicos y científicos.",
+      ],
+      trabajado: [
+        "Exploración del universo",
+        "Comprensión de fenómenos astronómicos",
+        "Validación de conceptos físicos y científicos",
+      ],
+      enfoque: "Aprendizaje científico basado en observación, análisis y exploración astronómica.",
+      metodologias: ["Taller teórico-práctico", "Observación guiada", "Análisis científico"],
+      enfoqueCierre: "Fortalecimiento del pensamiento científico mediante la astronomía.",
+      competencias: ["Pensamiento científico", "Observación", "Análisis crítico"],
+      proyectoFinal: "Socialización de aprendizajes sobre fenómenos astronómicos y físicos.",
+    },
+    {
+      id: "2026-5",
+      titulo: "IA para la gestión educativa",
+      tematica: "Inteligencia Artificial",
+      estado: "En curso",
+      edad: "Adultos",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["21 de abril de 2026"],
+      sesiones: ["2026-04-21"],
+      ano: 2026,
+      imagen: "/Formación 2026/IA para la gestión educativa.png",
+      subtitulo: "Aplicación de inteligencia artificial en procesos educativos y administrativos.",
+      descripcion: [
+        "El curso IA para la gestión educativa es una experiencia formativa dirigida a funcionarios, enfocada en la aplicación de la inteligencia artificial en procesos educativos y administrativos. A través de sesiones prácticas, los participantes exploran herramientas digitales que fortalecen la eficiencia, la toma de decisiones y la innovación en el ámbito educativo.",
+      ],
+      trabajado: [
+        "Aplicación de IA en procesos educativos",
+        "Uso de herramientas digitales para eficiencia administrativa",
+        "Innovación y toma de decisiones",
+      ],
+      enfoque: "Transformación de la gestión educativa mediante inteligencia artificial.",
+      metodologias: ["Sesiones prácticas", "Resolución de casos", "Aplicación institucional"],
+      enfoqueCierre: "Optimización de procesos y toma de decisiones en educación.",
+      competencias: ["Gestión educativa", "Competencia digital", "Innovación institucional"],
+      proyectoFinal: "Diseño de una mejora de proceso educativo apoyada por IA.",
+    },
+    {
+      id: "2026-6",
+      titulo: "Gobierno digital inteligente",
+      tematica: "Inteligencia Artificial",
+      estado: "En curso",
+      edad: "Adultos",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["22 de abril de 2026"],
+      sesiones: ["2026-04-22"],
+      ano: 2026,
+      imagen: "/Formación 2026/Gobierno digital inteligente.png",
+      subtitulo: "Formación en uso de IA para fortalecer la gestión pública e institucional.",
+      descripcion: [
+        "El curso Gobierno digital inteligente es una formación dirigida a funcionarios, enfocada en el uso de la inteligencia artificial para fortalecer la gestión pública y la innovación institucional. A través de sesiones prácticas, los participantes exploran herramientas digitales que optimizan procesos, mejoran la toma de decisiones y promueven una administración más eficiente.",
+      ],
+      trabajado: [
+        "Uso de IA en gestión pública",
+        "Optimización de procesos institucionales",
+        "Mejora de toma de decisiones",
+      ],
+      enfoque: "Innovación pública orientada a una administración más eficiente.",
+      metodologias: ["Formación práctica", "Estudio de casos", "Aplicación institucional"],
+      enfoqueCierre: "Fortalecimiento de capacidades para gobierno digital.",
+      competencias: ["Transformación digital", "Innovación pública", "Análisis para decisión"],
+      proyectoFinal: "Propuesta de mejora de un proceso institucional con apoyo de IA.",
+    },
+    {
+      id: "2026-7",
+      titulo: "Mujeres que usan la IA para la vida cotidiana",
+      tematica: "Inteligencia Artificial",
+      estado: "En curso",
+      edad: "18 años en adelante",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["8 de mayo de 2026"],
+      sesiones: ["2026-05-08"],
+      ano: 2026,
+      imagen: "/Formación 2026/Mujeres que usan la IA para la vida cotidiana.png",
+      subtitulo: "Espacio formativo para el uso práctico de IA en la vida diaria.",
+      descripcion: [
+        "El curso Mujeres que usan la IA para la vida cotidiana es un espacio formativo dirigido a mujeres, enfocado en el uso práctico de la inteligencia artificial y herramientas digitales en la vida diaria. A través de sesiones dinámicas, las participantes fortalecen habilidades tecnológicas básicas, promoviendo la autonomía, el aprendizaje continuo y el aprovechamiento de la tecnología en su entorno cotidiano.",
+      ],
+      trabajado: [
+        "Uso práctico de herramientas de IA",
+        "Fortalecimiento de habilidades tecnológicas básicas",
+        "Aprovechamiento de tecnología en el entorno cotidiano",
+      ],
+      enfoque: "Apropiación tecnológica para autonomía y aprendizaje continuo.",
+      metodologias: ["Sesiones dinámicas", "Prácticas guiadas", "Aprendizaje aplicado"],
+      enfoqueCierre: "Promoción de autonomía y uso consciente de herramientas digitales.",
+      competencias: ["Alfabetización digital", "Autonomía tecnológica", "Aprendizaje continuo"],
+      proyectoFinal: "Aplicación de herramientas de IA en situaciones cotidianas reales.",
+    },
+    {
+      id: "2026-8",
+      titulo: "Código en Juego",
+      tematica: "Tecnología",
+      estado: "En inscripciones",
+      edad: "7 a 13 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["22 de abril de 2026"],
+      sesiones: ["2026-04-22"],
+      ano: 2026,
+      imagen: "/Formación 2026/Código en Juego.png",
+      subtitulo: "Curso de programación con retos para desarrollar pensamiento lógico.",
+      descripcion: [
+        "El curso Código en Juego es un espacio formativo dirigido a niños y niñas, enfocado en el desarrollo de habilidades de pensamiento lógico y resolución de problemas a través de retos de programación. Mediante actividades prácticas, los participantes fortalecen su creatividad, pensamiento crítico y competencias digitales en un entorno dinámico y participativo.",
+      ],
+      trabajado: [
+        "Retos de programación",
+        "Pensamiento lógico",
+        "Resolución de problemas",
+      ],
+      enfoque: "Aprendizaje activo de programación para infancia y adolescencia.",
+      metodologias: ["Retos prácticos", "Gamificación", "Trabajo participativo"],
+      enfoqueCierre: "Consolidación de pensamiento crítico y creatividad digital.",
+      competencias: ["Pensamiento lógico", "Creatividad", "Competencias digitales", "Resolución de problemas"],
+      proyectoFinal: "Desarrollo de un reto de programación resuelto en equipo.",
+    },
+    {
+      id: "2026-9",
+      titulo: "Robótica: De 0 a prototipo",
+      tematica: "Robótica",
+      estado: "En inscripciones",
+      edad: "14 a 17 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["30 de abril de 2026"],
+      sesiones: ["2026-04-30"],
+      ano: 2026,
+      imagen: "/Formación 2026/Robótica De 0 a prototipo.png",
+      subtitulo: "Curso STEM para diseñar, construir y programar robots funcionales.",
+      descripcion: [
+        "El curso Robótica: De 0 a prototipo es un espacio formativo dirigido a adolescentes, enfocado en el diseño, construcción y programación de robots mediante un enfoque STEM. A través de proyectos prácticos, los participantes desarrollan habilidades en electrónica, programación e integración de sensores, creando prototipos funcionales capaces de ejecutar tareas autónomas o controladas.",
+      ],
+      trabajado: [
+        "Diseño y construcción de robots",
+        "Programación e integración de sensores",
+        "Prototipado funcional",
+      ],
+      enfoque: "Aprendizaje STEM orientado a la creación de prototipos robóticos.",
+      metodologias: ["Proyectos prácticos", "Prototipado", "Experimentación guiada"],
+      enfoqueCierre: "Desarrollo de soluciones robóticas funcionales con aplicación práctica.",
+      competencias: ["Electrónica básica", "Programación", "Pensamiento ingenieril", "Trabajo en equipo"],
+      proyectoFinal: "Construcción y prueba de un prototipo robótico funcional.",
+    },
   ];
 
   const ecardTagStyles: Record<string, string> = {
@@ -852,6 +1060,10 @@ export default function Formacion() {
 
     if (normalized.includes("adultos mayores")) {
       return { min: 60, max: Number.POSITIVE_INFINITY };
+    }
+
+    if (normalized.includes("adultos")) {
+      return { min: 18, max: Number.POSITIVE_INFINITY };
     }
 
     const plusMatch = normalized.match(/(\d+)\s*\+/);
@@ -1010,6 +1222,15 @@ export default function Formacion() {
       "Crea con la naturaleza",
       "Navidad en Pixel",
       "Reescribiendo la Navidad",
+      "De Jugador a Creador",
+      "Docentes que enseñan con IA",
+      "Emprende en video",
+      "Ciudadanos del Cosmos: el cielo de Envigado",
+      "IA para la gestión educativa",
+      "Gobierno digital inteligente",
+      "Mujeres que usan la IA para la vida cotidiana",
+      "Código en Juego",
+      "Robótica: De 0 a prototipo",
     ].map(normalizeCourseTitle)
   );
 
@@ -1044,6 +1265,16 @@ export default function Formacion() {
       return Array.from(new Set(points));
     };
 
+    const getNearestSnapIndex = (scrollLeft: number, points: number[]) => {
+      if (points.length === 0) return 0;
+
+      return points.reduce((bestIdx, point, idx) => {
+        const bestDistance = Math.abs(points[bestIdx] - scrollLeft);
+        const currentDistance = Math.abs(point - scrollLeft);
+        return currentDistance < bestDistance ? idx : bestIdx;
+      }, 0);
+    };
+
     const scrollByCard = (direction: -1 | 1) => {
       const track = trackRef.current;
       if (!track) return;
@@ -1051,12 +1282,7 @@ export default function Formacion() {
       const points = getCardSnapPoints();
       if (points.length === 0) return;
 
-      const current = track.scrollLeft;
-      const currentIndex = points.reduce((bestIdx, point, idx) => {
-        const bestDistance = Math.abs(points[bestIdx] - current);
-        const currentDistance = Math.abs(point - current);
-        return currentDistance < bestDistance ? idx : bestIdx;
-      }, 0);
+      const currentIndex = getNearestSnapIndex(track.scrollLeft, points);
 
       const nextIndex = Math.min(points.length - 1, Math.max(0, currentIndex + direction));
       track.scrollTo({ left: points[nextIndex], behavior: "smooth" });
@@ -1089,12 +1315,10 @@ export default function Formacion() {
       if (!track) return;
 
       const syncPagination = () => {
-        const nextPageCount = Math.max(1, Math.ceil(track.scrollWidth / track.clientWidth));
+        const points = getCardSnapPoints();
+        const nextPageCount = Math.max(1, points.length);
         setPageCount(nextPageCount);
-        const nextIndex = Math.min(
-          nextPageCount - 1,
-          Math.max(0, Math.round(track.scrollLeft / track.clientWidth))
-        );
+        const nextIndex = Math.min(nextPageCount - 1, getNearestSnapIndex(track.scrollLeft, points));
         setCarouselIndex(nextIndex);
       };
 
@@ -1111,27 +1335,35 @@ export default function Formacion() {
     const scrollToPage = (page: number) => {
       const track = trackRef.current;
       if (!track) return;
-      track.scrollTo({ left: track.clientWidth * page, behavior: "smooth" });
+
+      const points = getCardSnapPoints();
+      const targetPoint = points[page];
+      if (targetPoint === undefined) return;
+
+      track.scrollTo({ left: targetPoint, behavior: "smooth" });
     };
 
     return (
-      <div className="mb-12">
-        <h2 className="mb-6 text-2xl font-bold text-[#182130]">{title}</h2>
+      <div className="mb-10">
+        <div className="mb-5 flex items-center justify-between gap-4">
+          <div>
+            <h3 className="text-2xl font-bold text-[#182130]">{title}</h3>
+            <p className="mt-1 text-sm text-[#0D4B56]/75">{items.length} cursos disponibles</p>
+          </div>
+        </div>
+
         {orderedItems.length === 0 ? (
-          <div className="rounded-lg bg-[#11B2AA]/8 py-12 text-center">
-            <BookOpen className="mx-auto mb-2 h-12 w-12 text-[#0D4B56]/70" />
-            <p className="text-[#0D4B56]/80">
-              No hay cursos disponibles en esta categoría
-            </p>
+          <div className="rounded-2xl border border-dashed border-[#0D4B56]/20 bg-white/70 px-6 py-10 text-center text-sm text-slate-600">
+            No hay cursos para mostrar en esta sección con los filtros actuales.
           </div>
         ) : (
           <div className="relative">
             <button
               type="button"
               onClick={() => scrollByCard(-1)}
-              aria-label={`Anterior en ${title}`}
-              disabled={carouselIndex === 0}
+              disabled={carouselIndex <= 0}
               className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40"
+              aria-label={`Retroceder en ${title}`}
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -1139,9 +1371,9 @@ export default function Formacion() {
             <button
               type="button"
               onClick={() => scrollByCard(1)}
-              aria-label={`Siguiente en ${title}`}
               disabled={carouselIndex >= pageCount - 1}
               className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40"
+              aria-label={`Avanzar en ${title}`}
             >
               <ChevronRight className="h-5 w-5" />
             </button>
@@ -1160,59 +1392,57 @@ export default function Formacion() {
                   const isWideImageCourse = wideImageCourseTitles.has(normalizeCourseTitle(ecard.titulo));
 
                   return (
-                  <button
-                    key={ecard.id}
-                    data-ecard-card="true"
-                    type="button"
-                    onClick={() => {
-                      setSelectedEcard(ecard);
-                      setEcardOpen(true);
-                    }}
-                    className="group flex h-full snap-start snap-always flex-col overflow-hidden rounded-2xl border border-[#0D4B56]/15 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
-                    style={{
-                      flex: isWideImageCourse
-                        ? `0 0 calc(((100% - ${(visibleCards - 1) * gapPx}px) / ${visibleCards}) * ${wideCardWidthMultiplier})`
-                        : `0 0 calc((100% - ${(visibleCards - 1) * gapPx}px) / ${visibleCards})`,
-                    }}
-                    aria-label={`Abrir ${ecard.titulo}`}
-                  >
-                    <div className="flex h-[22rem] items-start justify-center overflow-hidden bg-[#11B2AA]/6 pt-3 sm:h-[24rem] lg:h-[25rem]">
-                      <picture className="contents">
-                        <source srcSet={toWebp(ecard.imagen)} type="image/webp" />
-                        <img
-                          src={ecard.imagen}
-                          alt={ecard.titulo}
-                          loading="lazy"
-                          decoding="async"
-                          className={`h-full w-full transition-transform duration-300 group-hover:scale-[1.02] ${
-                            isWideImageCourse ? "object-cover object-center" : "object-contain object-top"
-                          }`}
-                        />
-                      </picture>
-                    </div>
-                    <div className="flex min-h-[11.5rem] flex-1 flex-col bg-[#0D4B56]/[0.04] px-3 py-3">
-                      <p className="mb-2 line-clamp-2 text-sm font-bold text-[#182130]">
-                        {ecard.titulo}
-                      </p>
-                      <div className="-ml-0.5 mt-1 flex flex-wrap content-start gap-1.5">
-                        <Badge variant="outline" className={`max-w-full whitespace-normal break-words text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.tematica}`}>
-                          {ecard.tematica}
-                        </Badge>
-                        <Badge variant="outline" className={`max-w-full whitespace-normal break-words text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.edad}`}>
-                          {ecard.edad}
-                        </Badge>
-                        <Badge variant="outline" className={`max-w-full whitespace-normal break-words text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.fechas}`}>
-                          {ecard.fechas[0]}
-                        </Badge>
-                        <Badge variant="outline" className={`max-w-full whitespace-normal break-words text-xs rounded-full px-2 py-0.5 ${ecardTagStyles.estado}`}>
-                          {ecard.estado}
-                        </Badge>
-                        <Badge variant="outline" className={`max-w-full whitespace-normal break-words text-xs leading-4 rounded-full px-2 py-0.5 text-left ${ecardTagStyles.lugar}`}>
-                          {ecard.lugar}
-                        </Badge>
+                    <button
+                      key={ecard.id}
+                      data-ecard-card="true"
+                      type="button"
+                      onClick={() => {
+                        setSelectedEcard(ecard);
+                        setEcardOpen(true);
+                      }}
+                      className="group flex h-full snap-start snap-always flex-col overflow-hidden rounded-2xl border border-[#0D4B56]/15 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+                      style={{
+                        flex: isWideImageCourse
+                          ? `0 0 calc(((100% - ${(visibleCards - 1) * gapPx}px) / ${visibleCards}) * ${wideCardWidthMultiplier})`
+                          : `0 0 calc((100% - ${(visibleCards - 1) * gapPx}px) / ${visibleCards})`,
+                      }}
+                      aria-label={`Abrir ${ecard.titulo}`}
+                    >
+                      <div className="flex h-[22rem] items-start justify-center overflow-hidden bg-[#11B2AA]/6 pt-3 sm:h-[24rem] lg:h-[25rem]">
+                        <picture className="contents">
+                          <source srcSet={toWebp(ecard.imagen)} type="image/webp" />
+                          <img
+                            src={ecard.imagen}
+                            alt={ecard.titulo}
+                            loading="lazy"
+                            decoding="async"
+                            className={`h-full w-full transition-transform duration-300 group-hover:scale-[1.02] ${
+                              isWideImageCourse ? "object-cover object-center" : "object-contain object-top"
+                            }`}
+                          />
+                        </picture>
                       </div>
-                    </div>
-                  </button>
+                      <div className="flex min-h-[11.5rem] flex-1 flex-col bg-[#0D4B56]/[0.04] px-3 py-3">
+                        <p className="mb-2 line-clamp-2 text-sm font-bold text-[#182130]">{ecard.titulo}</p>
+                        <div className="-ml-0.5 mt-1 flex flex-wrap content-start gap-1.5">
+                          <Badge variant="outline" className={`max-w-full whitespace-normal break-words rounded-full px-2 py-0.5 text-xs ${ecardTagStyles.tematica}`}>
+                            {ecard.tematica}
+                          </Badge>
+                          <Badge variant="outline" className={`max-w-full whitespace-normal break-words rounded-full px-2 py-0.5 text-xs ${ecardTagStyles.edad}`}>
+                            {ecard.edad}
+                          </Badge>
+                          <Badge variant="outline" className={`max-w-full whitespace-normal break-words rounded-full px-2 py-0.5 text-xs ${ecardTagStyles.fechas}`}>
+                            {ecard.fechas[0]}
+                          </Badge>
+                          <Badge variant="outline" className={`max-w-full whitespace-normal break-words rounded-full px-2 py-0.5 text-xs ${ecardTagStyles.estado}`}>
+                            {ecard.estado}
+                          </Badge>
+                          <Badge variant="outline" className={`max-w-full whitespace-normal break-words rounded-full px-2 py-0.5 text-left text-xs leading-4 ${ecardTagStyles.lugar}`}>
+                            {ecard.lugar}
+                          </Badge>
+                        </div>
+                      </div>
+                    </button>
                   );
                 })}
               </div>

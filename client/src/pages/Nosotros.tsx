@@ -60,6 +60,11 @@ interface Gestor {
 }
 
 const toWebp = (src: string) => (typeof src === "string" ? src.replace(/\.(jpe?g|png)$/i, ".webp") : src);
+const NO_WEBP_FALLBACK = new Set(["/gestores/Zuleima.jpg"]);
+const getWebpSrc = (src: string) => {
+  if (NO_WEBP_FALLBACK.has(src)) return null;
+  return toWebp(src);
+};
 
 export default function Nosotros() {
   const containerRef = useRef(null);
@@ -76,6 +81,7 @@ export default function Nosotros() {
   const [gestoresCarouselIndex, setGestoresCarouselIndex] = useState(0);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [timelineMobileIndex, setTimelineMobileIndex] = useState(0);
+  const timelineTouchStartXRef = useRef<number | null>(null);
 
   const quickSections = [
     { id: "lo-que-hacemos", title: "Lo que Hacemos y Cómo Impactamos" },
@@ -306,15 +312,16 @@ export default function Nosotros() {
     { id: 5, nombre: "Daniela Jaramillo Hoyos", cargo: "Directora de Innovación", foto: DanielaImg },
     { id: 1, nombre: "Alexander Heredia Heredia", cargo: "Profesional Universitario", foto: AlexImg },
     { id: 12, nombre: "Yethy Gisela Granda Zapata", cargo: "Coordinadora Gestores Innovación - UPB", foto: YethyImg },
-    { id: 2, nombre: "Angela María González Valencia", cargo: "Asistente Administrativa - UPB", foto: AngelaImg },
     { id: 4, nombre: "Carolina Tabres Isaza", cargo: "Técnico Operativo", foto: CaroImg },
+    { id: 14, nombre: "María Zuleima Arango Sánchez", cargo: "Profeseional Universitaria", foto: "/gestores/Zuleima.jpg" },
     { id: 9, nombre: "Jhon Fredy Ríos Montoya", cargo: "Profesional Universitario", foto: JhonImg },
+    { id: 2, nombre: "Angela María González Valencia", cargo: "Asistente Administrativa - UPB", foto: AngelaImg },
     { id: 3, nombre: "Juan Camilo Álvarez Bedoya", cargo: "Contratista", foto: CamiloImg },
-    { id: 6, nombre: "Dubiel Enrique Restrepo Marulanda", cargo: "Contratista", foto: DubielImg },
-    { id: 8, nombre: "Jairo Alberto Muñoz Díaz", cargo: "Contratista", foto: JairoImg },
     { id: 13, nombre: "Daniela Serna Gallego", cargo: "Programadora - UPB", foto: "/gestores/Daniela%20SG.png" },
     { id: 10, nombre: "John Fredis Carmona Calderin", cargo: "Técnico Audiovisual - UPB", foto: JohnImg },
     { id: 11, nombre: "Jorge Guzmán Ruiz", cargo: "Técnico Audiovisual - UPB", foto: JorgeImg },
+    { id: 6, nombre: "Dubiel Enrique Restrepo Marulanda", cargo: "Contratista", foto: DubielImg },
+    { id: 8, nombre: "Jairo Alberto Muñoz Díaz", cargo: "Contratista", foto: JairoImg },
     { id: 7, nombre: "Hernán Alberto Maury Andrade", cargo: "Soporte Técnico de Tigo", foto: HernanImg },
   ];
 
@@ -443,6 +450,29 @@ export default function Nosotros() {
 
   const goTimelineMobileNext = () => {
     setTimelineMobileIndex((prev) => Math.min(timelineMobileMaxIndex, prev + 1));
+  };
+
+  const handleTimelineTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    timelineTouchStartXRef.current = event.changedTouches[0]?.clientX ?? null;
+  };
+
+  const handleTimelineTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    const startX = timelineTouchStartXRef.current;
+    const endX = event.changedTouches[0]?.clientX;
+
+    if (startX == null || endX == null) return;
+
+    const deltaX = startX - endX;
+    const swipeThreshold = 40;
+
+    if (Math.abs(deltaX) < swipeThreshold) return;
+
+    if (deltaX > 0) {
+      goTimelineMobileNext();
+      return;
+    }
+
+    goTimelineMobilePrev();
   };
 
   useEffect(() => {
@@ -655,7 +685,11 @@ export default function Nosotros() {
             </motion.div>
 
             {/* Timeline carrusel móvil */}
-            <div className="relative left-1/2 w-screen -translate-x-1/2 px-3 md:hidden">
+            <div
+              className="relative left-1/2 w-screen -translate-x-1/2 px-3 md:hidden"
+              onTouchStart={handleTimelineTouchStart}
+              onTouchEnd={handleTimelineTouchEnd}
+            >
               <div className="relative">
                 <div className="pointer-events-none absolute left-3 right-3 top-[18px] h-1 rounded-full bg-gradient-to-r from-blue-500 via-teal-500 to-green-500 opacity-35" />
 
@@ -807,7 +841,7 @@ export default function Nosotros() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="-mt-10 border-t border-gray-200 text-center"
+              className="mt-8 border-t border-gray-200 pt-4 text-center md:-mt-10 md:pt-0"
             >
               <p className="text-gray-600 text-lg font-semibold mb-4">
                 Continuamos innovando y creciendo cada día
@@ -887,8 +921,13 @@ export default function Nosotros() {
                     }}
                   >
                     <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
+                      {/** Some photos only exist as JPG/PNG in public and do not have WEBP siblings. */}
+                      {/** Keep size/layout identical and only skip WEBP source for those specific files. */}
+                      {(() => {
+                        const webpSrc = getWebpSrc(persona.foto);
+                        return (
                       <picture className="contents">
-                        <source srcSet={toWebp(persona.foto)} type="image/webp" />
+                        {webpSrc && <source srcSet={webpSrc} type="image/webp" />}
                         <img
                           src={persona.foto}
                           alt={persona.nombre}
@@ -897,6 +936,8 @@ export default function Nosotros() {
                           className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-3 sm:py-6"
                         />
                       </picture>
+                        );
+                      })()}
                     </div>
 
                     <div className="px-4 py-4 text-center sm:px-6 sm:py-6">
@@ -959,13 +1000,13 @@ export default function Nosotros() {
               alt="Equipo de gestores de innovación"
               loading="lazy"
               decoding="async"
-              className="h-[420px] w-full object-cover object-top transition-all duration-300 group-hover:brightness-90 sm:h-[820px] lg:h-[820px]"
+              className="h-auto w-full transition-all duration-300 group-hover:brightness-90 sm:h-[820px] sm:object-cover sm:object-top lg:h-[820px]"
             />
           </Link>
         </div>
       </section>
 
-      <div style={{ width: "100%" }}>
+      <div className="pb-8 md:pb-12" style={{ width: "100%" }}>
         <div
           style={{
             position: "relative",

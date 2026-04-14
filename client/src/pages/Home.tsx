@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import CoursesCarouselNew from "@/components/CoursesCarouselNew";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,57 @@ export default function Home() {
   // Users can login via the header button
   const showCoursesCarousel = false;
   const showCidKids = false;
+  const videosShorts = [
+    {
+      id: "QLJqKHyzcnU",
+      titulo: "Capsula STEM 1",
+    },
+    {
+      id: "spMFXEUCEX8",
+      titulo: "Capsula STEM 2",
+    },
+    {
+      id: "R3-OXQd-Fp4",
+      titulo: "Capsula STEM 3",
+    },
+  ];
+  const [videoIndex, setVideoIndex] = useState(0);
+  const mobileVideoSectionRef = useRef<HTMLElement | null>(null);
+  const hasAutoCenteredMobileRef = useRef(false);
+
+  const goPrevVideo = () => {
+    setVideoIndex((prev) => (prev - 1 + videosShorts.length) % videosShorts.length);
+  };
+
+  const goNextVideo = () => {
+    setVideoIndex((prev) => (prev + 1) % videosShorts.length);
+  };
+
+  const currentVideo = videosShorts[videoIndex];
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.innerWidth >= 768) return;
+
+    const section = mobileVideoSectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (!entry?.isIntersecting || hasAutoCenteredMobileRef.current) return;
+
+        hasAutoCenteredMobileRef.current = true;
+        section.scrollIntoView({ behavior: "smooth", block: "center" });
+      },
+      {
+        threshold: 0.35,
+      }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -160,6 +212,75 @@ export default function Home() {
             </div>
           </div>
         </section>
+      </section>
+
+      {/* Carrusel de videos STEM */}
+      <section ref={mobileVideoSectionRef} className="relative overflow-hidden py-10 md:py-16">
+        <img
+          src="/Fondos/6.png"
+          alt="Fondo sección de videos móvil"
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover md:hidden"
+        />
+        <img
+          src="/Fondos/5.png"
+          alt="Fondo sección de videos"
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 hidden h-full w-full object-contain md:block"
+        />
+
+        <div className="container relative z-10">
+          <div className="relative flex min-h-[650px] items-center justify-center md:min-h-[900px]">
+            <div className="relative">
+              <button
+                type="button"
+                onClick={goPrevVideo}
+                aria-label="Video anterior"
+                className="absolute left-0 top-1/2 z-20 -translate-x-[115%] -translate-y-1/2 rounded-full border border-white/55 bg-black/35 p-2 text-white transition hover:bg-black/55"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+
+              <div className="relative w-[340px] overflow-hidden rounded-[2.8rem] border-[5px] border-white/85 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.55)] sm:w-[420px] md:w-[520px]">
+                <div className="pointer-events-none absolute left-1/2 top-2 z-10 h-1.5 w-16 -translate-x-1/2 rounded-full bg-white/70" />
+                <iframe
+                  key={currentVideo.id}
+                  src={`https://www.youtube.com/embed/${currentVideo.id}?autoplay=1&mute=1&loop=1&playlist=${currentVideo.id}&playsinline=1&rel=0&modestbranding=1`}
+                  title={currentVideo.titulo}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="aspect-[9/16] w-full"
+                />
+              </div>
+
+              <button
+                type="button"
+                onClick={goNextVideo}
+                aria-label="Siguiente video"
+                className="absolute right-0 top-1/2 z-20 translate-x-[115%] -translate-y-1/2 rounded-full border border-white/55 bg-black/35 p-2 text-white transition hover:bg-black/55"
+              >
+                <ChevronLeft className="h-5 w-5 rotate-180" />
+              </button>
+
+              <div className="mt-4 flex justify-center gap-2">
+              {videosShorts.map((video, index) => (
+                <button
+                  key={video.id}
+                  type="button"
+                  onClick={() => setVideoIndex(index)}
+                  aria-label={`Ir al video ${index + 1}`}
+                  className={`h-2 rounded-full transition-all ${
+                    videoIndex === index ? "w-8 bg-white" : "w-2 bg-white/45"
+                  }`}
+                />
+              ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Banner Semana STEM */}
