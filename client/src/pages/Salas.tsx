@@ -369,7 +369,7 @@ export default function Salas() {
 
 			{salaSeleccionada && slideActual && (
 				<div
-					className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 py-6"
+					className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/70 px-4 py-6 sm:items-center"
 					onClick={() => {
 						setSalaSeleccionada(null);
 						setReservaAbierta(false);
@@ -469,7 +469,6 @@ export default function Salas() {
 			{reservaAbierta && salaSeleccionada && (
 				<div
 					className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 px-4 py-6"
-					onClick={cerrarReserva}
 					role="dialog"
 					aria-modal="true"
 					aria-label={`Formulario de reserva para ${salaSeleccionada.nombre}`}
