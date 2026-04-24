@@ -146,6 +146,20 @@
   }
 }
 
+html.high-contrast {
+  color-scheme: dark;
+  background: #000;
+  filter: invert(1) hue-rotate(180deg) contrast(1.18);
+}
+
+html.high-contrast img,
+html.high-contrast video,
+html.high-contrast iframe,
+html.high-contrast canvas,
+html.high-contrast svg {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 @layer components {
   /**
    * Custom container utility that centers content and adds responsive padding.

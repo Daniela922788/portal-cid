@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import AlejandraImg from "@/assets/Alejandra.webp";
 import IsabelImg from "@/assets/Isabel.webp";
 import JulianImg from "@/assets/Julian.webp";
@@ -32,6 +32,7 @@ import {
   Target,
   Users,
   Waypoints,
+  X,
   type LucideIcon,
 } from "lucide-react";
 
@@ -123,9 +124,8 @@ const competenciasClave: Competencia[] = [
 const frentesTrabajo: FrenteTrabajo[] = [
   {
     id: "cid",
-    title: "Trabajo en el Centro de Innovación (CID)",
-    summary:
-      "En el Centro de Innovación, los gestores desarrollan procesos formativos dirigidos a docentes, estudiantes y comunidad en general.",
+    title: "Centro de Innovación (CID)",
+    summary: "Procesos formativos dirigidos a docentes, estudiantes y comunidad.",
     icon: Lightbulb,
     acciones: [
       "Talleres formativos y cursos en tecnología, innovación y STEM.",
@@ -138,9 +138,8 @@ const frentesTrabajo: FrenteTrabajo[] = [
   },
   {
     id: "instituciones",
-    title: "Trabajo en Instituciones Educativas",
-    summary:
-      "En las instituciones educativas públicas fortalecen centros de interés, semilleros de investigación y proyectos STEM.",
+    title: "Instituciones Educativas",
+    summary: "Fortalecen centros de interés, semilleros de investigación y proyectos STEM.",
     icon: School,
     acciones: [
       "Acompañamiento a centros de interés y proyectos con enfoque territorial.",
@@ -153,9 +152,8 @@ const frentesTrabajo: FrenteTrabajo[] = [
   },
   {
     id: "docentes",
-    title: "Acompañamiento y asesoría a docentes",
-    summary:
-      "Uno de los pilares del trabajo de los gestores es el acompañamiento directo a docentes dentro del aula.",
+    title: "Acompañamiento a Docentes",
+    summary: "Acompañamiento directo a docentes dentro del aula.",
     icon: Handshake,
     acciones: [
       "Planeación conjunta de clases y proyectos.",
@@ -168,9 +166,8 @@ const frentesTrabajo: FrenteTrabajo[] = [
   },
   {
     id: "territorio",
-    title: "Trabajo en el territorio y la comunidad",
-    summary:
-      "Los gestores extienden su impacto más allá de la escuela, vinculando ciudadanía, comunidad y territorio.",
+    title: "Territorio y Comunidad",
+    summary: "Impacto más allá de la escuela, vinculando ciudadanía y territorio.",
     icon: MapPinned,
     acciones: [
       "Creación de comunidades de aprendizaje y formación abierta a la ciudadanía.",
@@ -183,9 +180,8 @@ const frentesTrabajo: FrenteTrabajo[] = [
   },
   {
     id: "articulacion",
-    title: "Articulación y gestión del sistema educativo",
-    summary:
-      "También cumplen un rol estratégico en la articulación institucional y el seguimiento de procesos educativos.",
+    title: "Articulación Institucional",
+    summary: "Rol estratégico en articulación y seguimiento de procesos educativos.",
     icon: Landmark,
     acciones: [
       "Apoyo a la transformación del PEI y la planeación de proyectos educativos.",
@@ -229,28 +225,6 @@ const frenteImagenes: Record<string, GestorGalleryImage> = {
 
 const bannerImagen = gestoresGalleryImages[11];
 
-const competenciaAccentStyles = [
-  {
-    cardClass: "bg-gradient-to-br from-white via-white to-[#11B2AA]/10 ring-[#11B2AA]/15",
-    iconClass: "bg-gradient-to-br from-[#11B2AA] to-[#0D4B56] text-white",
-  },
-  {
-    cardClass: "bg-gradient-to-br from-white via-white to-[#2D3586]/10 ring-[#2D3586]/15",
-    iconClass: "bg-gradient-to-br from-[#2D3586] to-[#0D4B56] text-white",
-  },
-];
-
-const cierreEtiquetas = [
-  { title: "Transformación educativa", color: "text-[#FFDE07]", body: "Acompañan procesos que cambian la práctica pedagógica." },
-  { title: "Tecnología con sentido", color: "text-[#11B2AA]", body: "Integran herramientas y metodologías según las necesidades reales." },
-  { title: "Trabajo en red", color: "text-[#EC6910]", body: "Articulan comunidad, instituciones y aliados del ecosistema." },
-  { title: "Proyección territorial", color: "text-[#7E8BFF]", body: "Impulsan una educación conectada con el futuro del municipio." },
-];
-
-const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
-
-const fotosGaleriaGestores = gestoresGalleryImages.map((image) => image.src);
-
 const institutionImageByName: Record<string, string> = {
   "Institución Educativa La Paz": "/instituciones-foto/institucion-la-paz.webp",
   "Institución Educativa Manuel Uribe Ángel": "/instituciones-foto/institucion-manuel-uribe-angel.webp",
@@ -274,134 +248,148 @@ const institutionImageByName: Record<string, string> = {
   "Institución Educativa Alejandro Vélez Barrientos": "/instituciones-foto/institucion-alejandro-velez-barrientos.webp",
 };
 
-  const gestoresData: Gestor[] = [
-    {
-      id: 1,
-      nombre: "Alejandra Mora Poveda",
-      profesion: "Bióloga con Maestría en Conservación y uso de la Biodiversidad",
-      tipo: "Investigación",
-      foto: AlejandraImg,
-      institucionAsignada: ["Institución Educativa La Paz", "Institución Educativa Manuel Uribe Ángel", "Institución Educativa Las Palmas", "Institución Educativa Comercial de Envigado"]
-    },
-    {
-      id: 2,
-      nombre: "Isabel Vega Rodríguez",
-      profesion: "Ingeniera Física, Magister en Ingeniería",
-      tipo: "STEM",
-      foto: IsabelImg,
-      institucionAsignada: "Institución Educativa José Manuel Restrepo"
-    },
-    {
-      id: 3,
-      nombre: "Julián Darío Parra Gómez",
-      profesion: "Ingeniero de Petróleos",
-      tipo: "STEM",
-      foto: JulianImg,
-      institucionAsignada: "Institución Educativa San Vicente Alto de Las Flores"
-    },
-    {
-      id: 4,
-      nombre: "Karen Palacio Úsuga",
-      profesion: "Licenciada Básica con énfasis en Ciencias Sociales",
-      tipo: "Investigación",
-      foto: KarenImg,
-      institucionAsignada: [
-        "Institución Educativa San Vicente Alto de las Flores",
-        "Institución Educativa El Salado",
-        "Institución Educativa José Manuel Restrepo Vélez",
-        "Institución Educativa Darío de Bedout",
-      ]
-    },
-    {
-      id: 5,
-      nombre: "Mauricio Valencia Cifuentes",
-      profesion: "Licenciado en Educación Básica con énfasis en Matemáticas",
-      tipo: "STEM",
-      foto: MauricioImg,
-      institucionAsignada: "Institución Educativa Darío de Bedout"
-    },
-    {
-      id: 6,
-      nombre: "Mónica María Quiceno Taborda",
-      profesion: "Licenciada en Ed. Básica con énfasis en Ciencias Naturales y Educación Ambiental",
-      tipo: "STEM",
-      foto: MonicaImg,
-      institucionAsignada: "Institución Educativa El Salado Sede Principal"
-    },
-    {
-      id: 7,
-      nombre: "Javier Nicolás Bernal Restrepo",
-      profesion: "Ecólogo y Magister en Turismo Sostenible",
-      tipo: "STEM",
-      foto: NicolasImg,
-      institucionAsignada: "Institución Educativa Normal Superior de Envigado"
-    },
-    {
-      id: 8,
-      nombre: "Santiago Sierra Yaber",
-      profesion: "Astronomo",
-      tipo: "STEM",
-      foto: SantiagoImg,
-      institucionAsignada: "Institución Educativa La Paz"
-    },
-    {
-      id: 9,
-      nombre: "Tania Carmona Vasco",
-      profesion: "Licenciada en Artes Plásticas",
-      tipo: "STEM",
-      foto: TaniaImg,
-      institucionAsignada: "Institución Educativa José Miguel de La Calle"
-    },
-    {
-      id: 10,
-      nombre: "Víctor Tobón Restrepo",
-      profesion: "Ciencias Política Politólogo",
-      tipo: "STEM",
-      foto: VictorImg,
-      institucionAsignada: "Institución Educativa Martín Eduardo Ríos Llano"
-    },
-    {
-      id: 11,
-      nombre: "William José Pomares Durango",
-      profesion: "Ingeniero Electrónico Especialista en Educación",
-      tipo: "STEM",
-      foto: WilmarImg,
-      institucionAsignada: "Institución Educativa Comercial de Envigado"
-    },
-    {
-      id: 12,
-      nombre: "Angela María Mejía Celis",
-      profesion: "Licenciada en Humanidades y Lengua Castellana",
-      tipo: "STEM",
-      foto: "/gestores/Angela%202.webp",
-      institucionAsignada: "Institución Educativa María Poussepin"
-    },
-    {
-      id: 13,
-      nombre: "Erika Atehortúa Argaez",
-      profesion: "Sociología, Magíster en Innovación y Educación",
-      tipo: "STEM",
-      foto: "/gestores/Erika.webp",
-      institucionAsignada: "Institución Educativa Las Palmas"
-    },
-    {
-      id: 14,
-      nombre: "Mateo Vásquez Correa",
-      profesion: "Ingeniero de Sistemas",
-      tipo: "STEM",
-      foto: "/gestores/Mateo.webp",
-      institucionAsignada: "Institución Educativa Manuel Uribe Ángel"
-    },
-    {
-      id: 15,
-      nombre: "Ronald Eduardo Gaitán Gelvez",
-      profesion: "Ing. Mecatrónico, Ing. Eléctrico, Esp.Telecomunicaciones",
-      tipo: "STEM",
-      foto: "/gestores/Ronald.webp",
-      institucionAsignada: "Institución Educativa Leticia Arango De Avendaño"
-    },
-  ];
+const gestoresData: Gestor[] = [
+  {
+    id: 1,
+    nombre: "Alejandra Mora Poveda",
+    profesion: "Bióloga con Maestría en Conservación y uso de la Biodiversidad",
+    tipo: "Investigación",
+    foto: AlejandraImg,
+    institucionAsignada: ["Institución Educativa La Paz", "Institución Educativa Manuel Uribe Ángel", "Institución Educativa Las Palmas", "Institución Educativa Comercial de Envigado"]
+  },
+  {
+    id: 2,
+    nombre: "Isabel Vega Rodríguez",
+    profesion: "Ingeniera Física, Magister en Ingeniería",
+    tipo: "STEM",
+    foto: IsabelImg,
+    institucionAsignada: "Institución Educativa José Manuel Restrepo"
+  },
+  {
+    id: 3,
+    nombre: "Julián Darío Parra Gómez",
+    profesion: "Ingeniero de Petróleos",
+    tipo: "STEM",
+    foto: JulianImg,
+    institucionAsignada: "Institución Educativa San Vicente Alto de Las Flores"
+  },
+  {
+    id: 4,
+    nombre: "Karen Palacio Úsuga",
+    profesion: "Licenciada Básica con énfasis en Ciencias Sociales",
+    tipo: "Investigación",
+    foto: KarenImg,
+    institucionAsignada: [
+      "Institución Educativa San Vicente Alto de las Flores",
+      "Institución Educativa El Salado",
+      "Institución Educativa José Manuel Restrepo Vélez",
+      "Institución Educativa Darío de Bedout",
+    ]
+  },
+  {
+    id: 5,
+    nombre: "Mauricio Valencia Cifuentes",
+    profesion: "Licenciado en Educación Básica con énfasis en Matemáticas",
+    tipo: "STEM",
+    foto: MauricioImg,
+    institucionAsignada: "Institución Educativa Darío de Bedout"
+  },
+  {
+    id: 6,
+    nombre: "Mónica María Quiceno Taborda",
+    profesion: "Licenciada en Ed. Básica con énfasis en Ciencias Naturales y Educación Ambiental",
+    tipo: "STEM",
+    foto: MonicaImg,
+    institucionAsignada: "Institución Educativa El Salado Sede Principal"
+  },
+  {
+    id: 7,
+    nombre: "Javier Nicolás Bernal Restrepo",
+    profesion: "Ecólogo y Magister en Turismo Sostenible",
+    tipo: "STEM",
+    foto: NicolasImg,
+    institucionAsignada: "Institución Educativa Normal Superior de Envigado"
+  },
+  {
+    id: 8,
+    nombre: "Santiago Sierra Yaber",
+    profesion: "Astrónomo",
+    tipo: "STEM",
+    foto: SantiagoImg,
+    institucionAsignada: "Institución Educativa La Paz"
+  },
+  {
+    id: 9,
+    nombre: "Tania Carmona Vasco",
+    profesion: "Licenciada en Artes Plásticas",
+    tipo: "STEM",
+    foto: TaniaImg,
+    institucionAsignada: "Institución Educativa José Miguel de La Calle"
+  },
+  {
+    id: 10,
+    nombre: "Víctor Tobón Restrepo",
+    profesion: "Ciencias Política Politólogo",
+    tipo: "STEM",
+    foto: VictorImg,
+    institucionAsignada: "Institución Educativa Martín Eduardo Ríos Llano"
+  },
+  {
+    id: 11,
+    nombre: "William José Pomares Durango",
+    profesion: "Ingeniero Electrónico Especialista en Educación",
+    tipo: "STEM",
+    foto: WilmarImg,
+    institucionAsignada: "Institución Educativa Comercial de Envigado"
+  },
+  {
+    id: 12,
+    nombre: "Angela María Mejía Celis",
+    profesion: "Licenciada en Humanidades y Lengua Castellana",
+    tipo: "STEM",
+    foto: "/gestores/Angela%202.webp",
+    institucionAsignada: "Institución Educativa María Poussepin"
+  },
+  {
+    id: 13,
+    nombre: "Erika Atehortúa Argaez",
+    profesion: "Sociología, Magíster en Innovación y Educación",
+    tipo: "STEM",
+    foto: "/gestores/Erika.webp",
+    institucionAsignada: "Institución Educativa Las Palmas"
+  },
+  {
+    id: 14,
+    nombre: "Mateo Vásquez Correa",
+    profesion: "Ingeniero de Sistemas",
+    tipo: "STEM",
+    foto: "/gestores/Mateo.webp",
+    institucionAsignada: "Institución Educativa Manuel Uribe Ángel"
+  },
+  {
+    id: 15,
+    nombre: "Ronald Eduardo Gaitán Gelvez",
+    profesion: "Ing. Mecatrónico, Ing. Eléctrico, Esp. Telecomunicaciones",
+    tipo: "STEM",
+    foto: "/gestores/Ronald.webp",
+    institucionAsignada: "Institución Educativa Leticia Arango De Avendaño"
+  },
+];
 
+const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
+const fotosGaleriaGestores = gestoresGalleryImages.map((image) => image.src);
+
+// ─── Stat Counter Component ───────────────────────────────────────────────────
+function StatCard({ number, label, accent }: { number: string; label: string; accent: string }) {
+  return (
+    <div className="flex flex-col items-center gap-1 rounded-2xl border border-white/10 bg-white/8 px-5 py-4 text-center backdrop-blur-sm">
+      <span className={`text-3xl font-black ${accent}`}>{number}</span>
+      <span className="text-xs font-medium text-white/70 leading-tight max-w-[80px]">{label}</span>
+    </div>
+  );
+}
+
+// ─── Image Card ───────────────────────────────────────────────────────────────
 function GestoresImageCard({
   image,
   className,
@@ -412,7 +400,7 @@ function GestoresImageCard({
   imageClassName?: string;
 }) {
   return (
-    <div className={`overflow-hidden rounded-[1.75rem] border border-white/12 bg-white/10 shadow-lg ${className ?? ""}`}>
+    <div className={`overflow-hidden rounded-2xl border border-white/12 bg-white/10 shadow-lg ${className ?? ""}`}>
       <picture className="contents">
         <source srcSet={toWebp(image.src)} type="image/webp" />
         <img
@@ -427,38 +415,104 @@ function GestoresImageCard({
   );
 }
 
+// ─── Frente Tab Button ────────────────────────────────────────────────────────
+function FrenteTab({
+  frente,
+  isActive,
+  onClick,
+}: {
+  frente: FrenteTrabajo;
+  isActive: boolean;
+  onClick: () => void;
+}) {
+  const Icon = frente.icon;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-200 ${
+        isActive
+          ? "border-[#11B2AA]/40 bg-gradient-to-r from-[#0D4B56]/10 to-[#11B2AA]/10 shadow-sm"
+          : "border-transparent bg-transparent text-slate-600 hover:border-slate-200 hover:bg-slate-50"
+      }`}
+    >
+      <div
+        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors ${
+          isActive ? "bg-[#0D4B56] text-white" : "bg-slate-100 text-slate-500 group-hover:bg-slate-200"
+        }`}
+      >
+        <Icon className="h-4 w-4" />
+      </div>
+      <span className={`text-sm font-semibold leading-tight ${isActive ? "text-[#0D4B56]" : ""}`}>
+        {frente.title}
+      </span>
+      {isActive && <ChevronRight className="ml-auto h-4 w-4 shrink-0 text-[#11B2AA]" />}
+    </button>
+  );
+}
+
+// ─── Gestor Card ──────────────────────────────────────────────────────────────
+function GestorCard({ gestor, onSelect }: { gestor: Gestor; onClick?: () => void; onSelect: (g: Gestor) => void }) {
+  const tipoColor =
+    gestor.tipo === "STEM"
+      ? "bg-[#0D4B56]/10 text-[#0D4B56] border-[#0D4B56]/20"
+      : "bg-[#EC6910]/10 text-[#EC6910] border-[#EC6910]/20";
+
+  return (
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-[#11B2AA]/40">
+      <button
+        type="button"
+        onClick={() => onSelect(gestor)}
+        className="relative overflow-hidden"
+        aria-label={`Ver institución de ${gestor.nombre}`}
+      >
+        <picture className="contents">
+          <source srcSet={toWebp(gestor.foto)} type="image/webp" />
+          <img
+            src={gestor.foto}
+            alt={gestor.nombre}
+            loading="lazy"
+            decoding="async"
+            className="h-[300px] w-full object-cover object-[center_10%] transition-transform duration-500 group-hover:scale-105 lg:h-[280px]"
+          />
+        </picture>
+        {/* Hover overlay */}
+        <div className="absolute inset-0 flex items-end bg-gradient-to-t from-[#0D4B56]/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="flex w-full items-center justify-center gap-2 pb-4 text-sm font-semibold text-white">
+            <MousePointerClick className="h-4 w-4" />
+            Ver institución
+          </div>
+        </div>
+      </button>
+
+      <div className="flex flex-1 flex-col gap-1.5 px-4 py-3">
+        <h3 className="text-sm font-bold leading-snug text-slate-900">{gestor.nombre}</h3>
+        <p className="line-clamp-2 text-xs leading-relaxed text-slate-500">{gestor.profesion}</p>
+        <div className="mt-auto pt-2">
+          <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${tipoColor}`}>
+            {gestor.tipo}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 export default function Gestores() {
   const [frenteActivo, setFrenteActivo] = useState(frentesTrabajo[0].id);
   const [gestoresCarouselIndex, setGestoresCarouselIndex] = useState(0);
-  const [gestoresGaleriaIndex, setGestoresGaleriaIndex] = useState(0);
   const [gestorSeleccionado, setGestorSeleccionado] = useState<Gestor | null>(null);
   const [institucionModalIndex, setInstitucionModalIndex] = useState(0);
   const [directionVisibleCards, setDirectionVisibleCards] = useState(4);
   const [gestoresGapPx, setGestoresGapPx] = useState(20);
+
   const gestoresTotal = gestoresData.length;
   const gestoresMaxStart = Math.max(0, gestoresTotal - directionVisibleCards);
 
-  const frenteActual = frentesTrabajo.find((frente) => frente.id === frenteActivo) ?? frentesTrabajo[0];
+  const frenteActual = frentesTrabajo.find((f) => f.id === frenteActivo) ?? frentesTrabajo[0];
   const IconoFrenteActual = frenteActual.icon;
   const imagenFrenteActual = frenteImagenes[frenteActivo] ?? gestoresGalleryImages[6];
-
-  const goGestoresPrev = () => {
-    setGestoresCarouselIndex((prev) => Math.max(0, prev - 1));
-  };
-
-  const goGestoresNext = () => {
-    setGestoresCarouselIndex((prev) => Math.min(gestoresMaxStart, prev + 1));
-  };
-
-  const goGaleriaGestoresPrev = () => {
-    setGestoresGaleriaIndex((prev) =>
-      (prev - 1 + fotosGaleriaGestores.length) % fotosGaleriaGestores.length
-    );
-  };
-
-  const goGaleriaGestoresNext = () => {
-    setGestoresGaleriaIndex((prev) => (prev + 1) % fotosGaleriaGestores.length);
-  };
 
   const institucionesGestorSeleccionado = gestorSeleccionado
     ? Array.isArray(gestorSeleccionado.institucionAsignada)
@@ -467,63 +521,20 @@ export default function Gestores() {
         ? [gestorSeleccionado.institucionAsignada]
         : []
     : [];
-
   const institucionModalActual = institucionesGestorSeleccionado[institucionModalIndex];
   const institucionModalImage = institucionModalActual ? institutionImageByName[institucionModalActual] : undefined;
 
-  const goInstitucionModalPrev = () => {
-    if (institucionesGestorSeleccionado.length <= 1) return;
-    setInstitucionModalIndex((prev) =>
-      (prev - 1 + institucionesGestorSeleccionado.length) % institucionesGestorSeleccionado.length
-    );
-  };
-
-  const goInstitucionModalNext = () => {
-    if (institucionesGestorSeleccionado.length <= 1) return;
-    setInstitucionModalIndex((prev) => (prev + 1) % institucionesGestorSeleccionado.length);
-  };
-
   useEffect(() => {
-    const id = window.setInterval(() => {
-      setGestoresGaleriaIndex((prev) => (prev + 1) % fotosGaleriaGestores.length);
-    }, 5000);
-
-    return () => window.clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    const updateVisibleCards = () => {
-      if (window.innerWidth >= 1536) {
-        setDirectionVisibleCards(5);
-        setGestoresGapPx(20);
-        return;
-      }
-
-      if (window.innerWidth >= 1280) {
-        setDirectionVisibleCards(4);
-        setGestoresGapPx(20);
-        return;
-      }
-
-      if (window.innerWidth >= 1024) {
-        setDirectionVisibleCards(3);
-        setGestoresGapPx(16);
-        return;
-      }
-
-      if (window.innerWidth >= 768) {
-        setDirectionVisibleCards(2);
-        setGestoresGapPx(14);
-        return;
-      }
-
-      setDirectionVisibleCards(1);
-      setGestoresGapPx(12);
+    const update = () => {
+      if (window.innerWidth >= 1536) { setDirectionVisibleCards(5); setGestoresGapPx(20); }
+      else if (window.innerWidth >= 1280) { setDirectionVisibleCards(4); setGestoresGapPx(20); }
+      else if (window.innerWidth >= 1024) { setDirectionVisibleCards(3); setGestoresGapPx(16); }
+      else if (window.innerWidth >= 768) { setDirectionVisibleCards(2); setGestoresGapPx(14); }
+      else { setDirectionVisibleCards(1); setGestoresGapPx(12); }
     };
-
-    updateVisibleCards();
-    window.addEventListener("resize", updateVisibleCards);
-    return () => window.removeEventListener("resize", updateVisibleCards);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   useEffect(() => {
@@ -531,18 +542,15 @@ export default function Gestores() {
   }, [gestoresMaxStart]);
 
   useEffect(() => {
-    const handleEscClose = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setGestorSeleccionado(null);
-      }
-    };
-
-    window.addEventListener("keydown", handleEscClose);
-    return () => window.removeEventListener("keydown", handleEscClose);
+    const handleEsc = (e: KeyboardEvent) => { if (e.key === "Escape") setGestorSeleccionado(null); };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(17,178,170,0.16),_transparent_24%),linear-gradient(180deg,_#ffffff_0%,_rgba(17,178,170,0.08)_45%,_rgba(13,75,86,0.08)_100%)]">
+    <div className="min-h-screen bg-slate-50">
+
+      {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section className="relative w-full overflow-hidden md:h-screen">
         <picture>
           <source srcSet="/banners/Banner%20gestores.webp" type="image/webp" />
@@ -555,15 +563,37 @@ export default function Gestores() {
             className="h-auto w-full object-contain md:h-full md:object-cover md:object-center"
           />
         </picture>
-        <div className="absolute inset-0 bg-[#182130]/35" />
-        <div className="absolute inset-0 z-10 flex items-center justify-center px-6 text-center">
-          <h1 className="text-lg font-black leading-tight text-white sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl lg:whitespace-nowrap">
-            Gestores de Innovación
-          </h1>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1F2D]/80 via-[#0D1F2D]/40 to-transparent" />
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#11B2AA]/50 bg-[#11B2AA]/15 px-4 py-1.5 text-sm font-semibold text-[#11B2AA] backdrop-blur-sm">
+              <Sparkles className="h-3.5 w-3.5" /> Innovación Educativa · Envigado
+            </span>
+            <h1 className="mt-3 text-4xl font-black leading-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+              Gestores de<br />
+              <span className="text-[#11B2AA]">Innovación</span>
+            </h1>
+            <p className="mt-4 max-w-xl text-base text-white/75 md:text-lg">
+              Profesionales que lideran la transformación educativa a través del enfoque STEM+ en Envigado.
+            </p>
+          </motion.div>
 
-        {/* Flecha scroll-down */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/50">
+          {/* Stats bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="mt-10 flex flex-wrap justify-center gap-3"
+          >
+            <StatCard number="16" label="Gestores activos" accent="text-[#11B2AA]" />
+            <StatCard number="14" label="Instituciones educativas" accent="text-[#FFDE07]" />
+          </motion.div>
+        </div>
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-white/40">
           <ChevronLeft className="h-6 w-6 rotate-[-90deg]" />
         </div>
       </section>
@@ -571,543 +601,462 @@ export default function Gestores() {
       <div className="container py-8">
         <Breadcrumbs items={[{ label: "Inicio", href: "/" }, { label: "Gestores de Innovación" }]} />
 
-        <section className="relative mt-6 overflow-hidden rounded-3xl border border-[#182130] bg-gradient-to-r from-[#182130] via-[#0D4B56] to-[#023A34] p-6 text-white shadow-2xl md:p-10 lg:p-14">
-          <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-[#11B2AA]/25 blur-2xl" />
-          <div className="absolute -bottom-16 left-1/3 h-52 w-52 rounded-full bg-[#2D3586]/25 blur-2xl" />
-          <div className="relative grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-            <div>
-              <Badge className="mb-4 bg-[#EC6910] text-white hover:bg-[#d75f0f]">
-                <Sparkles className="mr-2 h-4 w-4" /> Innovación educativa y territorio STEM+
-              </Badge>
-              <h1 className="max-w-4xl text-3xl font-black leading-tight md:text-5xl">
-                Gestores de Innovación Educativa
-              </h1>
-              <p className="mt-4 max-w-4xl text-sm text-cyan-50 md:text-lg">
-                Son profesionales que lideran procesos de transformación en las instituciones educativas,
-                promoviendo nuevas formas de enseñar y aprender a través del enfoque STEM+, la tecnología y la
-                innovación pedagógica.
+        {/* ── ¿QUÉ SON? + PROPÓSITO ────────────────────────────────────────── */}
+        <section className="mt-8 grid gap-6 lg:grid-cols-2">
+          {/* Left: Quiénes son */}
+          <div className="relative overflow-hidden rounded-2xl bg-[#0D1F2D] p-8 text-white">
+            <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-[#11B2AA]/20 blur-2xl" />
+            <div className="relative">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#11B2AA]/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#11B2AA]">
+                ¿Quiénes son?
+              </span>
+              <h2 className="mt-3 text-2xl font-black leading-tight md:text-3xl">
+                Agentes de cambio<br />en el aula
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-white/75">
+                Son profesionales con mentalidad innovadora, capaces de trascender los modelos tradicionales y
+                acompañar nuevas formas de aprendizaje. Su enfoque multidisciplinario integra distintas áreas
+                del conocimiento.
               </p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
-                  Agentes de cambio
-                </Badge>
-                <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
-                  Acompañamiento pedagógico
-                </Badge>
-                <Badge variant="secondary" className="bg-white/15 text-white hover:bg-white/20">
-                  Innovación con impacto territorial
-                </Badge>
+              <p className="mt-3 text-sm leading-relaxed text-white/75">
+                Más que capacitadores externos, son <strong className="text-white">aliados en el aula</strong> que
+                fortalecen las prácticas pedagógicas desde la realidad del territorio.
+              </p>
+              <div className="mt-6 grid grid-cols-2 gap-2">
+                {["Agentes de cambio", "Acompañamiento pedagógico", "Innovación territorial", "Enfoque STEM+"].map((tag) => (
+                  <div key={tag} className="rounded-lg border border-white/10 bg-white/8 px-3 py-2 text-xs font-medium text-white/80">
+                    {tag}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Propósito + imágenes */}
+          <div className="flex flex-col gap-4">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EC6910]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#EC6910]">
+                Propósito
+              </span>
+              <p className="mt-3 text-sm leading-relaxed text-slate-700">
+                Conectan conocimiento, comunidad y soluciones a problemáticas reales, impulsando procesos
+                educativos alineados con la sostenibilidad y el enfoque de <strong>Territorio STEM+ SMART</strong>.
+              </p>
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                {capacidadesCiudadanas.map((cap) => (
+                  <div key={cap} className="flex items-start gap-2 rounded-xl bg-slate-50 p-3">
+                    <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#11B2AA]" />
+                    <span className="text-xs leading-relaxed text-slate-600">{cap}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2 sm:grid-rows-[12rem_12rem] lg:grid-rows-[13rem_13rem]">
-              <GestoresImageCard
-                image={heroImages[0]}
-                className="sm:row-span-2"
-                imageClassName="min-h-[18rem] sm:min-h-full"
-              />
-              <GestoresImageCard image={heroImages[1]} imageClassName="min-h-[12rem]" />
-              <GestoresImageCard image={heroImages[2]} imageClassName="min-h-[12rem]" />
+            {/* Strip images */}
+            <div className="grid grid-cols-3 gap-3">
+              {heroImages.map((img) => (
+                <div key={img.src} className="overflow-hidden rounded-xl">
+                  <picture className="contents">
+                    <source srcSet={toWebp(img.src)} type="image/webp" />
+                    <img src={img.src} alt={img.alt} className="h-28 w-full object-cover" loading="lazy" decoding="async" />
+                  </picture>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        <section className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-          <Card className="border-[#0D4B56]/30 bg-gradient-to-br from-white via-white to-[#11B2AA]/10 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-[#0D4B56]">¿Qué son los gestores?</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-slate-700">
-              <p>
-                Se caracterizan por ser agentes de cambio con mentalidad innovadora, capaces de trascender los
-                modelos tradicionales de educación y acompañar nuevas formas de aprendizaje.
-              </p>
-              <p>
-                Su enfoque multidisciplinario les permite integrar distintas áreas del conocimiento para trabajar de
-                la mano con docentes, directivos y estudiantes en experiencias educativas más dinámicas,
-                pertinentes y significativas.
-              </p>
-              <p>
-                Más que capacitadores externos, son aliados en el aula que fortalecen las prácticas pedagógicas
-                desde la realidad del territorio.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-[#EC6910]/35 bg-gradient-to-br from-[#EC6910]/12 via-white to-[#11B2AA]/12 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-[#182130]">Propósito de los gestores</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-slate-700">
-              <p>
-                Su propósito se enmarca en el trabajo de la Dirección de Innovación, que busca liderar, coordinar y
-                promover el desarrollo científico, tecnológico y de innovación como motor del progreso social,
-                educativo, económico y cultural del municipio.
-              </p>
-              <p>
-                En ese sentido, los gestores conectan conocimiento, comunidad y soluciones a problemáticas reales,
-                impulsando procesos educativos alineados con la sostenibilidad y el enfoque de Territorio STEM+
-                SMART.
-              </p>
-              <div className="rounded-2xl border border-[#EC6910]/25 bg-gradient-to-r from-[#EC6910]/8 to-[#11B2AA]/10 p-4">
-                <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#EC6910]">
-                  Su labor contribuye a formar ciudadanos capaces de:
-                </p>
-                <div className="grid gap-2 sm:grid-cols-2">
-                  {capacidadesCiudadanas.map((capacidad) => (
-                    <div key={capacidad} className="rounded-xl border border-[#EC6910]/15 bg-white/90 p-3 text-sm text-slate-700 shadow-sm">
-                      {capacidad}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
-        <section className="mt-12 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-          <Card className="border-[#0D4B56]/30 bg-gradient-to-br from-white via-white to-[#023A34]/10 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-[#182130]">¿Qué hacen los gestores?</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="mb-5 text-slate-700">
-                Diseñan, implementan y acompañan procesos educativos innovadores que impactan diferentes niveles del
-                sistema educativo y la comunidad.
-              </p>
-              <div className="grid gap-3 md:grid-cols-2">
-                {funcionesGenerales.map((funcion) => (
-                  <div key={funcion} className="rounded-2xl border border-[#023A34]/15 bg-gradient-to-br from-white to-[#11B2AA]/8 p-4 text-sm text-slate-700 shadow-sm">
-                    {funcion}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-[#2D3586]/30 bg-gradient-to-br from-[#2D3586]/15 via-white to-[#EC6910]/8 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-[#182130]">Competencias que promueven</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {competenciasSigloXXI.map((competencia) => (
-                <div key={competencia} className="rounded-2xl border border-[#2D3586]/20 bg-gradient-to-r from-white to-[#2D3586]/10 p-4 text-slate-700 shadow-sm">
-                  <p className="font-semibold text-[#182130]">{competencia}</p>
-                  <p className="text-sm text-[#0D4B56]">
-                    Desarrollo integral para aprender, hacer, convivir y actuar con criterio.
-                  </p>
+        {/* ── ¿QUÉ HACEN? + COMPETENCIAS ───────────────────────────────────── */}
+        <section className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h2 className="mb-1 text-xl font-black text-slate-900">¿Qué hacen los gestores?</h2>
+            <p className="mb-5 text-sm text-slate-500">
+              Diseñan, implementan y acompañan procesos educativos innovadores en múltiples niveles del sistema.
+            </p>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {funcionesGenerales.map((fn, i) => (
+                <div key={fn} className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3.5">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#0D4B56] text-[10px] font-black text-white">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-xs leading-relaxed text-slate-700">{fn}</span>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-[#2D3586]/20 bg-gradient-to-br from-[#2D3586]/5 to-white p-6 shadow-sm">
+            <h2 className="mb-1 text-xl font-black text-slate-900">Competencias S. XXI</h2>
+            <p className="mb-5 text-sm text-slate-500">Desarrollo integral para el ciudadano del futuro.</p>
+            <div className="flex flex-col gap-3">
+              {competenciasSigloXXI.map((comp, i) => {
+                const colors = ["#11B2AA", "#EC6910", "#2D3586", "#0D4B56"];
+                return (
+                  <div key={comp} className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-3.5 shadow-sm">
+                    <div
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-black text-white"
+                      style={{ backgroundColor: colors[i] }}
+                    >
+                      {comp[0]}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-900">{comp}</p>
+                      <p className="text-xs text-slate-500">Aprender, hacer, convivir y actuar.</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </section>
 
-        <section className="mt-12 grid gap-4 md:grid-cols-3">
-          {stripImages.map((image, index) => (
-            <GestoresImageCard
-              key={image.src}
-              image={image}
-              className={index === 1 ? "md:-translate-y-3" : ""}
-              imageClassName="h-64 md:h-72"
-            />
+        {/* ── STRIP IMAGES ─────────────────────────────────────────────────── */}
+        <section className="mt-8 grid grid-cols-3 gap-3 overflow-hidden rounded-2xl">
+          {stripImages.map((img, i) => (
+            <div key={img.src} className={`overflow-hidden rounded-xl transition-transform ${i === 1 ? "-translate-y-2" : ""}`}>
+              <picture className="contents">
+                <source srcSet={toWebp(img.src)} type="image/webp" />
+                <img src={img.src} alt={img.alt} className="h-56 w-full object-cover md:h-64" loading="lazy" decoding="async" />
+              </picture>
+            </div>
           ))}
         </section>
 
-        <section className="mt-12 rounded-[2rem] border border-[#11B2AA]/20 bg-gradient-to-b from-white to-[#11B2AA]/5 p-1">
-          <div className="rounded-[1.7rem] bg-white/80 p-5 md:p-6">
-          <div className="mb-5 flex items-center gap-3">
-            <BrainCircuit className="h-7 w-7 text-[#0D4B56]" />
+        {/* ── PERFIL Y COMPETENCIAS CLAVE ───────────────────────────────────── */}
+        <section className="mt-10">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0D4B56] text-white">
+              <BrainCircuit className="h-5 w-5" />
+            </div>
             <div>
-              <h2 className="text-2xl font-bold text-[#182130] md:text-3xl">Perfil y competencias del gestor</h2>
-              <p className="text-slate-600">
-                El gestor de innovación educativa combina capacidades pedagógicas, tecnológicas y sociales para
-                generar impacto real en el entorno educativo.
-              </p>
+              <h2 className="text-2xl font-black text-slate-900">Perfil y competencias del gestor</h2>
+              <p className="text-sm text-slate-500">Capacidades pedagógicas, tecnológicas y sociales para generar impacto real.</p>
             </div>
           </div>
-
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {competenciasClave.map((competencia, index) => {
-              const Icon = competencia.icon;
-              const accent = competenciaAccentStyles[index % competenciaAccentStyles.length];
-
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {competenciasClave.map((comp, i) => {
+              const Icon = comp.icon;
+              const accents = [
+                { bg: "bg-[#11B2AA]/10", icon: "bg-[#11B2AA] text-white", border: "border-[#11B2AA]/20" },
+                { bg: "bg-[#EC6910]/10", icon: "bg-[#EC6910] text-white", border: "border-[#EC6910]/20" },
+                { bg: "bg-[#2D3586]/10", icon: "bg-[#2D3586] text-white", border: "border-[#2D3586]/20" },
+                { bg: "bg-[#0D4B56]/10", icon: "bg-[#0D4B56] text-white", border: "border-[#0D4B56]/20" },
+              ];
+              const a = accents[i % accents.length];
               return (
-                <Card key={competencia.title} className={`border-transparent shadow-sm ring-1 ${accent.cardClass}`}>
-                  <CardContent className="p-5">
-                    <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-2xl shadow-sm ${accent.iconClass}`}>
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <h3 className="text-lg font-bold text-[#182130]">{competencia.title}</h3>
-                    <p className="mt-2 text-sm text-slate-600">{competencia.description}</p>
-                  </CardContent>
-                </Card>
+                <div key={comp.title} className={`rounded-2xl border ${a.border} ${a.bg} p-5`}>
+                  <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl ${a.icon}`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900">{comp.title}</h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-600">{comp.description}</p>
+                </div>
               );
             })}
+          </div>
+        </section>
+
+        {/* ── FRENTES DE TRABAJO ───────────────────────────────────────────── */}
+        <section className="mt-12">
+          <div className="mb-6">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#2D3586]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#2D3586]">
+              Frentes de trabajo
+            </span>
+            <h2 className="mt-2 text-2xl font-black text-slate-900 md:text-3xl">¿Cómo trabajan los gestores?</h2>
+            <p className="mt-1 max-w-xl text-sm text-slate-500">
+              Explora los cinco escenarios principales en los que desarrollan su labor transformadora.
+            </p>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-[280px_1fr]">
+            {/* Tabs sidebar */}
+            <div className="flex flex-col gap-1 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm lg:self-start">
+              {frentesTrabajo.map((frente) => (
+                <FrenteTab
+                  key={frente.id}
+                  frente={frente}
+                  isActive={frenteActivo === frente.id}
+                  onClick={() => setFrenteActivo(frente.id)}
+                />
+              ))}
             </div>
-            </div>
-          </section>
 
-          <section className="mt-14 rounded-3xl border border-[#023A34]/20 bg-gradient-to-r from-[#023A34]/15 via-[#11B2AA]/12 to-[#2D3586]/10 p-6 shadow-sm md:p-8">
-            <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-              <div className="flex items-start gap-3">
-                <Handshake className="mt-1 h-6 w-6 shrink-0 text-[#023A34]" />
-                <div>
-                  <h3 className="text-xl font-bold text-[#182130]">¿Cómo trabajan los gestores?</h3>
-                  <p className="mt-2 max-w-4xl text-slate-700">
-                    Su trabajo combina formación, acompañamiento, trabajo en red y gestión institucional. A continuación
-                    puedes explorar los principales escenarios en los que desarrollan su labor.
-                  </p>
-                </div>
-              </div>
-
-              <GestoresImageCard
-                image={bannerImagen}
-                className="border-[#023A34]/10 bg-white/40"
-                imageClassName="h-64 lg:h-72"
-              />
-            </div>
-          </section>
-
-          <section className="mt-8 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-            <Card className="border-[#2D3586]/20 bg-gradient-to-b from-white to-[#2D3586]/5 shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-lg text-[#182130]">Frentes de trabajo</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {frentesTrabajo.map((frente) => {
-                        const Icon = frente.icon;
-
-                        return (
-                          <button
-                            key={frente.id}
-                            type="button"
-                            onClick={() => setFrenteActivo(frente.id)}
-                            className={`flex w-full items-start gap-3 rounded-2xl border px-4 py-4 text-left transition-colors ${
-                              frenteActivo === frente.id
-                                ? "border-[#2D3586]/35 bg-gradient-to-r from-[#2D3586]/15 to-[#11B2AA]/10 text-[#182130]"
-                                : "border-slate-200 bg-white text-slate-700 hover:border-[#2D3586]/40 hover:bg-[#2D3586]/5"
-                            }`}
-                          >
-                            <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#2D3586] to-[#0D4B56] text-white shadow-sm">
-                              <Icon className="h-4 w-4" />
-                            </div>
-                            <div>
-                              <p className="font-semibold">{frente.title}</p>
-                              <p className="mt-1 text-sm text-slate-600">{frente.summary}</p>
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </CardContent>
-                  </Card>
-
-                  <div className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr]">
-                    <Card className="border-[#2D3586]/30 bg-[linear-gradient(135deg,rgba(45,53,134,0.16)_0%,rgba(255,255,255,0.96)_38%,rgba(17,178,170,0.16)_100%)] shadow-sm">
-                      <CardHeader>
-                        <div className="flex items-center gap-3">
-                          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#11B2AA] to-[#2D3586] text-white shadow-sm">
-                            <IconoFrenteActual className="h-5 w-5" />
-                          </div>
-                          <div>
-                            <CardTitle className="text-xl text-[#182130]">{frenteActual.title}</CardTitle>
-                            <p className="mt-1 text-sm text-slate-600">{frenteActual.summary}</p>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#2D3586]">Acciones destacadas</p>
-                        <div className="grid gap-3 md:grid-cols-2">
-                          {frenteActual.acciones.map((accion) => (
-                            <div key={accion} className="rounded-2xl border border-[#11B2AA]/20 bg-white/90 p-4 text-sm text-slate-700 shadow-sm">
-                              {accion}
-                            </div>
-                          ))}
-                        </div>
-                        <div className="mt-5 rounded-2xl border border-[#0D4B56]/25 bg-gradient-to-r from-[#0D4B56]/10 to-[#11B2AA]/10 p-4 text-sm text-[#182130]">
-                          <span className="font-bold text-[#EC6910]">Impacto:</span> {frenteActual.impacto}
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    <GestoresImageCard
-                      image={imagenFrenteActual}
-                      className="border-[#2D3586]/15 bg-white/40"
-                      imageClassName="h-80 xl:h-full"
-                    />
+            {/* Content panel */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={frenteActivo}
+                initial={{ opacity: 0, x: 12 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -12 }}
+                transition={{ duration: 0.25 }}
+                className="grid gap-4 xl:grid-cols-[1fr_280px]"
+              >
+                <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                  <div className="mb-5 flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0D4B56] text-white">
+                      <IconoFrenteActual className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-black text-slate-900">{frenteActual.title}</h3>
+                      <p className="text-sm text-slate-500">{frenteActual.summary}</p>
+                    </div>
                   </div>
-                </section>
 
-        <section className="mt-16 rounded-3xl border border-[#182130]/10 bg-[linear-gradient(145deg,rgba(24,33,48,0.98)_0%,rgba(13,75,86,0.98)_45%,rgba(2,58,52,0.96)_100%)] p-8 text-white shadow-sm">
-          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-            <div>
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#11B2AA] to-[#2D3586] text-white">
+                  <p className="mb-4 text-xs font-bold uppercase tracking-widest text-[#0D4B56]">Acciones destacadas</p>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {frenteActual.acciones.map((accion, i) => (
+                      <div key={accion} className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3.5">
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-[#11B2AA] text-[9px] font-black text-white">
+                          {i + 1}
+                        </span>
+                        <span className="text-xs leading-relaxed text-slate-700">{accion}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-[#EC6910]/25 bg-[#EC6910]/5 p-4">
+                    <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-[#EC6910]" />
+                    <p className="text-sm text-slate-700">
+                      <strong className="text-[#EC6910]">Impacto: </strong>
+                      {frenteActual.impacto}
+                    </p>
+                  </div>
+                </div>
+
+                <GestoresImageCard
+                  image={imagenFrenteActual}
+                  className="border-slate-200"
+                  imageClassName="h-72 xl:h-full"
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </section>
+
+        {/* ── CIERRE / IMPACTO ─────────────────────────────────────────────── */}
+        <section className="mt-12 overflow-hidden rounded-2xl bg-[#0D1F2D]">
+          <div className="grid lg:grid-cols-2">
+            <div className="p-8 md:p-10">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#11B2AA]/20 text-[#11B2AA]">
                 <Building2 className="h-6 w-6" />
               </div>
-              <p className="mt-3 text-cyan-50">
-                Los Gestores de Innovación Educativa son actores clave en la transformación del sistema educativo,
-                conectando la escuela con la tecnología, la innovación y las necesidades del territorio.
+              <h2 className="mt-4 text-2xl font-black leading-tight text-white md:text-3xl">
+                Transformando la educación<br />
+                <span className="text-[#11B2AA]">desde adentro</span>
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-white/70">
+                Los Gestores de Innovación conectan la escuela con la tecnología, la innovación y las
+                necesidades reales del territorio, generando un impacto que va más allá del aula.
               </p>
-              <p className="mt-3 text-cyan-50">
-                Su trabajo no solo impacta el aula; fortalece el ecosistema educativo en su conjunto y promueve una
-                educación más pertinente, creativa y orientada al futuro.
-              </p>
+
+              <div className="mt-6 grid grid-cols-2 gap-3">
+                {[
+                  { label: "Transformación educativa", color: "text-[#FFDE07]", desc: "Cambian la práctica pedagógica desde adentro." },
+                  { label: "Tecnología con sentido", color: "text-[#11B2AA]", desc: "Integran herramientas según necesidades reales." },
+                  { label: "Trabajo en red", color: "text-[#EC6910]", desc: "Articulan comunidad, instituciones y aliados." },
+                  { label: "Proyección territorial", color: "text-[#A78BFA]", desc: "Educación conectada con el futuro del municipio." },
+                ].map((item) => (
+                  <div key={item.label} className="rounded-xl border border-white/8 bg-white/6 p-4">
+                    <p className={`text-sm font-bold ${item.color}`}>{item.label}</p>
+                    <p className="mt-1 text-xs leading-relaxed text-white/60">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
-              {cierreEtiquetas.slice(0, 2).map((item) => (
-                <div key={item.title} className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
-                  <p className={`font-semibold ${item.color}`}>{item.title}</p>
-                  <p className="mt-1 text-sm text-cyan-50">{item.body}</p>
+            <div className="grid grid-cols-2 gap-3 p-4 lg:p-6">
+              {cierreImages.map((img) => (
+                <div key={img.src} className="overflow-hidden rounded-xl">
+                  <picture className="contents">
+                    <source srcSet={toWebp(img.src)} type="image/webp" />
+                    <img src={img.src} alt={img.alt} className="h-full w-full object-cover" style={{ minHeight: "200px" }} loading="lazy" decoding="async" />
+                  </picture>
                 </div>
               ))}
-              <GestoresImageCard
-                image={cierreImages[0]}
-                className="border-white/15 bg-white/10"
-                imageClassName="h-52"
-              />
-              <GestoresImageCard
-                image={cierreImages[1]}
-                className="border-white/15 bg-white/10"
-                imageClassName="h-52"
-              />
+              <div className="col-span-2 overflow-hidden rounded-xl">
+                <GestoresImageCard image={bannerImagen} imageClassName="h-48 w-full" />
+              </div>
             </div>
           </div>
         </section>
 
-
-
-      {/* Gestores de Innovación */}
-      <section id="gestores-innovacion" className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-gray-100 scroll-mt-24">
-        <div className="container">
+        {/* ── CARRUSEL GESTORES ─────────────────────────────────────────────── */}
+        <section id="gestores-innovacion" className="mt-14 scroll-mt-24">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-3"
+            transition={{ duration: 0.6 }}
+            className="mb-8 flex flex-col items-start gap-2 sm:flex-row sm:items-end sm:justify-between"
           >
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-teal-100 border border-blue-300 rounded-full px-4 py-2 mb-4">
-              <Users className="w-4 h-4 text-blue-600" />
-              <span className="text-blue-700 text-sm font-semibold">Nuestro Equipo</span>
+            <div>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0D4B56]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#0D4B56]">
+                <Users className="h-3.5 w-3.5" /> Nuestro equipo
+              </span>
+              <h2 className="mt-2 text-3xl font-black text-slate-900 md:text-4xl">Conoce a los Gestores</h2>
+              <p className="mt-1 text-sm text-slate-500 max-w-md">
+                Profesionales comprometidos con la innovación educativa en Envigado.
+              </p>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Gestores de Innovación - Dirección de Innovación
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Conoce a los profesionales que lideran la innovación educativa en nuestras instituciones
-            </p>
-          </motion.div>
-
-          {/* Carrusel de fotos de los gestores */}
-          <div className="relative mb-2 overflow-hidden rounded-2xl shadow-2xl">
-            <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-              {fotosGaleriaGestores.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setGestoresGaleriaIndex(idx)}
-                  aria-label={`Ir a imagen ${idx + 1} de la galería de gestores`}
-                  className={`h-2 rounded-full transition-all ${
-                    gestoresGaleriaIndex === idx ? "w-8 bg-white" : "w-2 bg-white/55"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="relative">
-            <button
-              type="button"
-              onClick={goGestoresPrev}
-              aria-label="Anterior en Gestores de Innovación"
-              disabled={gestoresCarouselIndex === 0}
-              className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-
-            <button
-              type="button"
-              onClick={goGestoresNext}
-              aria-label="Siguiente en Gestores de Innovación"
-              disabled={gestoresCarouselIndex >= gestoresMaxStart}
-              className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-
-            <div className="overflow-hidden px-6">
-              <motion.div
-                animate={{
-                  x: `calc(-${gestoresCarouselIndex} * ((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards} + ${gestoresGapPx}px))`,
-                }}
-                transition={{ type: "spring", stiffness: 90, damping: 20, mass: 0.8 }}
-                className="flex"
-                style={{ gap: `${gestoresGapPx}px` }}
-              >
-                {gestoresData.map((gestor, index) => (
-                  <div
-                    key={gestor.id}
-                    className="group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
-                    style={{
-                      flex: `0 0 calc((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards})`,
-                    }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setGestorSeleccionado(gestor);
-                        setInstitucionModalIndex(0);
-                      }}
-                      className="relative w-full overflow-hidden bg-gray-50 text-left shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] flex items-center justify-center"
-                      aria-label={`Ver institución asignada de ${gestor.nombre}`}
-                    >
-                      <picture className="contents">
-                        <source srcSet={toWebp(gestor.foto)} type="image/webp" />
-                        <img
-                          src={gestor.foto}
-                          alt={gestor.nombre}
-                          loading={index < 8 || gestor.foto.startsWith("/gestores/") ? "eager" : "lazy"}
-                          fetchPriority={index < 8 || gestor.foto.startsWith("/gestores/") ? "high" : "auto"}
-                          decoding={index < 8 || gestor.foto.startsWith("/gestores/") ? "sync" : "async"}
-                          className="h-[380px] w-full object-cover object-[center_14%] transition-transform duration-300 group-hover:scale-105 sm:h-[320px] sm:object-[center_14%] sm:py-0 lg:h-[350px]"
-                        />
-                      </picture>
-                      <div className="pointer-events-none absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
-                        <MousePointerClick className="h-3.5 w-3.5" />
-                        <span>Toca aqui</span>
-                      </div>
-                    </button>
-
-                    <div className="px-3 py-2 text-center sm:px-4 sm:py-4">
-                      <h3 className="mb-1 text-sm font-bold leading-tight text-gray-900 sm:text-base">{gestor.nombre}</h3>
-                      <p className="mb-2 line-clamp-3 text-xs leading-snug text-gray-600 sm:mb-2 sm:line-clamp-3 sm:text-xs">{gestor.profesion}</p>
-                      <div className="flex justify-center">
-                        <Badge variant={gestor.tipo === "STEM" ? "default" : "secondary"}>
-                          {gestor.tipo}
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            <div className="mt-8 flex justify-center gap-2">
-              {Array.from({ length: gestoresMaxStart + 1 }, (_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setGestoresCarouselIndex(idx)}
-                  aria-label={`Ir al bloque de gestores ${idx + 1}`}
-                  className={`h-2 rounded-full transition-all ${
-                    gestoresCarouselIndex === idx ? "w-8 bg-slate-800" : "w-2 bg-slate-400"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {gestorSeleccionado && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-4"
-          onClick={() => {
-            setGestorSeleccionado(null);
-            setInstitucionModalIndex(0);
-          }}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Institución asignada del gestor"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={(event) => event.stopPropagation()}
-            className="w-full max-w-2xl rounded-2xl border border-[#0D4B56]/25 bg-white p-6 shadow-2xl"
-          >
-            <p className="text-xs font-semibold uppercase tracking-wide text-[#0D4B56]">Institución asignada</p>
-            <h3 className="mt-2 text-lg font-bold text-[#182130]">{gestorSeleccionado.nombre}</h3>
-
-            {institucionesGestorSeleccionado.length > 0 ? (
-              <div className="mt-3">
-                <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
-                  {institucionModalImage ? (
-                    <img
-                      src={institucionModalImage}
-                      alt={institucionModalActual}
-                      className="h-64 w-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <div className="flex h-64 w-full items-center justify-center text-sm text-slate-500">
-                      Sin foto disponible
-                    </div>
-                  )}
-
-                  {institucionesGestorSeleccionado.length > 1 && (
-                    <>
-                      <button
-                        type="button"
-                        onClick={goInstitucionModalPrev}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/55 p-1.5 text-white"
-                        aria-label="Institución anterior"
-                      >
-                        <ChevronLeft className="h-4 w-4" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={goInstitucionModalNext}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/55 p-1.5 text-white"
-                        aria-label="Siguiente institución"
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </button>
-                    </>
-                  )}
-                </div>
-
-                <p className="mt-3 text-sm font-medium leading-relaxed text-slate-700">{institucionModalActual}</p>
-
-                {institucionesGestorSeleccionado.length > 1 && (
-                  <div className="mt-2 flex items-center justify-center gap-1.5">
-                    {institucionesGestorSeleccionado.map((institucion, index) => (
-                      <button
-                        key={`${gestorSeleccionado.id}-${institucion}-${index}`}
-                        type="button"
-                        onClick={() => setInstitucionModalIndex(index)}
-                        className={`h-2 rounded-full transition-all ${
-                          institucionModalIndex === index ? "w-6 bg-[#0D4B56]" : "w-2 bg-slate-300"
-                        }`}
-                        aria-label={`Ver institución ${index + 1}`}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <p className="mt-3 text-sm leading-relaxed text-slate-700">Institución por confirmar</p>
-            )}
-            <div className="mt-5 flex justify-end">
+            <div className="flex gap-2">
               <button
                 type="button"
-                onClick={() => {
-                  setGestorSeleccionado(null);
-                  setInstitucionModalIndex(0);
-                }}
-                className="rounded-lg bg-[#0D4B56] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#023A34]"
+                onClick={() => setGestoresCarouselIndex((p) => Math.max(0, p - 1))}
+                disabled={gestoresCarouselIndex === 0}
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300 bg-white text-slate-600 shadow-sm transition hover:bg-slate-50 disabled:opacity-30"
+                aria-label="Anterior"
               >
-                Cerrar
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setGestoresCarouselIndex((p) => Math.min(gestoresMaxStart, p + 1))}
+                disabled={gestoresCarouselIndex >= gestoresMaxStart}
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300 bg-white text-slate-600 shadow-sm transition hover:bg-slate-50 disabled:opacity-30"
+                aria-label="Siguiente"
+              >
+                <ChevronRight className="h-4 w-4" />
               </button>
             </div>
           </motion.div>
-        </div>
-      )}
 
+          <div className="overflow-hidden">
+            <motion.div
+              animate={{
+                x: `calc(-${gestoresCarouselIndex} * ((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards} + ${gestoresGapPx}px))`,
+              }}
+              transition={{ type: "spring", stiffness: 90, damping: 20, mass: 0.8 }}
+              className="flex"
+              style={{ gap: `${gestoresGapPx}px` }}
+            >
+              {gestoresData.map((gestor) => (
+                <div
+                  key={gestor.id}
+                  style={{
+                    flex: `0 0 calc((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards})`,
+                  }}
+                >
+                  <GestorCard gestor={gestor} onSelect={(g) => { setGestorSeleccionado(g); setInstitucionModalIndex(0); }} />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Dots */}
+          <div className="mt-6 flex justify-center gap-1.5">
+            {Array.from({ length: gestoresMaxStart + 1 }, (_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setGestoresCarouselIndex(idx)}
+                aria-label={`Grupo ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all ${
+                  gestoresCarouselIndex === idx ? "w-8 bg-[#0D4B56]" : "w-1.5 bg-slate-300"
+                }`}
+              />
+            ))}
+          </div>
+        </section>
       </div>
+
+      {/* ── MODAL INSTITUCIÓN ─────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {gestorSeleccionado && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm"
+            onClick={() => setGestorSeleccionado(null)}
+            role="dialog"
+            aria-modal="true"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 12 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-lg rounded-2xl bg-white shadow-2xl"
+            >
+              {/* Header */}
+              <div className="flex items-start justify-between border-b border-slate-100 px-5 py-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-[#11B2AA]">Institución asignada</p>
+                  <h3 className="mt-0.5 text-base font-black text-slate-900">{gestorSeleccionado.nombre}</h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setGestorSeleccionado(null)}
+                  className="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+                  aria-label="Cerrar"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Body */}
+              <div className="p-5">
+                {institucionesGestorSeleccionado.length > 0 ? (
+                  <>
+                    <div className="relative overflow-hidden rounded-xl bg-slate-100">
+                      {institucionModalImage ? (
+                        <img
+                          src={institucionModalImage}
+                          alt={institucionModalActual}
+                          className="h-56 w-full object-cover"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <div className="flex h-56 items-center justify-center text-sm text-slate-400">
+                          Sin foto disponible
+                        </div>
+                      )}
+                      {institucionesGestorSeleccionado.length > 1 && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => setInstitucionModalIndex((p) => (p - 1 + institucionesGestorSeleccionado.length) % institucionesGestorSeleccionado.length)}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-1.5 text-white backdrop-blur-sm transition hover:bg-black/70"
+                            aria-label="Anterior institución"
+                          >
+                            <ChevronLeft className="h-4 w-4" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setInstitucionModalIndex((p) => (p + 1) % institucionesGestorSeleccionado.length)}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-1.5 text-white backdrop-blur-sm transition hover:bg-black/70"
+                            aria-label="Siguiente institución"
+                          >
+                            <ChevronRight className="h-4 w-4" />
+                          </button>
+                        </>
+                      )}
+                    </div>
+                    <p className="mt-3 text-sm font-semibold text-slate-800">{institucionModalActual}</p>
+                    {institucionesGestorSeleccionado.length > 1 && (
+                      <div className="mt-2 flex justify-center gap-1.5">
+                        {institucionesGestorSeleccionado.map((_, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => setInstitucionModalIndex(idx)}
+                            className={`h-1.5 rounded-full transition-all ${idx === institucionModalIndex ? "w-6 bg-[#0D4B56]" : "w-1.5 bg-slate-300"}`}
+                            aria-label={`Institución ${idx + 1}`}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <p className="text-sm text-slate-500">Institución por confirmar.</p>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

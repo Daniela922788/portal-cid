@@ -39,6 +39,10 @@ export default function Home() {
       id: "R3-OXQd-Fp4",
       titulo: "Capsula STEM 3",
     },
+    {
+      id: "4qF9yJWZRcU",
+      titulo: "Capsula STEM 4",
+    },
   ];
   const [videoIndex, setVideoIndex] = useState(0);
   const mobileVideoSectionRef = useRef<HTMLElement | null>(null);
@@ -212,6 +216,29 @@ export default function Home() {
             </div>
           </div>
         </section>
+      </section>
+
+        
+      <section className="relative left-1/2 w-screen -translate-x-1/2 py-10 md:py-14">
+        <div className="container">
+          <div className="mb-6 text-center md:mb-8">
+            <h2 className="text-4xl font-bold text-[#023A34] md:text-6xl">TOM 2026</h2>
+            <p className="mt-2 text-lg text-gray-700 md:text-2xl">Ideas que se convierten en esperanza</p>
+          </div>
+          <div className="mx-auto max-w-8xl overflow-hidden rounded-2xl shadow-2xl">
+            <div className="relative aspect-video w-full bg-black">
+              <iframe
+                src="https://www.youtube.com/embed/CceKZW0xxTk?autoplay=1&mute=1&loop=1&playlist=CceKZW0xxTk&playsinline=1&rel=0&modestbranding=1"
+                title="Somos el CID - Video"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full"
+              />
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Carrusel de videos STEM */}

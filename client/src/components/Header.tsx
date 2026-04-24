@@ -69,11 +69,11 @@ export default function Header() {
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
     : "sticky top-0 z-50 w-full border-b-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
   const topLevelNavLinkClass = isTransparent
-    ? "group inline-flex h-12 w-max items-center justify-center rounded-md bg-black/35 px-6 py-2 text-lg font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-    : "group inline-flex h-12 w-max items-center justify-center rounded-md bg-background px-6 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
+    ? "group inline-flex h-10 2xl:h-11 w-max items-center justify-center rounded-md bg-black/35 px-3 xl:px-4 2xl:px-5 py-2 text-[0.95rem] xl:text-base 2xl:text-[1.05rem] font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+    : "group inline-flex h-10 2xl:h-11 w-max items-center justify-center rounded-md bg-background px-3 xl:px-4 2xl:px-5 py-2 text-[0.95rem] xl:text-base 2xl:text-[1.05rem] font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
   const triggerClassName = isTransparent
-    ? "h-12 w-max rounded-md bg-black/35 px-6 text-lg font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
-    : "h-12 w-max rounded-md bg-background px-6 text-lg font-medium text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground";
+    ? "h-10 2xl:h-11 w-max rounded-md bg-black/35 px-3 xl:px-4 2xl:px-5 text-[0.95rem] xl:text-base 2xl:text-[1.05rem] font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
+    : "h-10 2xl:h-11 w-max rounded-md bg-background px-3 xl:px-4 2xl:px-5 text-[0.95rem] xl:text-base 2xl:text-[1.05rem] font-medium text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground";
 
   useEffect(() => {
     if (searchOpen) {
@@ -178,17 +178,17 @@ export default function Header() {
   return (
     <header className={headerClassName}>
       <div className="container">
-        <div className="flex h-20 items-center justify-between">
+        <div className="mx-auto flex h-16 w-full max-w-[1180px] items-center justify-between gap-3 md:h-[5.5rem] md:gap-5 lg:h-[6.9rem] lg:gap-6">
           {/* Logo */}
           <Link
             href="/"
-            className="-ml-6 mt-0 flex min-w-0 items-center transition-opacity hover:opacity-80 lg:-ml-40 lg:mt-13"
+            className="-ml-3 mr-3 flex min-w-0 shrink-0 items-center transition-opacity hover:opacity-80 sm:-ml-4 sm:mr-5 md:-ml-6 md:mr-7 lg:-ml-7 lg:mr-10 xl:-ml-8 xl:mr-12"
           >
-            <img src={logoSrc} alt="Logo CID" className="h-[3.75rem] w-auto md:h-[5.5rem] lg:h-[8rem]" />
+            <img src={logoSrc} alt="Logo CID" className="h-[clamp(3.6rem,9.1vw,6.9rem)] w-auto" />
           </Link>
 
           {/* Navegación desktop */}
-          <nav className="hidden lg:flex items-center gap-7 mt-13">
+          <nav className="hidden lg:flex min-w-0 flex-1 items-center justify-center gap-3 xl:gap-5">
             <NavigationMenu
               ref={desktopNavMenuRef}
               viewport={false}
@@ -396,7 +396,7 @@ export default function Header() {
           </nav>
 
           {/* Acciones */}
-          <div className="mt-0 flex items-center gap-2 md:mt-0">
+          <div className="mt-0 flex shrink-0 items-center gap-2 md:mt-0">
             {searchOpen ? (
               <form onSubmit={handleSearchSubmit} className="hidden md:flex items-center gap-2">
                 <input
@@ -437,7 +437,7 @@ export default function Header() {
                   setSearchOpen(true);
                   setSearchResults([]);
                 }}
-                className="hidden md:inline-flex mt-13 translate-x-40"
+                className="hidden md:inline-flex lg:ml-2"
                 aria-label="Abrir busqueda"
               >
                 <Search className="h-5 w-5" />

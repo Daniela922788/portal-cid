@@ -5,6 +5,8 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Header from "./components/Header";
+import AccessibilityToolbar from "./components/AccessibilityToolbar";
+import CIDChatWidget from "./components/CIDChatWidget";
 import Footer from "./components/Footer";
 import ContactBanner from "./components/ContactBanner";
 import ScrollToTopButton from "./components/ScrollToTopButton";
@@ -76,6 +78,7 @@ function Router() {
           <Route path="/normatividad" component={Normatividad} />
           <Route path="/semana-stem" component={SemanaStem} />
           <Route path="/semana-stem-complete" component={SemanaStemComplete} />
+          <Route path="/SemanaSTEM-Complete" component={SemanaStemComplete} />
           <Route path="/aliados" component={Aliados} />
           <Route path="/premios" component={Premios} />
           <Route path="/centro-ciencia" component={CentroCiencia} />
@@ -93,6 +96,8 @@ function Router() {
           <Route component={NotFound} />
         </Switch>
       </main>
+      <AccessibilityToolbar />
+      <CIDChatWidget />
       <ScrollToTopButton />
       <ContactBanner />
       <Footer />
