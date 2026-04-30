@@ -802,7 +802,7 @@ export default function Nosotros() {
           <div className="mx-auto max-w-8xl overflow-hidden rounded-2xl shadow-2xl">
             <div className="relative aspect-video w-full bg-black">
               <iframe
-                src="https://www.youtube.com/embed/R6ffTBIieCw?autoplay=1&mute=1&loop=1&playlist=R6ffTBIieCw&playsinline=1"
+                src="https://www.youtube.com/embed/nvjf_H3Nl90?autoplay=1&mute=1&loop=1&playlist=nvjf_H3Nl90&rel=0"
                 title="Somos el CID - Video"
                 loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
