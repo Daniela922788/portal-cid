@@ -195,20 +195,20 @@ const frentesTrabajo: FrenteTrabajo[] = [
 ];
 
 const gestoresGalleryImages: GestorGalleryImage[] = [
-  { src: "/Seccion Gestores/1.webp", alt: "Gestores de innovación en actividad formativa 1" },
-  { src: "/Seccion Gestores/2.webp", alt: "Gestores de innovación en actividad formativa 2" },
-  { src: "/Seccion Gestores/3.webp", alt: "Gestores de innovación en actividad formativa 3" },
-  { src: "/Seccion Gestores/4.webp", alt: "Gestores de innovación en actividad formativa 4" },
-  { src: "/Seccion Gestores/5.webp", alt: "Gestores de innovación en actividad formativa 5" },
-  { src: "/Seccion Gestores/6.webp", alt: "Gestores de innovación en actividad formativa 6" },
-  { src: "/Seccion Gestores/7.webp", alt: "Gestores de innovación en actividad formativa 7" },
-  { src: "/Seccion Gestores/8.webp", alt: "Gestores de innovación en actividad formativa 8" },
-  { src: "/Seccion Gestores/9.webp", alt: "Gestores de innovación en actividad formativa 9" },
-  { src: "/Seccion Gestores/10.webp", alt: "Gestores de innovación en actividad formativa 10" },
-  { src: "/Seccion Gestores/11.webp", alt: "Gestores de innovación en actividad formativa 11" },
-  { src: "/Seccion Gestores/12.webp", alt: "Gestores de innovación en actividad formativa 12" },
-  { src: "/Seccion Gestores/13.webp", alt: "Gestores de innovación en actividad formativa 13" },
-  { src: "/Seccion Gestores/14.webp", alt: "Gestores de innovación en actividad formativa 14" },
+  { src: "/Seccion Gestores/315A0110.webp", alt: "Gestores de innovación en actividad formativa 1" },
+  { src: "/Seccion Gestores/315A0117.webp", alt: "Gestores de innovación en actividad formativa 2" },
+  { src: "/Seccion Gestores/315A0331.webp", alt: "Gestores de innovación en actividad formativa 3" },
+  { src: "/Seccion Gestores/315A1818.webp", alt: "Gestores de innovación en actividad formativa 4" },
+  { src: "/Seccion Gestores/315A1912.webp", alt: "Gestores de innovación en actividad formativa 5" },
+  { src: "/Seccion Gestores/315A1940.webp", alt: "Gestores de innovación en actividad formativa 6" },
+  { src: "/Seccion Gestores/315A1962.webp", alt: "Gestores de innovación en actividad formativa 7" },
+  { src: "/Seccion Gestores/315A2026.webp", alt: "Gestores de innovación en actividad formativa 8" },
+  { src: "/Seccion Gestores/315A2095.webp", alt: "Gestores de innovación en actividad formativa 9" },
+  { src: "/Seccion Gestores/315A9761.webp", alt: "Gestores de innovación en actividad formativa 10" },
+  { src: "/Seccion Gestores/315A9774.webp", alt: "Gestores de innovación en actividad formativa 11" },
+  { src: "/Seccion Gestores/315A9870.webp", alt: "Gestores de innovación en actividad formativa 12" },
+  { src: "/Seccion Gestores/315A9904.webp", alt: "Gestores de innovación en actividad formativa 13" },
+  { src: "/Seccion Gestores/4S8A2218.webp", alt: "Gestores de innovación en actividad formativa 14" },
 ];
 
 const heroImages = gestoresGalleryImages.slice(0, 3);

@@ -23,8 +23,8 @@ async function convertDir(dir) {
     const webpPath = fullPath.replace(/\.(jpe?g|png)$/i, '.webp');
 
     await sharp(fullPath)
-      .resize({ width: 720, withoutEnlargement: true })
-      .webp({ quality: 68, effort: 6 })
+      .rotate()
+      .webp({ quality: 92, effort: 6 })
       .toFile(webpPath);
 
     console.log(`  ✓ convertido: ${path.relative(baseDir, webpPath)}`);
