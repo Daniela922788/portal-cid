@@ -59,6 +59,16 @@ interface Gestor {
   foto: string;
 }
 
+type TeamCategory = "administrativo" | "gestores" | "tecnologia" | "audiovisuales";
+
+interface TeamMember {
+  id: number;
+  nombre: string;
+  cargo: string;
+  foto: string;
+  categoria: TeamCategory | TeamCategory[];
+}
+
 const toWebp = (src: string) => (typeof src === "string" ? src.replace(/\.(jpe?g|png)$/i, ".webp") : src);
 const NO_WEBP_FALLBACK = new Set(["/gestores/Zuleima.jpg"]);
 const getWebpSrc = (src: string) => {
@@ -81,6 +91,8 @@ export default function Nosotros() {
   const [gestoresCarouselIndex, setGestoresCarouselIndex] = useState(0);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [timelineMobileIndex, setTimelineMobileIndex] = useState(0);
+  const [selectedTeamCategory, setSelectedTeamCategory] = useState<TeamCategory | "all">("all");
+  const [teamPreviewCarouselIndex, setTeamPreviewCarouselIndex] = useState(0);
   const timelineTouchStartXRef = useRef<number | null>(null);
 
   const quickSections = [
@@ -94,12 +106,6 @@ export default function Nosotros() {
     { id: "mundo-ve", title: "Lo que el Mundo Ve en Nosotros" },
     { id: "lineas-tematicas", title: "Líneas Temáticas" },
   ];
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (!element) return;
-    element.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
   
   const timelineEvents: TimelineEvent[] = [
     { 
@@ -308,22 +314,59 @@ export default function Nosotros() {
     },
   ];
 
-  const equipoImagenes = [
-    { id: 5, nombre: "Daniela Jaramillo Hoyos", cargo: "Directora de Innovación", foto: DanielaImg },
-    { id: 1, nombre: "Alexander Heredia Heredia", cargo: "Profesional Universitario", foto: AlexImg },
-    { id: 12, nombre: "Yethy Gisela Granda Zapata", cargo: "Coordinadora Gestores Innovación - UPB", foto: YethyImg },
-    { id: 4, nombre: "Carolina Tabres Isaza", cargo: "Técnico Operativo", foto: CaroImg },
-    { id: 14, nombre: "María Zuleima Arango Sánchez", cargo: "Profeseional Universitaria", foto: "/gestores/Zuleima.jpg" },
-    { id: 9, nombre: "Jhon Fredy Ríos Montoya", cargo: "Profesional Universitario", foto: JhonImg },
-    { id: 2, nombre: "Angela María González Valencia", cargo: "Asistente Administrativa - UPB", foto: AngelaImg },
-    { id: 3, nombre: "Juan Camilo Álvarez Bedoya", cargo: "Contratista", foto: CamiloImg },
-    { id: 13, nombre: "Daniela Serna Gallego", cargo: "Programadora - UPB", foto: "/gestores/Daniela%20SG.png" },
-    { id: 10, nombre: "John Fredis Carmona Calderin", cargo: "Técnico Audiovisual - UPB", foto: JohnImg },
-    { id: 11, nombre: "Jorge Guzmán Ruiz", cargo: "Técnico Audiovisual - UPB", foto: JorgeImg },
-    { id: 6, nombre: "Dubiel Enrique Restrepo Marulanda", cargo: "Contratista", foto: DubielImg },
-    { id: 8, nombre: "Jairo Alberto Muñoz Díaz", cargo: "Contratista", foto: JairoImg },
-    { id: 7, nombre: "Hernán Alberto Maury Andrade", cargo: "Soporte Técnico de Tigo", foto: HernanImg },
+  const equipoImagenes: TeamMember[] = [
+    { id: 5, nombre: "Daniela Jaramillo Hoyos", cargo: "Directora de Innovación", foto: DanielaImg, categoria: "administrativo" },
+    { id: 1, nombre: "Alexander Heredia Heredia", cargo: "Profesional Universitario", foto: AlexImg, categoria: ["administrativo", "tecnologia"] },
+    { id: 12, nombre: "Yethy Gisela Granda Zapata", cargo: "Coordinadora Gestores Innovación - UPB", foto: YethyImg, categoria: "administrativo" },
+    { id: 4, nombre: "Carolina Tabres Isaza", cargo: "Técnico Operativo", foto: CaroImg, categoria: "administrativo" },
+    { id: 14, nombre: "María Zuleima Arango Sánchez", cargo: "Profeseional Universitaria", foto: "/gestores/Zuleima.jpg", categoria: "administrativo" },
+    { id: 9, nombre: "Jhon Fredy Ríos Montoya", cargo: "Profesional Universitario", foto: JhonImg, categoria: "administrativo" },
+    { id: 2, nombre: "Angela María González Valencia", cargo: "Asistente Administrativa - UPB", foto: AngelaImg, categoria: "administrativo" },
+    { id: 3, nombre: "Juan Camilo Álvarez Bedoya", cargo: "Contratista", foto: CamiloImg, categoria: "gestores" },
+    { id: 13, nombre: "Daniela Serna Gallego", cargo: "Programadora - UPB", foto: "/gestores/Daniela%20SG.png", categoria: "tecnologia" },
+    { id: 10, nombre: "John Fredis Carmona Calderin", cargo: "Técnico Audiovisual - UPB", foto: JohnImg, categoria: "audiovisuales" },
+    { id: 11, nombre: "Jorge Guzmán Ruiz", cargo: "Técnico Audiovisual - UPB", foto: JorgeImg, categoria: "audiovisuales" },
+    { id: 6, nombre: "Dubiel Enrique Restrepo Marulanda", cargo: "Contratista", foto: DubielImg, categoria: "tecnologia" },
+    { id: 8, nombre: "Jairo Alberto Muñoz Díaz", cargo: "Contratista", foto: JairoImg, categoria: "tecnologia" },
+    { id: 7, nombre: "Hernán Alberto Maury Andrade", cargo: "Soporte Técnico de Tigo", foto: HernanImg, categoria: "tecnologia" },
   ];
+
+  const teamCardItems = [
+    {
+      key: "administrativo" as TeamCategory,
+      title: "Equipo Administrativo",
+      description: "Lidera los procesos estratégicos que dan vida a los proyectos.",
+      color: "bg-blue-500",
+    },
+    {
+      key: "gestores" as TeamCategory,
+      title: "Gestores de Innovación e Investigación",
+      description: "Acompaña procesos pedagógicos innovadores y de investigación que fortalecen la transformación educativa.",
+      color: "bg-teal-500",
+      descriptionClassName: "-mt-6",
+    },
+    {
+      key: "tecnologia" as TeamCategory,
+      title: "Equipo de Tecnología",
+      description: "Implementa soluciones digitales para nuestras iniciativas educativas.",
+      color: "bg-cyan-500",
+    },
+    {
+      key: "audiovisuales" as TeamCategory,
+      title: "Técnicos Audiovisuales",
+      description: "Generan experiencias mediante narrativas visuales de alto impacto.",
+      color: "bg-emerald-500",
+    },
+  ];
+
+  const filteredEquipoImagenes =
+    selectedTeamCategory === "all"
+      ? equipoImagenes
+      : equipoImagenes.filter((persona) =>
+          Array.isArray(persona.categoria)
+            ? persona.categoria.includes(selectedTeamCategory)
+            : persona.categoria === selectedTeamCategory
+        );
 
   const eventsByYear = new Map<number, TimelineEvent[]>();
   timelineEvents.forEach((event) => {
@@ -333,7 +376,7 @@ export default function Nosotros() {
     eventsByYear.get(event.year)!.push(event);
   });
   
-  const sortedYears = Array.from(eventsByYear.keys()).sort((a, b) => b - a);
+  const sortedYears = Array.from(eventsByYear.keys()).sort((a, b) => a - b);
   
   const logrosData = [
     "Primer lugar del equipo de la Institución Educativa Normal Superior de Envigado en el concurso Robojam. (2024 y 2025)",
@@ -419,9 +462,25 @@ export default function Nosotros() {
     return () => window.removeEventListener("resize", updateVisibleCards);
   }, []);
 
-  const directionTotal = equipoImagenes.length;
+  const directionTotal = filteredEquipoImagenes.length;
   const directionGapPx = directionVisibleCards === 2 ? 12 : 32;
   const directionMaxStart = Math.max(0, directionTotal - directionVisibleCards);
+  const teamPreviewTotal = filteredEquipoImagenes.length;
+  const teamPreviewMaxStart = Math.max(0, teamPreviewTotal - directionVisibleCards);
+
+  const handleTeamCardClick = (category: TeamCategory) => {
+    setSelectedTeamCategory((prev) => (prev === category ? "all" : category));
+    setDirectionCarouselIndex(0);
+    setTeamPreviewCarouselIndex(0);
+  };
+
+  const goTeamPreviewPrev = () => {
+    setTeamPreviewCarouselIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const goTeamPreviewNext = () => {
+    setTeamPreviewCarouselIndex((prev) => Math.min(teamPreviewMaxStart, prev + 1));
+  };
 
   const goDirectionPrev = () => {
     setDirectionCarouselIndex((prev) => Math.max(0, prev - 1));
@@ -478,6 +537,10 @@ export default function Nosotros() {
   useEffect(() => {
     setDirectionCarouselIndex((prev) => Math.min(prev, directionMaxStart));
   }, [directionMaxStart]);
+
+  useEffect(() => {
+    setTeamPreviewCarouselIndex((prev) => Math.min(prev, teamPreviewMaxStart));
+  }, [teamPreviewMaxStart]);
 
   useEffect(() => {
     setGestoresCarouselIndex((prev) => Math.min(prev, gestoresMaxStart));
@@ -573,50 +636,156 @@ export default function Nosotros() {
               Contamos con un equipo multidisciplinario que hace posible el diseño, la ejecución y el acompañamiento de nuestras iniciativas
             </p>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4">
-              <Card className="border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-                <CardHeader className="space-y-1.5 p-3 sm:space-y-3 sm:p-6">
-                  <div className="h-1.5 w-10 rounded-full bg-blue-500 sm:w-14" />
-                  <CardTitle className="text-sm leading-tight text-slate-900 sm:text-xl">Equipo Administrativo</CardTitle>
-                  <p className="text-xs font-medium text-slate-500 sm:text-sm">7 personas</p>
-                </CardHeader>
-                <CardContent className="p-3 pt-0 sm:p-6 sm:pt-0">
-                  <p className="text-xs leading-snug text-slate-700 sm:text-base">Lidera los procesos estratégicos que dan vida a los proyectos.</p>
-                </CardContent>
-              </Card>
+              {teamCardItems.map((item) => {
+                const isActive = selectedTeamCategory === item.key;
+                const cardContent = (
+                  <Card
+                    className={`h-full border bg-white shadow-sm transition-all hover:shadow-md ${
+                      isActive ? "border-teal-500 ring-2 ring-teal-200" : "border-slate-200"
+                    }`}
+                  >
+                    <CardHeader className="space-y-1.5 p-3 sm:space-y-3 sm:p-6">
+                      <div className={`h-1.5 w-10 rounded-full sm:w-14 ${item.color}`} />
+                      <CardTitle className="text-sm leading-tight text-slate-900 sm:text-xl">{item.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-3 pt-0 pb-1 sm:p-6 sm:pt-0 sm:pb-2">
+                      <p
+                        className={`text-xs leading-snug text-slate-700 sm:text-base ${
+                          item.descriptionClassName ?? ""
+                        }`}
+                      >
+                        {item.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                );
 
-              <Card className="border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-                <CardHeader className="space-y-1.5 p-3 sm:space-y-3 sm:p-6">
-                  <div className="h-1.5 w-10 rounded-full bg-teal-500 sm:w-14" />
-                  <CardTitle className="text-sm leading-tight text-slate-900 sm:text-xl">Gestores de Innovación e Investigación</CardTitle>
-                  <p className="text-xs font-medium text-slate-500 sm:text-sm">16 personas</p>
-                </CardHeader>
-                <CardContent className="p-3 pt-0 sm:p-6 sm:pt-0">
-                  <p className="text-xs leading-snug text-slate-700 sm:text-base">Acompaña procesos pedagógicos innovadores y de investigación que fortalecen la transformación educativa.</p>
-                </CardContent>
-              </Card>
+                if (item.key === "gestores") {
+                  return (
+                    <Link
+                      key={item.key}
+                      href="/gestores#gestores-innovacion"
+                      aria-label="Ir a la sección Gestores"
+                      className="h-full text-left"
+                    >
+                      {cardContent}
+                    </Link>
+                  );
+                }
 
-              <Card className="border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-                <CardHeader className="space-y-1.5 p-3 sm:space-y-3 sm:p-6">
-                  <div className="h-1.5 w-10 rounded-full bg-cyan-500 sm:w-14" />
-                  <CardTitle className="text-sm leading-tight text-slate-900 sm:text-xl">Equipo de Tecnología</CardTitle>
-                  <p className="text-xs font-medium text-slate-500 sm:text-sm">5 personas</p>
-                </CardHeader>
-                <CardContent className="p-3 pt-0 sm:p-6 sm:pt-0">
-                  <p className="text-xs leading-snug text-slate-700 sm:text-base">Implementa soluciones digitales para nuestras iniciativas educativas.</p>
-                </CardContent>
-              </Card>
-
-              <Card className="border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-                <CardHeader className="space-y-1.5 p-3 sm:space-y-3 sm:p-6">
-                  <div className="h-1.5 w-10 rounded-full bg-emerald-500 sm:w-14" />
-                  <CardTitle className="text-sm leading-tight text-slate-900 sm:text-xl">Técnicos Audiovisuales</CardTitle>
-                  <p className="text-xs font-medium text-slate-500 sm:text-sm">2 personas</p>
-                </CardHeader>
-                <CardContent className="p-3 pt-0 sm:p-6 sm:pt-0">
-                  <p className="text-xs leading-snug text-slate-700 sm:text-base">Generan experiencias mediante narrativas visuales de alto impacto.</p>
-                </CardContent>
-              </Card>
+                return (
+                  <button
+                    key={item.key}
+                    type="button"
+                    onClick={() => handleTeamCardClick(item.key)}
+                    className="h-full text-left"
+                  >
+                    {cardContent}
+                  </button>
+                );
+              })}
             </div>
+
+            {selectedTeamCategory !== "all" && (
+              <div className="mt-8">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <p className="text-sm font-semibold text-teal-700 sm:text-base">
+                    {teamCardItems.find((item) => item.key === selectedTeamCategory)?.title}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedTeamCategory("all");
+                      setTeamPreviewCarouselIndex(0);
+                    }}
+                    className="text-xs font-medium text-slate-600 underline decoration-slate-400 underline-offset-4 hover:text-slate-900"
+                  >
+                    Mostrar todo
+                  </button>
+                </div>
+
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={goTeamPreviewPrev}
+                    aria-label="Anterior en vista filtrada"
+                    disabled={teamPreviewCarouselIndex === 0}
+                    className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={goTeamPreviewNext}
+                    aria-label="Siguiente en vista filtrada"
+                    disabled={teamPreviewCarouselIndex >= teamPreviewMaxStart}
+                    className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+
+                  <div className="overflow-hidden px-6">
+                    <motion.div
+                      animate={{
+                        x: `calc(-${teamPreviewCarouselIndex} * ((100% - ${(directionVisibleCards - 1) * directionGapPx}px) / ${directionVisibleCards} + ${directionGapPx}px))`,
+                      }}
+                      transition={{ type: "spring", stiffness: 90, damping: 20, mass: 0.8 }}
+                      className="flex"
+                      style={{ gap: `${directionGapPx}px` }}
+                    >
+                      {filteredEquipoImagenes.map((persona) => (
+                        <div
+                          key={`team-preview-${persona.id}`}
+                          className="group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
+                          style={{
+                            flex: `0 0 calc((100% - ${(directionVisibleCards - 1) * directionGapPx}px) / ${directionVisibleCards})`,
+                          }}
+                        >
+                          <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
+                            {(() => {
+                              const webpSrc = getWebpSrc(persona.foto);
+                              return (
+                                <picture className="contents">
+                                  {webpSrc && <source srcSet={webpSrc} type="image/webp" />}
+                                  <img
+                                    src={persona.foto}
+                                    alt={persona.nombre}
+                                    loading="lazy"
+                                    decoding="async"
+                                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-3 sm:py-6"
+                                  />
+                                </picture>
+                              );
+                            })()}
+                          </div>
+
+                          <div className="px-4 py-4 text-center sm:px-6 sm:py-6">
+                            <h3 className="text-base sm:text-lg font-bold text-gray-900">{persona.nombre}</h3>
+                            <p className="text-xs sm:text-sm text-gray-600 mt-1">{persona.cargo}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </motion.div>
+                  </div>
+
+                  <div className="mt-6 flex justify-center gap-2">
+                    {teamPreviewTotal > 0 &&
+                      Array.from({ length: teamPreviewMaxStart + 1 }, (_, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => setTeamPreviewCarouselIndex(idx)}
+                          aria-label={`Ir al bloque filtrado ${idx + 1}`}
+                          className={`h-2 rounded-full transition-all ${
+                            teamPreviewCarouselIndex === idx ? "w-8 bg-slate-800" : "w-2 bg-slate-400"
+                          }`}
+                        />
+                      ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -860,111 +1029,7 @@ export default function Nosotros() {
         </div>
       </section>
 
-      {/* Nuevo Grid de Imágenes */}
-      <section id="direccion-innovacion" className="pt-2 sm:pt-4 pb-2 bg-gradient-to-br from-gray-50 to-gray-100 scroll-mt-24">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-teal-100 border border-blue-300 rounded-full px-4 py-2 mb-4">
-              <Users className="w-4 h-4 text-blue-600" />
-              <span className="text-blue-700 text-sm font-semibold">Nuestro Equipo</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Dirección de Innovación
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Conoce a los profesionales que conforman el equipo de Innovación 
-            </p>
-          </motion.div>
-
-          <div className="relative">
-            <button
-              type="button"
-              onClick={goDirectionPrev}
-              aria-label="Anterior en Dirección de Innovación"
-              disabled={directionCarouselIndex === 0}
-              className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-
-            <button
-              type="button"
-              onClick={goDirectionNext}
-              aria-label="Siguiente en Dirección de Innovación"
-              disabled={directionCarouselIndex >= directionMaxStart}
-              className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-
-            <div className="overflow-hidden px-6">
-              <motion.div
-                animate={{
-                  x: `calc(-${directionCarouselIndex} * ((100% - ${(directionVisibleCards - 1) * directionGapPx}px) / ${directionVisibleCards} + ${directionGapPx}px))`,
-                }}
-                transition={{ type: "spring", stiffness: 90, damping: 20, mass: 0.8 }}
-                className="flex"
-                style={{ gap: `${directionGapPx}px` }}
-              >
-                {equipoImagenes.map((persona) => (
-                  <div
-                    key={persona.id}
-                    className="group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br from-white to-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.15)] transition-all duration-300"
-                    style={{
-                      flex: `0 0 calc((100% - ${(directionVisibleCards - 1) * directionGapPx}px) / ${directionVisibleCards})`,
-                    }}
-                  >
-                    <div className="relative overflow-hidden shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] bg-gray-50 flex items-center justify-center">
-                      {/** Some photos only exist as JPG/PNG in public and do not have WEBP siblings. */}
-                      {/** Keep size/layout identical and only skip WEBP source for those specific files. */}
-                      {(() => {
-                        const webpSrc = getWebpSrc(persona.foto);
-                        return (
-                      <picture className="contents">
-                        {webpSrc && <source srcSet={webpSrc} type="image/webp" />}
-                        <img
-                          src={persona.foto}
-                          alt={persona.nombre}
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 py-3 sm:py-6"
-                        />
-                      </picture>
-                        );
-                      })()}
-                    </div>
-
-                    <div className="px-4 py-4 text-center sm:px-6 sm:py-6">
-                      <h3 className="text-base sm:text-lg font-bold text-gray-900">{persona.nombre}</h3>
-                      <p className="text-xs sm:text-sm text-gray-600 mt-1">{persona.cargo}</p>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            <div className="mt-8 flex justify-center gap-2">
-              {Array.from({ length: directionMaxStart + 1 }, (_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setDirectionCarouselIndex(idx)}
-                  aria-label={`Ir al bloque ${idx + 1}`}
-                  className={`h-2 rounded-full transition-all ${
-                    directionCarouselIndex === idx ? "w-8 bg-slate-800" : "w-2 bg-slate-400"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Carrusel principal oculto temporalmente */}
 
       {/* Gestores de Innovación */}
       <section id="gestores-innovacion" className="pt-10 pb-2 bg-gradient-to-br from-gray-50 to-gray-100 scroll-mt-24">
@@ -990,9 +1055,8 @@ export default function Nosotros() {
 
           {/* Imagen del equipo de gestores */}
           <Link
-            href="/Gestores"
+            href="/gestores#gestores-innovacion"
             aria-label="Ir a la sección Gestores"
-            onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "auto" })}
             className="group mb-16 block overflow-hidden rounded-2xl shadow-2xl"
           >
             <img

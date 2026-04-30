@@ -230,7 +230,7 @@ export default function Header() {
                       {[
                         { href: "/nosotros", title: "Nosotros", desc: "Misión, visión y valores del CID" },
                         { href: "/gestores", title: "Gestores de Innovación", desc: "Equipo de Gestores de Innovación" },
-                        { href: "/salas", title: "Salas", desc: "Espacios educativos y ambientes de aprendizaje" },
+                        { href: "/salas", title: "Nuestros Espacios", desc: "Espacios educativos y ambientes de aprendizaje" },
                         { href: "/centro", title: "Aula de Experimentación Audiovisual", desc: "Aula de Experimentación Audiovisual del CID" },
                       ].map(({ href, title, desc }) => (
                         <li key={href}>

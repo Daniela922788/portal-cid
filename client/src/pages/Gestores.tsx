@@ -459,7 +459,7 @@ function GestorCard({ gestor, onSelect }: { gestor: Gestor; onClick?: () => void
       : "bg-[#EC6910]/10 text-[#EC6910] border-[#EC6910]/20";
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-[#11B2AA]/40">
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-[#11B2AA]/40 h-full">
       <button
         type="button"
         onClick={() => onSelect(gestor)}
@@ -473,7 +473,7 @@ function GestorCard({ gestor, onSelect }: { gestor: Gestor; onClick?: () => void
             alt={gestor.nombre}
             loading="lazy"
             decoding="async"
-            className="h-[300px] w-full object-cover object-[center_10%] transition-transform duration-500 group-hover:scale-105 lg:h-[280px]"
+            className="h-[300px] w-full object-cover object-[center_10%] transition-transform duration-500 group-hover:scale-105"
           />
         </picture>
         {/* Hover overlay */}
@@ -545,6 +545,26 @@ export default function Gestores() {
     const handleEsc = (e: KeyboardEvent) => { if (e.key === "Escape") setGestorSeleccionado(null); };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
+
+  useEffect(() => {
+    const scrollToHashTarget = () => {
+      const hash = window.location.hash;
+      if (!hash) return;
+
+      const target = document.getElementById(hash.slice(1));
+      if (!target) return;
+
+      target.scrollIntoView({ behavior: "auto", block: "start" });
+    };
+
+    const timeoutId = window.setTimeout(scrollToHashTarget, 0);
+    window.addEventListener("hashchange", scrollToHashTarget);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      window.removeEventListener("hashchange", scrollToHashTarget);
+    };
   }, []);
 
   return (
@@ -826,7 +846,7 @@ export default function Gestores() {
                 <GestoresImageCard
                   image={imagenFrenteActual}
                   className="border-slate-200"
-                  imageClassName="h-72 xl:h-full"
+                  imageClassName="h-96 xl:h-full min-h-96"
                 />
               </motion.div>
             </AnimatePresence>
@@ -898,29 +918,30 @@ export default function Gestores() {
                 Profesionales comprometidos con la innovación educativa en Envigado.
               </p>
             </div>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => setGestoresCarouselIndex((p) => Math.max(0, p - 1))}
-                disabled={gestoresCarouselIndex === 0}
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300 bg-white text-slate-600 shadow-sm transition hover:bg-slate-50 disabled:opacity-30"
-                aria-label="Anterior"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => setGestoresCarouselIndex((p) => Math.min(gestoresMaxStart, p + 1))}
-                disabled={gestoresCarouselIndex >= gestoresMaxStart}
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300 bg-white text-slate-600 shadow-sm transition hover:bg-slate-50 disabled:opacity-30"
-                aria-label="Siguiente"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
           </motion.div>
 
-          <div className="overflow-hidden">
+          <div className="overflow-hidden relative">
+            <button
+              type="button"
+              onClick={() => setGestoresCarouselIndex((p) => Math.max(0, p - 1))}
+              disabled={gestoresCarouselIndex === 0}
+              className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+              aria-label="Anterior"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setGestoresCarouselIndex((p) => Math.min(gestoresMaxStart, p + 1))}
+              disabled={gestoresCarouselIndex >= gestoresMaxStart}
+              className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-slate-300 bg-white/95 p-2 text-slate-700 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+              aria-label="Siguiente"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+
+            <div className="px-6">
             <motion.div
               animate={{
                 x: `calc(-${gestoresCarouselIndex} * ((100% - ${(directionVisibleCards - 1) * gestoresGapPx}px) / ${directionVisibleCards} + ${gestoresGapPx}px))`,
@@ -940,6 +961,7 @@ export default function Gestores() {
                 </div>
               ))}
             </motion.div>
+            </div>
           </div>
 
           {/* Dots */}
@@ -982,8 +1004,8 @@ export default function Gestores() {
               {/* Header */}
               <div className="flex items-start justify-between border-b border-slate-100 px-5 py-4">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-[#11B2AA]">Institución asignada</p>
-                  <h3 className="mt-0.5 text-base font-black text-slate-900">{gestorSeleccionado.nombre}</h3>
+                  <p className="text-xs font-bold uppercase tracking-wider text-[#11B2AA]">Institución educativa asignada</p>
+                  <h3 className="mt-0.5 text-base font-black text-slate-900">{institucionModalActual}</h3>
                 </div>
                 <button
                   type="button"
@@ -1034,7 +1056,6 @@ export default function Gestores() {
                         </>
                       )}
                     </div>
-                    <p className="mt-3 text-sm font-semibold text-slate-800">{institucionModalActual}</p>
                     {institucionesGestorSeleccionado.length > 1 && (
                       <div className="mt-2 flex justify-center gap-1.5">
                         {institucionesGestorSeleccionado.map((_, idx) => (

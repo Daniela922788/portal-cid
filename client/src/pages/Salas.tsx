@@ -68,7 +68,7 @@ const salas: Sala[] = [
 		nombre: "Sala 3",
 		subtitulo: "Trabajo colaborativo",
 		descripcion:
-			"Sala de computadores con mesa de reuniones, perfecta para formaciones, trabajo colaborativo y encuentros de equipo.",
+			"Sala de computadores con mesa para cocreación, perfecta para formaciones, trabajo colaborativo y encuentros de equipo.",
 		capacidadMaxima: 20,
 		espacios: [
 			"20 computadores",
@@ -261,10 +261,10 @@ export default function Salas() {
 					<div className="mt-6 flex flex-wrap gap-3 text-sm">
 						<span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/12 px-4 py-2 font-medium backdrop-blur-sm">
 							<Sparkles className="h-4 w-4" />
-							6 espacios protagonistas
+							Espacios Protagonistas
 						</span>
 						<span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/12 px-4 py-2 font-medium backdrop-blur-sm">
-							Formación, creatividad y producción
+							Formación, Creatividad y Producción
 						</span>
 					</div>
 				</div>
