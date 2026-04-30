@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Lightbulb, Palette, Leaf, ArrowRight, Sparkles, Calendar, MapPin, Users, ChevronLeft, ChevronRight, Building2, GraduationCap, Handshake, MapPinned, Rocket, School, Waypoints } from "lucide-react";
+import { Lightbulb, Palette, Leaf, ArrowRight, Sparkles, Calendar, MapPin, Users, ChevronLeft, ChevronRight, Building2, GraduationCap, Handshake, MapPinned, Rocket, School, Waypoints, MousePointerClick } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import lineasTematicasImg from "@/assets/Líneas Temáticas.png";
 import serviciosImg from "@/assets/Servicios.png";
@@ -640,7 +640,7 @@ export default function Nosotros() {
                 const isActive = selectedTeamCategory === item.key;
                 const cardContent = (
                   <Card
-                    className={`h-full border bg-white shadow-sm transition-all hover:shadow-md ${
+                    className={`flex h-full flex-col border bg-white shadow-sm transition-all hover:shadow-md ${
                       isActive ? "border-teal-500 ring-2 ring-teal-200" : "border-slate-200"
                     }`}
                   >
@@ -648,14 +648,18 @@ export default function Nosotros() {
                       <div className={`h-1.5 w-10 rounded-full sm:w-14 ${item.color}`} />
                       <CardTitle className="text-sm leading-tight text-slate-900 sm:text-xl">{item.title}</CardTitle>
                     </CardHeader>
-                    <CardContent className="p-3 pt-0 pb-1 sm:p-6 sm:pt-0 sm:pb-2">
+                    <CardContent className="flex flex-1 flex-col p-3 pt-0 pb-3 sm:p-6 sm:pt-0 sm:pb-4">
                       <p
-                        className={`text-xs leading-snug text-slate-700 sm:text-base ${
+                        className={`flex-1 text-xs leading-snug text-slate-700 sm:text-base ${
                           item.descriptionClassName ?? ""
                         }`}
                       >
                         {item.description}
                       </p>
+                      <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-teal-50 px-2.5 py-1 text-[11px] font-semibold text-teal-700 ring-1 ring-teal-300 sm:text-xs">
+                        <MousePointerClick className="h-3.5 w-3.5" />
+                        Haz clic aquí
+                      </span>
                     </CardContent>
                   </Card>
                 );
