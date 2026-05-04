@@ -30,7 +30,6 @@ const SEARCH_RESULT_LABELS = new Map<string, string>(
   SEARCH_RESULT_SECTIONS.map((item) => [item.path, item.label])
 );
 
-// Clases compartidas para los items del dropdown — tamaño fijo consistente
 const dropdownItemClass =
   "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground";
 
@@ -50,35 +49,47 @@ export default function Header() {
   const showKitHerramientas = true;
   const showCidKids = false;
   const showProyectos = false;
+
   const mobileMenuItemClass =
     "px-5 py-2.5 rounded-md hover:bg-accent text-lg font-medium leading-7";
   const mobileAccordionTriggerClass = "px-3 py-2.5 text-lg font-medium leading-7";
+
   const normalizedLocation =
     (location.split("?")[0]?.split("#")[0] ?? "/").replace(/\/+$/, "") || "/";
   const normalizedLocationLower = normalizedLocation.toLowerCase();
+
   const isBlackLogoRoute =
     normalizedLocationLower === "/noticias" ||
     normalizedLocationLower === "/reconocimientos" ||
     normalizedLocationLower === "/semana-stem" ||
     normalizedLocationLower === "/semana-stem-complete" ||
     normalizedLocationLower === "/kit-herramientas";
-  const transparentPaths = new Set(["/", "/nosotros", "/centro", "/gestores", "/territorio-stem", "/ie-oficiales", "/normatividad", "/formacion", "/mesa-ayuda", "/aliados", "/publicaciones", "/salas"]);
+
+  const transparentPaths = new Set([
+    "/", "/nosotros", "/centro", "/gestores", "/territorio-stem",
+    "/ie-oficiales", "/normatividad", "/formacion", "/mesa-ayuda",
+    "/aliados", "/publicaciones", "/salas",
+  ]);
   const isTransparent = transparentPaths.has(normalizedLocationLower);
   const logoSrc = isBlackLogoRoute ? "/LOGO-NUEVO-CID-NEGRO.png" : "/LOGO-NUEVO-CID-BLANCO.png";
+
   const headerClassName = isTransparent
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
     : "sticky top-0 z-50 w-full border-b-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
+
+  // Botones del menú un poco más compactos para que quepan junto al logo grande
   const topLevelNavLinkClass = isTransparent
-    ? "group inline-flex h-10 2xl:h-11 w-max items-center justify-center rounded-md bg-black/35 px-3 xl:px-4 2xl:px-5 py-2 text-[0.95rem] xl:text-base 2xl:text-[1.05rem] font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-    : "group inline-flex h-10 2xl:h-11 w-max items-center justify-center rounded-md bg-background px-3 xl:px-4 2xl:px-5 py-2 text-[0.95rem] xl:text-base 2xl:text-[1.05rem] font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
+    ? "group inline-flex h-9 w-max items-center justify-center rounded-md bg-black/35 px-2.5 xl:px-3 py-2 text-[0.8rem] xl:text-[0.85rem] font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+    : "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-2.5 xl:px-3 py-2 text-[0.8rem] xl:text-[0.85rem] font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
+
   const triggerClassName = isTransparent
-    ? "h-10 2xl:h-11 w-max rounded-md bg-black/35 px-3 xl:px-4 2xl:px-5 text-[0.95rem] xl:text-base 2xl:text-[1.05rem] font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
-    : "h-10 2xl:h-11 w-max rounded-md bg-background px-3 xl:px-4 2xl:px-5 text-[0.95rem] xl:text-base 2xl:text-[1.05rem] font-medium text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground";
+    ? "h-9 w-max rounded-md bg-black/35 px-2.5 xl:px-3 text-[0.8rem] xl:text-[0.85rem] font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
+    : "h-9 w-max rounded-md bg-background px-2.5 xl:px-3 text-[0.8rem] xl:text-[0.85rem] font-medium text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground";
 
   useEffect(() => {
     if (searchOpen) {
       const isDesktop =
-        typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
+        typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches;
       if (isDesktop) {
         desktopSearchInputRef.current?.focus();
       } else {
@@ -177,18 +188,36 @@ export default function Header() {
 
   return (
     <header className={headerClassName}>
-      <div className="container">
-        <div className="mx-auto flex h-16 w-full max-w-[1180px] items-center justify-between gap-3 md:h-[5.5rem] md:gap-5 lg:h-[6.9rem] lg:gap-6">
-          {/* Logo */}
+      <div className="w-full px-4 xl:px-8">
+        {/*
+          Grid de 3 columnas explícitas:
+            col 1 (auto)  → logo: toma solo lo que necesita, nunca se encoge
+            col 2 (1fr)   → nav: toma el espacio restante, centrado
+            col 3 (auto)  → acciones: lupa/hamburguesa, siempre en la misma fila
+        */}
+        <div
+          className="
+            mx-auto grid w-full max-w-[1400px] items-center
+            grid-cols-[auto_1fr_auto]
+            h-20 gap-x-4
+            lg:h-28 lg:gap-x-6
+            xl:h-32 xl:gap-x-8
+          "
+        >
+          {/* ── Col 1: Logo ─────────────────────────────────────────── */}
           <Link
             href="/"
-            className="-ml-3 mr-3 flex min-w-0 shrink-0 items-center transition-opacity hover:opacity-80 sm:-ml-4 sm:mr-5 md:-ml-6 md:mr-7 lg:-ml-7 lg:mr-10 xl:-ml-8 xl:mr-12"
+            className="flex shrink-0 items-center transition-opacity hover:opacity-80"
           >
-            <img src={logoSrc} alt="Logo CID" className="h-[clamp(3.6rem,9.1vw,6.9rem)] w-auto" />
+            <img
+              src={logoSrc}
+              alt="Logo CID"
+              className="h-14 w-auto lg:h-20 xl:h-24"
+            />
           </Link>
 
-          {/* Navegación desktop */}
-          <nav className="hidden lg:flex min-w-0 flex-1 items-center justify-center gap-3 xl:gap-5">
+          {/* ── Col 2: Navegación desktop ────────────────────────────── */}
+          <nav className="hidden lg:flex min-w-0 items-center justify-center overflow-hidden">
             <NavigationMenu
               ref={desktopNavMenuRef}
               viewport={false}
@@ -199,7 +228,7 @@ export default function Header() {
                 )
               }
             >
-              <NavigationMenuList>
+              <NavigationMenuList className="flex-wrap gap-1 xl:gap-1.5">
                 {/* Inicio */}
                 <NavigationMenuItem>
                   <Link href="/">
@@ -207,7 +236,7 @@ export default function Header() {
                   </Link>
                 </NavigationMenuItem>
 
-                {/* ── Quiénes somos ── */}
+                {/* Quiénes somos */}
                 <NavigationMenuItem value="quienes-somos">
                   <NavigationMenuTrigger
                     className={triggerClassName}
@@ -221,11 +250,6 @@ export default function Header() {
                     Quiénes somos
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="md:left-1/2 md:-translate-x-1/2">
-                    {/*
-                      w-[500px] va aquí, en el <ul>, no en <NavigationMenuContent>.
-                      grid-cols-2 + ítems con h-full aseguran que todas las celdas
-                      tengan la misma altura y el panel siempre mida lo mismo.
-                    */}
                     <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
                       {[
                         { href: "/nosotros", title: "Nosotros", desc: "Misión, visión y valores del CID" },
@@ -237,9 +261,7 @@ export default function Header() {
                           <Link href={href}>
                             <NavigationMenuLink className={dropdownItemClass}>
                               <div className="text-sm font-medium leading-none">{title}</div>
-                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                {desc}
-                              </p>
+                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">{desc}</p>
                             </NavigationMenuLink>
                           </Link>
                         </li>
@@ -248,7 +270,7 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                {/* ── Contenido ── */}
+                {/* Contenido */}
                 <NavigationMenuItem value="contenido">
                   <NavigationMenuTrigger
                     className={triggerClassName}
@@ -276,9 +298,7 @@ export default function Header() {
                           <Link href={href}>
                             <NavigationMenuLink className={dropdownItemClass}>
                               <div className="text-sm font-medium leading-none">{title}</div>
-                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                {desc}
-                              </p>
+                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">{desc}</p>
                             </NavigationMenuLink>
                           </Link>
                         </li>
@@ -287,7 +307,7 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                {/* ── Comunidad ── */}
+                {/* Comunidad */}
                 <NavigationMenuItem value="comunidad">
                   <NavigationMenuTrigger
                     className={triggerClassName}
@@ -311,9 +331,7 @@ export default function Header() {
                           <Link href={href}>
                             <NavigationMenuLink className={dropdownItemClass}>
                               <div className="text-sm font-medium leading-none">{title}</div>
-                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                {desc}
-                              </p>
+                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">{desc}</p>
                             </NavigationMenuLink>
                           </Link>
                         </li>
@@ -322,7 +340,7 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                {/* ── Recursos ── */}
+                {/* Recursos */}
                 <NavigationMenuItem value="recursos">
                   <NavigationMenuTrigger
                     className={triggerClassName}
@@ -347,9 +365,7 @@ export default function Header() {
                           <Link href={href}>
                             <NavigationMenuLink className={dropdownItemClass}>
                               <div className="text-sm font-medium leading-none">{title}</div>
-                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                {desc}
-                              </p>
+                              <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">{desc}</p>
                             </NavigationMenuLink>
                           </Link>
                         </li>
@@ -365,13 +381,10 @@ export default function Header() {
                   </Link>
                 </NavigationMenuItem>
 
+                {/* Transparencia */}
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild className={topLevelNavLinkClass}>
-                    <a
-                      href="https://www.envigado.gov.co/transparencia"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <a href="https://www.envigado.gov.co/transparencia" target="_blank" rel="noreferrer">
                       Transparencia
                     </a>
                   </NavigationMenuLink>
@@ -395,10 +408,12 @@ export default function Header() {
             </NavigationMenu>
           </nav>
 
-          {/* Acciones */}
-          <div className="mt-0 flex shrink-0 items-center gap-2 md:mt-0">
+          {/* ── Col 3: Acciones ──────────────────────────────────────── */}
+          <div className="flex shrink-0 items-center gap-1">
+
+            {/* Desktop: form expandido O lupa */}
             {searchOpen ? (
-              <form onSubmit={handleSearchSubmit} className="hidden md:flex items-center gap-2">
+              <form onSubmit={handleSearchSubmit} className="hidden lg:flex items-center gap-2">
                 <input
                   ref={desktopSearchInputRef}
                   value={searchQuery}
@@ -408,7 +423,7 @@ export default function Header() {
                   }}
                   type="text"
                   placeholder="Buscar en esta pagina"
-                  className="h-9 w-44 rounded-md border border-input bg-background px-3 text-sm"
+                  className="h-9 w-36 xl:w-44 rounded-md border border-input bg-background px-3 text-sm"
                   aria-label="Buscar en la pagina"
                 />
                 <Button type="submit" variant="outline" size="sm">
@@ -437,13 +452,17 @@ export default function Header() {
                   setSearchOpen(true);
                   setSearchResults([]);
                 }}
-                className="hidden md:inline-flex lg:ml-2"
+                className={[
+                  "hidden lg:inline-flex",
+                  isTransparent ? "text-white hover:bg-black/25" : "",
+                ].join(" ")}
                 aria-label="Abrir busqueda"
               >
                 <Search className="h-5 w-5" />
               </Button>
             )}
 
+            {/* Lupa móvil */}
             <Button
               variant="ghost"
               size="icon"
@@ -452,12 +471,13 @@ export default function Header() {
                 setMobileMenuOpen(false);
                 setSearchResults([]);
               }}
-              className={isTransparent ? "md:hidden text-white hover:bg-black/25" : "md:hidden"}
+              className={isTransparent ? "lg:hidden text-white hover:bg-black/25" : "lg:hidden"}
               aria-label={searchOpen ? "Cerrar busqueda" : "Abrir busqueda"}
             >
               {searchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
             </Button>
 
+            {/* Hamburguesa */}
             <Button
               variant="ghost"
               size="icon"
@@ -477,7 +497,7 @@ export default function Header() {
 
         {/* Buscador móvil */}
         {searchOpen && (
-          <form onSubmit={handleSearchSubmit} className="md:hidden border-t py-3">
+          <form onSubmit={handleSearchSubmit} className="lg:hidden border-t py-3">
             <div className="flex items-center gap-2">
               <input
                 ref={mobileSearchInputRef}
@@ -498,6 +518,7 @@ export default function Header() {
           </form>
         )}
 
+        {/* Resultados */}
         {searchOpen && searchResults.length > 0 && (
           <div className="border-t py-2">
             <p className="px-1 pb-1 text-xs text-muted-foreground">Resultados (Top 5)</p>

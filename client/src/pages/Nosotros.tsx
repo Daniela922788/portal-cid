@@ -1014,9 +1014,9 @@ export default function Nosotros() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="mt-8 border-t border-gray-200 pt-4 text-center md:-mt-10 md:pt-0"
+              className="mt-8 border-t border-gray-200 pt-4 text-center"
             >
-              <p className="text-gray-600 text-lg font-semibold mb-4">
+              <p className="text-gray-900 text-lg font-semibold mb-4">
                 Continuamos innovando y creciendo cada día
               </p>
               <motion.div

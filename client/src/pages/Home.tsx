@@ -129,8 +129,8 @@ export default function Home() {
         <section className="relative z-10 bg-transparent pt-4 md:py-8">
           <div className="w-full space-y-2 md:container md:mx-auto md:space-y-4 md:px-4">
             <Link href="/nosotros" aria-label="Ir a Nosotros" className="group block">
-              <div className="overflow-hidden rounded-2xl shadow-md">
-                <div className="relative overflow-hidden rounded-2xl">
+              <div className="overflow-hidden shadow-md">
+                <div className="relative overflow-hidden">
                   <img
                     src="/banners/banner%202.webp"
                     alt="Banner Nosotros"
@@ -147,8 +147,8 @@ export default function Home() {
             </Link>
 
             <Link href="/formacion" aria-label="Ir a Formación" className="group block">
-              <div className="overflow-hidden rounded-2xl shadow-md">
-                <div className="relative overflow-hidden rounded-2xl">
+              <div className="overflow-hidden shadow-md">
+                <div className="relative overflow-hidden">
                   <img
                     src="/banners/banner%204.webp"
                     alt="Banner Formación"
@@ -164,8 +164,8 @@ export default function Home() {
               </div>
             </Link>
 
-            <div className="overflow-hidden rounded-2xl shadow-md">
-              <div className="overflow-hidden rounded-2xl">
+            <div className="overflow-hidden shadow-md">
+              <div className="overflow-hidden">
                 <img
                   src="/banners/banner%203.webp"
                   alt="Banner Convocatorias"
@@ -190,7 +190,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-[#2B3990] tracking-tight">NUESTRAS SECCIONES</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Territorio STEM */}
-              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
+              <div className="bg-white shadow-md overflow-hidden flex flex-col">
                 <img src="/Home/1.webp" alt="Territorio STEM" className="w-full h-auto object-contain bg-white" />
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Territorio STEM</h3>
@@ -198,7 +198,7 @@ export default function Home() {
                 </div>
               </div>
               {/* Premios y reconocimientos */}
-              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
+              <div className="bg-white shadow-md overflow-hidden flex flex-col">
                 <img src="/Home/2.webp" alt="Premios y reconocimientos" className="w-full h-auto object-contain bg-white" />
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Premios y reconocimientos</h3>
@@ -206,7 +206,7 @@ export default function Home() {
                 </div>
               </div>
               {/* Aliados */}
-              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
+              <div className="bg-white shadow-md overflow-hidden flex flex-col">
                 <img src="/Home/3.webp" alt="Aliados" className="w-full h-auto object-contain bg-white" />
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Aliados</h3>
@@ -225,7 +225,7 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-[#023A34] md:text-6xl">TOM 2026</h2>
             <p className="mt-2 text-lg text-gray-700 md:text-2xl">Ideas que se convierten en esperanza</p>
           </div>
-          <div className="mx-auto max-w-8xl overflow-hidden rounded-2xl shadow-2xl">
+          <div className="mx-auto max-w-8xl overflow-hidden shadow-2xl">
             <div className="relative aspect-video w-full bg-black">
               <iframe
                 src="https://www.youtube.com/embed/CceKZW0xxTk?autoplay=1&mute=1&loop=1&playlist=CceKZW0xxTk&playsinline=1&rel=0&modestbranding=1"
