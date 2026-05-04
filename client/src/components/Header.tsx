@@ -77,7 +77,6 @@ export default function Header() {
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
     : "sticky top-0 z-50 w-full border-b-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
 
-  // Botones del menú un poco más compactos para que quepan junto al logo grande
   const topLevelNavLinkClass = isTransparent
     ? "group inline-flex h-9 w-max items-center justify-center rounded-md bg-black/35 px-2.5 xl:px-3 py-2 text-[0.8rem] xl:text-[0.85rem] font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
     : "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-2.5 xl:px-3 py-2 text-[0.8rem] xl:text-[0.85rem] font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
@@ -188,13 +187,14 @@ export default function Header() {
 
   return (
     <header className={headerClassName}>
+      {/*
+        ── Wrapper sin overflow-hidden para que los dropdowns salgan hacia abajo ──
+        El grid de 3 columnas (auto / 1fr / auto) garantiza que:
+          • col-1 (logo): tamaño fijo, no se encoge
+          • col-2 (nav):  espacio restante, centrado
+          • col-3 (lupa): tamaño fijo, siempre en la misma fila
+      */}
       <div className="w-full px-4 xl:px-8">
-        {/*
-          Grid de 3 columnas explícitas:
-            col 1 (auto)  → logo: toma solo lo que necesita, nunca se encoge
-            col 2 (1fr)   → nav: toma el espacio restante, centrado
-            col 3 (auto)  → acciones: lupa/hamburguesa, siempre en la misma fila
-        */}
         <div
           className="
             mx-auto grid w-full max-w-[1400px] items-center
@@ -217,7 +217,13 @@ export default function Header() {
           </Link>
 
           {/* ── Col 2: Navegación desktop ────────────────────────────── */}
-          <nav className="hidden lg:flex min-w-0 items-center justify-center overflow-hidden">
+          {/*
+            ⚠️  Sin overflow-hidden aquí — es lo que cortaba los dropdowns.
+                El NavigationMenu con viewport={false} renderiza el
+                NavigationMenuContent directamente en el DOM, por lo que
+                necesita que ningún ancestro tenga overflow recortado.
+          */}
+          <nav className="hidden lg:flex items-center justify-center">
             <NavigationMenu
               ref={desktopNavMenuRef}
               viewport={false}
@@ -244,12 +250,14 @@ export default function Header() {
                     onPointerMove={(e) => e.preventDefault()}
                     onClick={(e) => {
                       e.preventDefault();
-                      setDesktopMenuOpen((prev) => (prev === "quienes-somos" ? "" : "quienes-somos"));
+                      setDesktopMenuOpen((prev) =>
+                        prev === "quienes-somos" ? "" : "quienes-somos"
+                      );
                     }}
                   >
                     Quiénes somos
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="md:left-1/2 md:-translate-x-1/2">
+                  <NavigationMenuContent className="absolute top-full left-1/2 -translate-x-1/2 z-50">
                     <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
                       {[
                         { href: "/nosotros", title: "Nosotros", desc: "Misión, visión y valores del CID" },
@@ -283,7 +291,7 @@ export default function Header() {
                   >
                     Contenido
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="md:left-1/2 md:-translate-x-1/2">
+                  <NavigationMenuContent className="absolute top-full left-1/2 -translate-x-1/2 z-50">
                     <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
                       {[
                         { href: "/noticias", title: "Noticias", desc: "Noticias y menciones del CID" },
@@ -320,7 +328,7 @@ export default function Header() {
                   >
                     Comunidad
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="md:left-1/2 md:-translate-x-1/2">
+                  <NavigationMenuContent className="absolute top-full left-1/2 -translate-x-1/2 z-50">
                     <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
                       {[
                         { href: "/ie-oficiales", title: "IE Oficiales", desc: "Instituciones Educativas" },
@@ -353,7 +361,7 @@ export default function Header() {
                   >
                     Recursos
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="md:left-1/2 md:-translate-x-1/2">
+                  <NavigationMenuContent className="absolute top-full left-1/2 -translate-x-1/2 z-50">
                     <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
                       {[
                         ...(showKitHerramientas
