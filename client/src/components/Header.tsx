@@ -302,6 +302,7 @@ export default function Header() {
                         { href: "/semana-stem-complete", title: "Semana STEM", desc: "Programa completo de la Semana STEM+" },
                         { href: "/publicaciones", title: "Publicaciones", desc: "Libros y revistas" },
                         { href: "/reconocimientos", title: "Reconocimientos", desc: "Premios y logros destacados" },
+                        { href: "/videos", title: "Videos", desc: "Cápsulas STEM y contenido audiovisual" },
                       ].map(({ href, title, desc }) => (
                         <li key={href}>
                           <Link href={href}>
@@ -581,6 +582,7 @@ export default function Header() {
                       <Link href="/semana-stem-complete" className={mobileMenuItemClass} onClick={closeMobileMenu}>Semana STEM</Link>
                       <Link href="/publicaciones" className={mobileMenuItemClass} onClick={closeMobileMenu}>Publicaciones</Link>
                       <Link href="/reconocimientos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Reconocimientos</Link>
+                      <Link href="/videos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Videos</Link>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
