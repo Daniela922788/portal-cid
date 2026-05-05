@@ -26,61 +26,7 @@ export default function Home() {
   // Users can login via the header button
   const showCoursesCarousel = false;
   const showCidKids = false;
-  const videosShorts = [
-    {
-      id: "QLJqKHyzcnU",
-      titulo: "Capsula STEM 1",
-    },
-    {
-      id: "spMFXEUCEX8",
-      titulo: "Capsula STEM 2",
-    },
-    {
-      id: "R3-OXQd-Fp4",
-      titulo: "Capsula STEM 3",
-    },
-    {
-      id: "4qF9yJWZRcU",
-      titulo: "Capsula STEM 4",
-    },
-  ];
-  const [videoIndex, setVideoIndex] = useState(0);
-  const mobileVideoSectionRef = useRef<HTMLElement | null>(null);
-  const hasAutoCenteredMobileRef = useRef(false);
-
-  const goPrevVideo = () => {
-    setVideoIndex((prev) => (prev - 1 + videosShorts.length) % videosShorts.length);
-  };
-
-  const goNextVideo = () => {
-    setVideoIndex((prev) => (prev + 1) % videosShorts.length);
-  };
-
-  const currentVideo = videosShorts[videoIndex];
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.innerWidth >= 768) return;
-
-    const section = mobileVideoSectionRef.current;
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (!entry?.isIntersecting || hasAutoCenteredMobileRef.current) return;
-
-        hasAutoCenteredMobileRef.current = true;
-        section.scrollIntoView({ behavior: "smooth", block: "center" });
-      },
-      {
-        threshold: 0.35,
-      }
-    );
-
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
+  const diaArbolVideoId = "vnCAia6v0bE";
 
   return (
     <div className="min-h-screen">
@@ -129,8 +75,8 @@ export default function Home() {
         <section className="relative z-10 bg-transparent pt-4 md:py-8">
           <div className="w-full space-y-2 md:container md:mx-auto md:space-y-4 md:px-4">
             <Link href="/nosotros" aria-label="Ir a Nosotros" className="group block">
-              <div className="overflow-hidden shadow-md">
-                <div className="relative overflow-hidden">
+              <div className="overflow-hidden rounded-2xl shadow-md">
+                <div className="relative overflow-hidden rounded-2xl">
                   <img
                     src="/banners/banner%202.webp"
                     alt="Banner Nosotros"
@@ -147,8 +93,8 @@ export default function Home() {
             </Link>
 
             <Link href="/formacion" aria-label="Ir a Formación" className="group block">
-              <div className="overflow-hidden shadow-md">
-                <div className="relative overflow-hidden">
+              <div className="overflow-hidden rounded-2xl shadow-md">
+                <div className="relative overflow-hidden rounded-2xl">
                   <img
                     src="/banners/banner%204.webp"
                     alt="Banner Formación"
@@ -164,8 +110,8 @@ export default function Home() {
               </div>
             </Link>
 
-            <div className="overflow-hidden shadow-md">
-              <div className="overflow-hidden">
+            <div className="overflow-hidden rounded-2xl shadow-md">
+              <div className="overflow-hidden rounded-2xl">
                 <img
                   src="/banners/banner%203.webp"
                   alt="Banner Convocatorias"
@@ -190,7 +136,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-[#2B3990] tracking-tight">NUESTRAS SECCIONES</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Territorio STEM */}
-              <div className="bg-white shadow-md overflow-hidden flex flex-col">
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
                 <img src="/Home/1.webp" alt="Territorio STEM" className="w-full h-auto object-contain bg-white" />
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Territorio STEM</h3>
@@ -198,7 +144,7 @@ export default function Home() {
                 </div>
               </div>
               {/* Premios y reconocimientos */}
-              <div className="bg-white shadow-md overflow-hidden flex flex-col">
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
                 <img src="/Home/2.webp" alt="Premios y reconocimientos" className="w-full h-auto object-contain bg-white" />
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Premios y reconocimientos</h3>
@@ -206,7 +152,7 @@ export default function Home() {
                 </div>
               </div>
               {/* Aliados */}
-              <div className="bg-white shadow-md overflow-hidden flex flex-col">
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
                 <img src="/Home/3.webp" alt="Aliados" className="w-full h-auto object-contain bg-white" />
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Aliados</h3>
@@ -225,7 +171,7 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-[#023A34] md:text-6xl">TOM 2026</h2>
             <p className="mt-2 text-lg text-gray-700 md:text-2xl">Ideas que se convierten en esperanza</p>
           </div>
-          <div className="mx-auto max-w-8xl overflow-hidden shadow-2xl">
+          <div className="mx-auto max-w-8xl overflow-hidden rounded-2xl shadow-2xl">
             <div className="relative aspect-video w-full bg-black">
               <iframe
                 src="https://www.youtube.com/embed/CceKZW0xxTk?autoplay=1&mute=1&loop=1&playlist=CceKZW0xxTk&playsinline=1&rel=0&modestbranding=1"
@@ -241,18 +187,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Carrusel de videos STEM */}
-      <section ref={mobileVideoSectionRef} className="relative overflow-hidden py-10 md:py-16">
+      <section className="relative overflow-hidden py-10 md:py-16">
         <img
-          src="/Fondos/6.png"
-          alt="Fondo sección de videos móvil"
+          src="/Fondos/dia_arbol.jpg"
+          alt="Fondo Día del Árbol"
           loading="lazy"
           decoding="async"
           className="absolute inset-0 h-full w-full object-cover md:hidden"
         />
         <img
-          src="/Fondos/5.png"
-          alt="Fondo sección de videos"
+          src="/Fondos/dia_arbol.jpg"
+          alt="Fondo Día del Árbol"
           loading="lazy"
           decoding="async"
           className="absolute inset-0 hidden h-full w-full object-contain md:block"
@@ -260,51 +205,17 @@ export default function Home() {
 
         <div className="container relative z-10">
           <div className="relative flex min-h-[650px] items-center justify-center md:min-h-[900px]">
-            <div className="relative">
-              <button
-                type="button"
-                onClick={goPrevVideo}
-                aria-label="Video anterior"
-                className="absolute left-0 top-1/2 z-20 -translate-x-[115%] -translate-y-1/2 rounded-full border border-white/55 bg-black/35 p-2 text-white transition hover:bg-black/55"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-
-              <div className="relative w-[340px] overflow-hidden rounded-[2.8rem] border-[5px] border-white/85 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.55)] sm:w-[420px] md:w-[520px]">
-                <div className="pointer-events-none absolute left-1/2 top-2 z-10 h-1.5 w-16 -translate-x-1/2 rounded-full bg-white/70" />
-                <iframe
-                  key={currentVideo.id}
-                  src={`https://www.youtube.com/embed/${currentVideo.id}?autoplay=1&mute=1&loop=1&playlist=${currentVideo.id}&playsinline=1&rel=0&modestbranding=1`}
-                  title={currentVideo.titulo}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  className="aspect-[9/16] w-full"
-                />
-              </div>
-
-              <button
-                type="button"
-                onClick={goNextVideo}
-                aria-label="Siguiente video"
-                className="absolute right-0 top-1/2 z-20 translate-x-[115%] -translate-y-1/2 rounded-full border border-white/55 bg-black/35 p-2 text-white transition hover:bg-black/55"
-              >
-                <ChevronLeft className="h-5 w-5 rotate-180" />
-              </button>
-
-              <div className="mt-4 flex justify-center gap-2">
-              {videosShorts.map((video, index) => (
-                <button
-                  key={video.id}
-                  type="button"
-                  onClick={() => setVideoIndex(index)}
-                  aria-label={`Ir al video ${index + 1}`}
-                  className={`h-2 rounded-full transition-all ${
-                    videoIndex === index ? "w-8 bg-white" : "w-2 bg-white/45"
-                  }`}
-                />
-              ))}
-              </div>
+            <div className="relative w-[340px] overflow-hidden rounded-[2.8rem] border-[5px] border-white/85 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.55)] sm:w-[420px] md:w-[520px]">
+              <div className="pointer-events-none absolute left-1/2 top-2 z-10 h-1.5 w-16 -translate-x-1/2 rounded-full bg-white/70" />
+              <iframe
+                src={`https://www.youtube.com/embed/${diaArbolVideoId}?autoplay=1&mute=1&loop=1&playlist=${diaArbolVideoId}&playsinline=1&rel=0&modestbranding=1`}
+                title="Día del Árbol"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="aspect-[9/16] w-full"
+              />
             </div>
           </div>
         </div>

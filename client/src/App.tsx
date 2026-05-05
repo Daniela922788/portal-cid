@@ -44,6 +44,7 @@ import SistemaSolar from "./pages/juegos/SistemaSolar.tsx";
 import Matematicas from "./pages/juegos/Matematicas";
 import FabricaInventos from "./pages/juegos/FabricaInventos";
 import EnvigadoCurioso from "./pages/juegos/EnvigadoCurioso.tsx";
+import Videos from "./pages/Videos";
 
 const ENABLE_CID_KIDS = true;
 const ENABLE_PROYECTOS = false;
@@ -91,6 +92,7 @@ function Router() {
           <Route path="/juegos/matematicas" component={Matematicas} />
           <Route path="/juegos/fabrica-inventos" component={FabricaInventos} />
           <Route path="/juegos/envigado-curioso" component={EnvigadoCurioso} />
+          <Route path="/videos" component={Videos} />
           <Route path={"/404"} component={NotFound} />
           {/* Final fallback route */}
           <Route component={NotFound} />

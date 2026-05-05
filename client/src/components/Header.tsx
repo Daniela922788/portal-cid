@@ -69,6 +69,7 @@ export default function Header() {
     "/", "/nosotros", "/centro", "/gestores", "/territorio-stem",
     "/ie-oficiales", "/normatividad", "/formacion", "/mesa-ayuda",
     "/aliados", "/publicaciones", "/salas",
+    "/videos",
   ]);
   const isTransparent = transparentPaths.has(normalizedLocationLower);
   const logoSrc = isBlackLogoRoute ? "/LOGO-NUEVO-CID-NEGRO.png" : "/LOGO-NUEVO-CID-BLANCO.png";
