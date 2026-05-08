@@ -69,7 +69,6 @@ export default function Header() {
     "/", "/nosotros", "/centro", "/gestores", "/territorio-stem",
     "/ie-oficiales", "/normatividad", "/formacion", "/mesa-ayuda",
     "/aliados", "/publicaciones", "/salas",
-    "/videos",
   ]);
   const isTransparent = transparentPaths.has(normalizedLocationLower);
   const logoSrc = isBlackLogoRoute ? "/LOGO-NUEVO-CID-NEGRO.png" : "/LOGO-NUEVO-CID-BLANCO.png";
@@ -78,13 +77,14 @@ export default function Header() {
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
     : "sticky top-0 z-50 w-full border-b-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
 
+  // Los botones mantienen h-10 como en el diseño original
   const topLevelNavLinkClass = isTransparent
-    ? "group inline-flex h-9 w-max items-center justify-center rounded-md bg-black/35 px-2.5 xl:px-3 py-2 text-[0.8rem] xl:text-[0.85rem] font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-    : "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-2.5 xl:px-3 py-2 text-[0.8rem] xl:text-[0.85rem] font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
+    ? "group inline-flex h-10 w-max items-center justify-center rounded-md bg-black/35 px-3 xl:px-4 py-2 text-[0.9rem] xl:text-[0.95rem] font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+    : "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-3 xl:px-4 py-2 text-[0.9rem] xl:text-[0.95rem] font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
 
   const triggerClassName = isTransparent
-    ? "h-9 w-max rounded-md bg-black/35 px-2.5 xl:px-3 text-[0.8rem] xl:text-[0.85rem] font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
-    : "h-9 w-max rounded-md bg-background px-2.5 xl:px-3 text-[0.8rem] xl:text-[0.85rem] font-medium text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground";
+    ? "h-10 w-max rounded-md bg-black/35 px-3 xl:px-4 text-[0.9rem] xl:text-[0.95rem] font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
+    : "h-10 w-max rounded-md bg-background px-3 xl:px-4 text-[0.9rem] xl:text-[0.95rem] font-medium text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground";
 
   useEffect(() => {
     if (searchOpen) {
@@ -188,24 +188,10 @@ export default function Header() {
 
   return (
     <header className={headerClassName}>
-      {/*
-        ── Wrapper sin overflow-hidden para que los dropdowns salgan hacia abajo ──
-        El grid de 3 columnas (auto / 1fr / auto) garantiza que:
-          • col-1 (logo): tamaño fijo, no se encoge
-          • col-2 (nav):  espacio restante, centrado
-          • col-3 (lupa): tamaño fijo, siempre en la misma fila
-      */}
-      <div className="w-full px-4 xl:px-8">
-        <div
-          className="
-            mx-auto grid w-full max-w-[1400px] items-center
-            grid-cols-[auto_1fr_auto]
-            h-20 gap-x-4
-            lg:h-28 lg:gap-x-6
-            xl:h-32 xl:gap-x-8
-          "
-        >
-          {/* ── Col 1: Logo ─────────────────────────────────────────── */}
+      <div className="container">
+        <div className="mx-auto grid w-full max-w-[1180px] grid-cols-[auto_1fr_auto] items-center h-16 gap-x-4 lg:h-[4.5rem] xl:gap-x-8">
+
+          {/* ── Col 1: Logo — mismo alto que los botones del nav (h-10) ── */}
           <Link
             href="/"
             className="flex shrink-0 items-center transition-opacity hover:opacity-80"
@@ -213,17 +199,11 @@ export default function Header() {
             <img
               src={logoSrc}
               alt="Logo CID"
-              className="h-14 w-auto lg:h-20 xl:h-24"
+              className="h-10 w-auto"
             />
           </Link>
 
-          {/* ── Col 2: Navegación desktop ────────────────────────────── */}
-          {/*
-            ⚠️  Sin overflow-hidden aquí — es lo que cortaba los dropdowns.
-                El NavigationMenu con viewport={false} renderiza el
-                NavigationMenuContent directamente en el DOM, por lo que
-                necesita que ningún ancestro tenga overflow recortado.
-          */}
+          {/* ── Col 2: Navegación desktop ── */}
           <nav className="hidden lg:flex items-center justify-center">
             <NavigationMenu
               ref={desktopNavMenuRef}
@@ -235,7 +215,7 @@ export default function Header() {
                 )
               }
             >
-              <NavigationMenuList className="flex-wrap gap-1 xl:gap-1.5">
+              <NavigationMenuList className="gap-1.5 xl:gap-2">
                 {/* Inicio */}
                 <NavigationMenuItem>
                   <Link href="/">
@@ -302,7 +282,6 @@ export default function Header() {
                         { href: "/semana-stem-complete", title: "Semana STEM", desc: "Programa completo de la Semana STEM+" },
                         { href: "/publicaciones", title: "Publicaciones", desc: "Libros y revistas" },
                         { href: "/reconocimientos", title: "Reconocimientos", desc: "Premios y logros destacados" },
-                        { href: "/videos", title: "Videos", desc: "Cápsulas STEM y contenido audiovisual" },
                       ].map(({ href, title, desc }) => (
                         <li key={href}>
                           <Link href={href}>
@@ -418,7 +397,7 @@ export default function Header() {
             </NavigationMenu>
           </nav>
 
-          {/* ── Col 3: Acciones ──────────────────────────────────────── */}
+          {/* ── Col 3: Acciones ── */}
           <div className="flex shrink-0 items-center gap-1">
 
             {/* Desktop: form expandido O lupa */}
@@ -582,7 +561,6 @@ export default function Header() {
                       <Link href="/semana-stem-complete" className={mobileMenuItemClass} onClick={closeMobileMenu}>Semana STEM</Link>
                       <Link href="/publicaciones" className={mobileMenuItemClass} onClick={closeMobileMenu}>Publicaciones</Link>
                       <Link href="/reconocimientos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Reconocimientos</Link>
-                      <Link href="/videos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Videos</Link>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
