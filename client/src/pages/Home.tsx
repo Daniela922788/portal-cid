@@ -205,7 +205,7 @@ export default function Home() {
 
         <div className="container relative z-10">
           <div className="relative flex items-center justify-center py-8 md:py-16 px-4">
-            <div className="relative w-full max-w-[92vw] overflow-hidden rounded-[2.8rem] border-[5px] border-white/85 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.55)] sm:max-w-[360px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[400px] 2xl:max-w-[550px]">
+            <div className="relative w-full max-w-[92vw] overflow-hidden rounded-[2.8rem] border-[5px] border-white/85 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.55)] sm:max-w-[360px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[380px] 2xl:max-w-[550px]">
               <div className="pointer-events-none absolute left-1/2 top-2 z-10 h-1.5 w-16 -translate-x-1/2 rounded-full bg-white/70" />
               <div className="aspect-[9/16] w-full">
                 <iframe

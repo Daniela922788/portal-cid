@@ -71,10 +71,13 @@ export default function Header() {
     "/aliados", "/publicaciones", "/salas",
   ]);
   const isTransparent = transparentPaths.has(normalizedLocationLower);
+  const isSolidDarkHeader = normalizedLocationLower === "/videos";
   const logoSrc = isBlackLogoRoute ? "/LOGO-NUEVO-CID-NEGRO.png" : "/LOGO-NUEVO-CID-BLANCO.png";
 
   const headerClassName = isTransparent
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
+    : isSolidDarkHeader
+    ? "sticky top-0 z-50 w-full border-b-0 bg-[#0f0f0f]"
     : "sticky top-0 z-50 w-full border-b-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
 
   /*
