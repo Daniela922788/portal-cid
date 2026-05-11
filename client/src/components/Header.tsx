@@ -96,7 +96,7 @@ export default function Header() {
         // altura y padding por breakpoint
         "h-10 px-3 text-[0.85rem]",
         "xl:h-11 xl:px-3.5 xl:text-[0.9rem]",
-        "2xl:h-12 2xl:px-4 2xl:text-[0.95rem]",
+        "2xl:h-11 2xl:px-3.5 2xl:text-[0.9rem]",
       ].join(" ")
     : [
         "group inline-flex w-max items-center justify-center rounded-md font-medium transition-colors",
@@ -104,7 +104,7 @@ export default function Header() {
         "disabled:pointer-events-none disabled:opacity-50",
         "h-10 px-3 text-[0.85rem]",
         "xl:h-11 xl:px-3.5 xl:text-[0.9rem]",
-        "2xl:h-12 2xl:px-4 2xl:text-[0.95rem]",
+        "2xl:h-11 2xl:px-3.5 2xl:text-[0.9rem]",
       ].join(" ");
 
   const triggerClassName = isTransparent
@@ -113,14 +113,14 @@ export default function Header() {
         "bg-black/35 hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white",
         "h-10 px-3 text-[0.85rem]",
         "xl:h-11 xl:px-3.5 xl:text-[0.9rem]",
-        "2xl:h-12 2xl:px-4 2xl:text-[0.95rem]",
+        "2xl:h-11 2xl:px-3.5 2xl:text-[0.9rem]",
       ].join(" ")
     : [
         "w-max rounded-md font-medium text-foreground",
         "bg-background hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
         "h-10 px-3 text-[0.85rem]",
         "xl:h-11 xl:px-3.5 xl:text-[0.9rem]",
-        "2xl:h-12 2xl:px-4 2xl:text-[0.95rem]",
+        "2xl:h-11 2xl:px-3.5 2xl:text-[0.9rem]",
       ].join(" ");
 
   useEffect(() => {
@@ -235,7 +235,7 @@ export default function Header() {
             xl 1280px    : h-[4.5rem]     — MacBook 14-16" / pantallas medianas
             2xl 1536px   : h-20  (80px)   — monitores 24-27"
         */}
-        <div className="mx-auto grid w-full max-w-[1180px] grid-cols-[auto_1fr_auto] items-center gap-x-3 h-16 lg:h-20 lg:gap-x-5 xl:h-24 xl:gap-x-7 2xl:h-28 2xl:gap-x-9">
+        <div className="mx-auto grid w-full max-w-[1400px] grid-cols-[auto_1fr_auto] items-center gap-x-3 h-16 lg:h-20 lg:gap-x-5 xl:h-24 xl:gap-x-7 2xl:h-28 2xl:gap-x-9">
 
           {/* ── Col 1: Logo ── */}
           {/*
