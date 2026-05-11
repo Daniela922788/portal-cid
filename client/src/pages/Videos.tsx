@@ -19,6 +19,8 @@ const VIDEOS = [
   },
 ];
 
+const YT_CHANNEL = "https://www.youtube.com/@CentrodeInnovaci%C3%B3nyDesarrollo";
+
 function PlayIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="white">
@@ -237,6 +239,23 @@ function VideoCard({ v }: { v: typeof VIDEOS[0] }) {
 }
 
 export default function Videos() {
+  const [query, setQuery] = useState("");
+  const q = query.trim().toLowerCase();
+
+  const filteredShorts = q
+    ? SHORTS.filter((s) => s.title.toLowerCase().includes(q))
+    : SHORTS;
+
+  const filteredVideos = q
+    ? VIDEOS.filter(
+        (v) =>
+          v.title.toLowerCase().includes(q) ||
+          v.channel.toLowerCase().includes(q)
+      )
+    : VIDEOS;
+
+  const noResults = q.length > 0 && filteredShorts.length === 0 && filteredVideos.length === 0;
+
   return (
     <div
       style={{
@@ -267,8 +286,9 @@ export default function Videos() {
             height: 56,
           }}
         >
+          {/* Logo → canal */}
           <a
-            href="https://www.youtube.com/@alcaldiadeenvigado"
+            href={YT_CHANNEL}
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}
@@ -291,12 +311,13 @@ export default function Videos() {
             </span>
           </a>
 
+          {/* Barra de búsqueda funcional */}
           <div
             style={{
               flex: 1,
               minWidth: 0,
               height: 40,
-              border: "1px solid #272727",
+              border: `1px solid ${query ? "#717171" : "#272727"}`,
               borderRadius: 9999,
               background: "#121212",
               display: "flex",
@@ -311,9 +332,11 @@ export default function Videos() {
             </svg>
             <input
               type="text"
-              placeholder="Buscar"
+              placeholder="Buscar videos..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               style={{
-                width: "100%",
+                flex: 1,
                 background: "transparent",
                 border: "none",
                 outline: "none",
@@ -322,10 +345,29 @@ export default function Videos() {
                 minWidth: 0,
               }}
             />
+            {query && (
+              <button
+                onClick={() => setQuery("")}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "#717171",
+                  fontSize: 18,
+                  lineHeight: 1,
+                  padding: 0,
+                  flexShrink: 0,
+                }}
+                aria-label="Limpiar búsqueda"
+              >
+                ×
+              </button>
+            )}
           </div>
 
+          {/* Botón suscribirse → canal */}
           <a
-            href="https://www.youtube.com/@alcaldiadeenvigado?sub_confirmation=1"
+            href={`${YT_CHANNEL}?sub_confirmation=1`}
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -350,70 +392,93 @@ export default function Videos() {
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "24px 24px 48px" }}>
 
         {/* Shorts header */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="#ff0000">
-            <path d="M10 9l5 3-5 3V9z" />
-            <path
-              d="M21.6 7.2A2.85 2.85 0 0 0 19.6 5.2C18.1 4.8 12 4.8 12 4.8s-6.1 0-7.6.4A2.85 2.85 0 0 0 2.4 7.2C2 8.7 2 12 2 12s0 3.3.4 4.8a2.85 2.85 0 0 0 2 2c1.5.4 7.6.4 7.6.4s6.1 0 7.6-.4a2.85 2.85 0 0 0 2-2C22 15.3 22 12 22 12s0-3.3-.4-4.8z"
-              fill="none"
-              stroke="#ff0000"
-              strokeWidth="1.5"
-            />
-          </svg>
-          <span style={{ fontSize: 16, fontWeight: 600 }}>Shorts</span>
-          <span
-            style={{
-              background: "#272727",
-              color: "#f1f1f1",
-              fontSize: 12,
-              fontWeight: 500,
-              padding: "3px 10px",
-              borderRadius: 8,
-            }}
-          >
-            # Shorts
-          </span>
-        </div>
+        {filteredShorts.length > 0 && (
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#ff0000">
+              <path d="M10 9l5 3-5 3V9z" />
+              <path
+                d="M21.6 7.2A2.85 2.85 0 0 0 19.6 5.2C18.1 4.8 12 4.8 12 4.8s-6.1 0-7.6.4A2.85 2.85 0 0 0 2.4 7.2C2 8.7 2 12 2 12s0 3.3.4 4.8a2.85 2.85 0 0 0 2 2c1.5.4 7.6.4 7.6.4s6.1 0 7.6-.4a2.85 2.85 0 0 0 2-2C22 15.3 22 12 22 12s0-3.3-.4-4.8z"
+                fill="none"
+                stroke="#ff0000"
+                strokeWidth="1.5"
+              />
+            </svg>
+            <span style={{ fontSize: 16, fontWeight: 600 }}>Shorts</span>
+            <span
+              style={{
+                background: "#272727",
+                color: "#f1f1f1",
+                fontSize: 12,
+                fontWeight: 500,
+                padding: "3px 10px",
+                borderRadius: 8,
+              }}
+            >
+              # Shorts
+            </span>
+          </div>
+        )}
 
         {/* Shorts horizontal scroll */}
-        <div
-          style={{
-            display: "flex",
-            gap: 8,
-            overflowX: "auto",
-            paddingBottom: 8,
-            msOverflowStyle: "none",
-            scrollbarWidth: "none" as const,
-          }}
-        >
-          {SHORTS.map((s) => (
-            <ShortCard key={s.id} s={s} />
-          ))}
-        </div>
+        {filteredShorts.length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              overflowX: "auto",
+              paddingBottom: 8,
+              msOverflowStyle: "none",
+              scrollbarWidth: "none" as const,
+            }}
+          >
+            {filteredShorts.map((s) => (
+              <ShortCard key={s.id} s={s} />
+            ))}
+          </div>
+        )}
+
+        {/* Sin resultados */}
+        {noResults && (
+          <div style={{ textAlign: "center", padding: "64px 0", color: "#717171" }}>
+            <svg width="48" height="48" fill="none" stroke="#444" strokeWidth="1.5" viewBox="0 0 24 24" style={{ display: "block", margin: "0 auto 16px" }}>
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <p style={{ fontSize: 16, color: "#aaa", margin: "0 0 6px" }}>No se encontraron resultados</p>
+            <p style={{ fontSize: 13, color: "#555", margin: 0 }}>Intenta con otro término de búsqueda</p>
+          </div>
+        )}
 
         {/* Divider */}
-        <div style={{ borderTop: "1px solid #272727", margin: "28px 0" }} />
+        {filteredVideos.length > 0 && (
+          <div style={{ borderTop: "1px solid #272727", margin: "28px 0" }} />
+        )}
 
         {/* Videos header */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <svg width="20" height="20" fill="none" stroke="#f1f1f1" strokeWidth="2" viewBox="0 0 24 24">
-            <rect x="2" y="4" width="20" height="14" rx="2" />
-            <path d="M8 20h8M12 18v2" />
-          </svg>
-          <span style={{ fontSize: 16, fontWeight: 600 }}>Videos</span>
-        </div>
+        {filteredVideos.length > 0 && (
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+            <svg width="20" height="20" fill="none" stroke="#f1f1f1" strokeWidth="2" viewBox="0 0 24 24">
+              <rect x="2" y="4" width="20" height="14" rx="2" />
+              <path d="M8 20h8M12 18v2" />
+            </svg>
+            <span style={{ fontSize: 16, fontWeight: 600 }}>Videos</span>
+          </div>
+        )}
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: 16,
-          }}
-        >
-          {VIDEOS.map((v) => (
-            <VideoCard key={v.id} v={v} />
-          ))}
-        </div>
+        {/* Videos grid */}
+        {filteredVideos.length > 0 && (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+              gap: 16,
+            }}
+          >
+            {filteredVideos.map((v) => (
+              <VideoCard key={v.id} v={v} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
