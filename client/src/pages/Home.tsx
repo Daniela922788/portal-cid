@@ -165,7 +165,7 @@ export default function Home() {
       </section>
 
         
-      <section className="relative left-1/2 w-screen -translate-x-1/2 py-10 md:py-14">
+      <section className="relative py-10 md:py-14">
         <div className="container">
           <div className="mb-6 text-center md:mb-8">
             <h2 className="text-4xl font-bold text-[#023A34] md:text-6xl">TOM 2026</h2>
@@ -204,8 +204,8 @@ export default function Home() {
         />
 
         <div className="container relative z-10">
-          <div className="relative flex min-h-[650px] items-center justify-center md:min-h-[900px]">
-            <div className="relative w-[340px] overflow-hidden rounded-[2.8rem] border-[5px] border-white/85 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.55)] sm:w-[420px] md:w-[520px]">
+          <div className="relative flex items-center justify-center py-8 md:py-16">
+            <div className="relative w-[75vw] max-w-[340px] overflow-hidden rounded-[2.8rem] border-[5px] border-white/85 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.55)] sm:max-w-[420px] md:max-w-[520px]">
               <div className="pointer-events-none absolute left-1/2 top-2 z-10 h-1.5 w-16 -translate-x-1/2 rounded-full bg-white/70" />
               <iframe
                 src={`https://www.youtube.com/embed/${diaArbolVideoId}?autoplay=1&mute=1&loop=1&playlist=${diaArbolVideoId}&playsinline=1&rel=0&modestbranding=1`}
