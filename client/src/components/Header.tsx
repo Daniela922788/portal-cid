@@ -77,14 +77,51 @@ export default function Header() {
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
     : "sticky top-0 z-50 w-full border-b-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60";
 
-  // Los botones mantienen h-10 como en el diseño original
+  /*
+    ESTRATEGIA DE TAMAÑOS:
+    - mobile  (<lg):   hamburguesa, logo pequeño, sin nav desktop
+    - lg 1024px:       nav desktop aparece, botones h-9, logo h-9
+    - xl 1280px:       MacBook 14" / pantallas medianas, botones h-10, logo h-10
+    - 2xl 1536px:      pantallas grandes 24-27", botones h-11, logo h-11
+    - 3xl personalizado ≥1920px: monitores 32"+, botones h-12, logo h-12
+
+    El logo SIEMPRE tiene la misma altura que los botones del nav
+    para que todo quede visualmente alineado.
+  */
   const topLevelNavLinkClass = isTransparent
-    ? "group inline-flex h-10 w-max items-center justify-center rounded-md bg-black/35 px-3 xl:px-4 py-2 text-[0.9rem] xl:text-[0.95rem] font-medium text-white transition-colors hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-    : "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-3 xl:px-4 py-2 text-[0.9rem] xl:text-[0.95rem] font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50";
+    ? [
+        "group inline-flex w-max items-center justify-center rounded-md font-medium text-white transition-colors",
+        "bg-black/35 hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white focus:outline-none",
+        "disabled:pointer-events-none disabled:opacity-50",
+        // altura y padding por breakpoint
+        "h-10 px-3 text-[0.85rem]",
+        "xl:h-11 xl:px-3.5 xl:text-[0.9rem]",
+        "2xl:h-12 2xl:px-4 2xl:text-[0.95rem]",
+      ].join(" ")
+    : [
+        "group inline-flex w-max items-center justify-center rounded-md font-medium transition-colors",
+        "bg-background hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none",
+        "disabled:pointer-events-none disabled:opacity-50",
+        "h-10 px-3 text-[0.85rem]",
+        "xl:h-11 xl:px-3.5 xl:text-[0.9rem]",
+        "2xl:h-12 2xl:px-4 2xl:text-[0.95rem]",
+      ].join(" ");
 
   const triggerClassName = isTransparent
-    ? "h-10 w-max rounded-md bg-black/35 px-3 xl:px-4 text-[0.9rem] xl:text-[0.95rem] font-medium text-white hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white"
-    : "h-10 w-max rounded-md bg-background px-3 xl:px-4 text-[0.9rem] xl:text-[0.95rem] font-medium text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground";
+    ? [
+        "w-max rounded-md font-medium text-white",
+        "bg-black/35 hover:bg-black/50 hover:text-white focus:bg-black/50 focus:text-white",
+        "h-10 px-3 text-[0.85rem]",
+        "xl:h-11 xl:px-3.5 xl:text-[0.9rem]",
+        "2xl:h-12 2xl:px-4 2xl:text-[0.95rem]",
+      ].join(" ")
+    : [
+        "w-max rounded-md font-medium text-foreground",
+        "bg-background hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+        "h-10 px-3 text-[0.85rem]",
+        "xl:h-11 xl:px-3.5 xl:text-[0.9rem]",
+        "2xl:h-12 2xl:px-4 2xl:text-[0.95rem]",
+      ].join(" ");
 
   useEffect(() => {
     if (searchOpen) {
@@ -189,9 +226,26 @@ export default function Header() {
   return (
     <header className={headerClassName}>
       <div className="container">
-        <div className="mx-auto grid w-full max-w-[1180px] grid-cols-[auto_1fr_auto] items-center h-16 gap-x-4 lg:h-[4.5rem] xl:gap-x-8">
+        {/*
+          Grid de 3 columnas: logo (auto) | nav (1fr) | acciones (auto)
 
-          {/* ── Col 1: Logo — mismo alto que los botones del nav (h-10) ── */}
+          Alturas del header sincronizadas con el logo y los botones:
+            mobile  <lg  : h-14  (56px)
+            lg 1024px    : h-16  (64px)   — MacBook 13" / pantallas pequeñas
+            xl 1280px    : h-[4.5rem]     — MacBook 14-16" / pantallas medianas
+            2xl 1536px   : h-20  (80px)   — monitores 24-27"
+        */}
+        <div className="mx-auto grid w-full max-w-[1180px] grid-cols-[auto_1fr_auto] items-center gap-x-3 h-16 lg:h-20 lg:gap-x-5 xl:h-24 xl:gap-x-7 2xl:h-28 2xl:gap-x-9">
+
+          {/* ── Col 1: Logo ── */}
+          {/*
+            El logo usa la misma altura que los botones del nav en cada breakpoint.
+            Así logo y menú siempre están visualmente alineados.
+              mobile: h-8  (32px)
+              lg:     h-9  (36px)
+              xl:     h-10 (40px)
+              2xl:    h-11 (44px)
+          */}
           <Link
             href="/"
             className="flex shrink-0 items-center transition-opacity hover:opacity-80"
@@ -199,12 +253,12 @@ export default function Header() {
             <img
               src={logoSrc}
               alt="Logo CID"
-              className="h-10 w-auto"
+              className="h-12 w-auto lg:h-16 xl:h-20 2xl:h-24"
             />
           </Link>
 
-          {/* ── Col 2: Navegación desktop ── */}
-          <nav className="hidden lg:flex items-center justify-center">
+          {/* ── Col 2: Navegación desktop (solo lg+) ── */}
+          <nav className="hidden lg:flex items-center justify-center min-w-0">
             <NavigationMenu
               ref={desktopNavMenuRef}
               viewport={false}
@@ -215,7 +269,8 @@ export default function Header() {
                 )
               }
             >
-              <NavigationMenuList className="gap-1.5 xl:gap-2">
+              <NavigationMenuList className="flex-wrap gap-0.5 xl:gap-1 2xl:gap-1.5">
+
                 {/* Inicio */}
                 <NavigationMenuItem>
                   <Link href="/">
@@ -239,12 +294,12 @@ export default function Header() {
                     Quiénes somos
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="absolute top-full left-1/2 -translate-x-1/2 z-50">
-                    <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
+                    <ul className="grid w-[460px] grid-cols-2 gap-3 p-4">
                       {[
                         { href: "/nosotros", title: "Nosotros", desc: "Misión, visión y valores del CID" },
                         { href: "/gestores", title: "Gestores de Innovación", desc: "Equipo de Gestores de Innovación" },
                         { href: "/salas", title: "Nuestros Espacios", desc: "Espacios educativos y ambientes de aprendizaje" },
-                        { href: "/centro", title: "Aula de Experimentación Audiovisual", desc: "Aula de Experimentación Audiovisual del CID" },
+                        { href: "/centro", title: "Aula Audiovisual", desc: "Aula de Experimentación Audiovisual del CID" },
                       ].map(({ href, title, desc }) => (
                         <li key={href}>
                           <Link href={href}>
@@ -273,9 +328,10 @@ export default function Header() {
                     Contenido
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="absolute top-full left-1/2 -translate-x-1/2 z-50">
-                    <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
+                    <ul className="grid w-[460px] grid-cols-2 gap-3 p-4">
                       {[
                         { href: "/noticias", title: "Noticias", desc: "Noticias y menciones del CID" },
+                        { href: "/videos", title: "Videos", desc: "Galería audiovisual del CID" },
                         ...(showProyectos
                           ? [{ href: "/proyectos", title: "Proyectos", desc: "Proyectos STEM e investigación" }]
                           : []),
@@ -310,7 +366,7 @@ export default function Header() {
                     Comunidad
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="absolute top-full left-1/2 -translate-x-1/2 z-50">
-                    <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
+                    <ul className="grid w-[460px] grid-cols-2 gap-3 p-4">
                       {[
                         { href: "/ie-oficiales", title: "IE Oficiales", desc: "Instituciones Educativas" },
                         { href: "/territorio-stem", title: "Territorio STEM", desc: "Proyectos y actores STEM Envigado" },
@@ -343,7 +399,7 @@ export default function Header() {
                     Recursos
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="absolute top-full left-1/2 -translate-x-1/2 z-50">
-                    <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
+                    <ul className="grid w-[460px] grid-cols-2 gap-3 p-4">
                       {[
                         ...(showKitHerramientas
                           ? [{ href: "/kit-herramientas", title: "Kit Herramientas", desc: "Recursos para docentes" }]
@@ -393,14 +449,15 @@ export default function Header() {
                     <NavigationMenuLink className={topLevelNavLinkClass}>Contáctanos</NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
+
               </NavigationMenuList>
             </NavigationMenu>
           </nav>
 
-          {/* ── Col 3: Acciones ── */}
+          {/* ── Col 3: Acciones (lupa + hamburguesa) ── */}
           <div className="flex shrink-0 items-center gap-1">
 
-            {/* Desktop: form expandido O lupa */}
+            {/* Desktop: form de búsqueda expandido O botón lupa */}
             {searchOpen ? (
               <form onSubmit={handleSearchSubmit} className="hidden lg:flex items-center gap-2">
                 <input
@@ -412,7 +469,7 @@ export default function Header() {
                   }}
                   type="text"
                   placeholder="Buscar en esta pagina"
-                  className="h-9 w-36 xl:w-44 rounded-md border border-input bg-background px-3 text-sm"
+                  className="h-9 w-32 xl:w-40 2xl:w-48 rounded-md border border-input bg-background px-3 text-sm"
                   aria-label="Buscar en la pagina"
                 />
                 <Button type="submit" variant="outline" size="sm">
@@ -451,7 +508,7 @@ export default function Header() {
               </Button>
             )}
 
-            {/* Lupa móvil */}
+            {/* Lupa móvil (solo < lg) */}
             <Button
               variant="ghost"
               size="icon"
@@ -466,7 +523,7 @@ export default function Header() {
               {searchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
             </Button>
 
-            {/* Hamburguesa */}
+            {/* Hamburguesa (solo < lg) */}
             <Button
               variant="ghost"
               size="icon"
@@ -484,7 +541,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Buscador móvil */}
+        {/* Buscador móvil desplegable */}
         {searchOpen && (
           <form onSubmit={handleSearchSubmit} className="lg:hidden border-t py-3">
             <div className="flex items-center gap-2">
@@ -507,7 +564,7 @@ export default function Header() {
           </form>
         )}
 
-        {/* Resultados */}
+        {/* Resultados de búsqueda */}
         {searchOpen && searchResults.length > 0 && (
           <div className="border-t py-2">
             <p className="px-1 pb-1 text-xs text-muted-foreground">Resultados (Top 5)</p>
@@ -527,7 +584,7 @@ export default function Header() {
           </div>
         )}
 
-        {/* Menú móvil */}
+        {/* Menú móvil desplegable */}
         {mobileMenuOpen && (
           <div className="lg:hidden border-t py-4 bg-white">
             <nav className="flex flex-col gap-2">
@@ -555,6 +612,7 @@ export default function Header() {
                   <AccordionContent className="pb-2">
                     <div className="flex flex-col gap-1">
                       <Link href="/noticias" className={mobileMenuItemClass} onClick={closeMobileMenu}>Noticias</Link>
+                      <Link href="/videos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Videos</Link>
                       {showProyectos && (
                         <Link href="/proyectos" className={mobileMenuItemClass} onClick={closeMobileMenu}>Proyectos</Link>
                       )}

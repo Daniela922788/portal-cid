@@ -29,7 +29,7 @@ export default function Home() {
   const diaArbolVideoId = "vnCAia6v0bE";
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen w-full overflow-x-hidden">
 
       {/* Hero Section */}
       <section className="relative w-full overflow-hidden md:h-screen">
@@ -204,18 +204,20 @@ export default function Home() {
         />
 
         <div className="container relative z-10">
-          <div className="relative flex items-center justify-center py-8 md:py-16">
-            <div className="relative w-[75vw] max-w-[340px] overflow-hidden rounded-[2.8rem] border-[5px] border-white/85 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.55)] sm:max-w-[420px] md:max-w-[520px]">
+          <div className="relative flex items-center justify-center py-8 md:py-16 px-4">
+            <div className="relative w-full max-w-[92vw] overflow-hidden rounded-[2.8rem] border-[5px] border-white/85 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.55)] sm:max-w-[360px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[400px] 2xl:max-w-[550px]">
               <div className="pointer-events-none absolute left-1/2 top-2 z-10 h-1.5 w-16 -translate-x-1/2 rounded-full bg-white/70" />
-              <iframe
-                src={`https://www.youtube.com/embed/${diaArbolVideoId}?autoplay=1&mute=1&loop=1&playlist=${diaArbolVideoId}&playsinline=1&rel=0&modestbranding=1`}
-                title="Día del Árbol"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                className="aspect-[9/16] w-full"
-              />
+              <div className="aspect-[9/16] w-full">
+                <iframe
+                  src={`https://www.youtube.com/embed/${diaArbolVideoId}?autoplay=1&mute=1&loop=1&playlist=${diaArbolVideoId}&playsinline=1&rel=0&modestbranding=1`}
+                  title="Día del Árbol"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full"
+                />
+              </div>
             </div>
           </div>
         </div>
