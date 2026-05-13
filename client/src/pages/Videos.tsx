@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const SHORTS = [
   { id: "spMFXEUCEX8", title: "Artemis III — no es soñar, es llegar" },
@@ -8,6 +9,7 @@ const SHORTS = [
   { id: "vnCAia6v0bE", title: "Día del Árbol — plantar para el futuro" },
   { id: "VGjz_9NKYZc", title: "Auroras Boreales — la danza del cielo" },
   { id: "vq614P1SONs", title: "Visita Renault — innovación en movimiento" },
+  { id: "hwdlq1YyQII", title: "Chernobyl — lecciones del desastre" },
 ];
 
 const VIDEOS = [
@@ -20,6 +22,9 @@ const VIDEOS = [
 ];
 
 const YT_CHANNEL = "https://www.youtube.com/@CentrodeInnovaci%C3%B3nyDesarrollo";
+
+const CARD_W = 300;
+const CARD_GAP = 16;
 
 function PlayIcon({ size = 20 }: { size?: number }) {
   return (
@@ -40,7 +45,7 @@ function YTIcon({ size = 18 }: { size?: number }) {
 
 function ShortCard({ s }: { s: typeof SHORTS[0] }) {
   const [hovered, setHovered] = useState(false);
-  const thumb = `https://i.ytimg.com/vi/${s.id}/hqdefault.jpg`;
+  const thumb = `https://i.ytimg.com/vi/${s.id}/maxresdefault.jpg`;
   const url = `https://youtube.com/shorts/${s.id}`;
 
   return (
@@ -48,14 +53,19 @@ function ShortCard({ s }: { s: typeof SHORTS[0] }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      style={{ flex: "0 0 162px", textDecoration: "none", color: "inherit", display: "block" }}
+      style={{
+        flex: `0 0 ${CARD_W}px`,
+        textDecoration: "none",
+        color: "inherit",
+        display: "block",
+      }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <div
         style={{
-          width: 162,
-          height: 288,
+          width: CARD_W,
+          height: Math.round(CARD_W * (16 / 9)),
           borderRadius: 12,
           overflow: "hidden",
           background: "#272727",
@@ -99,8 +109,8 @@ function ShortCard({ s }: { s: typeof SHORTS[0] }) {
           >
             <div
               style={{
-                width: 36,
-                height: 36,
+                width: 40,
+                height: 40,
                 borderRadius: "50%",
                 background: "rgba(255,255,255,0.2)",
                 display: "flex",
@@ -108,7 +118,7 @@ function ShortCard({ s }: { s: typeof SHORTS[0] }) {
                 justifyContent: "center",
               }}
             >
-              <PlayIcon size={18} />
+              <PlayIcon size={20} />
             </div>
           </div>
         )}
@@ -240,6 +250,10 @@ function VideoCard({ v }: { v: typeof VIDEOS[0] }) {
 
 export default function Videos() {
   const [query, setQuery] = useState("");
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
   const q = query.trim().toLowerCase();
 
   const filteredShorts = q
@@ -255,6 +269,46 @@ export default function Videos() {
     : VIDEOS;
 
   const noResults = q.length > 0 && filteredShorts.length === 0 && filteredVideos.length === 0;
+
+  const updateScrollState = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 8);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 8);
+  };
+
+  useEffect(() => {
+    updateScrollState();
+  }, [filteredShorts]);
+
+  const scrollBy = (dir: 1 | -1) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const step = (CARD_W + CARD_GAP) * 3;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+    setTimeout(updateScrollState, 350);
+  };
+
+  const btnStyle = (visible: boolean): React.CSSProperties => ({
+    position: "absolute",
+    top: "45%",
+    transform: "translateY(-50%)",
+    zIndex: 10,
+    width: 40,
+    height: 40,
+    borderRadius: "50%",
+    border: "none",
+    background: "#212121",
+    color: "#f1f1f1",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.6)",
+    opacity: visible ? 1 : 0,
+    pointerEvents: visible ? "auto" : "none",
+    transition: "opacity 0.2s",
+  });
 
   return (
     <div
@@ -286,7 +340,6 @@ export default function Videos() {
             height: 56,
           }}
         >
-          {/* Logo → canal */}
           <a
             href={YT_CHANNEL}
             target="_blank"
@@ -311,7 +364,6 @@ export default function Videos() {
             </span>
           </a>
 
-          {/* Barra de búsqueda funcional */}
           <div
             style={{
               flex: 1,
@@ -365,7 +417,6 @@ export default function Videos() {
             )}
           </div>
 
-          {/* Botón suscribirse → canal */}
           <a
             href={`${YT_CHANNEL}?sub_confirmation=1`}
             target="_blank"
@@ -389,58 +440,86 @@ export default function Videos() {
       </nav>
 
       {/* CONTENT */}
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "24px 24px 48px" }}>
+      <div style={{ maxWidth: 1600, margin: "0 auto", padding: "28px 16px 48px" }}>
 
-        {/* Shorts header */}
+        {/* SHORTS SECTION */}
         {filteredShorts.length > 0 && (
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="#ff0000">
-              <path d="M10 9l5 3-5 3V9z" />
-              <path
-                d="M21.6 7.2A2.85 2.85 0 0 0 19.6 5.2C18.1 4.8 12 4.8 12 4.8s-6.1 0-7.6.4A2.85 2.85 0 0 0 2.4 7.2C2 8.7 2 12 2 12s0 3.3.4 4.8a2.85 2.85 0 0 0 2 2c1.5.4 7.6.4 7.6.4s6.1 0 7.6-.4a2.85 2.85 0 0 0 2-2C22 15.3 22 12 22 12s0-3.3-.4-4.8z"
-                fill="none"
-                stroke="#ff0000"
-                strokeWidth="1.5"
-              />
-            </svg>
-            <span style={{ fontSize: 16, fontWeight: 600 }}>Shorts</span>
-            <span
-              style={{
-                background: "#272727",
-                color: "#f1f1f1",
-                fontSize: 12,
-                fontWeight: 500,
-                padding: "3px 10px",
-                borderRadius: 8,
-              }}
-            >
-              # Shorts
-            </span>
-          </div>
+          <section style={{ marginBottom: 40 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#ff0000">
+                <path d="M10 9l5 3-5 3V9z" />
+                <path
+                  d="M21.6 7.2A2.85 2.85 0 0 0 19.6 5.2C18.1 4.8 12 4.8 12 4.8s-6.1 0-7.6.4A2.85 2.85 0 0 0 2.4 7.2C2 8.7 2 12 2 12s0 3.3.4 4.8a2.85 2.85 0 0 0 2 2c1.5.4 7.6.4 7.6.4s6.1 0 7.6-.4a2.85 2.85 0 0 0 2-2C22 15.3 22 12 22 12s0-3.3-.4-4.8z"
+                  fill="none"
+                  stroke="#ff0000"
+                  strokeWidth="1.5"
+                />
+              </svg>
+              <span style={{ fontSize: 18, fontWeight: 700 }}>Shorts</span>
+              <span
+                style={{
+                  background: "#272727",
+                  color: "#aaa",
+                  fontSize: 12,
+                  fontWeight: 500,
+                  padding: "3px 10px",
+                  borderRadius: 8,
+                }}
+              >
+                {filteredShorts.length} videos
+              </span>
+            </div>
+
+            {/* Carousel */}
+            <div style={{ position: "relative" }}>
+              <button
+                style={{ ...btnStyle(canScrollLeft), left: -20 }}
+                onClick={() => scrollBy(-1)}
+                aria-label="Anterior"
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              <div
+                ref={scrollRef}
+                onScroll={updateScrollState}
+                style={{
+                  display: "flex",
+                  gap: CARD_GAP,
+                  overflowX: "auto",
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                  paddingBottom: 8,
+                }}
+              >
+                {filteredShorts.map((s) => (
+                  <ShortCard key={s.id} s={s} />
+                ))}
+              </div>
+
+              <button
+                style={{ ...btnStyle(canScrollRight), right: -20 }}
+                onClick={() => scrollBy(1)}
+                aria-label="Siguiente"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </section>
         )}
 
-        {/* Shorts horizontal scroll */}
-        {filteredShorts.length > 0 && (
-          <div
-            style={{
-              display: "flex",
-              gap: 8,
-              overflowX: "auto",
-              paddingBottom: 8,
-              msOverflowStyle: "none",
-              scrollbarWidth: "none" as const,
-            }}
-          >
-            {filteredShorts.map((s) => (
-              <ShortCard key={s.id} s={s} />
-            ))}
-          </div>
-        )}
-
-        {/* Sin resultados */}
+        {/* NO RESULTS */}
         {noResults && (
           <div style={{ textAlign: "center", padding: "64px 0", color: "#717171" }}>
-            <svg width="48" height="48" fill="none" stroke="#444" strokeWidth="1.5" viewBox="0 0 24 24" style={{ display: "block", margin: "0 auto 16px" }}>
+            <svg
+              width="48"
+              height="48"
+              fill="none"
+              stroke="#444"
+              strokeWidth="1.5"
+              viewBox="0 0 24 24"
+              style={{ display: "block", margin: "0 auto 16px" }}
+            >
               <circle cx="11" cy="11" r="8" />
               <path d="m21 21-4.35-4.35" />
             </svg>
@@ -449,35 +528,33 @@ export default function Videos() {
           </div>
         )}
 
-        {/* Divider */}
-        {filteredVideos.length > 0 && (
-          <div style={{ borderTop: "1px solid #272727", margin: "28px 0" }} />
+        {/* DIVIDER */}
+        {filteredShorts.length > 0 && filteredVideos.length > 0 && (
+          <div style={{ borderTop: "1px solid #272727", margin: "8px 0 32px" }} />
         )}
 
-        {/* Videos header */}
+        {/* VIDEOS SECTION */}
         {filteredVideos.length > 0 && (
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-            <svg width="20" height="20" fill="none" stroke="#f1f1f1" strokeWidth="2" viewBox="0 0 24 24">
-              <rect x="2" y="4" width="20" height="14" rx="2" />
-              <path d="M8 20h8M12 18v2" />
-            </svg>
-            <span style={{ fontSize: 16, fontWeight: 600 }}>Videos</span>
-          </div>
-        )}
-
-        {/* Videos grid */}
-        {filteredVideos.length > 0 && (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-              gap: 16,
-            }}
-          >
-            {filteredVideos.map((v) => (
-              <VideoCard key={v.id} v={v} />
-            ))}
-          </div>
+          <section>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+              <svg width="20" height="20" fill="none" stroke="#f1f1f1" strokeWidth="2" viewBox="0 0 24 24">
+                <rect x="2" y="4" width="20" height="14" rx="2" />
+                <path d="M8 20h8M12 18v2" />
+              </svg>
+              <span style={{ fontSize: 18, fontWeight: 700 }}>Videos</span>
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))",
+                gap: 24,
+              }}
+            >
+              {filteredVideos.map((v) => (
+                <VideoCard key={v.id} v={v} />
+              ))}
+            </div>
+          </section>
         )}
       </div>
     </div>

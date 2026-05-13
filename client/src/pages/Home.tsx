@@ -26,7 +26,7 @@ export default function Home() {
   // Users can login via the header button
   const showCoursesCarousel = false;
   const showCidKids = false;
-  const diaArbolVideoId = "vnCAia6v0bE";
+  const diaArbolVideoId = "hwdlq1YyQII";
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
@@ -189,18 +189,18 @@ export default function Home() {
 
       <section className="relative overflow-hidden py-10 md:py-16">
         <img
-          src="/Fondos/dia_arbol.jpg"
-          alt="Fondo Día del Árbol"
+          src="/Fondos/Fondo_chernobyl.png"
+          alt="Fondo Chernobyl"
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover md:hidden"
+          className="absolute left-1/2 top-0 h-full w-auto max-w-[92vw] -translate-x-1/2 object-contain md:hidden"
         />
         <img
-          src="/Fondos/dia_arbol.jpg"
-          alt="Fondo Día del Árbol"
+          src="/Fondos/Fondo_chernobyl.png"
+          alt="Fondo Chernobyl"
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 hidden h-full w-full object-contain md:block"
+          className="absolute left-1/2 top-0 hidden h-full w-auto max-w-[92vw] -translate-x-1/2 object-contain md:block"
         />
 
         <div className="container relative z-10">
