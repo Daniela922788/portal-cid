@@ -108,8 +108,33 @@ export default function MesaAyuda() {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Dirección */}
             <div>
-              <h3 className="text-gray-400 text-sm font-semibold mb-3">Dirección</h3>
-              <p className="text-gray-900 font-medium">Biblioteca Pública y Parque Cultural Débora Arango, Envigado</p>
+              <h3 className="text-gray-400 text-sm font-semibold mb-3">
+                	Dirección de Innovación Educativa
+
+              </h3>
+
+              <p className="text-gray-900 font-medium leading-relaxed">
+                CAM (Centro Administrativo Municipal)
+                <br />
+                Carrera 43 N.° 38 Sur-35
+                <br />
+                Torre sur - Piso 6
+              </p>
+            </div>
+
+            {/* Centro */}
+            <div>
+              <h3 className="text-gray-400 text-sm font-semibold mb-3">
+                Centro de Innovación
+              </h3>
+
+              <p className="text-gray-900 font-medium leading-relaxed">
+                Biblioteca Pública y Parque Cultural Débora Arango
+                <br />
+                Cl. 37 Sur # 45 B-27, Zona 8
+                <br />
+                Piso 3
+              </p>
             </div>
 
             {/* Email */}
@@ -120,7 +145,7 @@ export default function MesaAyuda() {
 
             {/* Teléfono */}
             <div>
-              <h3 className="text-gray-400 text-sm font-semibold mb-3">Teléfono</h3>
+              <h3 className="text-gray-400 text-sm font-semibold mb-3">Whatsapp</h3>
               <p className="text-gray-900 font-medium">(+57) 301 2577662</p>
             </div>
           </div>

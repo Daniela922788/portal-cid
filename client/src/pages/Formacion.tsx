@@ -984,11 +984,11 @@ export default function Formacion() {
       id: "2026-8",
       titulo: "Código en Juego",
       tematica: "Tecnología",
-      estado: "En inscripciones",
+      estado: "En curso",
       edad: "7 a 13 años",
       lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
       fechas: ["22 de abril de 2026"],
-      sesiones: ["2026-04-22"],
+      sesiones: ["2026-04-22", "2026-04-29", "2026-05-06", "2026-05-13", "2026-05-20", "2026-05-27", "2026-06-03", "2026-06-10"],
       ano: 2026,
       imagen: "/Formación 2026/Código en Juego.png",
       subtitulo: "Curso de programación con retos para desarrollar pensamiento lógico.",
@@ -1010,11 +1010,11 @@ export default function Formacion() {
       id: "2026-9",
       titulo: "Robótica: De 0 a prototipo",
       tematica: "Robótica",
-      estado: "En inscripciones",
+      estado: "En curso",
       edad: "14 a 17 años",
       lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
       fechas: ["30 de abril de 2026"],
-      sesiones: ["2026-04-30"],
+      sesiones: ["2026-04-30", "2026-05-07", "2026-05-14", "2026-05-21", "2026-05-28", "2026-06-04", "2026-06-11"],
       ano: 2026,
       imagen: "/Formación 2026/Robótica De 0 a prototipo.png",
       subtitulo: "Curso STEM para diseñar, construir y programar robots funcionales.",
@@ -1124,7 +1124,7 @@ export default function Formacion() {
   });
 
   // Separar por categoría
-  const cursosActivos = filteredEcards.filter((e) => e.estado === "En curso");
+  const cursosActivos = filteredEcards.filter((e) => e.id === "2026-8" || e.id === "2026-9");
   const cursos2026 = filteredEcards.filter((e) => e.ano === 2026);
   const cursos2025 = filteredEcards.filter((e) => e.ano === 2025);
 
@@ -1143,7 +1143,7 @@ export default function Formacion() {
 
   // Lógica del calendario
   const activeSessions = ecards
-    .filter((e) => e.estado === "En curso" || e.estado === "En inscripciones")
+    .filter((e) => e.id === "2026-8" || e.id === "2026-9")
     .flatMap((e) =>
       e.sesiones.map((date) => ({ date, titulo: e.titulo, tematica: e.tematica }))
     );
@@ -1171,6 +1171,7 @@ export default function Formacion() {
 
   const tematicaColor: Record<string, string> = {
     Robotica: "bg-[#11B2AA]",
+    "Robótica": "bg-[#11B2AA]",
     IA: "bg-[#2D3586]",
     "Inteligencia Artificial": "bg-[#2D3586]",
     "Animación": "bg-[#EC6910]",
@@ -1185,7 +1186,7 @@ export default function Formacion() {
     "Edición": "bg-[#EC6910]",
     Cocina: "bg-[#182130]",
     "Analítica": "bg-[#0D4B56]",
-    "Tecnología": "bg-[#2D3586]",
+    "Tecnología": "bg-[#EC6910]",
     "Creatividad": "bg-[#EC6910]",
     "Escritura": "bg-[#182130]",
   };
@@ -1357,12 +1358,12 @@ export default function Formacion() {
             No hay cursos para mostrar en esta sección con los filtros actuales.
           </div>
         ) : (
-          <div className="relative">
+          <div className="relative px-9">
             <button
               type="button"
               onClick={() => scrollByCard(-1)}
               disabled={carouselIndex <= 0}
-              className="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40"
+              className="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40"
               aria-label={`Retroceder en ${title}`}
             >
               <ChevronLeft className="h-5 w-5" />
@@ -1372,7 +1373,7 @@ export default function Formacion() {
               type="button"
               onClick={() => scrollByCard(1)}
               disabled={carouselIndex >= pageCount - 1}
-              className="absolute right-0 top-1/2 z-10 translate-x-3 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40"
+              className="absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40"
               aria-label={`Avanzar en ${title}`}
             >
               <ChevronRight className="h-5 w-5" />
@@ -1380,7 +1381,7 @@ export default function Formacion() {
 
             <div
               ref={trackRef}
-              className="snap-x snap-mandatory overflow-x-auto overflow-y-hidden px-6 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               <div
                 className="flex"
@@ -1400,7 +1401,7 @@ export default function Formacion() {
                         setSelectedEcard(ecard);
                         setEcardOpen(true);
                       }}
-                      className="group flex h-full snap-start snap-always flex-col overflow-hidden rounded-2xl border border-[#0D4B56]/15 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+                      className="group flex snap-start snap-always flex-col overflow-hidden rounded-2xl border border-[#0D4B56]/15 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
                       style={{
                         flex: isWideImageCourse
                           ? `0 0 calc(((100% - ${(visibleCards - 1) * gapPx}px) / ${visibleCards}) * ${wideCardWidthMultiplier})`
@@ -1408,23 +1409,23 @@ export default function Formacion() {
                       }}
                       aria-label={`Abrir ${ecard.titulo}`}
                     >
-                      <div className="flex h-[22rem] items-start justify-center overflow-hidden bg-[#11B2AA]/6 pt-3 sm:h-[24rem] lg:h-[25rem]">
-                        <picture className="contents">
+                      <div className="relative w-full overflow-hidden bg-[#11B2AA]/6" style={{ paddingBottom: "133%" }}>
+                        <picture>
                           <source srcSet={toWebp(ecard.imagen)} type="image/webp" />
                           <img
                             src={ecard.imagen}
                             alt={ecard.titulo}
                             loading="lazy"
                             decoding="async"
-                            className={`h-full w-full transition-transform duration-300 group-hover:scale-[1.02] ${
+                            className={`absolute inset-0 h-full w-full transition-transform duration-300 group-hover:scale-[1.02] ${
                               isWideImageCourse ? "object-cover object-center" : "object-contain object-top"
                             }`}
                           />
                         </picture>
                       </div>
-                      <div className="flex min-h-[11.5rem] flex-1 flex-col bg-[#0D4B56]/[0.04] px-3 py-3">
+                      <div className="flex h-[11.5rem] flex-shrink-0 flex-col bg-[#0D4B56]/[0.04] px-3 py-3">
                         <p className="mb-2 line-clamp-2 text-sm font-bold text-[#182130]">{ecard.titulo}</p>
-                        <div className="-ml-0.5 mt-1 flex flex-wrap content-start gap-1.5">
+                        <div className="-ml-0.5 mt-1 flex flex-wrap content-start gap-1.5 overflow-hidden">
                           <Badge variant="outline" className={`max-w-full whitespace-normal break-words rounded-full px-2 py-0.5 text-xs ${ecardTagStyles.tematica}`}>
                             {ecard.tematica}
                           </Badge>
@@ -1588,7 +1589,7 @@ export default function Formacion() {
           {activeSessions.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-4 border-t border-[#0D4B56]/12 pt-4">
               {ecards
-                .filter((e) => e.estado === "En curso" || e.estado === "En inscripciones")
+                .filter((e) => e.id === "2026-8" || e.id === "2026-9")
                 .map((e) => (
                   <div key={e.id} className="flex items-center gap-2">
                     <span className={`h-2.5 w-2.5 rounded-full ${tematicaColor[e.tematica] ?? "bg-[#0D4B56]"}`} />
@@ -1785,7 +1786,7 @@ export default function Formacion() {
           onClick={() => setEcardOpen(false)}
         >
           <div
-            className="max-h-[90vh] w-full max-w-5xl overflow-x-hidden overflow-y-auto rounded-3xl border border-[#0D4B56]/20 bg-[#11B2AA]/[0.06] shadow-2xl"
+            className="max-h-[90vh] w-full max-w-5xl overflow-x-hidden overflow-y-auto rounded-3xl border border-[#0D4B56]/20 bg-white shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="relative p-5 md:p-8">

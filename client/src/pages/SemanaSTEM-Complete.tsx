@@ -354,7 +354,7 @@ export default function SemanaSTEM() {
     },
     {
       time: '10:00 a.m.',
-      title: 'Refrigerio',
+      title: 'Receso',
       description:
         'Espacio de pausa para el descanso e intercambio de experiencias entre estudiantes, docentes e invitados.',
       icon: '☕',

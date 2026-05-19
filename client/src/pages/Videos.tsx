@@ -2,14 +2,14 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const SHORTS = [
-  { id: "spMFXEUCEX8", title: "Artemis III — no es soñar, es llegar" },
-  { id: "R3-OXQd-Fp4", title: "Lunar Gateway — la estación orbital lunar" },
-  { id: "QLJqKHyzcnU", title: "¿Quiénes irán a la Luna?" },
-  { id: "4qF9yJWZRcU", title: "El traje espacial de Artemis" },
-  { id: "vnCAia6v0bE", title: "Día del Árbol — plantar para el futuro" },
-  { id: "VGjz_9NKYZc", title: "Auroras Boreales — la danza del cielo" },
-  { id: "vq614P1SONs", title: "Visita Renault — innovación en movimiento" },
   { id: "hwdlq1YyQII", title: "Chernobyl — lecciones del desastre" },
+  { id: "vq614P1SONs", title: "Visita Renault — innovación en movimiento" },
+  { id: "VGjz_9NKYZc", title: "Auroras Boreales — la danza del cielo" },
+  { id: "vnCAia6v0bE", title: "Día del Árbol — plantar para el futuro" },
+  { id: "4qF9yJWZRcU", title: "El traje espacial de Artemis" },
+  { id: "QLJqKHyzcnU", title: "¿Quiénes irán a la Luna?" },
+  { id: "R3-OXQd-Fp4", title: "Lunar Gateway — la estación orbital lunar" },
+  { id: "spMFXEUCEX8", title: "Artemis III — no es soñar, es llegar" },
 ];
 
 const VIDEOS = [
@@ -284,7 +284,7 @@ export default function Videos() {
   const scrollBy = (dir: 1 | -1) => {
     const el = scrollRef.current;
     if (!el) return;
-    const step = (CARD_W + CARD_GAP) * 3;
+    const step = CARD_W + CARD_GAP;
     el.scrollBy({ left: dir * step, behavior: "smooth" });
     setTimeout(updateScrollState, 350);
   };
@@ -319,6 +319,10 @@ export default function Videos() {
         color: "#f1f1f1",
       }}
     >
+      <style>{`
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+      `}</style>
       {/* NAV */}
       <nav
         style={{
@@ -440,7 +444,7 @@ export default function Videos() {
       </nav>
 
       {/* CONTENT */}
-      <div style={{ maxWidth: 1600, margin: "0 auto", padding: "28px 16px 48px" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "28px 24px 48px" }}>
 
         {/* SHORTS SECTION */}
         {filteredShorts.length > 0 && (
@@ -482,13 +486,13 @@ export default function Videos() {
 
               <div
                 ref={scrollRef}
+                className="no-scrollbar"
                 onScroll={updateScrollState}
                 style={{
                   display: "flex",
                   gap: CARD_GAP,
                   overflowX: "auto",
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
+                  
                   paddingBottom: 8,
                 }}
               >

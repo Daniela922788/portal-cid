@@ -549,51 +549,6 @@ export default function TerritorioStem() {
         </div>
       </motion.section>
 
-      {/* ===== SECCIÓN: TESTIMONIOS ===== */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-[#EC6910]/12 via-[#2D3586]/10 to-[#11B2AA]/12"
-      >
-        <div className="max-w-6xl mx-auto">
-          <motion.h2 variants={itemVariants} className="text-4xl font-bold text-center mb-4 text-[#182130]">Testimonios STEM+ en video</motion.h2>
-          <motion.p variants={itemVariants} className="text-center text-[#0D4B56] mb-12 text-lg">Recorre los testimonios en formato carrusel</motion.p>
-
-          <div className="relative mx-auto w-full max-w-[620px]">
-            <button type="button" onClick={goToPreviousTestimony} aria-label="Testimonio anterior" className="absolute left-0 top-[42%] z-10 h-11 w-11 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white text-[#182130] shadow-md hover:bg-[#11B2AA]/15">
-              <ChevronLeft className="mx-auto h-5 w-5" />
-            </button>
-            <button type="button" onClick={goToNextTestimony} aria-label="Siguiente testimonio" className="absolute right-0 top-[42%] z-10 h-11 w-11 translate-x-1/2 -translate-y-1/2 rounded-full bg-white text-[#182130] shadow-md hover:bg-[#11B2AA]/15">
-              <ChevronRight className="mx-auto h-5 w-5" />
-            </button>
-
-            <motion.div key={activeTestimony} initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -100 }} transition={{ duration: 0.5 }} className="rounded-[2.2rem] bg-white p-3 shadow-2xl sm:p-4">
-              <div className="mx-auto w-full max-w-[500px] overflow-hidden rounded-[1.8rem] bg-black">
-                <iframe src={testimonies[activeTestimony].embedUrl} title={`Video testimonio ${activeTestimony + 1}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen className="aspect-[9/16] w-full" />
-              </div>
-              <div className="mt-5 min-h-[120px] px-2 text-center sm:min-h-[132px]">
-                <p className="text-lg font-semibold leading-snug text-[#182130]">{testimonies[activeTestimony].title}</p>
-                {testimonies[activeTestimony].lines.length > 0 && (
-                  <div className="mt-2 space-y-1">
-                    {testimonies[activeTestimony].lines.map((line) => (
-                      <p key={line} className="text-sm text-[#0D4B56]">- {line}</p>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </motion.div>
-
-            <div className="flex justify-center gap-2 mt-8">
-              {testimonies.map((_, idx) => (
-                <motion.button key={idx} onClick={() => setActiveTestimony(idx)} className={`h-2 rounded-full transition-all ${activeTestimony === idx ? 'bg-[#2D3586] w-8' : 'bg-[#11B2AA]/50 w-2'}`} whileHover={{ scale: 1.2 }} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </motion.section>
-
       {/* ===== BANNER SEMANA STEM ===== */}
       <motion.section
         initial="hidden"

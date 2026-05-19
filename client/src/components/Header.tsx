@@ -46,7 +46,6 @@ export default function Header() {
   const mobileSearchInputRef = useRef<HTMLInputElement>(null);
   const desktopNavMenuRef = useRef<HTMLDivElement>(null);
   const closeMobileMenu = () => setMobileMenuOpen(false);
-  const showKitHerramientas = true;
   const showCidKids = false;
   const showProyectos = false;
 
@@ -404,9 +403,6 @@ export default function Header() {
                   <NavigationMenuContent className="absolute top-full left-1/2 -translate-x-1/2 z-50">
                     <ul className="grid w-[460px] grid-cols-2 gap-3 p-4">
                       {[
-                        ...(showKitHerramientas
-                          ? [{ href: "/kit-herramientas", title: "Kit Herramientas", desc: "Recursos para docentes" }]
-                          : []),
                         { href: "/normatividad", title: "Normatividad", desc: "Acuerdos, leyes, resoluciones y circulares" },
                       ].map(({ href, title, desc }) => (
                         <li key={href}>
@@ -641,9 +637,6 @@ export default function Header() {
                   <AccordionTrigger className={mobileAccordionTriggerClass}>Recursos</AccordionTrigger>
                   <AccordionContent className="pb-2">
                     <div className="flex flex-col gap-1">
-                      {showKitHerramientas && (
-                        <Link href="/kit-herramientas" className={mobileMenuItemClass} onClick={closeMobileMenu}>Kit Herramientas</Link>
-                      )}
                       <Link href="/normatividad" className={mobileMenuItemClass} onClick={closeMobileMenu}>Normatividad</Link>
                     </div>
                   </AccordionContent>
