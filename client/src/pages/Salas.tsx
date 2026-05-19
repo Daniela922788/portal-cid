@@ -148,6 +148,16 @@ export default function Salas() {
 	const [enviandoReserva, setEnviandoReserva] = useState(false);
 	const [reservaValidationError, setReservaValidationError] = useState("");
 	const [showReservaValidationFeedback, setShowReservaValidationFeedback] = useState(false);
+	const [tipoProyecto, setTipoProyecto] = useState<string[]>([]);
+
+	const tipoProyectoOpciones = [
+		"Fotografía",
+		"Video/TV",
+		"Podcast",
+		"Locución/Voz",
+		"Grabación Musical",
+		"Asesoría Técnica",
+	];
 
 	const slideActual = salaSeleccionada ? salaSeleccionada.galeria[slideIndex] : null;
 
@@ -172,6 +182,7 @@ export default function Salas() {
 		setReservaValidationError("");
 		setShowReservaValidationFeedback(false);
 		setReservaAbierta(false);
+		setTipoProyecto([]);
 	};
 
 	const handleReservaSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -188,6 +199,41 @@ export default function Salas() {
 			return;
 		}
 
+		if (salaSeleccionada.nombre === "Aula de Experimentación Audiovisual") {
+			const horaInicioVal = (event.currentTarget.elements.namedItem("horaInicio") as HTMLInputElement)?.value;
+			const horaFinVal = (event.currentTarget.elements.namedItem("horaFin") as HTMLInputElement)?.value;
+
+			if (horaInicioVal && horaFinVal) {
+				const [hIni, mIni] = horaInicioVal.split(":").map(Number);
+				const [hFin, mFin] = horaFinVal.split(":").map(Number);
+				const inicioMin = hIni * 60 + mIni;
+				const finMin = hFin * 60 + mFin;
+
+				const enBloqueManana = inicioMin >= 7 * 60 && finMin <= 12 * 60 && inicioMin < finMin;
+				const enBloqueTarde = inicioMin >= 13 * 60 && finMin <= 17 * 60 && inicioMin < finMin;
+
+				if (!enBloqueManana && !enBloqueTarde) {
+					setReservaValidationError(
+						"El horario permitido es de 7:00 a 12:00 o de 13:00 a 17:00. La reserva no puede cruzar el mediodía ni salir de estos rangos."
+					);
+					return;
+				}
+
+				const duracionMin = finMin - inicioMin;
+				if (duracionMin > 120) {
+					setReservaValidationError(
+						"La duración máxima de reserva es de 2 horas. Por favor ajusta la hora de inicio o finalización."
+					);
+					return;
+				}
+			}
+
+			if (tipoProyecto.length === 0) {
+				setReservaValidationError("Debes seleccionar al menos un Tipo de Proyecto.");
+				return;
+			}
+		}
+
 		setReservaValidationError("");
 
 		const formData = new FormData(event.currentTarget);
@@ -201,6 +247,11 @@ export default function Salas() {
 			celular: getValue("celular"),
 			correoElectronico: getValue("correoElectronico"),
 			nombreEvento: getValue("nombreEvento"),
+			...(salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && {
+				vinculoInstitucional: getValue("vinculoInstitucional"),
+				institucionEducativa: getValue("institucionEducativa"),
+				tipoProyecto: tipoProyecto.join(", "),
+			}),
 			tipoEvento: getValue("tipoEvento"),
 			objetivoEvento: getValue("objetivoEvento"),
 			descripcionEvento: getValue("objetivoEvento"),
@@ -228,6 +279,7 @@ export default function Salas() {
 			setReservaValidationError("");
 			setShowReservaValidationFeedback(false);
 			setReservaAbierta(false);
+			setTipoProyecto([]);
 			window.alert("Solicitud enviada correctamente. Pronto recibirás respuesta por correo.");
 			if (formRef.current) {
 				formRef.current.reset();
@@ -273,7 +325,7 @@ export default function Salas() {
 			<div className="container py-8">
 				<Breadcrumbs items={[{ label: "Salas" }]} />
 
-                <section className="relative left-1/2 w-screen -translate-x-1/2 bg-[#023A34] py-10 md:py-14">
+				<section className="relative -mx-4 bg-[#023A34] py-10 sm:-mx-6 md:-mx-8 md:py-14 lg:-mx-16 xl:-mx-32 2xl:-mx-64">
 					<div className="container">
 						<h2 className="mb-8 text-center text-4xl font-bold text-white md:mb-10 md:text-6xl">
 							Nuestros espacios en acción
@@ -302,14 +354,14 @@ export default function Salas() {
 					</p>
 				</section>
 
-				<section className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+				<section className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
 					{salas.map((sala) => {
 						const Icono = sala.icono;
 
 						return (
 							<Card
 								key={sala.nombre}
-								className="h-full overflow-hidden border-none shadow-[0_16px_40px_rgba(24,33,48,0.10)] ring-1 ring-[#182130]/10 transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(24,33,48,0.16)]"
+								className="flex flex-col overflow-hidden border-none shadow-[0_16px_40px_rgba(24,33,48,0.10)] ring-1 ring-[#182130]/10 transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(24,33,48,0.16)]"
 							>
 								<button
 									type="button"
@@ -324,7 +376,7 @@ export default function Salas() {
 										setSalaSeleccionada(sala);
 										setSlideIndex(0);
 									}}
-									className="flex h-full w-full flex-col text-left"
+									className="flex flex-1 w-full flex-col text-left"
 									aria-label={
 										sala.nombre === "Centro de producción audiovisual"
 											? `Ir a la sección Centro desde ${sala.nombre}`
@@ -615,33 +667,96 @@ export default function Salas() {
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
 								</label>
-								<label className="text-sm font-medium text-slate-700 flex flex-col">
-									<span>Nombre del evento <span className="text-red-600">*</span></span>
-									<input
-										type="text"
-										name="nombreEvento"
-										required
-										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
-									/>
-								</label>
-								<label className="text-sm font-medium text-slate-700 flex flex-col">
-									<span>Tipo de evento <span className="text-red-600">*</span></span>
-									<select
-										name="tipoEvento"
-										required
-										defaultValue=""
-										className="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none transition focus:border-[#0D4B56]"
-									>
-										<option value="" disabled>
-											Seleccione una opción
-										</option>
-										<option value="conferencias">Conferencias, charlas o conversatorios</option>
-										<option value="reuniones">Reuniones de equipo</option>
-										<option value="congreso">Congreso, seminario, foro o simposio</option>
-										<option value="institucional">Actividad institucional</option>
-										<option value="otras">Otras</option>
-									</select>
-								</label>
+								{salaSeleccionada.nombre !== "Aula de Experimentación Audiovisual" && (
+									<label className="text-sm font-medium text-slate-700 flex flex-col">
+										<span>Nombre del evento <span className="text-red-600">*</span></span>
+										<input
+											type="text"
+											name="nombreEvento"
+											required
+											className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
+										/>
+									</label>
+								)}
+								{salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && (
+									<>
+										<label className="text-sm font-medium text-slate-700 flex flex-col">
+											<span>Vínculo Institucional <span className="text-red-600">*</span></span>
+											<select
+												name="vinculoInstitucional"
+												required
+												defaultValue=""
+												className="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none transition focus:border-[#0D4B56]"
+											>
+												<option value="" disabled>
+													Seleccione una opción
+												</option>
+												<option value="Estudiante I.E. Pública">Estudiante I.E. Pública</option>
+												<option value="Estudiante otro">Estudiante otro</option>
+												<option value="Docente I.E. Pública">Docente I.E. Pública</option>
+												<option value="Administrativo Municipio">Administrativo Municipio</option>
+												<option value="Público General Envigado">Público General Envigado</option>
+												<option value="Público General">Público General</option>
+											</select>
+										</label>
+										<label className="text-sm font-medium text-slate-700 flex flex-col">
+											<span>Institución Educativa <span className="text-red-600">*</span></span>
+											<input
+												type="text"
+												name="institucionEducativa"
+												required
+												className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
+											/>
+										</label>
+										<div className="col-span-2 flex flex-col">
+											<span className="text-sm font-medium text-slate-700">
+												Tipo de Proyecto <span className="text-red-600">*</span>
+											</span>
+											<p className="mt-0.5 text-xs text-slate-500">Selecciona al menos una opción</p>
+											<div className={`mt-2 grid grid-cols-2 gap-2 rounded-lg border p-3 sm:grid-cols-3 ${
+												showReservaValidationFeedback && tipoProyecto.length === 0
+													? "border-red-500 ring-1 ring-red-200"
+													: "border-slate-300"
+											}`}>
+												{tipoProyectoOpciones.map((opcion) => (
+													<label key={opcion} className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm text-slate-700 hover:bg-slate-50">
+														<input
+															type="checkbox"
+															checked={tipoProyecto.includes(opcion)}
+															onChange={(e) =>
+																setTipoProyecto((prev) =>
+																	e.target.checked ? [...prev, opcion] : prev.filter((o) => o !== opcion)
+																)
+															}
+															className="h-4 w-4 accent-[#182130]"
+														/>
+														{opcion}
+													</label>
+												))}
+											</div>
+										</div>
+									</>
+								)}
+								{salaSeleccionada.nombre !== "Aula de Experimentación Audiovisual" && (
+									<label className="text-sm font-medium text-slate-700 flex flex-col">
+										<span>Tipo de evento <span className="text-red-600">*</span></span>
+										<select
+											name="tipoEvento"
+											required
+											defaultValue=""
+											className="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none transition focus:border-[#0D4B56]"
+										>
+											<option value="" disabled>
+												Seleccione una opción
+											</option>
+											<option value="conferencias">Conferencias, charlas o conversatorios</option>
+											<option value="reuniones">Reuniones de equipo</option>
+											<option value="congreso">Congreso, seminario, foro o simposio</option>
+											<option value="institucional">Actividad institucional</option>
+											<option value="otras">Otras</option>
+										</select>
+									</label>
+								)}
 								<label className="text-sm font-medium text-slate-700 flex flex-col">
 									<span>Fecha evento <span className="text-red-600">*</span></span>
 									<input
@@ -659,6 +774,9 @@ export default function Salas() {
 										required
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
+									{salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && (
+										<span className="mt-1 text-xs text-slate-500">Horario permitido: 7:00–12:00 o 13:00–17:00</span>
+									)}
 								</label>
 								<label className="text-sm font-medium text-slate-700 flex flex-col">
 									<span>Hora de finalización del evento <span className="text-red-600">*</span></span>
@@ -668,6 +786,9 @@ export default function Salas() {
 										required
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
+									{salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && (
+										<span className="mt-1 text-xs text-slate-500">Máximo 2 horas de reserva</span>
+									)}
 								</label>
 								<label className="text-sm font-medium text-slate-700 flex flex-col">
 									<span>Número de asistentes <span className="text-red-600">*</span></span>
@@ -675,6 +796,7 @@ export default function Salas() {
 										type="number"
 										name="numeroAsistentes"
 										min={1}
+										{...(salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" ? { max: 15 } : {})}
 										required
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
@@ -710,6 +832,59 @@ export default function Salas() {
 									className="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 text-sm text-slate-700"
 								/>
 							</label>
+
+							{salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && (
+								<div className="flex flex-col gap-3">
+									<label className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 ${
+										showReservaValidationFeedback && !(document.querySelector('input[name="compromisoAutoproduccion"]') as HTMLInputElement)?.checked
+											? "border-red-400 bg-red-50"
+											: "border-slate-200 bg-slate-50"
+									}`}>
+										<input
+											type="checkbox"
+											name="compromisoAutoproduccion"
+											required
+											className="mt-0.5 h-4 w-4 shrink-0 accent-[#182130]"
+										/>
+										<span className="text-sm leading-relaxed text-slate-700">
+											<span className="font-semibold text-[#182130]">Compromiso de Autoproducción <span className="text-red-600">*</span></span><br />
+											Comprendo que el centro tiene un enfoque formativo (“aprender haciendo”). Recibiré asesoría técnica, pero la operación de los equipos y la ejecución del proyecto corren por mi cuenta.
+										</span>
+									</label>
+									<label className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 ${
+										showReservaValidationFeedback && !(document.querySelector('input[name="mediosAlmacenamiento"]') as HTMLInputElement)?.checked
+											? "border-red-400 bg-red-50"
+											: "border-slate-200 bg-slate-50"
+									}`}>
+										<input
+											type="checkbox"
+											name="mediosAlmacenamiento"
+											required
+											className="mt-0.5 h-4 w-4 shrink-0 accent-[#182130]"
+										/>
+										<span className="text-sm leading-relaxed text-slate-700">
+											<span className="font-semibold text-[#182130]">Medios de almacenamiento <span className="text-red-600">*</span></span><br />
+											Entiendo que el centro no almacena mis proyectos. Es mi responsabilidad traer mis propios medios de almacenamiento (Memoria SD, MicroSD o Disco Duro externo) para llevarme el material generado.
+										</span>
+									</label>
+									<label className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 ${
+										showReservaValidationFeedback && !(document.querySelector('input[name="decoracionUtileria"]') as HTMLInputElement)?.checked
+											? "border-red-400 bg-red-50"
+											: "border-slate-200 bg-slate-50"
+									}`}>
+										<input
+											type="checkbox"
+											name="decoracionUtileria"
+											required
+											className="mt-0.5 h-4 w-4 shrink-0 accent-[#182130]"
+										/>
+										<span className="text-sm leading-relaxed text-slate-700">
+											<span className="font-semibold text-[#182130]">Decoración, mobiliario y Utilería <span className="text-red-600">*</span></span><br />
+											Comprendo que el Aula proporciona únicamente los equipos técnicos y el espacio. Cualquier elemento de utilería, decoración, o material consumible (cartulinas, marcadores, cintas, etc.) que requiera, debo traerlo por mi cuenta.
+										</span>
+									</label>
+								</div>
+							)}
 
 							<div className="flex justify-end gap-3 pt-2">
 								<button
