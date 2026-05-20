@@ -762,6 +762,9 @@ export default function Salas() {
 										type="date"
 										name="fechaEvento"
 										required
+										{...(salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && {
+											min: (() => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; })()
+										})}
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
 								</label>
