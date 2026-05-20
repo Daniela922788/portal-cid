@@ -700,11 +700,10 @@ export default function Salas() {
 											</select>
 										</label>
 										<label className="text-sm font-medium text-slate-700 flex flex-col">
-											<span>Institución Educativa <span className="text-red-600">*</span></span>
+											<span>Institución Educativa</span>
 											<input
 												type="text"
 												name="institucionEducativa"
-												required
 												className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 											/>
 										</label>
