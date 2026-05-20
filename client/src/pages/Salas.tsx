@@ -247,6 +247,15 @@ export default function Salas() {
 			}
 		}
 
+		const fechaValGlobal = (event.currentTarget.elements.namedItem("fechaEvento") as HTMLInputElement)?.value;
+		if (fechaValGlobal) {
+			const diaSemana = new Date(fechaValGlobal + "T00:00:00").getDay();
+			if (diaSemana === 0 || diaSemana === 6) {
+				setReservaValidationError("No se pueden hacer reservas los sábados ni domingos. Por favor selecciona un día hábil.");
+				return;
+			}
+		}
+
 		if (!event.currentTarget.checkValidity()) {
 			setReservaValidationError("Faltan campos obligatorios. Revisa los campos resaltados en rojo.");
 			event.currentTarget
@@ -633,7 +642,7 @@ export default function Salas() {
 									<span>Nombres y apellidos del solicitante <span className="text-red-600">*</span></span>
 									<input
 										type="text"
-										name="entidadSolicitante"
+										name="solicitanteNombre"
 										required
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
@@ -667,7 +676,7 @@ export default function Salas() {
 									Nombre de la entidad que solicita la reserva
 									<input
 										type="text"
-										name="solicitanteNombre"
+										name="entidadSolicitante"
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
 								</label>

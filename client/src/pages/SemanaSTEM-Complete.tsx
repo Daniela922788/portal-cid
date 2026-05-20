@@ -1648,39 +1648,137 @@ export default function SemanaSTEM() {
           )}
         </>
       ) : (
-        <section className="py-20 px-4 bg-gradient-to-br from-blue-900 via-purple-800 to-purple-900 text-white min-h-screen flex items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-2xl mx-auto text-center"
+        <section
+          className="relative min-h-screen flex items-center justify-center overflow-hidden"
+          style={{ background: '#0f0a1e' }}
+        >
+          {/* Diagonal stripe texture */}
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0px, #ffffff 1px, transparent 1px, transparent 40px)',
+            }}
+          />
+
+          {/* Large decorative "2026" watermark */}
+          <div
+            className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+            style={{ overflow: 'hidden' }}
           >
-            <div className="mb-8">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                className="text-8xl mb-6 inline-block"
-              >
-                🚀
-              </motion.div>
-            </div>
-            <h2 className="text-5xl font-bold mb-6">Semana STEM+ 2026</h2>
-            <p className="text-2xl text-white/90 mb-4">¡Próximamente!</p>
-            <p className="text-lg text-white/80 mb-8 leading-relaxed">
-              Estamos preparando la próxima edición de la Semana STEM+ Envigado 2026 con nuevas tendencias, expositores internacionales y experiencias transformadoras para la educación.
-            </p>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 mb-8 border border-white/20">
-              <p className="text-white/90 mb-4">Mantente atento a las novedades</p>
-              <p className="text-sm text-white/70">Pronto compartiremos fechas, agenda y detalles del evento</p>
-            </div>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all"
+            <span
+              className="font-black text-white"
+              style={{
+                fontSize: 'clamp(180px, 30vw, 400px)',
+                opacity: 0.03,
+                letterSpacing: '-0.05em',
+                lineHeight: 1,
+                userSelect: 'none',
+              }}
             >
-              Notificarme
-            </motion.button>
-          </motion.div>
+              2026
+            </span>
+          </div>
+
+          {/* Accent line top */}
+          <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #7c3aed, #f97316, #7c3aed)' }} />
+
+          <div className="relative z-10 w-full max-w-5xl mx-auto px-6 py-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+
+              {/* Left: main text block */}
+              <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="flex items-center gap-3 mb-8"
+                >
+                  <div className="h-px flex-1 max-w-[48px]" style={{ background: '#f97316' }} />
+                  <span className="text-xs font-bold tracking-[0.25em] uppercase" style={{ color: '#f97316' }}>
+                    Próximamente
+                  </span>
+                </motion.div>
+
+                <motion.h2
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, delay: 0.1 }}
+                  className="font-black leading-none mb-6"
+                  style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', color: '#ffffff', letterSpacing: '-0.03em' }}
+                >
+                  Semana<br />
+                  <span style={{ color: '#7c3aed' }}>STEM+</span><br />
+                  <span
+                    style={{
+                      WebkitTextStroke: '2px #ffffff',
+                      WebkitTextFillColor: 'transparent',
+                      color: 'transparent',
+                    }}
+                  >
+                    2026
+                  </span>
+                </motion.h2>
+
+                <motion.p
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, delay: 0.2 }}
+                  className="text-base leading-relaxed mb-10"
+                  style={{ color: 'rgba(255,255,255,0.55)', maxWidth: '38ch' }}
+                >
+                  Estamos preparando la próxima edición de la Semana STEM+ Envigado 2026 con nuevas tendencias y experiencias transformadoras para la educación.
+                </motion.p>
+
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, delay: 0.3 }}
+                  className="flex items-center gap-4"
+                >
+                  <span className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                    Envigado · Antioquia · Colombia
+                  </span>
+                </motion.div>
+              </div>
+
+              {/* Right: year + disciplines */}
+              <div className="flex flex-col gap-4">
+                {[
+                  { letter: 'S', word: 'Ciencia', color: '#7c3aed' },
+                  { letter: 'T', word: 'Tecnología', color: '#2563eb' },
+                  { letter: 'E', word: 'Ingeniería', color: '#f97316' },
+                  { letter: 'M', word: 'Matemáticas', color: '#16a34a' },
+                  { letter: '+', word: 'Arte & Humanidades', color: '#db2777' },
+                ].map((item, i) => (
+                  <motion.div
+                    key={item.letter}
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.15 + i * 0.08 }}
+                    className="flex items-center gap-5 group"
+                    style={{
+                      borderLeft: `3px solid ${item.color}`,
+                      paddingLeft: '20px',
+                    }}
+                  >
+                    <span
+                      className="font-black leading-none"
+                      style={{ fontSize: '2.5rem', color: item.color, minWidth: '2.5rem', letterSpacing: '-0.03em' }}
+                    >
+                      {item.letter}
+                    </span>
+                    <span className="text-base font-medium" style={{ color: 'rgba(255,255,255,0.65)' }}>
+                      {item.word}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+
+            </div>
+          </div>
+
+          {/* Accent line bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
         </section>
       )}
     </div>

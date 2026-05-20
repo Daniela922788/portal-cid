@@ -1,38 +1,102 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Link } from "wouter";
 import CoursesCarouselNew from "@/components/CoursesCarouselNew";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  Lightbulb, 
-  Users, 
-  ChevronLeft,
-  BookOpen, 
-  Award, 
-  Newspaper, 
-  Calendar,
-  Microscope,
-  GraduationCap,
-  Sparkles,
-  HeartHandshake
-} from "lucide-react";
- 
+import { ChevronLeft } from "lucide-react";
+
 import educacionLogo from "@/assets/educacion-logo.png";
 import alcaldiaLogo from "@/assets/alcaldia-envigado-logo.png";
 import cienciasLogo from "@/assets/ciencias-logo.png";
 import ticLogo from "@/assets/tic-logo.png";
+
 export default function Home() {
-  // Authentication state is managed by the app context
-  // Users can login via the header button
   const showCoursesCarousel = false;
   const showCidKids = false;
   const diaArbolVideoId = "hwdlq1YyQII";
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#F5F2EC]" style={{ fontFamily: "'Georgia', serif" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap');
 
-      {/* Hero Section */}
-      <section className="relative w-full overflow-hidden md:h-screen">
+        .cid-hero-text {
+          font-family: 'Playfair Display', Georgia, serif;
+        }
+        .cid-hero-banner {
+          font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+          font-weight: 900;
+        }
+        .cid-body {
+          font-family: 'DM Sans', sans-serif;
+        }
+        .cid-section-label {
+          font-family: 'DM Sans', sans-serif;
+          letter-spacing: 0.22em;
+          font-size: 0.72rem;
+          font-weight: 500;
+          text-transform: uppercase;
+        }
+        .cid-card {
+          transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .cid-card:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 24px 56px rgba(2, 58, 52, 0.18);
+        }
+        .cid-banner-link img {
+          transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .cid-banner-link:hover img {
+          transform: scale(1.015);
+        }
+        .cid-rule {
+          height: 3px;
+          background: #11B2AA;
+          width: 52px;
+          border-radius: 2px;
+          display: inline-block;
+        }
+        .cid-diagonal-strip {
+          clip-path: polygon(0 6%, 100% 0%, 100% 94%, 0% 100%);
+        }
+        .cid-logo-strip a {
+          transition: filter 0.25s, transform 0.25s;
+          filter: grayscale(100%) opacity(0.6);
+        }
+        .cid-logo-strip a:hover {
+          filter: grayscale(0%) opacity(1);
+          transform: scale(1.07);
+        }
+        @keyframes cid-fade-up {
+          from { opacity: 0; transform: translateY(28px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .cid-fade-up { animation: cid-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .cid-fade-up-2 { animation: cid-fade-up 0.9s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .cid-fade-up-3 { animation: cid-fade-up 0.9s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+        .phone-frame {
+          border-radius: 2.8rem;
+          border: 5px solid rgba(255,255,255,0.85);
+          overflow: hidden;
+          box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+        }
+        .phone-notch {
+          position: absolute;
+          left: 50%;
+          top: 10px;
+          transform: translateX(-50%);
+          width: 64px;
+          height: 6px;
+          background: rgba(255,255,255,0.7);
+          border-radius: 3px;
+          z-index: 10;
+        }
+      `}</style>
+
+      {/* ═══════════════════════════════════════
+          HERO – full-bleed with editorial overlay
+      ═══════════════════════════════════════ */}
+      <section className="relative w-full" style={{ height: '100vh', minHeight: '500px' }}>
         <picture>
           <source srcSet="/banners/Banner_principal.webp" type="image/webp" />
           <img
@@ -41,137 +105,198 @@ export default function Home() {
             loading="eager"
             fetchPriority="high"
             decoding="sync"
-            className="w-full h-auto object-contain md:h-full md:object-cover md:object-center"
+            className="absolute inset-0 w-full h-full object-cover object-center"
           />
         </picture>
-        <div className="absolute inset-0 bg-[#182130]/35" />
-        <div className="absolute left-4 top-[62%] z-10 -translate-y-1/2 text-left md:left-28 md:top-[58%] lg:left-[6.5rem] lg:top-[56%]">
-          <h1 className="text-sm font-black leading-tight text-white sm:text-4xl lg:text-6xl xl:text-7xl">
-            <span className="block">Somos el CID</span>
+
+        {/* Deep gradient — left side dark, fades right */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(105deg, rgba(2,20,18,0.82) 0%, rgba(2,58,52,0.55) 45%, rgba(17,178,170,0.12) 100%)'
+          }}
+        />
+
+        {/* Vertical rule accent */}
+        <div
+          className="absolute hidden md:block"
+          style={{
+            left: '7rem',
+            top: '18%',
+            bottom: '18%',
+            width: '3px',
+            background: 'linear-gradient(to bottom, transparent, #11B2AA, transparent)',
+            opacity: 0.8,
+          }}
+        />
+
+        {/* Text block */}
+        <div className="absolute left-6 top-1/2 -translate-y-1/2 z-10 md:left-32">
+
+          <h1 className="cid-hero-banner cid-fade-up-2 leading-[1.05] text-white"
+            style={{ fontSize: 'clamp(1.8rem, 7vw, 6.5rem)' }}>
+            <span className="block" style={{ color: '#11B2AA' }}>Somos el CID</span>
             <span className="block">donde la ciencia</span>
             <span className="block">y la innovación</span>
             <span className="block">transforman</span>
             <span className="block">el territorio.</span>
           </h1>
+          <div className="cid-fade-up-3 mt-6 md:mt-8 flex items-center gap-3">
+            <span className="cid-rule" />
+            <span className="cid-body text-white/60 text-sm">Envigado, Antioquia</span>
+          </div>
         </div>
-        
-                {/* Flecha scroll-down */}
-                <div className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 animate-bounce text-white/50 md:bottom-8 md:block">
-                  <ChevronLeft className="h-5 w-5 rotate-[-90deg] md:h-6 md:w-6" />
-                </div>
+
+        {/* Scroll hint */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-1 text-white/40">
+          <div className="animate-bounce">
+            <ChevronLeft className="h-5 w-5 rotate-[-90deg]" />
+          </div>
+        </div>
       </section>
 
-      {/* Banner Trancion de fondo debajo del principal y debajo de los cuadros */}
-      <div className="relative w-full">
-        <img
-          src="/Home/banner%20trancion.webp"
-          alt="Banner Trancion"
-          loading="lazy"
-          decoding="async"
-          className="absolute inset-0 w-full h-auto object-cover z-0"
-          style={{ pointerEvents: 'none' }}
-        />
-        {/* Banners de acceso rápido sobre el fondo */}
-        <section className="relative z-10 bg-transparent pt-4 md:py-8">
-          <div className="w-full space-y-2 md:container md:mx-auto md:space-y-4 md:px-4">
-            <Link href="/nosotros" aria-label="Ir a Nosotros" className="group block">
-              <div className="overflow-hidden rounded-2xl shadow-md">
-                <div className="relative overflow-hidden rounded-2xl">
-                  <img
-                    src="/banners/banner%202.webp"
-                    alt="Banner Nosotros"
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.01] md:group-hover:scale-100"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 hidden bg-black/0 transition-colors duration-300 md:block md:group-hover:bg-black/20"
-                  />
-                </div>
-              </div>
-            </Link>
+      {/* ═══════════════════════════════════════
+          QUICK-ACCESS BANNERS — editorial grid
+      ═══════════════════════════════════════ */}
+      <section className="relative bg-[#F5F2EC] py-12 md:py-20">
+        {/* Watermark number */}
+        <span
+          className="cid-hero-text pointer-events-none select-none absolute right-4 top-4 text-[11rem] font-black text-[#11B2AA]/6 leading-none hidden md:block"
+          aria-hidden="true"
+        >01</span>
 
-            <Link href="/formacion" aria-label="Ir a Formación" className="group block">
-              <div className="overflow-hidden rounded-2xl shadow-md">
-                <div className="relative overflow-hidden rounded-2xl">
-                  <img
-                    src="/banners/banner%204.webp"
-                    alt="Banner Formación"
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.01] md:group-hover:scale-100"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 hidden bg-black/0 transition-colors duration-300 md:block md:group-hover:bg-black/20"
-                  />
-                </div>
-              </div>
-            </Link>
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="mb-8 md:mb-12 flex items-center gap-4">
+            <span className="cid-rule" />
+            <p className="cid-section-label text-[#023A34]">Explora</p>
+          </div>
 
-            <div className="overflow-hidden rounded-2xl shadow-md">
-              <div className="overflow-hidden rounded-2xl">
+          <div className="grid grid-cols-1 gap-5 md:gap-7">
+            {/* Banner Nosotros */}
+            <Link href="/nosotros" aria-label="Ir a Nosotros" className="cid-banner-link group block">
+              <div className="overflow-hidden rounded-2xl shadow-lg">
                 <img
-                  src="/banners/banner%203.webp"
-                  alt="Banner Convocatorias"
+                  src="/banners/banner 2.webp"
+                  alt="Banner Nosotros"
                   loading="lazy"
                   decoding="async"
                   className="w-full object-cover"
                 />
               </div>
+            </Link>
+
+            {/* Banner Formación */}
+            <Link href="/formacion" aria-label="Ir a Formación" className="cid-banner-link group block">
+              <div className="overflow-hidden rounded-2xl shadow-lg">
+                <img
+                  src="/banners/banner 4.webp"
+                  alt="Banner Formación"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full object-cover"
+                />
+              </div>
+            </Link>
+
+            {/* Banner Convocatorias (no link) */}
+            <div className="overflow-hidden rounded-2xl shadow-lg">
+              <img
+                src="/banners/banner 3.webp"
+                alt="Banner Convocatorias"
+                loading="lazy"
+                decoding="async"
+                className="w-full object-cover"
+              />
             </div>
           </div>
-        </section>
-      </div>
-
-      {/* Carrusel de Cursos */}
-      {showCoursesCarousel && <CoursesCarouselNew />}
-
-      {/* Accesos Rápidos */}
-      <section className="py-16">
-        {/* Nuestras Secciones - estilo destacado (comparación) */}
-        <section className="w-full py-12" style={{ background: '#11B2AA' }}>
-          <div className="container">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-[#2B3990] tracking-tight">NUESTRAS SECCIONES</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Territorio STEM */}
-              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
-                <img src="/Home/1.webp" alt="Territorio STEM" className="w-full h-auto object-contain bg-white" />
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Territorio STEM</h3>
-                  <p className="text-gray-700 text-base mb-2">Conoce el ecosistema STEM de Envigado, sus actores, proyectos y oportunidades para estudiantes y docentes.</p>
-                </div>
-              </div>
-              {/* Premios y reconocimientos */}
-              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
-                <img src="/Home/2.webp" alt="Premios y reconocimientos" className="w-full h-auto object-contain bg-white" />
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Premios y reconocimientos</h3>
-                  <p className="text-gray-700 text-base mb-2">Explora los reconocimientos que reflejan nuestro compromiso con la excelencia.</p>
-                </div>
-              </div>
-              {/* Aliados */}
-              <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
-                <img src="/Home/3.webp" alt="Aliados" className="w-full h-auto object-contain bg-white" />
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-2xl font-bold text-[#2B3990] mb-2">Aliados</h3>
-                  <p className="text-gray-700 text-base mb-2">Descubre a nuestros aliados estratégicos que impulsan la innovación educativa en nuestra comunidad.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        </div>
       </section>
 
-        
-      <section className="relative py-10 md:py-14">
-        <div className="container">
-          <div className="mb-6 text-center md:mb-8">
-            <h2 className="text-4xl font-bold text-[#023A34] md:text-6xl">TOM 2026</h2>
-            <p className="mt-2 text-lg text-gray-700 md:text-2xl">Ideas que se convierten en esperanza</p>
+      {showCoursesCarousel && <CoursesCarouselNew />}
+
+      {/* ═══════════════════════════════════════
+          NUESTRAS SECCIONES — teal diagonal strip
+      ═══════════════════════════════════════ */}
+      <section
+        className="relative py-20 md:py-28 cid-diagonal-strip"
+        style={{ background: 'linear-gradient(135deg, #023A34 0%, #11B2AA 100%)' }}
+      >
+        {/* Watermark */}
+        <span
+          className="cid-hero-text pointer-events-none select-none absolute left-4 top-4 text-[11rem] font-black text-white/5 leading-none hidden md:block"
+          aria-hidden="true"
+        >02</span>
+
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="mb-12 md:mb-16 text-center">
+            <p className="cid-section-label text-[#11B2AA]/70 mb-3" style={{ color: 'rgba(255,255,255,0.55)' }}>Lo que hacemos</p>
+            <h2 className="cid-hero-text text-4xl md:text-6xl font-black text-white tracking-tight">
+              Nuestras Secciones
+            </h2>
           </div>
-          <div className="mx-auto max-w-8xl overflow-hidden rounded-2xl shadow-2xl">
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {[
+              {
+                img: "/Home/1.webp",
+                title: "Territorio STEM",
+                desc: "Conoce el ecosistema STEM de Envigado, sus actores, proyectos y oportunidades para estudiantes y docentes.",
+              },
+              {
+                img: "/Home/2.webp",
+                title: "Premios y reconocimientos",
+                desc: "Explora los reconocimientos que reflejan nuestro compromiso con la excelencia.",
+              },
+              {
+                img: "/Home/3.webp",
+                title: "Aliados",
+                desc: "Descubre a nuestros aliados estratégicos que impulsan la innovación educativa en nuestra comunidad.",
+              },
+            ].map((item) => (
+              <div key={item.title} className="cid-card group bg-white rounded-2xl overflow-hidden flex flex-col shadow-xl">
+                <div className="overflow-hidden">
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-auto object-contain bg-white transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-6 md:p-8 flex-1 flex flex-col gap-3 border-t-4 border-[#11B2AA]">
+                  <h3 className="cid-hero-text text-2xl font-bold text-[#023A34]">{item.title}</h3>
+                  <p className="cid-body text-gray-600 text-base leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════
+          TOM 2026 — dark cinematic section
+      ═══════════════════════════════════════ */}
+      <section className="relative py-16 md:py-24 bg-[#08100F]">
+        {/* Watermark */}
+        <span
+          className="cid-hero-text pointer-events-none select-none absolute right-6 bottom-6 text-[11rem] font-black text-white/[0.03] leading-none hidden md:block"
+          aria-hidden="true"
+        >03</span>
+
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
+            <div>
+              <p className="cid-section-label text-[#11B2AA] mb-3">Video principal</p>
+              <h2 className="cid-hero-text font-black text-white leading-none"
+                style={{ fontSize: 'clamp(2.8rem, 8vw, 7rem)' }}>
+                TOM 2026
+              </h2>
+            </div>
+            <p className="cid-body text-white/50 text-lg md:text-2xl md:text-right max-w-xs">
+              Ideas que se convierten en esperanza
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-2xl shadow-2xl"
+            style={{ boxShadow: '0 0 80px rgba(17,178,170,0.15), 0 32px 64px rgba(0,0,0,0.6)' }}>
             <div className="relative aspect-video w-full bg-black">
               <iframe
                 src="https://www.youtube.com/embed/CceKZW0xxTk?autoplay=1&mute=1&loop=1&playlist=CceKZW0xxTk&playsinline=1&rel=0&modestbranding=1"
@@ -187,30 +312,50 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden py-10 md:py-16">
+      {/* ═══════════════════════════════════════
+          DÍA DEL ÁRBOL — phone mockup centered
+      ═══════════════════════════════════════ */}
+      <section className="relative overflow-hidden py-16 md:py-24 bg-[#F5F2EC]">
+        {/* Decorative background image */}
         <img
           src="/Fondos/Fondo_chernobyl.png"
-          alt="Fondo Chernobyl"
+          alt=""
+          aria-hidden="true"
           loading="lazy"
           decoding="async"
-          className="absolute left-1/2 top-0 h-full w-auto max-w-[92vw] -translate-x-1/2 object-contain md:hidden"
-        />
-        <img
-          src="/Fondos/Fondo_chernobyl.png"
-          alt="Fondo Chernobyl"
-          loading="lazy"
-          decoding="async"
-          className="absolute left-1/2 top-0 hidden h-full w-auto max-w-[92vw] -translate-x-1/2 object-contain md:block"
+          className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none"
         />
 
-        <div className="container relative z-10">
-          <div className="relative flex items-center justify-center py-8 md:py-16 px-4">
-            <div className="relative w-full max-w-[92vw] overflow-hidden rounded-[2.8rem] border-[5px] border-white/85 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.55)] sm:max-w-[360px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[380px] 2xl:max-w-[550px]">
-              <div className="pointer-events-none absolute left-1/2 top-2 z-10 h-1.5 w-16 -translate-x-1/2 rounded-full bg-white/70" />
+        {/* Large watermark text */}
+        <span
+          className="cid-hero-text pointer-events-none select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[14rem] font-black text-[#023A34]/5 leading-none whitespace-nowrap hidden md:block"
+          aria-hidden="true"
+        >CID</span>
+
+        <div className="relative z-10 container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center gap-12 md:gap-20">
+          {/* Text side */}
+          <div className="md:flex-1 text-center md:text-left">
+            <p className="cid-section-label text-[#11B2AA] mb-4">Contenido destacado</p>
+            <h2 className="cid-hero-text text-4xl md:text-5xl font-black text-[#023A34] mb-6 leading-tight">
+              Chernóbil: El desastre nuclear más grande de la historia
+            </h2>
+            <div className="cid-rule mb-6" />
+            <p className="cid-body text-[#023A34]/75 text-base md:text-lg leading-relaxed max-w-md">
+              Chernóbil no fue un fallo de la física, sino un quiebre de la responsabilidad. Nos recordó que la ciencia sin conciencia es un arma de doble filo: una herramienta capaz de iluminar naciones o de apagar el futuro de generaciones enteras.
+            </p>
+          </div>
+
+          {/* Phone mockup */}
+          <div className="relative flex justify-center md:flex-1">
+            <div className="phone-frame relative bg-black"
+              style={{
+                width: 'min(88vw, 330px)',
+              }}>
+              <div className="phone-notch" />
               <div className="aspect-[9/16] w-full">
                 <iframe
                   src={`https://www.youtube.com/embed/${diaArbolVideoId}?autoplay=1&mute=1&loop=1&playlist=${diaArbolVideoId}&playsinline=1&rel=0&modestbranding=1`}
-                  title="Día del Árbol"
+                  title="Chernobyl"
                   loading="lazy"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerPolicy="strict-origin-when-cross-origin"
@@ -223,87 +368,50 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Banner Semana STEM */}
-      <section className="py-8 md:py-12 bg-white">
-        {/* Mobile: banner extendido, Desktop: container */}
-        <div className="block md:hidden w-full">
-          <Link href="/semana-stem-complete" aria-label="Ir a la sección Semana STEM" className="group block cursor-pointer">
-            <div className="overflow-hidden rounded-2xl shadow-md">
+      {/* ═══════════════════════════════════════
+          SEMANA STEM — full-bleed banner
+      ═══════════════════════════════════════ */}
+      <section className="py-8 md:py-14 bg-[#023A34]">
+        <div className="container mx-auto px-4 md:px-8">
+          <p className="cid-section-label text-[#11B2AA] mb-6 text-center">Evento especial</p>
+          <Link
+            href="/semana-stem-complete"
+            aria-label="Ir a la sección Semana STEM"
+            className="cid-banner-link group block"
+          >
+            <div className="overflow-hidden rounded-2xl shadow-2xl"
+              style={{ boxShadow: '0 0 60px rgba(17,178,170,0.2), 0 16px 48px rgba(0,0,0,0.4)' }}>
               <img
                 src="/banners/banner-semana-click.webp"
                 alt="Banner Semana STEM"
                 loading="lazy"
                 fetchPriority="high"
                 decoding="async"
-                className="w-full object-contain h-20 sm:h-28 rounded-2xl"
+                className="w-full object-cover"
               />
-            </div>
-          </Link>
-        </div>
-        <div className="hidden md:block container">
-          <Link href="/semana-stem-complete" aria-label="Ir a la sección Semana STEM" className="group block cursor-pointer">
-            <div className="overflow-hidden rounded-2xl shadow-md">
-              <div className="relative overflow-hidden rounded-2xl">
-                <img
-                  src="/banners/banner-semana-click.webp"
-                  alt="Banner Semana STEM"
-                  loading="lazy"
-                  fetchPriority="high"
-                  decoding="async"
-                  className="h-[220px] w-full object-cover object-center md:h-[270px] rounded-2xl"
-                />
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20"
-                />
-              </div>
             </div>
           </Link>
         </div>
       </section>
 
-      {/* Logos de Ministerios y Entidades */}
-      <section className="py-16 bg-white">
-        <div className="container">
-          <div className="grid grid-cols-4 items-center gap-3 md:gap-6">
+      {/* ═══════════════════════════════════════
+          LOGOS — refined grayscale strip
+      ═══════════════════════════════════════ */}
+      <section className="py-14 md:py-20 bg-[#F5F2EC] border-t border-[#023A34]/10">
+        <div className="container mx-auto px-4 md:px-8">
+          <p className="cid-section-label text-center text-[#023A34]/40 mb-10">Con el apoyo de</p>
+          <div className="cid-logo-strip grid grid-cols-4 items-center justify-items-center gap-4 md:gap-10">
             <a href="https://www.mineducacion.gov.co/portal/" target="_blank" rel="noopener noreferrer">
-              <div className="flex flex-col items-center hover:opacity-80 transition-opacity cursor-pointer">
-                <img 
-                  src={educacionLogo} 
-                  alt="Ministerio de Educación" 
-                  className="h-14 w-auto object-contain sm:h-20 md:h-24"
-                />
-              </div>
+              <img src={educacionLogo} alt="Ministerio de Educación" className="h-12 w-auto object-contain sm:h-16 md:h-20" />
             </a>
-
             <a href="https://minciencias.gov.co/" target="_blank" rel="noopener noreferrer">
-              <div className="flex flex-col items-center hover:opacity-80 transition-opacity cursor-pointer">
-                <img 
-                  src={cienciasLogo} 
-                  alt="Ciencias" 
-                  className="h-14 w-auto object-contain sm:h-20 md:h-24"
-                />
-              </div>
+              <img src={cienciasLogo} alt="Minciencias" className="h-12 w-auto object-contain sm:h-16 md:h-20" />
             </a>
-
             <a href="https://www.mintic.gov.co/portal/inicio/" target="_blank" rel="noopener noreferrer">
-              <div className="flex flex-col items-center hover:opacity-80 transition-opacity cursor-pointer">
-                <img 
-                  src={ticLogo} 
-                  alt="TIC" 
-                  className="h-14 w-auto object-contain sm:h-20 md:h-24"
-                />
-              </div>
+              <img src={ticLogo} alt="MinTIC" className="h-12 w-auto object-contain sm:h-16 md:h-20" />
             </a>
-
             <a href="https://www.envigado.gov.co/" target="_blank" rel="noopener noreferrer">
-              <div className="flex flex-col items-center hover:opacity-80 transition-opacity cursor-pointer">
-                <img 
-                  src={alcaldiaLogo} 
-                  alt="Alcaldía de Envigado" 
-                  className="h-14 w-auto object-contain sm:h-20 md:h-24"
-                />
-              </div>
+              <img src={alcaldiaLogo} alt="Alcaldía de Envigado" className="h-12 w-auto object-contain sm:h-16 md:h-20" />
             </a>
           </div>
         </div>

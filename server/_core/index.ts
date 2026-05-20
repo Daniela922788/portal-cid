@@ -255,7 +255,6 @@ async function startServer() {
     const esAula = payload.espacioSolicitado === "Aula de Experimentación Audiovisual";
 
     const requiredFields: (keyof typeof payload)[] = [
-      "entidadSolicitante",
       "tipoDocumento",
       "numeroDocumento",
       "celular",
@@ -273,7 +272,7 @@ async function startServer() {
     const missing = requiredFields.filter((field) => !payload[field]);
 
     if (missing.length > 0) {
-      res.status(400).json({ message: "Faltan campos obligatorios del formulario." });
+      res.status(400).json({ message: `Faltan campos obligatorios del formulario: ${missing.join(", ")}` });
       return;
     }
 
