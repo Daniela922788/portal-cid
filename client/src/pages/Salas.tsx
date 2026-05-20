@@ -325,30 +325,90 @@ export default function Salas() {
 
 	return (
 		<div className="min-h-screen bg-white">
-			<section className="relative overflow-hidden bg-[linear-gradient(122deg,#182130_0%,#0D4B56_48%,#11B2AA_100%)] text-white">
-				<div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[#FFDE07]/20 blur-3xl" />
-				<div className="pointer-events-none absolute -left-16 bottom-0 h-48 w-48 rounded-full bg-[#EC6910]/20 blur-3xl" />
 
-				<div className="container relative z-10 flex min-h-[460px] flex-col justify-end pb-10 pt-24 md:pt-0">
-					<div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/35 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em]">
-						<Building2 className="h-4 w-4 text-[#FFDE07]" />
+			{/* ═══════════════════════════════════════════════════
+			    BANNER — Rediseño completo
+			    Fondo oscuro con rejilla geométrica + acento amarillo diagonal
+			══════════════════════════════════════════════════════ */}
+			<section className="relative overflow-hidden bg-[#0D1B2A] text-white">
+
+				{/* Rejilla de puntos de fondo */}
+				<div
+					className="pointer-events-none absolute inset-0"
+					style={{
+						backgroundImage:
+							"radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px)",
+						backgroundSize: "32px 32px",
+					}}
+				/>
+
+				{/* Barra diagonal de acento en la parte superior */}
+				<div
+					className="pointer-events-none absolute -top-10 -right-24 h-[420px] w-[520px] rotate-[-18deg] rounded-[48px]"
+					style={{ background: "linear-gradient(135deg, #FFDE07 0%, #EC6910 100%)", opacity: 0.12 }}
+				/>
+
+				{/* Círculo difuso teal en la izquierda */}
+				<div
+					className="pointer-events-none absolute -left-32 top-1/3 h-80 w-80 rounded-full"
+					style={{ background: "radial-gradient(circle, #11B2AA55 0%, transparent 70%)" }}
+				/>
+
+				{/* Línea lateral izquierda de acento */}
+				<div className="pointer-events-none absolute left-0 top-0 h-full w-1"
+					style={{ background: "linear-gradient(to bottom, #FFDE07, #EC6910, transparent)" }}
+				/>
+
+				<div className="container relative z-10 flex min-h-[480px] flex-col justify-center py-20 md:py-28">
+
+					{/* Etiqueta superior */}
+					<div className="mb-6 inline-flex w-fit items-center gap-2.5 rounded-none border-l-2 border-[#FFDE07] pl-3 text-xs font-bold uppercase tracking-[0.22em] text-[#FFDE07]">
+						<Building2 className="h-3.5 w-3.5" />
 						Infraestructura educativa CID
 					</div>
 
-					<h1 className="text-5xl font-extrabold leading-tight lg:text-6xl">Salas para la educación</h1>
-					<p className="mt-3 max-w-3xl text-base leading-relaxed text-white/85 lg:text-lg">
+					{/* Título principal con corte tipográfico */}
+					<h1 className="text-5xl font-black uppercase leading-[0.92] tracking-tight lg:text-7xl">
+						<span className="block text-white">Salas para</span>
+						<span
+							className="block"
+							style={{
+								WebkitTextStroke: "2px #11B2AA",
+								color: "transparent",
+							}}
+						>
+							la educación
+						</span>
+					</h1>
+
+					<p className="mt-6 max-w-2xl text-sm leading-relaxed text-white/70 lg:text-base">
 						Contamos con seis espacios que impulsan formación, creatividad, tecnología y producción de conocimiento.
 						Cada sala está pensada para vivir experiencias de aprendizaje con enfoque innovador.
 					</p>
 
-					<div className="mt-6 flex flex-wrap gap-3 text-sm">
-						<span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/12 px-4 py-2 font-medium backdrop-blur-sm">
-							<Sparkles className="h-4 w-4" />
+					{/* Chips de características */}
+					<div className="mt-8 flex flex-wrap gap-3 text-xs">
+						<span className="inline-flex items-center gap-2 border border-[#FFDE07]/40 bg-[#FFDE07]/10 px-4 py-2 font-semibold uppercase tracking-widest text-[#FFDE07]">
+							<Sparkles className="h-3.5 w-3.5" />
 							Espacios Protagonistas
 						</span>
-						<span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/12 px-4 py-2 font-medium backdrop-blur-sm">
+						<span className="inline-flex items-center gap-2 border border-white/15 bg-white/5 px-4 py-2 font-semibold uppercase tracking-widest text-white/80">
 							Formación, Creatividad y Producción
 						</span>
+					</div>
+
+					{/* Indicadores numéricos */}
+					<div className="mt-10 flex gap-10">
+						{[
+							{ numero: "6", etiqueta: "Espacios" },
+							{ numero: "+100", etiqueta: "Puestos" },
+							{ numero: "5", etiqueta: "Días hábiles" },
+						].map(({ numero, etiqueta }) => (
+							<div key={etiqueta} className="flex flex-col">
+								<span className="text-3xl font-black text-white lg:text-4xl">{numero}</span>
+								<span className="mt-0.5 text-xs font-medium uppercase tracking-widest text-white/45">{etiqueta}</span>
+							</div>
+						))}
 					</div>
 				</div>
 			</section>
@@ -356,27 +416,85 @@ export default function Salas() {
 			<div className="container py-8">
 				<Breadcrumbs items={[{ label: "Salas" }]} />
 
-				<section className="relative -mx-4 bg-[#023A34] py-10 sm:-mx-6 md:-mx-8 md:py-14 lg:-mx-16 xl:-mx-32 2xl:-mx-64">
-					<div className="container">
-						<h2 className="mb-8 text-center text-4xl font-bold text-white md:mb-10 md:text-6xl">
-							Nuestros espacios en acción
-						</h2>
-						<div className="mx-auto max-w-8xl overflow-hidden rounded-2xl shadow-2xl">
-							<div className="relative aspect-video w-full bg-black">
-								<iframe
-									src="https://www.youtube.com/embed/R6ffTBIieCw?autoplay=1&mute=1&loop=1&playlist=R6ffTBIieCw&playsinline=1"
-									title="Somos el CID - Video"
-									loading="lazy"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									referrerPolicy="strict-origin-when-cross-origin"
-									allowFullScreen
-									className="absolute inset-0 h-full w-full"
-								/>
+				{/* ═══════════════════════════════════════════════════
+				    SECCIÓN DE VIDEO — Rediseño completo
+				    Diseño editorial con título lateral + video envuelto
+				══════════════════════════════════════════════════════ */}
+				<section className="relative -mx-4 overflow-hidden sm:-mx-6 md:-mx-8 lg:-mx-16 xl:-mx-32 2xl:-mx-64">
+
+					{/* Fondo dividido: blanco arriba / teal oscuro abajo */}
+					<div className="absolute inset-0 flex flex-col">
+						<div className="h-1/3 bg-white" />
+						<div className="flex-1" style={{ background: "linear-gradient(170deg, #023A34 0%, #0D1B2A 100%)" }} />
+					</div>
+
+					{/* Textura de puntos sobre el fondo oscuro */}
+					<div
+						className="pointer-events-none absolute inset-0 top-1/3"
+						style={{
+							backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)",
+							backgroundSize: "28px 28px",
+						}}
+					/>
+
+					<div className="relative z-10 pb-12 pt-8">
+
+						{/* Encabezado editorial centrado */}
+						<div className="container mb-4 flex items-end gap-6">
+							<span
+								className="hidden select-none font-black text-[120px] leading-none text-white/5 lg:block"
+								aria-hidden="true"
+							>
+								01
+							</span>
+							<div className="flex-1 border-b border-white/10 pb-3">
+								<p className="mb-1 text-xs font-bold uppercase tracking-[0.25em] text-[#11B2AA]">
+									Video institucional
+								</p>
+								<h2 className="text-3xl font-black uppercase leading-tight text-white md:text-5xl">
+									Nuestros espacios<br className="hidden md:block" /> en acción
+								</h2>
 							</div>
 						</div>
-					</div>
-				</section>
 
+						{/* Contenedor del video — ancho completo con pequeño padding */}
+						<div className="relative px-4 sm:px-8 md:px-16 lg:px-24">
+
+							{/* Marco decorativo superior-izquierda */}
+							<div className="absolute left-1 top-0 h-14 w-14 border-l-2 border-t-2 border-[#FFDE07] z-10" />
+							{/* Marco decorativo inferior-derecha */}
+							<div className="absolute bottom-0 right-1 h-14 w-14 border-b-2 border-r-2 border-[#EC6910] z-10" />
+
+							{/* Sombra de profundidad */}
+							<div
+								className="absolute inset-0 translate-x-2 translate-y-2"
+								style={{ background: "linear-gradient(135deg, #FFDE07 0%, #11B2AA 100%)", opacity: 0.15 }}
+							/>
+
+							{/* Video */}
+							<div className="relative overflow-hidden rounded-lg shadow-2xl ring-1 ring-white/10">
+								<div className="relative aspect-video w-full bg-black">
+									<iframe
+										src="https://www.youtube.com/embed/9Rh6VdZv0B0?autoplay=1&mute=1&loop=1&playlist=9Rh6VdZv0B0&playsinline=1"
+										title="Somos el CID - Video"
+										loading="lazy"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+										referrerPolicy="strict-origin-when-cross-origin"
+										allowFullScreen
+										className="absolute inset-0 h-full w-full"
+									/>
+								</div>
+							</div>
+						</div>
+
+					{/* Frase de pie del video */}
+					<p className="mt-8 text-center text-xs font-medium uppercase tracking-[0.2em] text-white/35">
+						Centro de Innovación y Desarrollo · CID
+					</p>
+				</div>
+			</section>
+
+				{/* Banner de introducción a las salas — igual que el original */}
 				<section className="mt-6 rounded-3xl border border-[#0D4B56]/15 bg-[linear-gradient(120deg,rgba(13,75,86,0.06)_0%,rgba(17,178,170,0.08)_45%,rgba(255,222,7,0.12)_100%)] p-6 md:p-8">
 					<h2 className="text-2xl font-bold text-[#182130] md:text-3xl">Nuestros espacios de aprendizaje</h2>
 					<p className="mt-2 max-w-4xl text-[#0D4B56]">
@@ -385,6 +503,7 @@ export default function Salas() {
 					</p>
 				</section>
 
+				{/* ═══ CUADROS DE SALAS — sin cambios ═══ */}
 				<section className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
 					{salas.map((sala) => {
 						const Icono = sala.icono;
@@ -450,6 +569,7 @@ export default function Salas() {
 				</section>
 			</div>
 
+			{/* ═══ MODAL GALERÍA — sin cambios ═══ */}
 			{salaSeleccionada && slideActual && (
 				<div
 					className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/70 px-4 py-6 sm:items-center"
@@ -549,6 +669,7 @@ export default function Salas() {
 				</div>
 			)}
 
+			{/* ═══ MODAL RESERVA — sin cambios ═══ */}
 			{reservaAbierta && salaSeleccionada && (
 				<div
 					className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 px-4 py-6"
@@ -582,7 +703,7 @@ export default function Salas() {
 							<h4 className="text-base font-bold text-[#182130]">Información importante</h4>
 							<ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-700">
 								<li>
-									El uso de los espacios debe ser exclusivamente para actividades relacionadas con la educación, 
+									El uso de los espacios debe ser exclusivamente para actividades relacionadas con la educación,
 									formación, innovación o producción de conocimiento.
 								</li>
 								<li>
@@ -602,11 +723,11 @@ export default function Salas() {
 									(parqueadero, refrigerio, estación de café, almuerzo, adaptadores, extensiones, usb, cargadores, etc.) u operación de eventos.
 								</li>
 								<li>
-									Los espacios cuentan con cámaras de seguridad las cuales son monitoreadas por el personal del CID, sin embargo, 
+									Los espacios cuentan con cámaras de seguridad las cuales son monitoreadas por el personal del CID, sin embargo,
 									el CID no se hace responsable por objetos personales o equipos que sean llevados a las salas.
 								</li>
 								<li>
-									Tenga en cuenta que no es permitido el ingreso de alimentos o bebidas a las salas, 
+									Tenga en cuenta que no es permitido el ingreso de alimentos o bebidas a las salas,
 									ni el consumo de cigarrillos o sustancias psicoactivas al interior de las instalaciones del CID.
 								</li>
 								<li>
@@ -655,9 +776,7 @@ export default function Salas() {
 										defaultValue=""
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									>
-										<option value="" disabled>
-											Seleccione una opción
-										</option>
+										<option value="" disabled>Seleccione una opción</option>
 										<option value="nit">Nit</option>
 										<option value="cc">Cédula de ciudadanía</option>
 										<option value="ce">Cédula de extranjería</option>
@@ -719,9 +838,7 @@ export default function Salas() {
 												defaultValue=""
 												className="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 											>
-												<option value="" disabled>
-													Seleccione una opción
-												</option>
+												<option value="" disabled>Seleccione una opción</option>
 												<option value="Estudiante I.E. Pública">Estudiante I.E. Pública</option>
 												<option value="Estudiante otro">Estudiante otro</option>
 												<option value="Docente I.E. Pública">Docente I.E. Pública</option>
@@ -776,9 +893,7 @@ export default function Salas() {
 											defaultValue=""
 											className="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 										>
-											<option value="" disabled>
-												Seleccione una opción
-											</option>
+											<option value="" disabled>Seleccione una opción</option>
 											<option value="conferencias">Conferencias, charlas o conversatorios</option>
 											<option value="reuniones">Reuniones de equipo</option>
 											<option value="congreso">Congreso, seminario, foro o simposio</option>
@@ -884,7 +999,7 @@ export default function Salas() {
 										/>
 										<span className="text-sm leading-relaxed text-slate-700">
 											<span className="font-semibold text-[#182130]">Compromiso de Autoproducción <span className="text-red-600">*</span></span><br />
-											Comprendo que el centro tiene un enfoque formativo (“aprender haciendo”). Recibiré asesoría técnica, pero la operación de los equipos y la ejecución del proyecto corren por mi cuenta.
+											Comprendo que el centro tiene un enfoque formativo ("aprender haciendo"). Recibiré asesoría técnica, pero la operación de los equipos y la ejecución del proyecto corren por mi cuenta.
 										</span>
 									</label>
 									<label className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 ${
