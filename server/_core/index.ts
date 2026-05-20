@@ -238,6 +238,9 @@ async function startServer() {
       correoElectronico: String(body.correoElectronico ?? "").trim(),
       nombreEvento: String(body.nombreEvento ?? "").trim(),
       tipoEvento: String(body.tipoEvento ?? "").trim(),
+      vinculoInstitucional: String(body.vinculoInstitucional ?? "").trim(),
+      institucionEducativa: String(body.institucionEducativa ?? "").trim(),
+      tipoProyecto: String(body.tipoProyecto ?? "").trim(),
       objetivoEvento: String(body.objetivoEvento ?? "").trim(),
       descripcionEvento: String(body.descripcionEvento ?? "").trim(),
       fechaEvento: String(body.fechaEvento ?? "").trim(),
@@ -248,14 +251,15 @@ async function startServer() {
       espacioSolicitado: String(body.espacioSolicitado ?? "").trim(),
     };
 
-    const requiredFields = [
+    const esAula = payload.espacioSolicitado === "Aula de Experimentación Audiovisual";
+
+    const requiredFields: (keyof typeof payload)[] = [
       "entidadSolicitante",
       "tipoDocumento",
       "numeroDocumento",
       "celular",
       "correoElectronico",
-      "nombreEvento",
-      "tipoEvento",
+      ...(esAula ? [] : ["nombreEvento", "tipoEvento"] as (keyof typeof payload)[]),
       "objetivoEvento",
       "descripcionEvento",
       "fechaEvento",
@@ -263,7 +267,7 @@ async function startServer() {
       "horaFin",
       "numeroAsistentes",
       "espacioSolicitado",
-    ] as const;
+    ];
 
     const missing = requiredFields.filter((field) => !payload[field]);
 
@@ -331,8 +335,14 @@ async function startServer() {
       ["Nombres y apellidos del solicitante", payload.solicitanteNombre],
       ["Número de celular", payload.celular],
       ["Correo electrónico", payload.correoElectronico],
-      ["Nombre del evento", payload.nombreEvento],
-      ["Tipo de evento", payload.tipoEvento],
+      ...(esAula ? [
+        ["Vínculo Institucional", payload.vinculoInstitucional],
+        ["Institución Educativa", payload.institucionEducativa || "(No indicada)"],
+        ["Tipo de Proyecto", payload.tipoProyecto],
+      ] : [
+        ["Nombre del evento", payload.nombreEvento],
+        ["Tipo de evento", payload.tipoEvento],
+      ]),
       ["Objetivo del evento", payload.objetivoEvento],
       ["Descripción detallada del evento a realizar", payload.descripcionEvento],
       ["Fecha evento", payload.fechaEvento],

@@ -232,6 +232,21 @@ export default function Salas() {
 			}
 		}
 
+		if (salaSeleccionada.nombre === "Aula de Experimentación Audiovisual") {
+			const fechaVal = (event.currentTarget.elements.namedItem("fechaEvento") as HTMLInputElement)?.value;
+			if (fechaVal) {
+				const hoy = new Date();
+				hoy.setHours(0, 0, 0, 0);
+				const manana = new Date(hoy);
+				manana.setDate(manana.getDate() + 1);
+				const fechaSeleccionada = new Date(fechaVal + "T00:00:00");
+				if (fechaSeleccionada < manana) {
+					setReservaValidationError("La fecha del evento debe ser a partir del día siguiente al actual.");
+					return;
+				}
+			}
+		}
+
 		if (!event.currentTarget.checkValidity()) {
 			setReservaValidationError("Faltan campos obligatorios. Revisa los campos resaltados en rojo.");
 			event.currentTarget
@@ -245,6 +260,7 @@ export default function Salas() {
 		const formData = new FormData(event.currentTarget);
 		const getValue = (key: string) => String(formData.get(key) ?? "").trim();
 
+		const esAula = salaSeleccionada.nombre === "Aula de Experimentación Audiovisual";
 		const payload = {
 			entidadSolicitante: getValue("entidadSolicitante"),
 			tipoDocumento: getValue("tipoDocumento"),
@@ -252,13 +268,13 @@ export default function Salas() {
 			solicitanteNombre: getValue("solicitanteNombre"),
 			celular: getValue("celular"),
 			correoElectronico: getValue("correoElectronico"),
-			nombreEvento: getValue("nombreEvento"),
-			...(salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && {
+			nombreEvento: esAula ? tipoProyecto.join(", ") : getValue("nombreEvento"),
+			...(esAula && {
 				vinculoInstitucional: getValue("vinculoInstitucional"),
 				institucionEducativa: getValue("institucionEducativa"),
 				tipoProyecto: tipoProyecto.join(", "),
 			}),
-			tipoEvento: getValue("tipoEvento"),
+			tipoEvento: esAula ? "Aula de Experimentación Audiovisual" : getValue("tipoEvento"),
 			objetivoEvento: getValue("objetivoEvento"),
 			descripcionEvento: getValue("objetivoEvento"),
 			fechaEvento: getValue("fechaEvento"),
