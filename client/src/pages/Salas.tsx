@@ -191,14 +191,6 @@ export default function Salas() {
 
 		if (!salaSeleccionada) return;
 
-		if (!event.currentTarget.checkValidity()) {
-			setReservaValidationError("Faltan campos obligatorios. Revisa los campos resaltados en rojo.");
-			event.currentTarget
-				.querySelector<HTMLElement>("input:invalid, select:invalid, textarea:invalid")
-				?.focus();
-			return;
-		}
-
 		if (salaSeleccionada.nombre === "Aula de Experimentación Audiovisual") {
 			const horaInicioVal = (event.currentTarget.elements.namedItem("horaInicio") as HTMLInputElement)?.value;
 			const horaFinVal = (event.currentTarget.elements.namedItem("horaFin") as HTMLInputElement)?.value;
@@ -228,10 +220,24 @@ export default function Salas() {
 				}
 			}
 
+			const asistentesVal = Number((event.currentTarget.elements.namedItem("numeroAsistentes") as HTMLInputElement)?.value);
+			if (asistentesVal > 15) {
+				setReservaValidationError("El número máximo de asistentes para el Aula de Experimentación Audiovisual es de 15 personas.");
+				return;
+			}
+
 			if (tipoProyecto.length === 0) {
 				setReservaValidationError("Debes seleccionar al menos un Tipo de Proyecto.");
 				return;
 			}
+		}
+
+		if (!event.currentTarget.checkValidity()) {
+			setReservaValidationError("Faltan campos obligatorios. Revisa los campos resaltados en rojo.");
+			event.currentTarget
+				.querySelector<HTMLElement>("input:invalid, select:invalid, textarea:invalid")
+				?.focus();
+			return;
 		}
 
 		setReservaValidationError("");
@@ -802,6 +808,9 @@ export default function Salas() {
 										required
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
+									{salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && (
+										<span className="mt-1 text-xs text-slate-500">Máximo 15 asistentes</span>
+									)}
 								</label>
 							</div>
 
