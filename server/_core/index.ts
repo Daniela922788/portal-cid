@@ -21,6 +21,7 @@ type SearchTarget = {
 let cachedSearchTargets: SearchTarget[] | null = null;
 
 const RESERVAS_DESTINO = "daniela.sernag@envigado.edu.co";
+const RESERVAS_DESTINO_AULA = "jorge.guzman@envigado.edu.co";
 const RESERVAS_DIRECCION_DEFAULT =
   "Biblioteca y Parque Cultural Debora Arango - Centro de Innovacion y Desarrollo (CID), Envigado.";
 const SALAS_CAPACIDAD_MAXIMA: Record<string, number> = {
@@ -382,7 +383,7 @@ async function startServer() {
     try {
       await transporter.sendMail({
         from: fromAddress,
-        to: RESERVAS_DESTINO,
+        to: esAula ? RESERVAS_DESTINO_AULA : RESERVAS_DESTINO,
         subject: `Nueva solicitud de reserva - ${payload.espacioSolicitado}`,
         replyTo: payload.correoElectronico,
         text,

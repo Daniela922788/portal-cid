@@ -30,29 +30,34 @@ const canales = [
 
 const preguntasFrecuentes = [
   {
-    pregunta: "¿Cómo puedo radicar una solicitud en el SAC?",
+    pregunta: "¿Con cuánta frecuencia ofertan cursos nuevos?",
     respuesta:
-      "Ingresa al botón 'Ingresar a SAC', inicia sesión y selecciona el tipo de solicitud. Completa los datos solicitados y guarda el número de radicado para seguimiento.",
+      "Mensualmente se publica una nueva oferta de cursos y procesos de formación para la comunidad.",
   },
   {
-    pregunta: "¿Cuánto tarda la respuesta a una solicitud?",
+    pregunta: "¿Tienen oferta para vacaciones?",
     respuesta:
-      "El tiempo depende del tipo de trámite. Generalmente recibirás una respuesta dentro de los tiempos establecidos por la normativa de atención al ciudadano.",
+      "Sí. Durante las temporadas de vacaciones contamos con cursos, talleres y actividades especiales.",
   },
   {
-    pregunta: "¿Puedo hacer seguimiento a mi caso?",
+    pregunta: "¿Para qué tipo de público tienen oferta de formación?",
     respuesta:
-      "Sí. Con el número de radicado puedes revisar el estado de tu solicitud directamente en la plataforma SAC.",
+      "Nuestra oferta de formación está dirigida a todo tipo de público, incluyendo niños, adolescentes, adultos y adultos mayores.",
   },
   {
-    pregunta: "¿Qué información debo tener antes de contactarlos?",
+    pregunta: "¿Los cursos tienen algún costo?",
     respuesta:
-      "Te recomendamos tener documento de identidad, datos de contacto y una descripción clara de la solicitud. Si aplica, adjunta soportes en formato digital.",
+      "No. Todos nuestros cursos y procesos de formación son completamente gratuitos.",
   },
   {
-    pregunta: "¿Atienden de forma presencial?",
+    pregunta: "¿Cómo puedo enterarme de nuevas convocatorias?",
     respuesta:
-      "Sí. También puedes visitarnos en la Biblioteca Pública y Parque Cultural Débora Arango, Envigado, para recibir orientación presencial.",
+      "Puedes conocer nuestras nuevas convocatorias en la sección de Formación de nuestra página web o comunicándote a través de nuestro número de WhatsApp.",
+  },
+  {
+    pregunta: "¿Los cursos se ofrecen los fines de semana?",
+    respuesta:
+      "No. Actualmente los cursos se realizan únicamente en días hábiles de la semana.",
   },
 ];
 
