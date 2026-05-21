@@ -227,7 +227,7 @@ export default function Header() {
 
   return (
     <header className={headerClassName}>
-      <div className="container pr-4 sm:pr-6 md:pr-8 lg:pr-4">
+      <div className="w-full pl-4 pr-1 sm:pl-6 sm:pr-2 md:pl-8 md:pr-4 lg:px-8 xl:px-10 2xl:px-12">
         {/*
           Grid de 3 columnas: logo (auto) | nav (1fr) | acciones (auto)
 
@@ -237,7 +237,7 @@ export default function Header() {
             xl 1280px    : h-[4.5rem]     — MacBook 14-16" / pantallas medianas
             2xl 1536px   : h-20  (80px)   — monitores 24-27"
         */}
-        <div className="mx-auto grid w-full max-w-[1400px] grid-cols-[auto_1fr_auto] items-center gap-x-3 h-16 lg:h-20 lg:gap-x-5 xl:h-24 xl:gap-x-7 2xl:h-28 2xl:gap-x-9">
+        <div className="grid w-full max-w-[1400px] grid-cols-[auto_1fr_auto] items-center gap-x-3 h-16 lg:mx-auto lg:h-20 lg:gap-x-5 xl:h-24 xl:gap-x-7 2xl:h-28 2xl:gap-x-9">
 
           {/* ── Col 1: Logo ── */}
           {/*
