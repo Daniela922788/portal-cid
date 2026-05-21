@@ -86,6 +86,20 @@ function AutoCarousel({
   containerClassName?: string;
 }) {
   const [current, setCurrent] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [slideWidth, setSlideWidth] = useState(0);
+
+  // Medir el ancho real del contenedor para calcular el desplazamiento exacto
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => {
+      setSlideWidth(el.offsetWidth);
+    });
+    observer.observe(el);
+    setSlideWidth(el.offsetWidth);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -98,13 +112,16 @@ function AutoCarousel({
   const next = () => setCurrent((c) => (c + 1) % images.length);
 
   return (
-    <div className={`relative overflow-hidden ${containerClassName ?? "rounded-2xl"}`}>
+    <div ref={containerRef} className={`relative overflow-hidden ${containerClassName ?? "rounded-2xl"}`}>
       <div
         className="flex transition-transform duration-500 ease-in-out"
-        style={{ transform: `translateX(-${current * 100}%)` }}
+        style={{
+          transform: `translateX(-${current * slideWidth}px)`,
+          width: slideWidth ? `${images.length * slideWidth}px` : "100%",
+        }}
       >
         {images.map((src, i) => (
-          <div key={src} className="min-w-full shrink-0">
+          <div key={src} style={{ width: slideWidth || undefined, minWidth: slideWidth || "100%" }} className="shrink-0">
             <img
               src={src}
               alt={`${altPrefix} ${i + 1}`}

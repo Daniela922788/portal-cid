@@ -1358,12 +1358,12 @@ export default function Formacion() {
             No hay cursos para mostrar en esta sección con los filtros actuales.
           </div>
         ) : (
-          <div className="relative px-9">
+          <div className="relative px-4 sm:px-5">
             <button
               type="button"
               onClick={() => scrollByCard(-1)}
               disabled={carouselIndex <= 0}
-              className="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40"
+              className="absolute -left-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40 sm:-left-4 md:-left-5"
               aria-label={`Retroceder en ${title}`}
             >
               <ChevronLeft className="h-5 w-5" />
@@ -1373,7 +1373,7 @@ export default function Formacion() {
               type="button"
               onClick={() => scrollByCard(1)}
               disabled={carouselIndex >= pageCount - 1}
-              className="absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40"
+              className="absolute -right-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-[#023A34] bg-[#0D4B56] p-2 text-[#FFDE07] shadow-md hover:bg-[#023A34] disabled:cursor-not-allowed disabled:opacity-40 sm:-right-4 md:-right-5"
               aria-label={`Avanzar en ${title}`}
             >
               <ChevronRight className="h-5 w-5" />
