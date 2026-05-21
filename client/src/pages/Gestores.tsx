@@ -571,7 +571,7 @@ export default function Gestores() {
     <div className="min-h-screen bg-slate-50">
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section className="relative w-full overflow-hidden md:h-screen">
+      <section className="relative w-full overflow-hidden h-[55vw] min-h-[240px] max-h-[380px] md:h-screen md:max-h-none md:min-h-0">
         <picture>
           <source srcSet="/banners/Banner%20gestores.webp" type="image/webp" />
           <img
@@ -580,40 +580,44 @@ export default function Gestores() {
             loading="eager"
             fetchPriority="high"
             decoding="sync"
-            className="h-auto w-full object-contain md:h-full md:object-cover md:object-center"
+            className="h-full w-full object-cover object-center"
           />
         </picture>
         <div className="absolute inset-0 bg-gradient-to-t from-[#0D1F2D]/80 via-[#0D1F2D]/40 to-transparent" />
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-5 px-4 text-center md:justify-center md:pb-0">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#11B2AA]/50 bg-[#11B2AA]/15 px-4 py-1.5 text-sm font-semibold text-[#11B2AA] backdrop-blur-sm">
+            {/* Badge: desktop only */}
+            <span className="hidden md:mb-4 md:inline-flex items-center gap-2 rounded-full border border-[#11B2AA]/50 bg-[#11B2AA]/15 px-4 py-1.5 text-sm font-semibold text-[#11B2AA] backdrop-blur-sm">
               <Sparkles className="h-3.5 w-3.5" /> Innovación Educativa · Envigado
             </span>
-            <h1 className="mt-3 text-4xl font-black leading-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+
+            <h1 className="text-2xl font-black leading-tight text-white md:mt-3 md:text-6xl lg:text-7xl">
               Gestores de<br />
               <span className="text-[#11B2AA]">Innovación</span>
             </h1>
-            <p className="mt-4 max-w-xl text-base text-white/75 md:text-lg">
+
+            {/* Subtitle: desktop only */}
+            <p className="hidden md:block mt-4 max-w-xl text-lg text-white/75">
               Profesionales que lideran la transformación educativa a través del enfoque STEM+ en Envigado.
             </p>
           </motion.div>
 
-          {/* Stats bar */}
+          {/* Stats bar: desktop only */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-10 flex flex-wrap justify-center gap-3"
+            className="hidden md:flex mt-10 flex-wrap justify-center gap-3"
           >
             <StatCard number="16" label="Gestores activos" accent="text-[#11B2AA]" />
             <StatCard number="14" label="Instituciones educativas" accent="text-[#FFDE07]" />
           </motion.div>
         </div>
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-white/40">
+        <div className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-white/40">
           <ChevronLeft className="h-6 w-6 rotate-[-90deg]" />
         </div>
       </section>
@@ -920,7 +924,20 @@ export default function Gestores() {
             </div>
           </motion.div>
 
-          <div className="overflow-hidden relative">
+          <div
+            className="overflow-hidden relative"
+            onTouchStart={(e) => {
+              (e.currentTarget as HTMLDivElement).dataset.touchStartX = String(e.touches[0].clientX);
+            }}
+            onTouchEnd={(e) => {
+              const startX = Number((e.currentTarget as HTMLDivElement).dataset.touchStartX ?? 0);
+              const diff = startX - e.changedTouches[0].clientX;
+              if (Math.abs(diff) > 40) {
+                if (diff > 0) setGestoresCarouselIndex((p) => Math.min(gestoresMaxStart, p + 1));
+                else setGestoresCarouselIndex((p) => Math.max(0, p - 1));
+              }
+            }}
+          >
             <button
               type="button"
               onClick={() => setGestoresCarouselIndex((p) => Math.max(0, p - 1))}

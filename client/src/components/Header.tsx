@@ -227,7 +227,7 @@ export default function Header() {
 
   return (
     <header className={headerClassName}>
-      <div className="container">
+      <div className="container pr-4 sm:pr-6 md:pr-8 lg:pr-4">
         {/*
           Grid de 3 columnas: logo (auto) | nav (1fr) | acciones (auto)
 
@@ -454,7 +454,7 @@ export default function Header() {
           </nav>
 
           {/* ── Col 3: Acciones (lupa + hamburguesa) ── */}
-          <div className="flex shrink-0 items-center gap-1">
+          <div className="flex shrink-0 items-center gap-1 -mr-2 lg:mr-0">
 
             {/* Desktop: form de búsqueda expandido O botón lupa */}
             {searchOpen ? (

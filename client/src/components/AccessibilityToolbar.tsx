@@ -61,7 +61,7 @@ export default function AccessibilityToolbar() {
 
   return (
     <aside
-      className="fixed right-3 top-1/2 z-[70] -translate-y-1/2 rounded-2xl bg-[#0b4f8a] p-2 shadow-xl"
+      className="fixed right-3 top-[80%] sm:top-1/2 z-[70] -translate-y-1/2 rounded-2xl bg-[#0b4f8a] p-2 shadow-xl"
       aria-label="Controles de accesibilidad"
     >
       <div className="flex flex-col items-center gap-2">
@@ -70,7 +70,7 @@ export default function AccessibilityToolbar() {
           onClick={toggleContrast}
           title="Cambiar contraste"
           aria-label="Cambiar contraste"
-          className={`h-7 w-7 sm:h-10 sm:w-10 rounded-md text-xs sm:text-base font-semibold transition hover:scale-105 ${
+          className={`h-6 w-6 sm:h-10 sm:w-10 rounded-md text-xs sm:text-base font-semibold transition hover:scale-105 ${
             highContrast
               ? "bg-[#0b4f8a] text-white ring-2 ring-white"
               : "bg-white text-[#0b4f8a] hover:bg-slate-100"
@@ -84,7 +84,7 @@ export default function AccessibilityToolbar() {
           onClick={() => updateScale(FONT_SCALE_STEP)}
           title="Aumentar tamano de letra"
           aria-label="Aumentar tamano de letra"
-          className="h-7 w-7 sm:h-10 sm:w-10 rounded-md bg-white text-sm sm:text-lg font-bold text-[#0b4f8a] transition hover:scale-105 hover:bg-slate-100"
+          className="h-6 w-6 sm:h-10 sm:w-10 rounded-md bg-white text-sm sm:text-lg font-bold text-[#0b4f8a] transition hover:scale-105 hover:bg-slate-100"
         >
           A+
         </button>
@@ -94,7 +94,7 @@ export default function AccessibilityToolbar() {
           onClick={() => updateScale(-FONT_SCALE_STEP)}
           title="Reducir tamano de letra"
           aria-label="Reducir tamano de letra"
-          className="h-7 w-7 sm:h-10 sm:w-10 rounded-md bg-white text-sm sm:text-lg font-bold text-[#0b4f8a] transition hover:scale-105 hover:bg-slate-100"
+          className="h-6 w-6 sm:h-10 sm:w-10 rounded-md bg-white text-sm sm:text-lg font-bold text-[#0b4f8a] transition hover:scale-105 hover:bg-slate-100"
         >
           A-
         </button>
@@ -105,7 +105,7 @@ export default function AccessibilityToolbar() {
           rel="noopener noreferrer"
           title="Ir al Centro de relevo"
           aria-label="Ir al Centro de relevo"
-          className="flex h-7 w-7 sm:h-10 sm:w-10 items-center justify-center rounded-md bg-white text-xs font-semibold text-[#0b4f8a] transition hover:scale-105 hover:bg-slate-100"
+          className="flex h-6 w-6 sm:h-10 sm:w-10 items-center justify-center rounded-md bg-white text-xs font-semibold text-[#0b4f8a] transition hover:scale-105 hover:bg-slate-100"
         >
           CR
         </a>
