@@ -11,6 +11,7 @@ import CIDChatWidget from "./components/CIDChatWidget";
 import Footer from "./components/Footer";
 import ContactBanner from "./components/ContactBanner";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import ComingSoon from "./pages/ComingSoon";
 
 const IS_PREVIEW = new URLSearchParams(window.location.search).has("preview");
 
@@ -45,7 +46,6 @@ const Matematicas = lazy(() => import("./pages/juegos/Matematicas"));
 const FabricaInventos = lazy(() => import("./pages/juegos/FabricaInventos"));
 const EnvigadoCurioso = lazy(() => import("./pages/juegos/EnvigadoCurioso"));
 const Videos = lazy(() => import("./pages/Videos"));
-const TableroBI = lazy(() => import("./pages/TableroBI"));
 
 const ENABLE_CID_KIDS = import.meta.env.VITE_ENABLE_CID_KIDS === 'true';
 const ENABLE_PROYECTOS = import.meta.env.VITE_ENABLE_PROYECTOS === 'true';
@@ -88,7 +88,6 @@ function Router() {
             <Route path="/juegos/matematicas" component={Matematicas} />
             <Route path="/juegos/fabrica-inventos" component={FabricaInventos} />
             <Route path="/juegos/envigado-curioso" component={EnvigadoCurioso} />
-            <Route path="/tablero" component={TableroBI} />
             <Route path="/videos" component={Videos} />
             <Route path="/404" component={NotFound} />
             <Route component={NotFound} />
