@@ -16,6 +16,9 @@ type NoticiaLocal = {
   tipo: "propia" | "mencion";
   imagenes: string[];
   autor?: string;
+  video?: string;
+  videoFinal?: string;
+  instagramReels?: string[];
 };
 
 type NoticiaUI = {
@@ -27,9 +30,102 @@ type NoticiaUI = {
   imagenes: string[];
   autor?: string;
   contenido?: string[];
+  video?: string;
+  videoFinal?: string;
+  instagramReels?: string[];
 };
 
 const noticiasLocales: NoticiaLocal[] = [
+  {
+    id: "tlaxcala-envigado-jovenes-innovacion",
+    titulo: "Desde Tlaxcala hasta Envigado: jóvenes que inspiran con innovación y educación",
+    fecha: "2026-05-25",
+    resumen:
+      "Jóvenes embajadores de México llegaron a Envigado para compartir conocimiento, en un encuentro que conectó a Tlaxcala con Envigado a través de la innovación, la creatividad y el aprendizaje.",
+    contenido: [
+      "El talento no tiene fronteras. México y Colombia se conectaron a través de la creatividad, el aprendizaje y la innovación en un encuentro que unió a Tlaxcala con Envigado.",
+      "Jóvenes embajadores de México llegaron hasta Envigado para compartir conocimiento, en una experiencia que demuestra cómo, cuando la educación cruza países, nacen vivencias que transforman.",
+    ],
+    tipo: "propia",
+    imagenes: [
+      "/Noticias/Mexico/4S8A3179.jpg",
+      "/Noticias/Mexico/4S8A3197.jpg",
+      "/Noticias/Mexico/4S8A3287.jpg",
+      "/Noticias/Mexico/4S8A3344.jpg",
+      "/Noticias/Mexico/4S8A3377.jpg",
+    ],
+    instagramReels: ["DYxrqXIRxF7"],
+    autor: "Secretaría de Educación de Envigado",
+  },
+  {
+    id: "robojam-2026",
+    titulo: "El talento, la creatividad y el trabajo en equipo brillaron en RoboJam 2026",
+    fecha: "2026-05-25",
+    resumen:
+      "RoboJam 2026 reunió a 21 equipos y 56 estudiantes de las instituciones educativas de Envigado. Seis delegaciones clasificaron a las finales y el equipo Los Reales, de la I. E. San Vicente Alto de las Flores, se consagró subcampeón en la categoría Bristle Race.",
+    contenido: [
+      "RoboJam 2026 cerró su primera ronda con una destacada participación: 21 equipos y 56 estudiantes de las diferentes instituciones educativas de Envigado se midieron en la fase inicial de la competencia.",
+      "La Secretaría de Educación agradeció el compromiso de los 15 equipos (39 estudiantes) que completaron su participación en esta primera ronda, un esfuerzo que constituye la base de todo el proceso de innovación.",
+      "Seis delegaciones, integradas por 17 estudiantes, clasificaron a la fase de finales: Comercial de Envigado, Darío de Bedout, Leticia Arango de Avendaño, Manuel Uribe Ángel, Normal Superior de Envigado y San Vicente Alto de las Flores.",
+      "En las rondas decisivas, los equipos de Envigado demostraron que la pasión por la robótica y la innovación puede llevarlos muy lejos y motivarlos a aprender más cada día. La Secretaría de Educación destacó de manera especial al equipo Los Reales, de la I. E. San Vicente Alto de las Flores, que alcanzó el título de subcampeones en la categoría Bristle Race.",
+      "El talento, la creatividad y el trabajo en equipo fueron protagonistas de RoboJam 2026. Cada prueba se convirtió en una oportunidad para crecer, crear y demostrar que el futuro se construye desde hoy, gracias a estos jóvenes talentos y a todos quienes hicieron parte de este gran logro.",
+    ],
+    tipo: "propia",
+    imagenes: [
+      "/Noticias/RoboJam/4S8A3409.jpg",
+      "/Noticias/RoboJam/4S8A3429.jpg",
+      "/Noticias/RoboJam/4S8A3435.jpg",
+      "/Noticias/RoboJam/4S8A3441.jpg",
+      "/Noticias/RoboJam/4S8A3443.jpg",
+      "/Noticias/RoboJam/4S8A3475.jpg",
+    ],
+    instagramReels: ["DYxTI61RdrJ", "DYsfxQmRJ0O"],
+    autor: "Secretaría de Educación de Envigado",
+  },
+  {
+    id: "comercial-envigado-top-10-mundo-global-schools-prize",
+    titulo:
+      "El Colegio Comercial de Envigado, entre los 10 mejores colegios del mundo por su apuesta a la innovación y la formación integral",
+    fecha: "2026-05-19",
+    resumen:
+      "El Colegio Comercial de Envigado fue reconocido como uno de los 10 mejores colegios del mundo en el Global Schools Prize, certamen liderado por la Varkey Foundation y la UNESCO, gracias a un modelo pedagógico centrado en la investigación, la innovación y la solución de problemáticas reales de su comunidad.",
+    contenido: [
+      "El Colegio Comercial de Envigado fue reconocido como uno de los 10 mejores colegios del mundo en el Global Schools Prize, un certamen internacional liderado por la Varkey Foundation en alianza con la UNESCO, que cada año exalta a las instituciones educativas más innovadoras e influyentes del planeta. El anuncio se realizó en Londres, Inglaterra, el 19 de mayo de 2026.",
+      "El profesor Alexander Echeverri, quien representó a la institución durante la premiación, celebró la distinción desde la capital británica: \"Es un orgullo representar a la institución y a nuestro país en este certamen. Este es un trabajo en equipo. Colombia es sostenibilidad, de justicia ambiental y armonía\".",
+      "Detrás de este reconocimiento hay un modelo pedagógico que pone la investigación, la innovación y la solución de problemáticas reales de las comunidades en el centro del aprendizaje. Desde las aulas, estudiantes y docentes han desarrollado proyectos científicos y tecnológicos con impacto social y ambiental, demostrando que la educación puede transformar territorios y mejorar la calidad de vida de las personas.",
+      "Entre los proyectos que han marcado la diferencia se cuentan iniciativas para contribuir a la erradicación del dengue, el desarrollo de prótesis para víctimas de minas antipersona y una mano robótica pensada para acompañar procesos relacionados con el túnel carpiano. A ello se suman máquinas capaces de convertir el humo contaminante en tinta y biocombustible, además de prototipos orientados a mejorar la calidad del agua y a proteger el medio ambiente.",
+      "Buena parte de este trabajo ha sido impulsado desde el centro de interés InventiPaz —liderado por el profesor Alexander Echeverri— y desde la metodología de investigación socioambiental, estrategias que articulan la sostenibilidad, la ciencia y la innovación como pilares de la formación integral. A través de ellas, los estudiantes se comprometen con el cuidado del medio ambiente y con proyectos productivos para su comunidad, al tiempo que fortalecen el pensamiento crítico, el liderazgo y el trabajo colaborativo desde edades tempranas.",
+      "Para la educación colombiana, el caso del Colegio Comercial de Envigado se convierte en un referente de cómo las apuestas pedagógicas centradas en la formación integral permiten que niñas, niños y jóvenes desarrollen habilidades para construir soluciones, aportar al cuidado del entorno y transformar su realidad desde la escuela.",
+      "Desde el Ministerio de Educación se extendió una felicitación al colegio y al profesor Alexander Echeverri por su trabajo en favor de la formación integral.",
+    ],
+    tipo: "propia",
+    imagenes: [
+      "/Noticias/El Colegio Comercial de Envigado, entre los 10 mejores/Comercial_Top1.jpg",
+      "/Noticias/El Colegio Comercial de Envigado, entre los 10 mejores/Comercial_Top2.jpg",
+      "/Noticias/El Colegio Comercial de Envigado, entre los 10 mejores/Comercial_Top3.jpg",
+    ],
+    videoFinal: "yG90mPOCwWM",
+    autor: "MinEducación",
+  },
+  {
+    id: "centro-innovacion-desarrollo-cid",
+    titulo: "Centro de Innovación y Desarrollo CID",
+    fecha: "2026-03-12",
+    resumen:
+      "Una de las fortalezas educativas de Envigado es la implementación del enfoque STEM y el trabajo de las habilidades blandas, que han permitido obtener reconocimientos nacionales e internacionales. El municipio cuenta con 16 gestores de innovación que acompañan a 14 instituciones educativas.",
+    contenido: [
+      "Una de nuestras fortalezas en educación en el municipio de Envigado es la implementación del enfoque STEM y el trabajo de las habilidades blandas. Esto nos ha permitido obtener reconocimientos tanto nacionales como internacionales.",
+      "Contamos con 16 gestores de innovación, quienes acompañan nuestras 14 instituciones educativas. Allí también tenemos el acompañamiento de nuestras gestoras de investigación.",
+      "Desde el Centro de Innovación brindamos formación constante y gratuita para toda la comunidad.",
+      "Mi labor como gestor de innovación incluye varias tareas. Una de ellas, la más importante para mí, es brindarles la oportunidad de formación a los docentes para que dinamicen y creen espacios educativos de alta calidad.",
+      "Por otro lado, también realizamos el acompañamiento a diferentes tipos de semilleros. En estos semilleros trabajamos temas relacionados con el STEM, desde la tecnología y las ciencias naturales, y abordamos también temas que tienen que ver con las artes, las humanidades y otras áreas.",
+      "Lo más satisfactorio de mi labor como gestor de innovación es, definitivamente, la creación de esperanza y de nuevas formas de ver el mundo en los estudiantes y en los docentes. Ese es el componente que más me genera satisfacción.",
+    ],
+    tipo: "propia",
+    imagenes: [],
+    video: "qcuBE1JJjMY",
+    autor: "Alcaldía de Envigado",
+  },
   {
     id: "envigado-red-nacional-ciudades-aprendizaje",
     titulo: "Envigado se suma a la Red Nacional de Ciudades del Aprendizaje",
@@ -305,6 +401,7 @@ const noticiasLocales: NoticiaLocal[] = [
 ];
 
 const fuentesOficialesById: Record<string, string> = {
+  "comercial-envigado-top-10-mundo-global-schools-prize": "https://www.mineducacion.gov.co/portal/salaprensa/Comunicados/428954:El-Colegio-Comercial-de-Envigado-entre-los-10-mejores-colegios-del-mundo-por-su-apuesta-a-la-innovacion-y-la-formacion-integral",
   "envigado-kits-tecnologia-mobiliario-colegios-publicos": "https://www.envigado.gov.co/noticias/alcaldia-de-envigado-invierte-mas-de-3000-millones-en",
   "envigado-visita-certificacion-centro-ciencia": "https://www.envigado.gov.co/noticias/envigado-recibio-visita-para-avanzar-en-su-certificacion",
   "envigado-canta-cuenta-historia-creatividad-estudiantil": "https://www.envigado.gov.co/noticias/envigado-canta-y-cuenta-su-historia-con-creatividad",
@@ -320,6 +417,14 @@ const fuentesOficialesById: Record<string, string> = {
 
 const getPreferredImageSrc = (src: string) =>
   src.replace(/\.(jpe?g|png)$/i, '.webp');
+
+// Encuadre por imagen. Por defecto se ancla arriba ("center top"), que funciona
+// para fotos de personas/grupos. Aquí se sobrescriben los casos puntuales en los
+// que el sujeto está en otra zona de la foto.
+const imagePositionOverrides: Record<string, string> = {
+  "/Noticias/El Colegio Comercial de Envigado, entre los 10 mejores/Comercial_Top2.jpg": "center bottom",
+};
+const getImagePosition = (src: string) => imagePositionOverrides[src] ?? "center top";
 
 export default function Noticias() {
   const [selectedNews, setSelectedNews] = useState<NoticiaUI | null>(null);
@@ -365,8 +470,11 @@ export default function Noticias() {
   const getFuenteOficialUrl = (newsId: string) => fuentesOficialesById[newsId];
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>, fallbackSrc: string) => {
     const target = event.currentTarget;
-    if (target.dataset.fallbackApplied === "true") return;
-    target.dataset.fallbackApplied = "true";
+    // Si ya estamos mostrando justamente este fallback, no hacemos nada (evita bucles).
+    if (target.dataset.currentFallback === fallbackSrc) return;
+    // Marcamos el fallback de ESTA imagen (no una bandera global de la tarjeta),
+    // así cada imagen del carrusel puede recuperarse de forma independiente.
+    target.dataset.currentFallback = fallbackSrc;
     target.src = fallbackSrc;
   };
 
@@ -429,33 +537,48 @@ export default function Noticias() {
             {noticiasFiltradas.map((noticia) => (
               <Card key={noticia.id} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative h-48 overflow-hidden bg-[#11B2AA]/10">
-                  <img
-                    src={getPreferredImageSrc(noticia.imagenes[getCurrentImageIndex(noticia.id)])}
-                    alt={noticia.titulo}
-                    loading="lazy"
-                    decoding="async"
-                    fetchPriority="low"
-                    onError={(e) => handleImageError(e, noticia.imagenes[getCurrentImageIndex(noticia.id)])}
-                    className="w-full h-full object-cover"
-                  />
-                  {noticia.imagenes.length > 1 && (
+                  {noticia.video ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${noticia.video}?autoplay=1&mute=1&loop=1&playlist=${noticia.video}&playsinline=1&controls=0&rel=0&modestbranding=1`}
+                      title={noticia.titulo}
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                      className="absolute inset-0 h-full w-full"
+                    />
+                  ) : (
                     <>
-                      <button
-                        type="button"
-                        aria-label="Imagen anterior"
-                        onClick={() => prevImage(noticia.id, noticia.imagenes.length)}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-1.5 text-[#FFDE07] hover:bg-[#023A34]"
-                      >
-                        <ChevronLeft className="h-4 w-4" />
-                      </button>
-                      <button
-                        type="button"
-                        aria-label="Siguiente imagen"
-                        onClick={() => nextImage(noticia.id, noticia.imagenes.length)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-1.5 text-[#FFDE07] hover:bg-[#023A34]"
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </button>
+                      <img
+                        src={getPreferredImageSrc(noticia.imagenes[getCurrentImageIndex(noticia.id)])}
+                        alt={noticia.titulo}
+                        loading="lazy"
+                        decoding="async"
+                        fetchPriority="low"
+                        onError={(e) => handleImageError(e, noticia.imagenes[getCurrentImageIndex(noticia.id)])}
+                        className="w-full h-full object-cover"
+                        style={{ objectPosition: getImagePosition(noticia.imagenes[getCurrentImageIndex(noticia.id)]) }}
+                      />
+                      {noticia.imagenes.length > 1 && (
+                        <>
+                          <button
+                            type="button"
+                            aria-label="Imagen anterior"
+                            onClick={() => prevImage(noticia.id, noticia.imagenes.length)}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-1.5 text-[#FFDE07] hover:bg-[#023A34]"
+                          >
+                            <ChevronLeft className="h-4 w-4" />
+                          </button>
+                          <button
+                            type="button"
+                            aria-label="Siguiente imagen"
+                            onClick={() => nextImage(noticia.id, noticia.imagenes.length)}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-1.5 text-[#FFDE07] hover:bg-[#023A34]"
+                          >
+                            <ChevronRight className="h-4 w-4" />
+                          </button>
+                        </>
+                      )}
                     </>
                   )}
                 </div>
@@ -509,33 +632,50 @@ export default function Noticias() {
 
               <div className="p-6">
                 <div className="relative mb-6 overflow-hidden rounded-xl bg-[#11B2AA]/10">
-                  <img
-                    src={getPreferredImageSrc(selectedNews.imagenes[getCurrentImageIndex(selectedNews.id)])}
-                    alt={selectedNews.titulo}
-                    loading="eager"
-                    decoding="async"
-                    fetchPriority="high"
-                    onError={(e) => handleImageError(e, selectedNews.imagenes[getCurrentImageIndex(selectedNews.id)])}
-                    className="h-[380px] w-full object-cover"
-                  />
-                  {selectedNews.imagenes.length > 1 && (
+                  {selectedNews.video ? (
+                    <div className="relative aspect-video w-full bg-black">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${selectedNews.video}?autoplay=1&mute=1&loop=1&playlist=${selectedNews.video}&playsinline=1&rel=0&modestbranding=1`}
+                        title={selectedNews.titulo}
+                        loading="eager"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                        className="absolute inset-0 h-full w-full"
+                      />
+                    </div>
+                  ) : (
                     <>
-                      <button
-                        type="button"
-                        aria-label="Imagen anterior"
-                        onClick={() => prevImage(selectedNews.id, selectedNews.imagenes.length)}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-2 text-[#FFDE07] hover:bg-[#023A34]"
-                      >
-                        <ChevronLeft className="h-5 w-5" />
-                      </button>
-                      <button
-                        type="button"
-                        aria-label="Siguiente imagen"
-                        onClick={() => nextImage(selectedNews.id, selectedNews.imagenes.length)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-2 text-[#FFDE07] hover:bg-[#023A34]"
-                      >
-                        <ChevronRight className="h-5 w-5" />
-                      </button>
+                      <img
+                        src={getPreferredImageSrc(selectedNews.imagenes[getCurrentImageIndex(selectedNews.id)])}
+                        alt={selectedNews.titulo}
+                        loading="eager"
+                        decoding="async"
+                        fetchPriority="high"
+                        onError={(e) => handleImageError(e, selectedNews.imagenes[getCurrentImageIndex(selectedNews.id)])}
+                        className="h-[380px] w-full object-cover"
+                        style={{ objectPosition: getImagePosition(selectedNews.imagenes[getCurrentImageIndex(selectedNews.id)]) }}
+                      />
+                      {selectedNews.imagenes.length > 1 && (
+                        <>
+                          <button
+                            type="button"
+                            aria-label="Imagen anterior"
+                            onClick={() => prevImage(selectedNews.id, selectedNews.imagenes.length)}
+                            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-2 text-[#FFDE07] hover:bg-[#023A34]"
+                          >
+                            <ChevronLeft className="h-5 w-5" />
+                          </button>
+                          <button
+                            type="button"
+                            aria-label="Siguiente imagen"
+                            onClick={() => nextImage(selectedNews.id, selectedNews.imagenes.length)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-2 text-[#FFDE07] hover:bg-[#023A34]"
+                          >
+                            <ChevronRight className="h-5 w-5" />
+                          </button>
+                        </>
+                      )}
                     </>
                   )}
                 </div>
@@ -572,6 +712,46 @@ export default function Noticias() {
                     <p key={idx}>{paragraph}</p>
                   ))}
                 </div>
+
+                {selectedNews.videoFinal && (
+                  <div className="mt-8">
+                    <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#0D4B56]">
+                      Conozca aquí la historia
+                    </p>
+                    <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black shadow-lg">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${selectedNews.videoFinal}?autoplay=1&mute=1&loop=1&playlist=${selectedNews.videoFinal}&playsinline=1&rel=0&modestbranding=1`}
+                        title={`Video: ${selectedNews.titulo}`}
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                        className="absolute inset-0 h-full w-full"
+                      />
+                    </div>
+                  </div>
+                )}
+                {selectedNews.instagramReels && selectedNews.instagramReels.length > 0 && (
+                  <div className="mt-8">
+                    <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#0D4B56]">
+                      Míralo en Instagram
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-6">
+                      {selectedNews.instagramReels.map((code) => (
+                        <iframe
+                          key={code}
+                          src={`https://www.instagram.com/reel/${code}/embed`}
+                          title={`Reel de Instagram ${code}`}
+                          loading="lazy"
+                          scrolling="no"
+                          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                          allowFullScreen
+                          className="h-[640px] w-full max-w-[340px] overflow-hidden rounded-xl border border-[#0D4B56]/15 bg-white shadow-lg"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

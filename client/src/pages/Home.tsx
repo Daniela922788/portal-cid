@@ -241,19 +241,28 @@ export default function Home() {
                 img: "/Home/1.webp",
                 title: "Territorio STEM",
                 desc: "Conoce el ecosistema STEM de Envigado, sus actores, proyectos y oportunidades para estudiantes y docentes.",
+                href: "/territorio-stem",
               },
               {
                 img: "/Home/2.webp",
                 title: "Premios y reconocimientos",
                 desc: "Explora los reconocimientos que reflejan nuestro compromiso con la excelencia.",
+                href: "/reconocimientos",
               },
               {
                 img: "/Home/3.webp",
                 title: "Aliados",
                 desc: "Descubre a nuestros aliados estratégicos que impulsan la innovación educativa en nuestra comunidad.",
+                href: "/aliados",
               },
             ].map((item) => (
-              <div key={item.title} className="cid-card group bg-white rounded-2xl overflow-hidden flex flex-col shadow-xl">
+              <Link
+                key={item.title}
+                href={item.href}
+                aria-label={`Ir a ${item.title}`}
+                onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "auto" })}
+                className="cid-card group bg-white rounded-2xl overflow-hidden flex flex-col shadow-xl"
+              >
                 <div className="overflow-hidden">
                   <img
                     src={item.img}
@@ -265,7 +274,7 @@ export default function Home() {
                   <h3 className="cid-hero-text text-2xl font-bold text-[#023A34]">{item.title}</h3>
                   <p className="cid-body text-gray-600 text-base leading-relaxed">{item.desc}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
