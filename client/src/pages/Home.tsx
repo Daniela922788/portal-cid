@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "wouter";
 import CoursesCarouselNew from "@/components/CoursesCarouselNew";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import educacionLogo from "@/assets/educacion-logo.png";
 import alcaldiaLogo from "@/assets/alcaldia-envigado-logo.png";
@@ -11,7 +11,55 @@ import ticLogo from "@/assets/tic-logo.png";
 export default function Home() {
   const showCoursesCarousel = false;
   const showCidKids = false;
-  const diaArbolVideoId = "hwdlq1YyQII";
+
+  // ─────────────────────────────────────────────
+  // Carrusel de contenido destacado
+  // Para agregar / quitar slides, edita este arreglo.
+  // videoId = el ID del video de YouTube (lo que va después de "watch?v=")
+  // bg      = imagen de fondo difuminada (ponla en /public/Fondos/)
+  // ─────────────────────────────────────────────
+  const featuredSections = [
+    {
+      id: "chernobyl",
+      title: "Chernóbil: el desastre nuclear más grande de la historia",
+      desc: "Chernóbil no fue un fallo de la física, sino un quiebre de la responsabilidad. Nos recordó que la ciencia sin conciencia es un arma de doble filo: una herramienta capaz de iluminar naciones o de apagar el futuro de generaciones enteras.",
+      videos: ["hwdlq1YyQII"],
+      bg: "/Fondos/Fondo_chernobyl.png",
+      watermark: "CID",
+    },
+    
+    {
+      id: "arbol",
+      title: "Día del Árbol: sembrando futuro",
+      desc: "Cada árbol que sembramos es una decisión sobre el futuro que queremos habitar. El Día del Árbol nos recuerda que cuidar lo vivo también es una forma de innovación: la más antigua y la más necesaria.",
+      videos: ["vnCAia6v0bE"],
+      bg: "/Fondos/dia_arbol.jpg",
+      watermark: "ÁRBOL",
+    },
+    {
+      id: "artemis",
+      title: "Artemis II: el regreso de la humanidad a la Luna",
+      desc: "Artemis II marca el retorno de la humanidad a la Luna después de más de medio siglo. No es solo un viaje: es la promesa de que la curiosidad y la cooperación científica todavía pueden llevarnos más lejos de lo que imaginamos.",
+      videos: ["spMFXEUCEX8", "R3-OXQd-Fp4", "QLJqKHyzcnU", "4qF9yJWZRcU"],
+      bg: "/Fondos/5.png",
+      watermark: "ARTEMIS",
+    },
+  ];
+
+  const [activeSection, setActiveSection] = useState(0);
+  const [activeVideo, setActiveVideo] = useState(0);
+  // handlers to navigate videos inside a section
+  const prevVideo = () => setActiveVideo((v) => (v - 1 + active.videos.length) % active.videos.length);
+  const nextVideo = () => setActiveVideo((v) => (v + 1) % active.videos.length);
+  const sectionCount = featuredSections.length;
+  const active = featuredSections[activeSection];
+  const currentVideoId = active.videos[Math.min(activeVideo, active.videos.length - 1)];
+  const selectSection = (i: number) => {
+    setActiveSection(((i % sectionCount) + sectionCount) % sectionCount);
+    setActiveVideo(0);
+  };
+  const goPrev = () => selectSection(activeSection - 1);
+  const goNext = () => selectSection(activeSection + 1);
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-[#F5F2EC]" style={{ fontFamily: "'Georgia', serif" }}>
@@ -90,6 +138,33 @@ export default function Home() {
           background: rgba(255,255,255,0.7);
           border-radius: 3px;
           z-index: 10;
+        }
+
+        @keyframes cid-fade-in { from { opacity: 0; } to { opacity: 1; } }
+        .cid-fade-in { animation: cid-fade-in 0.55s ease both; }
+        @keyframes cid-bg-fade { from { opacity: 0; } to { opacity: 0.1; } }
+        .cid-bg-fade { animation: cid-bg-fade 0.8s ease both; }
+
+        .cid-carousel-arrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 48px;
+          height: 48px;
+          border-radius: 9999px;
+          background: rgba(255,255,255,0.75);
+          border: 1px solid rgba(2,58,52,0.15);
+          color: #023A34;
+          box-shadow: 0 8px 24px rgba(2,58,52,0.15);
+          backdrop-filter: blur(4px);
+          cursor: pointer;
+          transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+        }
+        .cid-carousel-arrow:hover {
+          background: #11B2AA;
+          color: #ffffff;
+          transform: scale(1.08);
+          box-shadow: 0 12px 30px rgba(17,178,170,0.35);
         }
       `}</style>
 
@@ -322,59 +397,147 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════════════════════════
-          DÍA DEL ÁRBOL — phone mockup centered
+          CONTENIDO DESTACADO — carrusel de mockups
       ═══════════════════════════════════════ */}
       <section className="relative overflow-hidden py-16 md:py-24 bg-[#F5F2EC]">
-        {/* Decorative background image */}
+        {/* Fondo decorativo (cambia por slide) */}
         <img
-          src="/Fondos/Fondo_chernobyl.png"
+          key={`bg-${active.id}`}
+          src={active.bg}
           alt=""
           aria-hidden="true"
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none"
+          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+          className="cid-bg-fade absolute inset-0 w-full h-full object-cover pointer-events-none"
         />
 
-        {/* Large watermark text */}
+        {/* Marca de agua grande */}
         <span
-          className="cid-hero-text pointer-events-none select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[14rem] font-black text-[#023A34]/5 leading-none whitespace-nowrap hidden md:block"
+          key={`wm-${active.id}`}
+          className="cid-hero-text cid-fade-in pointer-events-none select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[14rem] font-black text-[#023A34]/5 leading-none whitespace-nowrap hidden md:block"
           aria-hidden="true"
-        >CID</span>
+        >{active.watermark}</span>
 
-        <div className="relative z-10 container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center gap-12 md:gap-20">
-          {/* Text side */}
-          <div className="md:flex-1 text-center md:text-left">
-            <p className="cid-section-label text-[#11B2AA] mb-4">Contenido destacado</p>
-            <h2 className="cid-hero-text text-4xl md:text-5xl font-black text-[#023A34] mb-6 leading-tight">
-              Chernóbil: El desastre nuclear más grande de la historia
-            </h2>
-            <div className="cid-rule mb-6" />
-            <p className="cid-body text-[#023A34]/75 text-base md:text-lg leading-relaxed max-w-md">
-              Chernóbil no fue un fallo de la física, sino un quiebre de la responsabilidad. Nos recordó que la ciencia sin conciencia es un arma de doble filo: una herramienta capaz de iluminar naciones o de apagar el futuro de generaciones enteras.
-            </p>
+        <div className="relative z-10 container mx-auto px-4 md:px-8">
+          {/* Encabezado fijo */}
+          <div className="mb-8 md:mb-12 flex items-center gap-3">
+            <span className="cid-rule" />
+            <p className="cid-section-label text-[#023A34]">Contenido destacado</p>
           </div>
 
-          {/* Phone mockup */}
-          <div className="relative flex justify-center md:flex-1">
-            <div className="phone-frame relative bg-black"
-              style={{
-                width: 'min(88vw, 330px)',
-              }}>
-              <div className="phone-notch" />
-              <div className="aspect-[9/16] w-full">
-                <iframe
-                  src={`https://www.youtube.com/embed/${diaArbolVideoId}?autoplay=1&mute=1&loop=1&playlist=${diaArbolVideoId}&playsinline=1&rel=0&modestbranding=1`}
-                  title="Chernobyl"
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full"
-                />
+          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
+            {/* Texto */}
+            <div key={`txt-${active.id}`} className="cid-fade-in md:flex-1 text-center md:text-left">
+              <h2 className="cid-hero-text text-4xl md:text-5xl font-black text-[#023A34] mb-6 leading-tight">
+                {active.title}
+              </h2>
+              <div className="cid-rule mb-6" />
+              <p className="cid-body text-[#023A34]/75 text-base md:text-lg leading-relaxed max-w-md mx-auto md:mx-0">
+                {active.desc}
+              </p>
+            </div>
+
+            {/* Celular */}
+            <div className="relative flex flex-col items-center md:flex-1">
+              <div
+                key={`phone-${active.id}-${activeVideo}`}
+                className="phone-frame cid-fade-in relative bg-black"
+                style={{ width: 'min(88vw, 330px)' }}
+              >
+                <div className="phone-notch" />
+                <div className="aspect-[9/16] w-full">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${currentVideoId}?autoplay=1&mute=1&loop=1&playlist=${currentVideoId}&playsinline=1&rel=0&modestbranding=1`}
+                    title={active.title}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    className="absolute inset-0 h-full w-full"
+                  />
+                </div>
+                {/* Flechas internas para navegar entre videos (aparecen si hay más de uno) */}
+                {active.videos.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevVideo}
+                      aria-label="Video anterior"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 z-30 cid-carousel-arrow"
+                      style={{ width: '38px', height: '38px' }}
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={nextVideo}
+                      aria-label="Siguiente video"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 z-30 cid-carousel-arrow"
+                      style={{ width: '38px', height: '38px' }}
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </>
+                )}
               </div>
+
+              {/* Puntos de video (solo si la sección tiene más de uno) */}
+              {active.videos.length > 1 && (
+                <div className="mt-5 flex items-center justify-center gap-2.5">
+                  {active.videos.map((v, vi) => (
+                    <button
+                      key={v}
+                      onClick={() => setActiveVideo(vi)}
+                      aria-label={`Ver video ${vi + 1} de ${active.videos.length}`}
+                      aria-current={vi === activeVideo}
+                      className="rounded-full transition-all duration-300"
+                      style={
+                        vi === activeVideo
+                          ? { width: '22px', height: '6px', background: '#11B2AA' }
+                          : { width: '6px', height: '6px', background: 'rgba(2,58,52,0.22)' }
+                      }
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
+
+          {/* Puntos de navegación */}
+          <div className="mt-10 md:mt-12 flex items-center justify-center gap-3">
+            {featuredSections.map((s, i) => (
+              <button
+                key={s.id}
+                onClick={() => selectSection(i)}
+                aria-label={`Ir a la sección ${s.title}`}
+                aria-current={i === activeSection}
+                className="rounded-full transition-all duration-300"
+                style={
+                  i === activeSection
+                    ? { width: '30px', height: '8px', background: '#11B2AA' }
+                    : { width: '8px', height: '8px', background: 'rgba(2,58,52,0.25)' }
+                }
+              />
+            ))}
+          </div>
         </div>
+
+        {/* Flechas laterales */}
+        <button
+          onClick={goPrev}
+          aria-label="Sección anterior"
+          className="cid-carousel-arrow absolute top-1/2 -translate-y-1/2 z-20"
+          style={{ left: 'calc(50% - 890px)' }}
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+        <button
+          onClick={goNext}
+          aria-label="Sección siguiente"
+          className="cid-carousel-arrow absolute top-1/2 -translate-y-1/2 z-20"
+          style={{ left: 'calc(50% + 700px)' }}
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
       </section>
 
       {/* ═══════════════════════════════════════

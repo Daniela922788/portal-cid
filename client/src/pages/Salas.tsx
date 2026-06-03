@@ -475,7 +475,7 @@ export default function Salas() {
 							<div className="relative overflow-hidden rounded-lg shadow-2xl ring-1 ring-white/10">
 								<div className="relative aspect-video w-full bg-black">
 									<iframe
-										src="https://www.youtube.com/embed/9Rh6VdZv0B0?autoplay=1&mute=1&loop=1&playlist=9Rh6VdZv0B0&playsinline=1"
+										src="https://www.youtube.com/embed/CWOuPFKcM04?autoplay=1&mute=1&loop=1&playlist=CWOuPFKcM04&playsinline=1"
 										title="Somos el CID - Video"
 										loading="lazy"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
