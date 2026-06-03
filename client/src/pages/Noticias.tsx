@@ -423,8 +423,19 @@ const getPreferredImageSrc = (src: string) =>
 // que el sujeto está en otra zona de la foto.
 const imagePositionOverrides: Record<string, string> = {
   "/Noticias/El Colegio Comercial de Envigado, entre los 10 mejores/Comercial_Top2.jpg": "center bottom",
+  "/Noticias/estudiantes-el-salado-computadores/151822_estudiantes-de-la-i-e-el-salado-en-envigado-estrenaron_1024x600.jpeg": "center 30%",
 };
-const getImagePosition = (src: string) => imagePositionOverrides[src] ?? "center top";
+const getImagePosition = (src: string) => {
+  // Ajustes puntuales por imagen (tienen prioridad sobre las reglas por carpeta).
+  if (imagePositionOverrides[src]) return imagePositionOverrides[src];
+  // RoboJam y Colegio Comercial: fotos de personas con las caras en la parte alta.
+  if (src.startsWith("/Noticias/RoboJam/")) return "center top";
+  if (src.startsWith("/Noticias/El Colegio Comercial de Envigado, entre los 10 mejores/")) return "center top";
+  // México: encuadre hacia la parte baja de la foto, sin llegar al fondo del todo.
+  if (src.startsWith("/Noticias/Mexico/")) return "center 70%";
+  // Por defecto, centrado (como estaba originalmente y como se ven bien las demás).
+  return "center";
+};
 
 export default function Noticias() {
   const [selectedNews, setSelectedNews] = useState<NoticiaUI | null>(null);

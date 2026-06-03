@@ -322,7 +322,7 @@ export default function Nosotros() {
     { id: 14, nombre: "María Zuleima Arango Sánchez", cargo: "Profeseional Universitaria", foto: "/gestores/Zuleima.jpg", categoria: "administrativo" },
     { id: 9, nombre: "Jhon Fredy Ríos Montoya", cargo: "Profesional Universitario", foto: JhonImg, categoria: "administrativo" },
     { id: 2, nombre: "Angela María González Valencia", cargo: "Asistente Administrativa - UPB", foto: AngelaImg, categoria: "administrativo" },
-    { id: 3, nombre: "Juan Camilo Álvarez Bedoya", cargo: "Contratista", foto: CamiloImg, categoria: "gestores" },
+    { id: 3, nombre: "Juan Camilo Álvarez Bedoya", cargo: "Contratista", foto: CamiloImg, categoria: "administrativo" },
     { id: 13, nombre: "Daniela Serna Gallego", cargo: "Programadora - UPB", foto: "/gestores/Daniela%20SG.png", categoria: "tecnologia" },
     { id: 10, nombre: "John Fredis Carmona Calderin", cargo: "Técnico Audiovisual - UPB", foto: JohnImg, categoria: "audiovisuales" },
     { id: 11, nombre: "Jorge Guzmán Ruiz", cargo: "Técnico Audiovisual - UPB", foto: JorgeImg, categoria: "audiovisuales" },
