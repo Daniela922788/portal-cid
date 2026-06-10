@@ -2,7 +2,7 @@ import { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, MapPin, Phone, ExternalLink, LifeBuoy, ChevronDown } from "lucide-react";
+import { Mail, MapPin, Phone, ExternalLink, LifeBuoy, ChevronDown, MessageCircle } from "lucide-react";
 
 const canales = [
   {
@@ -32,32 +32,38 @@ const preguntasFrecuentes = [
   {
     pregunta: "¿Con cuánta frecuencia ofertan cursos nuevos?",
     respuesta:
-      "Mensualmente se publica una nueva oferta de cursos y procesos de formación para la comunidad.",
+      "De manera periódica se publica una nueva oferta de cursos y procesos de formación para la comunidad.",
+    mostrarBotonWhatsApp: false,
   },
   {
     pregunta: "¿Tienen oferta para vacaciones?",
     respuesta:
-      "Sí. Durante las temporadas de vacaciones contamos con cursos, talleres y actividades especiales.",
+      "Sí. Durante las temporadas de vacaciones contamos con cursos, talleres y actividades.",
+    mostrarBotonWhatsApp: false,
   },
   {
     pregunta: "¿Para qué tipo de público tienen oferta de formación?",
     respuesta:
       "Nuestra oferta de formación está dirigida a todo tipo de público, incluyendo niños, adolescentes, adultos y adultos mayores.",
+    mostrarBotonWhatsApp: false,
   },
   {
     pregunta: "¿Los cursos tienen algún costo?",
     respuesta:
       "No. Todos nuestros cursos y procesos de formación son completamente gratuitos.",
+    mostrarBotonWhatsApp: false,
   },
   {
     pregunta: "¿Cómo puedo enterarme de nuevas convocatorias?",
     respuesta:
-      "Puedes conocer nuestras nuevas convocatorias en la sección de Formación de nuestra página web o comunicándote a través de nuestro número de WhatsApp.",
+      "Puedes conocer nuestra oferta en la sección de formación de nuestra página web",
+    mostrarBotonWhatsApp: true,
   },
   {
-    pregunta: "¿Los cursos se ofrecen los fines de semana?",
+    pregunta: "¿Tienen oferta activa los fines de semana?",
     respuesta:
-      "No. Actualmente los cursos se realizan únicamente en días hábiles de la semana.",
+      "No. Actualmente la oferta está activa de lunes a viernes",
+    mostrarBotonWhatsApp: false,
   },
 ];
 
@@ -193,7 +199,22 @@ export default function MesaAyuda() {
                 </button>
 
                 {faqAbierta === index && (
-                  <p className="mt-3 text-sm leading-relaxed text-slate-700">{item.respuesta}</p>
+                  <div className="mt-3">
+                    <p className="text-sm leading-relaxed text-slate-700">{item.respuesta}</p>
+                    {item.mostrarBotonWhatsApp && (
+                      <a
+                        href="https://wa.me/573012577662"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-flex"
+                      >
+                        <Button variant="outline" className="border-green-300 text-green-700 hover:bg-green-50">
+                          Contactar por WhatsApp
+                          <MessageCircle className="ml-2 h-4 w-4" />
+                        </Button>
+                      </a>
+                    )}
+                  </div>
                 )}
               </div>
             ))}
