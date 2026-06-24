@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const SHORTS = [
+  { id: "7bviMX88Y7k", title: "🚀📚 Desde Bucaramanga hasta Envigado, una experiencia que inspira, transforma y deja nuevas perspectivas para la educación del futuro. La innovación educativa se construye con ideas, aprendizaje y el compromiso de seguir creando oportunidades para las próximas generaciones. ✨🎓" },
+  { id: "Z7lTRVLTAbk", title: "⚽🧠 Detrás de cada gol imposible, hay una explicación científica" },
   { id: "hwdlq1YyQII", title: "Chernobyl — lecciones del desastre" },
   { id: "vq614P1SONs", title: "Visita Renault — innovación en movimiento" },
   { id: "VGjz_9NKYZc", title: "Auroras Boreales — la danza del cielo" },

@@ -195,7 +195,6 @@ const testimonies = [
 
 export default function Centro() {
   const infraRef = useRef<HTMLElement>(null);
-  const heroVideoRef = useRef<HTMLIFrameElement>(null);
   const [activeTestimony, setActiveTestimony] = useState(0);
 
   const goToPreviousTestimony = () =>
@@ -203,49 +202,15 @@ export default function Centro() {
   const goToNextTestimony = () =>
     setActiveTestimony((prev) => (prev + 1) % testimonies.length);
 
-  const forceHeroVideoPlayback = () => {
-    const iframe = heroVideoRef.current;
-    if (!iframe?.contentWindow) return;
-
-    const command = (func: string, args: unknown[] = []) =>
-      iframe.contentWindow?.postMessage(
-        JSON.stringify({ event: "command", func, args }),
-        "*"
-      );
-
-    command("mute");
-    command("playVideo");
-    command("setLoop", [true]);
-  };
-
-  useEffect(() => {
-    const triggerPlayback = () => forceHeroVideoPlayback();
-
-    // Reintentos escalonados para mejorar la fiabilidad en móvil
-    const timers = [300, 800, 2000, 4000].map((delay) =>
-      window.setTimeout(triggerPlayback, delay)
-    );
-
-    // Solo una vez por tipo de evento para no acumular llamadas
-    document.addEventListener("touchstart", triggerPlayback, { once: true, passive: true });
-    document.addEventListener("click", triggerPlayback, { once: true });
-
-    return () => {
-      timers.forEach((id) => window.clearTimeout(id));
-      document.removeEventListener("touchstart", triggerPlayback);
-      document.removeEventListener("click", triggerPlayback);
-    };
-  }, []);
-
   return (
     <div className="min-h-screen bg-white text-[#182130]">
 
       {/* ─── 1. HERO ───────────────────────────────────────────────────── */}
       {/*
-        Usamos un único iframe para móvil y desktop.
-        - youtube-nocookie.com: menos restricciones de privacidad/autoplay
-        - controls=1: el usuario puede dar play manualmente si el autoplay falla en móvil
-        - playsinline=1: evita que iOS abra el video en pantalla completa
+        Video de fondo local que se reproduce solo y en bucle.
+        - muted + autoPlay: el navegador exige que esté silenciado para autoreproducir
+        - loop: se reinicia automáticamente al terminar
+        - playsInline: evita que iOS lo abra en pantalla completa
         - La imagen de fondo actúa como fallback mientras carga el video
       */}
       <section
@@ -262,33 +227,22 @@ export default function Centro() {
           decoding="async"
         />
 
-        {/* Contenedor del iframe */}
+        {/* Contenedor del video */}
         <div className="absolute inset-0">
-          <iframe
-            ref={heroVideoRef}
+          <video
             /*
-              Parámetros importantes:
-              - autoplay=1 + mute=1: necesarios para autoplay sin interacción
-              - controls=1: muestra controles en móvil para que el usuario pueda dar play si falla
-              - loop=1 + playlist=ID: necesario para loopear en la API de YT
-              - playsinline=1: evita fullscreen automático en iOS
-              - enablejsapi=1: permite enviar comandos postMessage
-              - origin=...: requerido por la API de YT cuando se usa enablejsapi
+              Atributos para autoplay en bucle:
+              - autoPlay + muted: el navegador solo permite autoplay si el video va silenciado
+              - loop: reinicia el video automáticamente al terminar
+              - playsInline: evita que iOS lo abra en pantalla completa
             */
-            src="https://www.youtube-nocookie.com/embed/zfpCuxxymuA?autoplay=1&mute=1&controls=0&start=3&loop=1&playlist=zfpCuxxymuA&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&origin=https://portal-cid.vercel.app"
-            title="Video de fondo Centro Audiovisual"
-            /*
-              El truco del aspect-ratio 16:9 centrado:
-              - Se posiciona en el centro
-              - Tiene ancho mínimo de 177.78vh y alto mínimo de 56.25vw
-              - Así cubre toda la pantalla sin importar el tamaño
-            */
-            className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-full min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            referrerPolicy="strict-origin-when-cross-origin"
-            loading="eager"
-            onLoad={forceHeroVideoPlayback}
+            src="/videos/Video_audiovisual.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="absolute inset-0 h-full w-full object-cover"
           />
         </div>
 

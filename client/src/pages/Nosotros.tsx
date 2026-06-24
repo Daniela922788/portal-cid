@@ -5,10 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Lightbulb, Palette, Leaf, ArrowRight, Sparkles, Calendar, MapPin, Users, ChevronLeft, ChevronRight, Building2, GraduationCap, Handshake, MapPinned, Rocket, School, Waypoints, MousePointerClick } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import lineasTematicasImg from "@/assets/Líneas Temáticas.png";
-import serviciosImg from "@/assets/Servicios.png";
-import comunidadImpactadaImg from "@/assets/Comunidad impactada.png";
-import equipoCIDImg from "@/assets/Equipo CID.jpg";
+import equipoCIDImg from "@/assets/Equipo_CID.webp";
 import centroCienciaImg from "@/assets/Centro-de-Ciencia.jfif";
 import AlejandraImg from "@/assets/Alejandra.webp";
 import IsabelImg from "@/assets/Isabel.webp";
@@ -70,11 +67,7 @@ interface TeamMember {
 }
 
 const toWebp = (src: string) => (typeof src === "string" ? src.replace(/\.(jpe?g|png)$/i, ".webp") : src);
-const NO_WEBP_FALLBACK = new Set(["/gestores/Zuleima.jpg"]);
-const getWebpSrc = (src: string) => {
-  if (NO_WEBP_FALLBACK.has(src)) return null;
-  return toWebp(src);
-};
+const getWebpSrc = (src: string) => toWebp(src);
 
 export default function Nosotros() {
   const containerRef = useRef(null);
@@ -319,7 +312,7 @@ export default function Nosotros() {
     { id: 1, nombre: "Alexander Heredia Heredia", cargo: "Profesional Universitario", foto: AlexImg, categoria: ["administrativo", "tecnologia"] },
     { id: 12, nombre: "Yethy Gisela Granda Zapata", cargo: "Coordinadora Gestores Innovación - UPB", foto: YethyImg, categoria: "administrativo" },
     { id: 4, nombre: "Carolina Tabres Isaza", cargo: "Técnico Operativo", foto: CaroImg, categoria: "administrativo" },
-    { id: 14, nombre: "María Zuleima Arango Sánchez", cargo: "Profeseional Universitaria", foto: "/gestores/Zuleima.jpg", categoria: "administrativo" },
+    { id: 14, nombre: "María Zuleima Arango Sánchez", cargo: "Profesional Universitaria", foto: "/gestores/Zuleima.webp", categoria: "administrativo" },
     { id: 9, nombre: "Jhon Fredy Ríos Montoya", cargo: "Profesional Universitario", foto: JhonImg, categoria: "administrativo" },
     { id: 2, nombre: "Angela María González Valencia", cargo: "Asistente Administrativa - UPB", foto: AngelaImg, categoria: "administrativo" },
     { id: 3, nombre: "Juan Camilo Álvarez Bedoya", cargo: "Contratista", foto: CamiloImg, categoria: "administrativo" },
@@ -595,7 +588,7 @@ export default function Nosotros() {
       {/* Banner Principal Nosotros */}
       <section className="relative w-full overflow-hidden md:h-screen">
         <img
-          src="/Nosotros/Banner%20principal.png"
+          src="/Nosotros/Banner_principal.webp"
           alt="Banner principal Nosotros"
           loading="eager"
           fetchPriority="high"
@@ -1064,7 +1057,7 @@ export default function Nosotros() {
             className="group mb-16 block overflow-hidden rounded-2xl shadow-2xl"
           >
             <img
-              src="/Fotogestores.jpg"
+              src="/Fotogestores.webp"
               alt="Equipo de gestores de innovación"
               loading="lazy"
               decoding="async"

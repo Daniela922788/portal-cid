@@ -95,7 +95,7 @@ function Router() {
         </Suspense>
       </main>
       <AccessibilityToolbar />
-      <CIDChatWidget />
+      {/* <CIDChatWidget /> */}
       <ScrollToTopButton />
       <ContactBanner />
       <Footer />

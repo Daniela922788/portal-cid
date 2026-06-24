@@ -16,9 +16,6 @@ export default function Footer() {
               Centro de Innovación y Desarrollo dedicado a promover la innovación, la investigación y el desarrollo STEM.
             </p>
             <div className="flex gap-3">
-              <a href="https://www.instagram.com/cidenvigado/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                <Instagram className="h-5 w-5" />
-              </a>
               <a href="https://www.youtube.com/@CentrodeInnovaci%C3%B3nyDesarrollo/featured" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Youtube className="h-5 w-5" />
               </a>
@@ -56,11 +53,6 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Recursos</h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/kit-herramientas" className="text-muted-foreground hover:text-primary transition-colors">
-                  Kit de Herramientas
-                </Link>
-              </li>
               <li>
                 <Link href="/formacion" className="text-muted-foreground hover:text-primary transition-colors">
                   Formación

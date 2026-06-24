@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useLocation } from "wouter";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building2, Camera, ChevronLeft, ChevronRight, GraduationCap, LayoutGrid, Monitor, MousePointerClick, Palette, Sparkles, X } from "lucide-react";
+import { Building2, Camera, CheckCircle2, ChevronLeft, ChevronRight, GraduationCap, LayoutGrid, Monitor, MousePointerClick, Palette, Sparkles, XCircle, X } from "lucide-react";
 
 type Sala = {
 	nombre: string;
@@ -149,6 +149,7 @@ export default function Salas() {
 	const [reservaValidationError, setReservaValidationError] = useState("");
 	const [showReservaValidationFeedback, setShowReservaValidationFeedback] = useState(false);
 	const [tipoProyecto, setTipoProyecto] = useState<string[]>([]);
+	const [feedbackModal, setFeedbackModal] = useState<{ tipo: "exito" | "error"; mensaje: string } | null>(null);
 
 	const tipoProyectoOpciones = [
 		"Fotografía",
@@ -311,13 +312,16 @@ export default function Salas() {
 			setShowReservaValidationFeedback(false);
 			setReservaAbierta(false);
 			setTipoProyecto([]);
-			window.alert("Solicitud enviada correctamente. Pronto recibirás respuesta por correo.");
+			setFeedbackModal({
+				tipo: "exito",
+				mensaje: "Solicitud enviada correctamente. Pronto recibirás respuesta por correo.",
+			});
 			if (formRef.current) {
 				formRef.current.reset();
 			}
 		} catch (error) {
 			const message = error instanceof Error ? error.message : "No se pudo enviar la solicitud.";
-			window.alert(message);
+			setFeedbackModal({ tipo: "error", mensaje: message });
 		} finally {
 			setEnviandoReserva(false);
 		}
@@ -1054,6 +1058,61 @@ export default function Salas() {
 								</button>
 							</div>
 						</form>
+					</div>
+				</div>
+			)}
+
+			{/* ═══════════════════════════════════════════════════
+			    MODAL DE CONFIRMACIÓN — Reemplaza window.alert
+			    ═══════════════════════════════════════════════════ */}
+			{feedbackModal && (
+				<div
+					className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 px-4"
+					onClick={() => setFeedbackModal(null)}
+				>
+					<div
+						className="relative w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl"
+						onClick={(e) => e.stopPropagation()}
+					>
+						<button
+							type="button"
+							onClick={() => setFeedbackModal(null)}
+							className="absolute right-3 top-3 rounded-full p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+							aria-label="Cerrar"
+						>
+							<X className="h-4 w-4" />
+						</button>
+
+						<div
+							className={`mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full ${
+								feedbackModal.tipo === "exito" ? "bg-[#11B2AA]/10" : "bg-red-50"
+							}`}
+						>
+							{feedbackModal.tipo === "exito" ? (
+								<CheckCircle2 className="h-8 w-8 text-[#11B2AA]" strokeWidth={1.5} />
+							) : (
+								<XCircle className="h-8 w-8 text-red-500" strokeWidth={1.5} />
+							)}
+						</div>
+
+						<h3 className="mb-2 text-lg font-bold text-[#182130]">
+							{feedbackModal.tipo === "exito" ? "¡Solicitud enviada!" : "Algo salió mal"}
+						</h3>
+						<p className="mb-6 text-sm leading-relaxed text-slate-600">
+							{feedbackModal.mensaje}
+						</p>
+
+						<button
+							type="button"
+							onClick={() => setFeedbackModal(null)}
+							className={`w-full rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-colors ${
+								feedbackModal.tipo === "exito"
+									? "bg-[#0D4B56] hover:bg-[#0A3A42]"
+									: "bg-red-500 hover:bg-red-600"
+							}`}
+						>
+							Entendido
+						</button>
 					</div>
 				</div>
 			)}

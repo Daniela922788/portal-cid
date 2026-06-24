@@ -72,6 +72,10 @@ export default function Header() {
   const isTransparent = transparentPaths.has(normalizedLocationLower);
   const isSolidDarkHeader = normalizedLocationLower === "/videos";
   const logoSrc = isBlackLogoRoute ? "/LOGO-NUEVO-CID-NEGRO.png" : "/LOGO-NUEVO-CID-BLANCO.png";
+  const escudoAlcaldiaSrc = isBlackLogoRoute
+    ? "/Logo-Escudo-Alcaldia-NEGRO.png"
+    : "/Logo-Escudo-Alcaldia-BLANCO.png";
+  const dividerColorClass = isBlackLogoRoute ? "bg-black/40" : "bg-white/60";
 
   const headerClassName = isTransparent
     ? "absolute top-0 z-50 w-full border-b-0 bg-transparent"
@@ -252,6 +256,18 @@ export default function Header() {
             href="/"
             className="flex shrink-0 items-center transition-opacity hover:opacity-80"
           >
+            {/* ── Escudo Alcaldía (primer logo) ── */}
+            <img
+              src={escudoAlcaldiaSrc}
+              alt="Escudo Alcaldía de Envigado"
+              className="h-12 w-auto lg:h-16 xl:h-20 2xl:h-24"
+            />
+            {/* ── Línea divisoria ── */}
+            <span
+              aria-hidden="true"
+              className={`mx-3 h-9 w-px shrink-0 lg:mx-4 lg:h-12 xl:h-14 2xl:h-16 ${dividerColorClass}`}
+            />
+            {/* ── Logo CID (segundo logo) ── */}
             <img
               src={logoSrc}
               alt="Logo CID"

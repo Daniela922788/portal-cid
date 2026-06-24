@@ -808,7 +808,7 @@ export default function Formacion() {
       fechas: ["21 de abril de 2026"],
       sesiones: ["2026-04-21"],
       ano: 2026,
-      imagen: "/Formación 2026/De Jugador a Creador.png",
+      imagen: "/Formación%202026/De%20Jugador%20a%20Creador.png",
       subtitulo: "Curso enfocado en la creación de videojuegos para primeras infancias.",
       descripcion: [
         "Curso enfocado en la creación de videojuegos, donde los participantes aprendieron fundamentos de diseño, lógica de programación y desarrollo de entornos interactivos. A través de herramientas digitales, pasaron de jugar a construir sus propias experiencias.",
@@ -834,7 +834,7 @@ export default function Formacion() {
       fechas: ["15 de abril de 2026"],
       sesiones: ["2026-04-15"],
       ano: 2026,
-      imagen: "/Formación 2026/Docentes que enseñan con IA.png",
+      imagen: "/Formación%202026/Docentes%20que%20enseñan%20con%20IA.png",
       subtitulo: "Bootcamp orientado al uso pedagógico de herramientas de inteligencia artificial.",
       descripcion: [
         "Bootcamp orientado a docentes para el uso pedagógico de herramientas de inteligencia artificial en el aula. Durante las sesiones, exploraron aplicaciones prácticas para innovar en sus metodologías de enseñanza y fortalecer sus procesos educativos.",
@@ -860,7 +860,7 @@ export default function Formacion() {
       fechas: ["21 de abril de 2026"],
       sesiones: ["2026-04-21"],
       ano: 2026,
-      imagen: "/Formación 2026/Emprende en video.png",
+      imagen: "/Formación%202026/Emprende%20en%20video.png",
       subtitulo: "Curso práctico de creación y edición de video para emprendimientos.",
       descripcion: [
         "Curso práctico enfocado en la creación y edición de videos para fortalecer la presencia digital de emprendimientos. Los participantes aprendieron a producir contenido audiovisual con fines comerciales, potenciando sus estrategias de comunicación y ventas.",
@@ -886,7 +886,7 @@ export default function Formacion() {
       fechas: ["23 de abril de 2026"],
       sesiones: ["2026-04-23"],
       ano: 2026,
-      imagen: "/Formación 2026/Ciudadanos del Cosmos el cielo de Envigado.png",
+      imagen: "/Formación%202026/Ciudadanos%20del%20Cosmos%20el%20cielo%20de%20Envigado.png",
       subtitulo: "Curso teórico-práctico para explorar el universo desde una mirada científica.",
       descripcion: [
         "Curso teórico-práctico enfocado en la exploración del universo, donde los participantes desarrollaron habilidades científicas para comprender fenómenos astronómicos. A través de actividades formativas, pasaron de la observación a la validación de conceptos físicos y científicos.",
@@ -912,7 +912,7 @@ export default function Formacion() {
       fechas: ["21 de abril de 2026"],
       sesiones: ["2026-04-21"],
       ano: 2026,
-      imagen: "/Formación 2026/IA para la gestión educativa.png",
+      imagen: "/Formación%202026/IA%20para%20la%20gestión%20educativa.png",
       subtitulo: "Aplicación de inteligencia artificial en procesos educativos y administrativos.",
       descripcion: [
         "El curso IA para la gestión educativa es una experiencia formativa dirigida a funcionarios, enfocada en la aplicación de la inteligencia artificial en procesos educativos y administrativos. A través de sesiones prácticas, los participantes exploran herramientas digitales que fortalecen la eficiencia, la toma de decisiones y la innovación en el ámbito educativo.",
@@ -938,7 +938,7 @@ export default function Formacion() {
       fechas: ["22 de abril de 2026"],
       sesiones: ["2026-04-22"],
       ano: 2026,
-      imagen: "/Formación 2026/Gobierno digital inteligente.png",
+      imagen: "/Formación%202026/Gobierno%20digital%20inteligente.png",
       subtitulo: "Formación en uso de IA para fortalecer la gestión pública e institucional.",
       descripcion: [
         "El curso Gobierno digital inteligente es una formación dirigida a funcionarios, enfocada en el uso de la inteligencia artificial para fortalecer la gestión pública y la innovación institucional. A través de sesiones prácticas, los participantes exploran herramientas digitales que optimizan procesos, mejoran la toma de decisiones y promueven una administración más eficiente.",
@@ -964,7 +964,7 @@ export default function Formacion() {
       fechas: ["8 de mayo de 2026"],
       sesiones: ["2026-05-08"],
       ano: 2026,
-      imagen: "/Formación 2026/Mujeres que usan la IA para la vida cotidiana.png",
+      imagen: "/Formación%202026/Mujeres%20que%20usan%20la%20IA%20para%20la%20vida%20cotidiana.png",
       subtitulo: "Espacio formativo para el uso práctico de IA en la vida diaria.",
       descripcion: [
         "El curso Mujeres que usan la IA para la vida cotidiana es un espacio formativo dirigido a mujeres, enfocado en el uso práctico de la inteligencia artificial y herramientas digitales en la vida diaria. A través de sesiones dinámicas, las participantes fortalecen habilidades tecnológicas básicas, promoviendo la autonomía, el aprendizaje continuo y el aprovechamiento de la tecnología en su entorno cotidiano.",
@@ -990,7 +990,7 @@ export default function Formacion() {
       fechas: ["22 de abril de 2026"],
       sesiones: ["2026-04-22", "2026-04-29", "2026-05-06", "2026-05-13", "2026-05-20", "2026-05-27", "2026-06-03", "2026-06-10"],
       ano: 2026,
-      imagen: "/Formación 2026/Código en Juego.png",
+      imagen: "/Formación%202026/Código%20en%20Juego.png",
       subtitulo: "Curso de programación con retos para desarrollar pensamiento lógico.",
       descripcion: [
         "El curso Código en Juego es un espacio formativo dirigido a niños y niñas, enfocado en el desarrollo de habilidades de pensamiento lógico y resolución de problemas a través de retos de programación. Mediante actividades prácticas, los participantes fortalecen su creatividad, pensamiento crítico y competencias digitales en un entorno dinámico y participativo.",
@@ -1016,7 +1016,7 @@ export default function Formacion() {
       fechas: ["30 de abril de 2026"],
       sesiones: ["2026-04-30", "2026-05-07", "2026-05-14", "2026-05-21", "2026-05-28", "2026-06-04", "2026-06-11"],
       ano: 2026,
-      imagen: "/Formación 2026/Robótica De 0 a prototipo.png",
+      imagen: "/Formación%202026/Robótica%20De%200%20a%20prototipo.png",
       subtitulo: "Curso STEM para diseñar, construir y programar robots funcionales.",
       descripcion: [
         "El curso Robótica: De 0 a prototipo es un espacio formativo dirigido a adolescentes, enfocado en el diseño, construcción y programación de robots mediante un enfoque STEM. A través de proyectos prácticos, los participantes desarrollan habilidades en electrónica, programación e integración de sensores, creando prototipos funcionales capaces de ejecutar tareas autónomas o controladas.",
@@ -1042,7 +1042,7 @@ export default function Formacion() {
       fechas: ["28 de abril de 2026"],
       sesiones: ["2026-04-28"],
       ano: 2026,
-      imagen: "/Formación 2026/MARKETING.png",
+      imagen: "/Formación%202026/MARKETING.png",
       subtitulo: "Curso práctico para fortalecer proyectos con promoción y comunicación digital.",
       descripcion: [
         "El curso Marketing Digital está diseñado para que los participantes aprendan a utilizar herramientas digitales de manera estratégica para fortalecer proyectos, atraer clientes y aumentar ventas. A través de siete sesiones prácticas, los asistentes desarrollarán competencias en promoción digital, comunicación efectiva y posicionamiento de iniciativas en entornos digitales.",
@@ -1068,7 +1068,7 @@ export default function Formacion() {
       fechas: ["28 de marzo de 2026"],
       sesiones: ["2026-03-28"],
       ano: 2026,
-      imagen: "/Formación 2026/E-card Historias del clima.png",
+      imagen: "/Formación%202026/E-card%20Historias%20del%20clima.png",
       subtitulo: "Encuentro y memoria colectiva sobre cambios ambientales.",
       descripcion: [
         "Historias del clima es un espacio de encuentro y reflexión donde los participantes comparten experiencias y recuerdos relacionados con los cambios observados en el clima y el entorno a lo largo del tiempo. A través del diálogo y la construcción de memoria colectiva, se promueve una mejor comprensión del territorio, sus transformaciones ambientales y la importancia de la adaptación frente a los desafíos climáticos actuales.",
@@ -1094,7 +1094,7 @@ export default function Formacion() {
       fechas: ["27 de mayo de 2026"],
       sesiones: ["2026-05-27"],
       ano: 2026,
-      imagen: "/Formación 2026/E-card Miradas del territorio Mapeando el riesgo.png",
+      imagen: "/Formación%202026/E-card%20Miradas%20del%20territorio%20Mapeando%20el%20riesgo.png",
       subtitulo: "Experiencia participativa para identificar riesgos y fortalecer acciones comunitarias.",
       descripcion: [
         "Miradas del territorio: Mapeando el riesgo es una experiencia participativa orientada a reconocer el territorio desde las vivencias y conocimientos de la comunidad. A través de la construcción colectiva de mapas, los participantes identifican riesgos, comparten saberes y fortalecen la comprensión de su entorno, promoviendo acciones comunitarias para la prevención y la gestión del riesgo.",
@@ -1120,7 +1120,7 @@ export default function Formacion() {
       fechas: ["26 de mayo de 2026"],
       sesiones: ["2026-05-26"],
       ano: 2026,
-      imagen: "/Formación 2026/E-card Volando el territorio.png",
+      imagen: "/Formación%202026/E-card%20Volando%20el%20territorio.png",
       subtitulo: "Taller sobre uso de drones para observar y monitorear el territorio.",
       descripcion: [
         "Taller orientado a descubrir el territorio desde una nueva perspectiva mediante el uso de drones. Los participantes aprenderán cómo estas herramientas tecnológicas permiten observar, comprender y monitorear riesgos, conectando la innovación con el conocimiento y cuidado del entorno.",
@@ -1135,6 +1135,75 @@ export default function Formacion() {
       enfoqueCierre: "Capacidad para monitorear y analizar riesgos desde observación aérea.",
       competencias: ["Manejo de drones", "Interpretación de imágenes aéreas", "Conciencia territorial"],
       proyectoFinal: "Registro y análisis de imágenes aéreas para identificar riesgos.",
+    },
+    {
+      id: "2026-14",
+      titulo: "Campus vacacional: Ciencia, tecnología y diversión",
+      tematica: "Tecnología",
+      estado: "En curso",
+      edad: "6 a 17",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["16 de junio - 26 de junio de 2026"],
+      sesiones: [
+        "2026-06-16",
+        "2026-06-17",
+        "2026-06-18",
+        "2026-06-19",
+        "2026-06-22",
+        "2026-06-23",
+        "2026-06-24",
+        "2026-06-25",
+        "2026-06-26",
+      ],
+      ano: 2026,
+      imagen: "/Formación%202026/Vacacionales.jfif",
+      subtitulo: "Ciencia, tecnología y diversión: campus vacacional para explorar y aprender.",
+      descripcion: [
+        "Ciencia, tecnología y diversión es una experiencia formativa diseñada para que niños, niñas y jóvenes exploren el mundo de la ciencia y la tecnología a través de actividades prácticas, retos creativos y experiencias de aprendizaje dinámicas. Durante el campus, los participantes desarrollarán habilidades de pensamiento crítico, innovación y trabajo en equipo en un entorno lleno de descubrimientos y diversión.",
+      ],
+      trabajado: [
+        "Actividades prácticas y retos creativos",
+        "Desarrollo de pensamiento crítico e innovación",
+        "Trabajo en equipo y experiencias lúdicas",
+        "Exploración de conceptos básicos de ciencia y tecnología",
+      ],
+      enfoque: "Aprendizaje práctico y exploratorio centrado en la ciencia y la tecnología.",
+      metodologias: ["Aprendizaje basado en proyectos", "Retos creativos", "Aprendizaje experiencial"],
+      enfoqueCierre: "Socialización de proyectos y actividades de cierre.",
+      competencias: ["Pensamiento crítico", "Innovación", "Trabajo en equipo", "Curiosidad científica", "Habilidades tecnológicas básicas"],
+      proyectoFinal: "Presentación de un proyecto o reto final que recoja los aprendizajes y creaciones del campus.",
+    },
+    {
+      id: "2026-15",
+      titulo: "Campus vacacional: Zona Challenge STEM+",
+      tematica: "Tecnología",
+      estado: "En curso",
+      edad: "8 a 17",
+      lugar: "I.E. José Manuel Restrepo Vélez (JOMAR), Envigado.",
+      fechas: ["16 al 19 de junio de 2026"],
+      sesiones: [
+        "2026-06-16",
+        "2026-06-17",
+        "2026-06-18",
+        "2026-06-19",
+      ],
+      ano: 2026,
+      imagen: "/Formación%202026/Zona%20Challenge.jpeg",
+      subtitulo: "Zona Challenge STEM+: retos tecnológicos, Escape Room y Mundialito de Robótica.",
+      descripcion: [
+        "Zona Challenge STEM+ es un espacio de aprendizaje y diversión donde los participantes ponen a prueba su creatividad, lógica e ingenio a través de experiencias interactivas basadas en la metodología STEM. Durante la jornada, los jóvenes enfrentarán retos tecnológicos, resolverán enigmas en un Escape Room temático y vivirán la emoción del Mundialito de Robótica, fortaleciendo habilidades de pensamiento crítico, trabajo en equipo y solución de problemas de manera práctica y entretenida.",
+      ],
+      trabajado: [
+        "Retos tecnológicos STEM+",
+        "Escape Room temático",
+        "Mundialito de Robótica",
+        "Trabajo en equipo y pensamiento crítico",
+      ],
+      enfoque: "Aprendizaje activo STEM con énfasis en creatividad e ingenio.",
+      metodologias: ["Aprendizaje basado en proyectos", "Retos interactivos", "Dinámicas colaborativas"],
+      enfoqueCierre: "Socialización de soluciones y reflexiones sobre el desafío STEM+.",
+      competencias: ["Pensamiento crítico", "Creatividad", "Resolución de problemas", "Trabajo en equipo", "Competencias digitales básicas"],
+      proyectoFinal: "Presentación de un reto resuelto del campus Challenge STEM+.",
     },
   ];
 
@@ -1228,7 +1297,7 @@ export default function Formacion() {
   });
 
   // Separar por categoría
-  const cursosActivos = filteredEcards.filter((e) => e.id === "2026-8" || e.id === "2026-9");
+  const cursosActivos = filteredEcards.filter((e) => e.id === "2026-14" || e.id === "2026-15");
   const cursos2026 = filteredEcards.filter((e) => e.ano === 2026);
   const cursos2025 = filteredEcards.filter((e) => e.ano === 2025);
 
@@ -1247,9 +1316,9 @@ export default function Formacion() {
 
   // Lógica del calendario
   const activeSessions = ecards
-    .filter((e) => e.id === "2026-8" || e.id === "2026-9")
+    .filter((e) => e.id === "2026-14" || e.id === "2026-15")
     .flatMap((e) =>
-      e.sesiones.map((date) => ({ date, titulo: e.titulo, tematica: e.tematica }))
+      e.sesiones.map((date) => ({ date, id: e.id, titulo: e.titulo, tematica: e.tematica }))
     );
 
   const calendarYear = calendarDate.getFullYear();
@@ -1263,13 +1332,13 @@ export default function Formacion() {
   const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
 
   // dias con sesiones en el mes visible
-  const sessionsByDay: Record<number, { titulo: string; tematica: string }[]> = {};
-  activeSessions.forEach(({ date, titulo, tematica }) => {
+  const sessionsByDay: Record<number, { id: string; titulo: string; tematica: string }[]> = {};
+  activeSessions.forEach(({ date, id, titulo, tematica }) => {
     const d = new Date(date + "T00:00:00");
     if (d.getFullYear() === calendarYear && d.getMonth() === calendarMonth) {
       const day = d.getDate();
       if (!sessionsByDay[day]) sessionsByDay[day] = [];
-      sessionsByDay[day].push({ titulo, tematica });
+      sessionsByDay[day].push({ id, titulo, tematica });
     }
   });
 
@@ -1327,6 +1396,8 @@ export default function Formacion() {
       "Crea con la naturaleza",
       "Navidad en Pixel",
       "Reescribiendo la Navidad",
+      "Campus vacacional: Ciencia, tecnología y diversión",
+      "Campus vacacional: Zona Challenge STEM+",
       "De Jugador a Creador",
       "Docentes que enseñan con IA",
       "Emprende en video",
@@ -1680,12 +1751,15 @@ export default function Formacion() {
                   </span>
                   {sessions && (
                     <div className="flex flex-wrap justify-center gap-0.5 mt-1">
-                      {sessions.map((s, idx) => (
-                        <span
-                          key={idx}
-                          className={`h-1.5 w-1.5 rounded-full ${tematicaColor[s.tematica] ?? "bg-[#0D4B56]"}`}
-                        />
-                      ))}
+                      {sessions.map((s, idx) => {
+                        const courseColor = s.id === "2026-14" ? "bg-[#FFDE07]" : "bg-[#EC6910]";
+                        return (
+                          <span
+                            key={idx}
+                            className={`h-1.5 w-1.5 rounded-full ${courseColor}`}
+                          />
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -1696,14 +1770,14 @@ export default function Formacion() {
           {/* Leyenda */}
           {activeSessions.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-4 border-t border-[#0D4B56]/12 pt-4">
-              {ecards
-                .filter((e) => e.id === "2026-8" || e.id === "2026-9")
-                .map((e) => (
-                  <div key={e.id} className="flex items-center gap-2">
-                    <span className={`h-2.5 w-2.5 rounded-full ${tematicaColor[e.tematica] ?? "bg-[#0D4B56]"}`} />
-                    <span className="text-xs text-[#0D4B56]/80">{e.titulo}</span>
-                  </div>
-                ))}
+              {cursosActivos.map((e) => (
+                <div key={e.id} className="flex items-center gap-2">
+                  <span
+                    className={`h-2.5 w-2.5 rounded-full ${e.id === "2026-14" ? "bg-[#FFDE07]" : "bg-[#EC6910]"}`}
+                  />
+                  <span className="text-xs text-[#0D4B56]/80">{e.titulo}</span>
+                </div>
+              ))}
             </div>
           )}
         </div>

@@ -37,6 +37,23 @@ type NoticiaUI = {
 
 const noticiasLocales: NoticiaLocal[] = [
   {
+    id: "amor-por-envigado-calidad-educativa-bienestar",
+    titulo: "Envigado destaca por sus avances en educación, innovación y bienestar social",
+    fecha: "2026-06-04",
+    resumen:
+      "En una nueva emisión del programa Amor por Envigado, la administración municipal resaltó logros como el reconocimiento de la I.E. Comercial entre las 10 mejores del mundo en sostenibilidad, el primer lugar por segundo año consecutivo en las Pruebas Saber 11 y programas de bienestar social y salud mental.",
+    contenido: [
+      "Durante una nueva emisión de Amor por Envigado, la administración municipal resaltó importantes logros para la ciudad. Entre ellos, el reconocimiento de la Institución Educativa Comercial de Envigado como una de las 10 mejores instituciones educativas del mundo en sostenibilidad, gracias a sus proyectos de investigación e innovación liderados por estudiantes.",
+      "Además, Envigado se consolidó por segundo año consecutivo como el municipio con los mejores resultados en las Pruebas Saber 11, reafirmando su liderazgo educativo a nivel nacional.",
+      "La administración también destacó programas como Envigado Let's Move Forward, que enviará a 14 estudiantes y un docente a Canadá para fortalecer sus competencias en inglés, así como iniciativas de bienestar social y salud mental como El Escuchadero, 1000 Días para Crecer Acunando y el programa Cuidadores, que continúan beneficiando a cientos de familias del municipio.",
+      "Según el alcalde Raúl Cardona, estos resultados son fruto de una inversión histórica en educación, innovación y programas sociales que buscan seguir posicionando a Envigado como un referente de desarrollo y calidad de vida en Colombia.",
+    ],
+    tipo: "propia",
+    imagenes: [],
+    video: "7my2luMjdoo",
+    autor: "Programa Amor por Envigado",
+  },
+  {
     id: "tlaxcala-envigado-jovenes-innovacion",
     titulo: "Desde Tlaxcala hasta Envigado: jóvenes que inspiran con innovación y educación",
     fecha: "2026-05-25",
@@ -440,6 +457,7 @@ const getImagePosition = (src: string) => {
 export default function Noticias() {
   const [selectedNews, setSelectedNews] = useState<NoticiaUI | null>(null);
   const [currentImageByNews, setCurrentImageByNews] = useState<Record<string, number>>({});
+  const [visibleCount, setVisibleCount] = useState(6);
   const { data: noticias = [], isLoading } = trpc.news.list.useQuery();
   
   // Mapear noticias de la BD a formato de UI
@@ -521,7 +539,7 @@ export default function Noticias() {
             </div>
           </div>
         </section>
-        {isLoading ? (
+        {isLoading && noticiasFiltradas.length === 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
               <Card key={i}>
@@ -544,13 +562,14 @@ export default function Noticias() {
             <p className="text-muted-foreground">No hay noticias disponibles</p>
           </div>
         ) : (
+          <>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {noticiasFiltradas.map((noticia) => (
+            {noticiasFiltradas.slice(0, visibleCount).map((noticia) => (
               <Card key={noticia.id} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative h-48 overflow-hidden bg-[#11B2AA]/10">
                   {noticia.video ? (
                     <iframe
-                      src={`https://www.youtube.com/embed/${noticia.video}?autoplay=1&mute=1&loop=1&playlist=${noticia.video}&playsinline=1&controls=0&rel=0&modestbranding=1`}
+                      src={`https://www.youtube.com/embed/${noticia.video}?autoplay=1&mute=1&playsinline=1&controls=0&rel=0&modestbranding=1`}
                       title={noticia.titulo}
                       loading="lazy"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -618,6 +637,18 @@ export default function Noticias() {
               </Card>
             ))}
           </div>
+          {visibleCount < noticiasFiltradas.length && (
+            <div className="mt-8 flex justify-center">
+              <Button
+                variant="outline"
+                onClick={() => setVisibleCount((c) => c + 6)}
+                className="border-[#0D4B56] bg-[#FFDE07]/20 text-[#182130] hover:bg-[#FFDE07]/35 px-8"
+              >
+                Ver más noticias
+              </Button>
+            </div>
+          )}
+          </>
         )}
 
         {selectedNews && (
@@ -646,7 +677,7 @@ export default function Noticias() {
                   {selectedNews.video ? (
                     <div className="relative aspect-video w-full bg-black">
                       <iframe
-                        src={`https://www.youtube.com/embed/${selectedNews.video}?autoplay=1&mute=1&loop=1&playlist=${selectedNews.video}&playsinline=1&rel=0&modestbranding=1`}
+                        src={`https://www.youtube.com/embed/${selectedNews.video}?playsinline=1&rel=0&modestbranding=1`}
                         title={selectedNews.titulo}
                         loading="eager"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -731,7 +762,7 @@ export default function Noticias() {
                     </p>
                     <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black shadow-lg">
                       <iframe
-                        src={`https://www.youtube.com/embed/${selectedNews.videoFinal}?autoplay=1&mute=1&loop=1&playlist=${selectedNews.videoFinal}&playsinline=1&rel=0&modestbranding=1`}
+                        src={`https://www.youtube.com/embed/${selectedNews.videoFinal}?playsinline=1&rel=0&modestbranding=1`}
                         title={`Video: ${selectedNews.titulo}`}
                         loading="lazy"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

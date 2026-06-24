@@ -288,20 +288,20 @@ export default function SemanaSTEM() {
   ];
 
   const day2GalleryImages: string[] = [
-    '/Semana STEM/24/1.jpg',
-    '/Semana STEM/24/2.jpg',
-    '/Semana STEM/24/3.jpg',
-    '/Semana STEM/24/4.jpg',
-    '/Semana STEM/24/5.jpg',
-    '/Semana STEM/24/6.jpg',
-    '/Semana STEM/24/7.jpg',
-    '/Semana STEM/24/8.jpg',
-    '/Semana STEM/24/9.jpg',
-    '/Semana STEM/24/10.jpg',
-    '/Semana STEM/24/11.jpg',
-    '/Semana STEM/24/12.jpg',
-    '/Semana STEM/24/13.jpg',
-    '/Semana STEM/24/14.jpg',
+    '/Semana%20STEM/24/1.jpg',
+    '/Semana%20STEM/24/2.jpg',
+    '/Semana%20STEM/24/3.jpg',
+    '/Semana%20STEM/24/4.jpg',
+    '/Semana%20STEM/24/5.jpg',
+    '/Semana%20STEM/24/6.jpg',
+    '/Semana%20STEM/24/7.jpg',
+    '/Semana%20STEM/24/8.jpg',
+    '/Semana%20STEM/24/9.jpg',
+    '/Semana%20STEM/24/10.jpg',
+    '/Semana%20STEM/24/11.jpg',
+    '/Semana%20STEM/24/12.jpg',
+    '/Semana%20STEM/24/13.jpg',
+    '/Semana%20STEM/24/14.jpg',
   ];
 
   // Datos del Día 3 - Jueves
@@ -635,14 +635,14 @@ export default function SemanaSTEM() {
   ];
 
   const day4GalleryImages: string[] = [
-    '/Semana STEM/26/1.jpg',
-    '/Semana STEM/26/2.jpg',
-    '/Semana STEM/26/3.jpg',
-    '/Semana STEM/26/4.jpg',
-    '/Semana STEM/26/5.jpg',
-    '/Semana STEM/26/6.jpg',
-    '/Semana STEM/26/7.jpg',
-    '/Semana STEM/26/8.jpg',
+    '/Semana%20STEM/26/1.jpg',
+    '/Semana%20STEM/26/2.jpg',
+    '/Semana%20STEM/26/3.jpg',
+    '/Semana%20STEM/26/4.jpg',
+    '/Semana%20STEM/26/5.jpg',
+    '/Semana%20STEM/26/6.jpg',
+    '/Semana%20STEM/26/7.jpg',
+    '/Semana%20STEM/26/8.jpg',
   ];
 
   const day2TeamCards = [

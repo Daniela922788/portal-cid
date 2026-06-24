@@ -61,7 +61,7 @@ export default function IEOficiales() {
       {/* Hero Banner */}
       <section className="relative w-full h-[560px] overflow-hidden">
         <img
-          src="/4S8A1959.jpg"
+          src="/4S8A1959.webp"
           alt="Instituciones Educativas Oficiales de Envigado"
           className="w-full h-full object-cover"
         />

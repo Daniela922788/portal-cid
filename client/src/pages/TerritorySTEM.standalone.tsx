@@ -215,7 +215,7 @@ export default function TerritorioStem() {
       <div className="bg-[#00838f] pt-20">
         <section className="relative w-full overflow-hidden">
           <img
-            src="/banners/banner-territorio.png"
+            src="/banners/banner-territorio.webp"
             alt="Banner Territorio STEM"
             loading="eager"
             fetchPriority="high"
@@ -562,7 +562,7 @@ export default function TerritorioStem() {
             <a href="/semana-stem-complete" aria-label="Ir a Semana STEM" className="group block">
               <div className="rounded-2xl border border-[#0D4B56]/20 bg-white p-3 shadow-md transition-all group-hover:shadow-lg">
                 <div className="relative overflow-hidden rounded-xl">
-                  <img src="/banners/banner-semana-click.png" alt="Banner Semana STEM" loading="lazy" decoding="async" className="h-[190px] w-full object-cover object-center md:h-[230px]" />
+                  <img src="/banners/banner-semana-click.webp" alt="Banner Semana STEM" loading="lazy" decoding="async" className="h-[190px] w-full object-cover object-center md:h-[230px]" />
                   <div className="pointer-events-none absolute inset-0 bg-[#182130]/0 transition-colors duration-300 group-hover:bg-[#182130]/20" />
                 </div>
               </div>

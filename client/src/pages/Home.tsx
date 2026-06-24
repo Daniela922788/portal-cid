@@ -1,12 +1,15 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "wouter";
 import CoursesCarouselNew from "@/components/CoursesCarouselNew";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Calendar, Clock, Users, MapPin } from "lucide-react";
 
 import educacionLogo from "@/assets/educacion-logo.png";
 import alcaldiaLogo from "@/assets/alcaldia-envigado-logo.png";
 import cienciasLogo from "@/assets/ciencias-logo.png";
 import ticLogo from "@/assets/tic-logo.png";
+
+// Convierte la ruta de una imagen a su versión .webp (si es .jpg/.jpeg/.png)
+const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
 
 export default function Home() {
   const showCoursesCarousel = false;
@@ -19,6 +22,14 @@ export default function Home() {
   // bg      = imagen de fondo difuminada (ponla en /public/Fondos/)
   // ─────────────────────────────────────────────
   const featuredSections = [
+    {
+      id: "mundial",
+      title: "La ciencia detrás de cada gol imposible",
+      desc: "La aerodinámica, la geometría y la física transformaron la forma de jugar al fútbol. Los balones del Mundial han evolucionado científicamente para lograr trayectorias más precisas, efectos sorprendentes y tiros cada vez más impredecibles. Desde las pesadas pelotas de cuero de 1930 hasta los diseños actuales con micro-ranuras, cada gol memorable esconde una explicación científica.",
+      videos: ["Z7lTRVLTAbk"],
+      bg: "/Fondos/mundial_colombia.png",
+      watermark: "MUNDIAL",
+    },
     {
       id: "chernobyl",
       title: "Chernóbil: el desastre nuclear más grande de la historia",
@@ -145,12 +156,10 @@ export default function Home() {
         @keyframes cid-bg-fade { from { opacity: 0; } to { opacity: 0.1; } }
         .cid-bg-fade { animation: cid-bg-fade 0.8s ease both; }
 
+        /* Nota: el "display" lo controla Tailwind (flex / hidden md:flex) en
+           cada botón, para que mostrar/ocultar por tamaño de pantalla sea
+           confiable. Aquí solo van los estilos visuales. */
         .cid-carousel-arrow {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 48px;
-          height: 48px;
           border-radius: 9999px;
           background: rgba(255,255,255,0.75);
           border: 1px solid rgba(2,58,52,0.15);
@@ -165,6 +174,21 @@ export default function Home() {
           color: #ffffff;
           transform: scale(1.08);
           box-shadow: 0 12px 30px rgba(17,178,170,0.35);
+        }
+
+        /* — Campus vacacional (atmósfera espacial del flyer) — */
+        @keyframes campus-float {
+          0%, 100% { transform: translateY(0); }
+          50%      { transform: translateY(-12px); }
+        }
+        @keyframes campus-twinkle {
+          0%, 100% { opacity: 0.18; }
+          50%      { opacity: 0.9; }
+        }
+        .campus-float { animation: campus-float 7s ease-in-out infinite; }
+        .campus-star  { animation: campus-twinkle 3.6s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          .campus-float, .campus-star { animation: none; }
         }
       `}</style>
 
@@ -356,41 +380,149 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════════════════════════
-          TOM 2026 — dark cinematic section
+          CAMPUS VACACIONAL — vitrina con video vertical (autoplay)
+          · El video va en /public/videos/ como .mp4 (Instagram NO permite
+            autoplay embebido, por eso se usa el archivo descargado).
+          · Para cambiar fechas / textos, edita el arreglo `chips` y los textos.
       ═══════════════════════════════════════ */}
-      <section className="relative py-16 md:py-24 bg-[#08100F]">
-        {/* Watermark */}
-        <span
-          className="cid-hero-text pointer-events-none select-none absolute right-6 bottom-6 text-[11rem] font-black text-white/[0.03] leading-none hidden md:block"
-          aria-hidden="true"
-        >03</span>
+      <section
+        className="relative overflow-hidden py-20 md:py-28"
+        style={{
+          background:
+            'radial-gradient(130% 100% at 78% 0%, #16306e 0%, #0c1d50 40%, #0a1338 72%, #070b24 100%)',
+        }}
+      >
+        {/* Resplandores de color (echo del degradado del flyer) */}
+        <div className="pointer-events-none absolute -top-32 right-0 h-96 w-96 rounded-full blur-3xl"
+          style={{ background: 'rgba(247,148,29,0.14)' }} aria-hidden="true" />
+        <div className="pointer-events-none absolute -bottom-40 -left-24 h-[28rem] w-[28rem] rounded-full blur-3xl"
+          style={{ background: 'rgba(17,178,170,0.16)' }} aria-hidden="true" />
+        <div className="pointer-events-none absolute bottom-0 right-1/4 h-80 w-80 rounded-full blur-3xl"
+          style={{ background: 'rgba(124,58,237,0.16)' }} aria-hidden="true" />
 
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
-            <div>
-              <p className="cid-section-label text-[#11B2AA] mb-3">Video principal</p>
-              <h2 className="cid-hero-text font-black text-white leading-none"
-                style={{ fontSize: 'clamp(2.8rem, 8vw, 7rem)' }}>
-                TOM 2026
+        {/* Planeta tipo Saturno (esquina superior) */}
+        <svg
+          className="pointer-events-none absolute right-6 top-12 hidden md:block opacity-50"
+          width="84" height="84" viewBox="0 0 84 84" aria-hidden="true"
+        >
+          <circle cx="42" cy="42" r="18" fill="rgba(247,148,29,0.45)" />
+          <ellipse cx="42" cy="42" rx="36" ry="11" fill="none"
+            stroke="rgba(255,255,255,0.35)" strokeWidth="2" transform="rotate(-20 42 42)" />
+        </svg>
+
+        {/* Estrellas */}
+        {[
+          { top: '14%', left: '6%', s: 3 }, { top: '22%', left: '40%', s: 2 },
+          { top: '10%', left: '62%', s: 2 }, { top: '70%', left: '12%', s: 3 },
+          { top: '82%', left: '54%', s: 2 }, { top: '40%', left: '90%', s: 3 },
+          { top: '58%', left: '78%', s: 2 }, { top: '88%', left: '32%', s: 2 },
+          { top: '30%', left: '24%', s: 2 },
+        ].map((st, i) => (
+          <span
+            key={i}
+            className="campus-star pointer-events-none absolute rounded-full bg-white"
+            style={{ top: st.top, left: st.left, width: st.s, height: st.s, animationDelay: `${i * 0.4}s` }}
+            aria-hidden="true"
+          />
+        ))}
+        {/* Destellos "+" */}
+        {[{ top: '18%', left: '84%', c: '#A7CE3B' }, { top: '76%', left: '88%', c: '#F7941D' }, { top: '64%', left: '4%', c: '#11B2AA' }].map((p, i) => (
+          <span key={`p${i}`} className="campus-star pointer-events-none absolute select-none font-bold"
+            style={{ top: p.top, left: p.left, color: p.c, fontSize: '14px', animationDelay: `${i * 0.7}s` }} aria-hidden="true">+</span>
+        ))}
+
+        <div className="relative z-10 container mx-auto px-4 md:px-8">
+          <div className="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-20">
+            {/* ── Texto / información ── */}
+            <div className="cid-fade-in md:flex-1 text-center md:text-left">
+              {/* Eyebrow "En curso" con punto pulsante */}
+              <div className="mb-7 flex items-center justify-center md:justify-start gap-2.5">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+                    style={{ background: '#A7CE3B' }} />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full" style={{ background: '#A7CE3B' }} />
+                </span>
+                <p className="cid-section-label" style={{ color: '#A7CE3B' }}>En curso · Vacaciones STEM</p>
+              </div>
+
+              <h2 className="cid-hero-text italic font-black leading-[1.04] mb-4"
+                style={{ fontSize: 'clamp(2.5rem, 5.4vw, 4.6rem)', color: '#F7941D' }}>
+                Campus vacacional
+                <span className="block not-italic font-bold text-white/90"
+                  style={{ fontSize: 'clamp(1.35rem, 2.8vw, 2.3rem)', marginTop: '0.2rem' }}>
+                  ciencia, tecnología y diversión
+                </span>
               </h2>
-            </div>
-            <p className="cid-body text-white/50 text-lg md:text-2xl md:text-right max-w-xs">
-              Ideas que se convierten en esperanza
-            </p>
-          </div>
 
-          <div className="overflow-hidden rounded-2xl shadow-2xl"
-            style={{ boxShadow: '0 0 80px rgba(17,178,170,0.15), 0 32px 64px rgba(0,0,0,0.6)' }}>
-            <div className="relative aspect-video w-full bg-black">
-              <iframe
-                src="https://www.youtube.com/embed/CceKZW0xxTk?autoplay=1&mute=1&loop=1&playlist=CceKZW0xxTk&playsinline=1&rel=0&modestbranding=1"
-                title="Somos el CID - Video"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                className="absolute inset-0 h-full w-full"
-              />
+              <p className="cid-body text-lg md:text-xl mb-3" style={{ color: '#A7CE3B' }}>
+                Aprender nunca fue tan divertido.
+              </p>
+              <p className="cid-body text-white/65 text-base md:text-lg leading-relaxed max-w-lg mx-auto md:mx-0 mb-8">
+                Ciencia, tecnología, creatividad y juego se unen en un campus lleno de
+                experiencias, retos y descubrimientos.
+              </p>
+
+              {/* Detalles del campus (lista con iconos) */}
+              <div className="mb-8 max-w-md mx-auto md:mx-0 divide-y divide-white/10">
+                {[
+                  { icon: Calendar, k: "Fechas", v: "Semana 1: 16–19 jun · Semana 2: 22–26 jun" },
+                  { icon: Clock, k: "Horario", v: "8:00 a. m. – 12:00 m." },
+                  { icon: Users, k: "Edades", v: "6 a 17 años" },
+                  { icon: MapPin, k: "Lugar", v: "CID · Biblioteca Débora Arango, 3er piso" },
+                ].map(({ icon: Icon, k, v }) => (
+                  <div key={k} className="flex items-center gap-4 py-3.5 text-left">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05]">
+                      <Icon className="h-[18px] w-[18px]" style={{ color: '#11B2AA' }} />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="cid-section-label text-white/45 mb-0.5">{k}</p>
+                      <p className="cid-body text-white text-sm md:text-base leading-snug">{v}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Badge "Sin costo" */}
+              <div className="flex justify-center md:justify-start">
+                <span className="cid-body rounded-full px-5 py-2 text-sm font-bold text-[#070b24]"
+                  style={{ background: '#F7941D' }}>Sin costo</span>
+              </div>
+            </div>
+
+            {/* ── Video vertical flotando en el espacio ── */}
+            <div className="relative flex justify-center md:flex-1">
+              {/* Órbita */}
+              <svg
+                className="pointer-events-none absolute left-1/2 top-1/2 hidden sm:block"
+                width="480" height="430" viewBox="0 0 480 430"
+                style={{ transform: 'translate(-50%, -50%) rotate(-15deg)' }} aria-hidden="true"
+              >
+                <ellipse cx="240" cy="215" rx="218" ry="150" fill="none"
+                  stroke="rgba(167,206,59,0.28)" strokeWidth="1.4" strokeDasharray="3 9" />
+                <circle cx="30" cy="150" r="6" fill="#F7941D" />
+                <circle cx="455" cy="270" r="3.5" fill="#11B2AA" />
+              </svg>
+
+              {/* Marco flotante con halo */}
+              <div className="campus-float relative">
+                <div className="absolute -inset-5 rounded-[3rem] blur-2xl opacity-55"
+                  style={{ background: 'linear-gradient(140deg, #F7941D, #11B2AA)' }} aria-hidden="true" />
+                <div className="phone-frame relative bg-black" style={{ width: 'min(76vw, 285px)' }}>
+                  <div className="phone-notch" />
+                  <div className="aspect-[9/16] w-full">
+                    <video
+                      src="/videos/campus-vacacional.mp4"
+                      poster="/videos/campus-vacacional.jpg"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -403,12 +535,20 @@ export default function Home() {
         {/* Fondo decorativo (cambia por slide) */}
         <img
           key={`bg-${active.id}`}
-          src={active.bg}
+          src={toWebp(active.bg)}
           alt=""
           aria-hidden="true"
           loading="lazy"
           decoding="async"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+          onError={(e) => {
+            const el = e.currentTarget as HTMLImageElement;
+            if (el.dataset.fallback !== "1") {
+              el.dataset.fallback = "1";
+              el.src = active.bg; // si no existe el webp, usa la imagen original
+            } else {
+              el.style.display = "none"; // si tampoco existe el original, ocúltala
+            }
+          }}
           className="cid-bg-fade absolute inset-0 w-full h-full object-cover pointer-events-none"
         />
 
@@ -463,7 +603,7 @@ export default function Home() {
                     <button
                       onClick={prevVideo}
                       aria-label="Video anterior"
-                      className="absolute left-2 top-1/2 -translate-y-1/2 z-30 cid-carousel-arrow"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 z-30 cid-carousel-arrow flex items-center justify-center"
                       style={{ width: '38px', height: '38px' }}
                     >
                       <ChevronLeft className="h-4 w-4" />
@@ -471,7 +611,7 @@ export default function Home() {
                     <button
                       onClick={nextVideo}
                       aria-label="Siguiente video"
-                      className="absolute right-2 top-1/2 -translate-y-1/2 z-30 cid-carousel-arrow"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 z-30 cid-carousel-arrow flex items-center justify-center"
                       style={{ width: '38px', height: '38px' }}
                     >
                       <ChevronRight className="h-4 w-4" />
@@ -502,42 +642,77 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Puntos de navegación */}
-          <div className="mt-10 md:mt-12 flex items-center justify-center gap-3">
-            {featuredSections.map((s, i) => (
+          {/* Puntos de navegación de secciones
+              · En móvil: flechas a cada lado de los puntos (no tapan el video).
+              · En escritorio: solo los puntos; las flechas van a los costados. */}
+          <div className="mt-10 md:mt-12 flex items-center justify-center gap-4">
+            {/* Flecha anterior — SOLO móvil */}
+            {sectionCount > 1 && (
               <button
-                key={s.id}
-                onClick={() => selectSection(i)}
-                aria-label={`Ir a la sección ${s.title}`}
-                aria-current={i === activeSection}
-                className="rounded-full transition-all duration-300"
-                style={
-                  i === activeSection
-                    ? { width: '30px', height: '8px', background: '#11B2AA' }
-                    : { width: '8px', height: '8px', background: 'rgba(2,58,52,0.25)' }
-                }
-              />
-            ))}
+                onClick={goPrev}
+                aria-label="Sección anterior"
+                className="cid-carousel-arrow flex md:hidden items-center justify-center shrink-0"
+                style={{ width: '40px', height: '40px' }}
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+            )}
+
+            <div className="flex items-center justify-center gap-3">
+              {featuredSections.map((s, i) => (
+                <button
+                  key={s.id}
+                  onClick={() => selectSection(i)}
+                  aria-label={`Ir a la sección ${s.title}`}
+                  aria-current={i === activeSection}
+                  className="rounded-full transition-all duration-300"
+                  style={
+                    i === activeSection
+                      ? { width: '30px', height: '8px', background: '#11B2AA' }
+                      : { width: '8px', height: '8px', background: 'rgba(2,58,52,0.25)' }
+                  }
+                />
+              ))}
+            </div>
+
+            {/* Flecha siguiente — SOLO móvil */}
+            {sectionCount > 1 && (
+              <button
+                onClick={goNext}
+                aria-label="Sección siguiente"
+                className="cid-carousel-arrow flex md:hidden items-center justify-center shrink-0"
+                style={{ width: '40px', height: '40px' }}
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Flechas laterales */}
-        <button
-          onClick={goPrev}
-          aria-label="Sección anterior"
-          className="cid-carousel-arrow absolute top-1/2 -translate-y-1/2 z-20"
-          style={{ left: 'calc(50% - 890px)' }}
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </button>
-        <button
-          onClick={goNext}
-          aria-label="Sección siguiente"
-          className="cid-carousel-arrow absolute top-1/2 -translate-y-1/2 z-20"
-          style={{ left: 'calc(50% + 700px)' }}
-        >
-          <ChevronRight className="h-6 w-6" />
-        </button>
+        {/* Flechas laterales — SOLO escritorio (md+).
+            Posición dinámica con clamp(): se separan del borde según el ancho
+            de la pantalla, con un mínimo de 1rem y un máximo de 5rem.
+            En móvil se ocultan y se usan las flechas de abajo. */}
+        {sectionCount > 1 && (
+          <>
+            <button
+              onClick={goPrev}
+              aria-label="Sección anterior"
+              className="cid-carousel-arrow hidden md:flex items-center justify-center absolute top-1/2 -translate-y-1/2 z-20"
+              style={{ width: '48px', height: '48px', left: 'clamp(1rem, 3vw, 5rem)' }}
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+            <button
+              onClick={goNext}
+              aria-label="Sección siguiente"
+              className="cid-carousel-arrow hidden md:flex items-center justify-center absolute top-1/2 -translate-y-1/2 z-20"
+              style={{ width: '48px', height: '48px', right: 'clamp(1rem, 3vw, 5rem)' }}
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+          </>
+        )}
       </section>
 
       {/* ═══════════════════════════════════════
