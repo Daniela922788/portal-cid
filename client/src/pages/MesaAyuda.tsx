@@ -78,11 +78,6 @@ export default function MesaAyuda() {
         <div className="pointer-events-none absolute -left-16 bottom-0 h-48 w-48 rounded-full bg-[#EC6910]/15 blur-3xl" />
 
         <div className="relative z-10 container flex min-h-[480px] flex-col justify-end pb-8 md:pb-10">
-          <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/35 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em]">
-            <LifeBuoy className="h-4 w-4 text-[#FFDE07]" />
-            Mesa de ayuda CID
-          </div>
-
           <h1 className="text-5xl font-extrabold leading-tight lg:text-6xl">Contactanos</h1>
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-white/85 lg:text-lg">
             Estamos para apoyarte. Resuelve tus dudas y gestiona tus solicitudes mediante nuestros canales de atencion.
@@ -116,7 +111,7 @@ export default function MesaAyuda() {
             {/* Dirección */}
             <div>
               <h3 className="text-gray-400 text-sm font-semibold mb-3">
-                	Dirección de Innovación Educativa
+                	Dirección de Innovación y Desarrollo
 
               </h3>
 

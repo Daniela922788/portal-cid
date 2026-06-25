@@ -12,14 +12,9 @@ export default function Footer() {
           {/* Información del CID */}
           <div>
             <h3 className="font-bold text-lg mb-4 text-primary">{APP_TITLE}</h3>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-muted-foreground">
               Centro de Innovación y Desarrollo dedicado a promover la innovación, la investigación y el desarrollo STEM.
             </p>
-            <div className="flex gap-3">
-              <a href="https://www.youtube.com/@CentrodeInnovaci%C3%B3nyDesarrollo/featured" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                <Youtube className="h-5 w-5" />
-              </a>
-            </div>
           </div>
 
           {/* Enlaces rápidos */}
@@ -37,7 +32,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/semana-stem" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link href="/semana-stem-complete" className="text-muted-foreground hover:text-primary transition-colors">
                   Semana STEM
                 </Link>
               </li>
@@ -54,8 +49,8 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Recursos</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/formacion" className="text-muted-foreground hover:text-primary transition-colors">
-                  Formación
+                <Link href="/videos" className="text-muted-foreground hover:text-primary transition-colors">
+                  Videos
                 </Link>
               </li>
               <li>
@@ -69,8 +64,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/enlaces" className="text-muted-foreground hover:text-primary transition-colors">
-                  Enlaces de Interés
+                <Link href="/aliados" className="text-muted-foreground hover:text-primary transition-colors">
+                  Aliados
                 </Link>
               </li>
             </ul>
@@ -101,21 +96,69 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-          <p>© {currentYear} {APP_TITLE}. Todos los derechos reservados.</p>
-          <div className="flex gap-4">
-            <Link href="/mesa-ayuda" className="hover:text-primary transition-colors">
-              Mesa de Ayuda
-            </Link>
-            <span>|</span>
-            <a href="#" className="hover:text-primary transition-colors">
-              Términos y Condiciones
-            </a>
-            <span>|</span>
-            <a href="#" className="hover:text-primary transition-colors">
-              Política de Privacidad
-            </a>
+        {/* ── Logos institucionales (izquierda) + YouTube/copyright (derecha) ── */}
+        <div className="border-t mt-8 pt-8 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          {/* Logos a la izquierda */}
+          <div className="flex items-center gap-6">
+            <img
+              src="/Logo-Escudo-Alcaldia-NEGRO.png"
+              alt="Escudo Alcaldía de Envigado"
+              className="h-20 w-auto"
+            />
+            <img
+              src="/LOGO-NUEVO-CID-NEGRO.png"
+              alt="Logo CID"
+              className="h-20 w-auto"
+            />
           </div>
+
+          {/* YouTube + copyright a la derecha */}
+          <div className="flex flex-col items-center gap-3 md:items-end">
+            <a
+              href="https://www.youtube.com/@CentrodeInnovaci%C3%B3nyDesarrollo/featured"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Canal de YouTube del CID"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Youtube className="h-6 w-6" />
+            </a>
+            <p className="text-sm text-muted-foreground">
+              © {currentYear} {APP_TITLE}. Todos los derechos reservados.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Barra Marca País + GOV.CO (Portal Único del Estado Colombiano) ── */}
+      <div className="bg-[#1c1c1c] py-5">
+        <div className="container flex items-center justify-end gap-6">
+          <a
+            href="https://www.colombia.co"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Marca País Colombia"
+            className="transition-opacity hover:opacity-90"
+          >
+            <img
+              src="/colombia-co-blanco.webp"
+              alt="Colombia CO"
+              className="h-7 w-auto"
+            />
+          </a>
+          <a
+            href="https://www.gov.co"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Ir a GOV.CO, Portal Único del Estado Colombiano"
+            className="transition-opacity hover:opacity-90"
+          >
+            <img
+              src="/logo_gov_blanco_res.webp"
+              alt="GOV.CO - Portal Único del Estado Colombiano"
+              className="h-7 w-auto"
+            />
+          </a>
         </div>
       </div>
     </footer>

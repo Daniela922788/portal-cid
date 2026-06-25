@@ -18,20 +18,20 @@ interface IE {
 
 
 const iesData: IE[] = [
-  { id: 1, nombre: "Institución Educativa Alejandro Vélez Barrientos", rector: "Maria Nohelia Ochoa Betancur", telefono: "604 332 43 66", direccion: "Dg. 29 No. 35D SUR 10, Barrio La Sebastiana", sitioWeb: "https://www.iealejandrovelez.edu.co/", imagen: "/InstituciónEducativaAlejandroVélezBarrientos.jpg", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20Alejandro%20V%C3%A9lez%20Barrientos.png" },
-  { id: 2, nombre: "Institución Educativa San Vicente Alto de las Flores", rector: "Roberto Torres Payares", telefono: "312 765 8029", direccion: "CALLE 41 SUR # 24 C 71 Barrio La Mina", sitioWeb: "https://www.iesanvicente.edu.co/", imagen: "/InstituciónEducativaSanVicenteAltodelasFlores.jpg", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20San%20Vicente%20Alto%20de%20las%20Flores.png" },
-  { id: 3, nombre: "Institución Educativa Comercial de Envigado", rector: "Isabel Cristina Montoya Posada", telefono: "604 333 33 73", direccion: "Carrera 45C N° 39 Sur-11 Alcalá", sitioWeb: "https://www.iece.edu.co/", imagen: "/InstituciónEducativaComercialdeEnvigado.jpg", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20Comercial%20de%20Envigado.png" },
-  { id: 4, nombre: "Institución Educativa Darío de Bedout", rector: "Julian Augusto Morales Idarraga", telefono: "319 784 6802", direccion: "Calle 53 sur N° 39 - 62 Alto de las Flores", sitioWeb: "https://iedariodebedout.edu.co/", imagen: "/InstituciónEducativaDaríodeBedout.jpg", logo: "/InstituciónEducativaDaríodeBedout.png" },
-  { id: 5, nombre: "Institución Educativa El Salado", rector: "Jose Alexander Estrada Villa", telefono: "324 516 7648", direccion: "Carrera 25 No. 39D SUR 60 Envigado", sitioWeb: "https://www.iesalado.edu.co/", imagen: "/InstituciónEducativaElSalado.jpg", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20El%20Salado.png" },
+  { id: 1, nombre: "Institución Educativa Alejandro Vélez Barrientos", rector: "Maria Nohelia Ochoa Betancur", telefono: "604 3324366", direccion: "Carrera 45C N.° 39 Sur-11 Alcalá", sitioWeb: "https://www.iealejandrovelez.edu.co/", imagen: "/InstituciónEducativaAlejandroVélezBarrientos.jpg", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20Alejandro%20V%C3%A9lez%20Barrientos.png" },
+  { id: 2, nombre: "Institución Educativa San Vicente Alto de las Flores", rector: "Roberto Torres Payares", telefono: "3127658029", direccion: "Calle 53 sur N 39 - 62 Alto de las Flores", sitioWeb: "https://www.iesanvicente.edu.co/", imagen: "/InstituciónEducativaSanVicenteAltodelasFlores.jpg", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20San%20Vicente%20Alto%20de%20las%20Flores.png" },
+  { id: 3, nombre: "Institución Educativa Comercial de Envigado", rector: "Isabel Cristina Montoya Posada", telefono: "604 3333373", direccion: "Calle 41 Sur # 24 C 71 Barrio La Mina", sitioWeb: "https://www.iece.edu.co/", imagen: "/InstituciónEducativaComercialdeEnvigado.jpg", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20Comercial%20de%20Envigado.png" },
+  { id: 4, nombre: "Institución Educativa Darío de Bedout", rector: "Julian Augusto Morales Idarraga", telefono: "3197846802", direccion: "Dg. 29 No. 35D SUR 10, Barrio La Sebastiana", sitioWeb: "https://iedariodebedout.edu.co/", imagen: "/InstituciónEducativaDaríodeBedout.jpg", logo: "/InstituciónEducativaDaríodeBedout.png" },
+  { id: 5, nombre: "Institución Educativa El Salado", rector: "Jose Alexander Estrada Villa", telefono: "3245167648", direccion: "Carrera 25 No. 39D SUR 60", sitioWeb: "https://www.iesalado.edu.co/", imagen: "/InstituciónEducativaElSalado.jpg", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20El%20Salado.png" },
   { id: 6, nombre: "Institución Educativa José Manuel Restrepo Vélez", rector: "Juan David Hernandez Bolivar", telefono: "2763988", direccion: "Calle 38 Sur # 45 A 87 Barrio Alcalá", sitioWeb: "https://www.jomar.edu.co/", imagen: "/InstituciónEducativaJoséManuelRestrepoVélez.jpg", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20Jos%C3%A9%20Manuel%20Restrepo%20V%C3%A9lez.jpg" },
-  { id: 7, nombre: "Institución Educativa José Miguel de la Calle", rector: "Francy Esperanza Chávez Jaime", telefono: "276 24 26", direccion: "Tv 34b sur # 31e66 # 31e, Zona 9", sitioWeb: "https://www.lajose.edu.co/", imagen: "/InstituciónEducativaJoséMigueldelaCalle.png", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20Jos%C3%A9%20Miguel%20de%20la%20Calle.png" },
-  { id: 8, nombre: "Institución Educativa La Paz", rector: "Doris Omaira Sánchez Álvarez", telefono: "276 77 97", direccion: "Calle 46 S Nro. 42", sitioWeb: "https://www.institucioneducativalapaz.edu.co/", imagen: "/InstituciónEducativaLaPaz.jpg", logo: "/InstituciónEducativaLaPaz.png" },
-  { id: 9, nombre: "Institución Educativa Las Palmas", rector: "Jorge Albeiro Marulanda Carmona", telefono: "6043860198", direccion: "Calle 25B Sur #5D61. – Sector los Lotes- Las Palmas", sitioWeb: "https://www.ielaspalmas.edu.co/", imagen: "/InstituciónEducativaLasPalmas.JPG", logo: "/InstituciónEducativaLasPalmas.png" },
-  { id: 10, nombre: "Institución Educativa Manuel Uribe Ángel", rector: "Ana Lucía Rivera Escudero", telefono: "604 276 17 88", direccion: "Carrera 44 No. 38 SUR - 15, Envigado", sitioWeb: "https://www.iemua.edu.co/", imagen: "/InstituciónEducativaManuelUribeÁngel.JPG", logo: "/InstituciónEducativaManuelUribeÁngel.png" },
-  { id: 11, nombre: "Institución Educativa María Poussepin", rector: "Francisco Eladio Lopera Salgado", telefono: "604 276 17 56", direccion: "Calle 37 SUR No. 33 - 14, Envigado", sitioWeb: "https://www.iemariapoussepin.edu.co/", imagen: "/InstituciónEducativaMaríaPoussepin.JPG", logo: "/InstituciónEducativaMaríaPoussepin.png" },
-  { id: 12, nombre: "Institución Educativa Martín Eduardo Ríos Llanos", rector: "Margarita  María Gutiérrez Cano", telefono: "276 47 55", direccion: "Calle 45B sur N° 42c -09", sitioWeb: "https://iemartineduardorios.edu.co/", imagen: "/InstituciónEducativaMartínEduardoRíosLlanos.png", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20Mart%C3%ADn%20Eduardo%20R%C3%ADos%20Llanos.png" },
-  { id: 13, nombre: "Institución Educativa Normal Superior de Envigado", rector: "Pedro Alonso Rivera Bustamante", telefono: "304 283 82 40", direccion: "Calle 34DD SUR No. 28 - 24", sitioWeb: "https://www.iende.edu.co/", imagen: "/InstituciónEducativaNormalSuperiordeEnvigado.jpg", logo: "/InstituciónEducativaNormalSuperiordeEnvigado.png" },
-  { id: 14, nombre: "Institución Educativa Leticia Arango de Avendaño", rector: "William Alonso Gaviria Campuzano", telefono: "538 01 01", direccion: "Vereda Pantanillo", sitioWeb: "https://leticiaarango.edu.co/", imagen: "/InstituciónEducativaLeticiaArangodeAvendaño.JPG", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20Leticia%20Arango%20de%20Avenda%C3%B1o.png" },
+  { id: 7, nombre: "Institución Educativa José Miguel de la Calle", rector: "Francy Esperanza Chávez Jaime", telefono: "604 2762426", direccion: "Tv. 34b Sur # 31e66 # 31e. Zona 9", sitioWeb: "https://www.lajose.edu.co/", imagen: "/InstituciónEducativaJoséMigueldelaCalle.png", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20Jos%C3%A9%20Miguel%20de%20la%20Calle.png" },
+  { id: 8, nombre: "Institución Educativa La Paz", rector: "Doris Omaira Sánchez Álvarez", telefono: "604 2767797", direccion: "Calle 46 S Nro. 42", sitioWeb: "https://www.institucioneducativalapaz.edu.co/", imagen: "/InstituciónEducativaLaPaz.jpg", logo: "/InstituciónEducativaLaPaz.png" },
+  { id: 9, nombre: "Institución Educativa Las Palmas", rector: "Jorge Albeiro Marulanda Carmona", telefono: "604 3860198", direccion: "Calle 25B Sur #5D61. – Sector los Lotes", sitioWeb: "https://www.ielaspalmas.edu.co/", imagen: "/InstituciónEducativaLasPalmas.JPG", logo: "/InstituciónEducativaLasPalmas.png" },
+  { id: 10, nombre: "Institución Educativa Manuel Uribe Ángel", rector: "Ana Lucía Rivera Escudero", telefono: "604 2761788", direccion: "Carrera 44 No. 38 SUR - 15", sitioWeb: "https://www.iemua.edu.co/", imagen: "/InstituciónEducativaManuelUribeÁngel.JPG", logo: "/InstituciónEducativaManuelUribeÁngel.png" },
+  { id: 11, nombre: "Institución Educativa María Poussepin", rector: "Francisco Eladio Lopera Salgado", telefono: "604 2761756", direccion: "Calle 34DD SUR No. 28 - 24", sitioWeb: "https://www.iemariapoussepin.edu.co/", imagen: "/InstituciónEducativaMaríaPoussepin.JPG", logo: "/InstituciónEducativaMaríaPoussepin.png" },
+  { id: 12, nombre: "Institución Educativa Martín Eduardo Ríos Llanos", rector: "Margarita María Gutiérrez Cano", telefono: " 604 2764755", direccion: "Vereda Pantanillo", sitioWeb: "https://iemartineduardorios.edu.co/", imagen: "/InstituciónEducativaMartínEduardoRíosLlanos.png", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20Mart%C3%ADn%20Eduardo%20R%C3%ADos%20Llanos.png" },
+  { id: 13, nombre: "Institución Educativa Normal Superior de Envigado", rector: "Pedro Alonso Rivera Bustamante", telefono: "3042838240", direccion: "Calle 37 SUR No. 33 - 14", sitioWeb: "https://www.iende.edu.co/", imagen: "/InstituciónEducativaNormalSuperiordeEnvigado.jpg", logo: "/InstituciónEducativaNormalSuperiordeEnvigado.png" },
+  { id: 14, nombre: "Institución Educativa Leticia Arango de Avendaño", rector: "William Alonso Gaviria Campuzano", telefono: "604 5380101", direccion: "Calle 45B sur N° 42c -09", sitioWeb: "https://leticiaarango.edu.co/", imagen: "/InstituciónEducativaLeticiaArangodeAvendaño.JPG", logo: "/Logos%20IE/Instituci%C3%B3n%20Educativa%20Leticia%20Arango%20de%20Avenda%C3%B1o.png" },
 ];
 
 export default function IEOficiales() {
@@ -69,10 +69,6 @@ export default function IEOficiales() {
         <div className="absolute inset-0 flex items-end pb-16">
           <div className="container">
             <div className="max-w-2xl text-white">
-              <div className="flex items-center gap-2 mb-3">
-                <School className="h-6 w-6 text-[#FFDE07]" />
-                <span className="text-sm font-semibold uppercase tracking-widest text-[#FFDE07]">Municipio de Envigado</span>
-              </div>
               <h1 className="text-5xl font-extrabold leading-tight mb-4">
                 Instituciones Educativas Oficiales
               </h1>
@@ -96,7 +92,7 @@ export default function IEOficiales() {
 
         {/* Instituciones Educativas */}
         <div>
-          <h2 className="text-2xl font-bold mb-6">Instituciones Educativas Participantes</h2>
+          <h2 className="text-2xl font-bold mb-6">Instituciones Educativas</h2>
           
           <div className="mb-6">
             <div className="relative max-w-md">

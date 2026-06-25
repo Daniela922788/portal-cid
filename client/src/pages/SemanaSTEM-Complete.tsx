@@ -22,12 +22,38 @@ import { motion } from 'framer-motion';
 
 export default function SemanaSTEM() {
   const [bannerSrc, setBannerSrc] = useState('/images/semana-stem-banner.png');
-  const [activeYear, setActiveYear] = useState(2025);
+  const [activeYear, setActiveYear] = useState<'principal' | 2025 | 2026>('principal');
   const [activeDay, setActiveDay] = useState(1);
   const [selectedDay2Team, setSelectedDay2Team] = useState<string | null>(null);
   const [day2VisibleImages, setDay2VisibleImages] = useState(6);
+  const [lightboxImages, setLightboxImages] = useState<string[] | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const openLightbox = (images: string[], index: number) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+  };
+  const closeLightbox = () => setLightboxImages(null);
+  const showPrevImage = () =>
+    setLightboxIndex((i) => (lightboxImages ? (i - 1 + lightboxImages.length) % lightboxImages.length : i));
+  const showNextImage = () =>
+    setLightboxIndex((i) => (lightboxImages ? (i + 1) % lightboxImages.length : i));
   const speakerImage = (fileName: string) => `/ponentes/martes/${encodeURIComponent(fileName)}`;
   const toWebp = (imagePath: string) => imagePath.replace(/\.(jpe?g|png)$/i, '.webp');
+
+  useEffect(() => {
+    if (!lightboxImages) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') showPrevImage();
+      else if (e.key === 'ArrowRight') showNextImage();
+    };
+    window.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [lightboxImages]);
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
@@ -68,6 +94,7 @@ export default function SemanaSTEM() {
       icon: '🤖',
       color: 'from-blue-400 to-blue-600',
       eCardImage: '/Semana%20STEM/23/Agenda/Etica-inteligencia.jpeg',
+      videoUrl: 'https://youtu.be/Hvjh7unL8f4',
     },
     {
       time: '08:45 a.m.',
@@ -96,6 +123,7 @@ export default function SemanaSTEM() {
       icon: '💡',
       color: 'from-purple-400 to-purple-600',
       eCardImage: '/Semana%20STEM/23/Agenda/Conversatorio-innovacion.jpeg',
+      videoUrl: 'https://youtu.be/331Vu0gUYi8',
     },
     {
       time: '09:30 a.m.',
@@ -120,6 +148,7 @@ export default function SemanaSTEM() {
       icon: '👶',
       color: 'from-pink-400 to-pink-600',
       eCardImage: '/Semana%20STEM/23/Agenda/Primera-infancia.jpeg',
+      videoUrl: 'https://youtu.be/ccdVo4CTnyg',
     },
     {
       time: '10:45 a.m.',
@@ -154,6 +183,7 @@ export default function SemanaSTEM() {
       icon: '🎯',
       color: 'from-green-400 to-green-600',
       eCardImage: '/Semana%20STEM/23/Agenda/Conversatorio-retos.jpeg',
+      videoUrl: 'https://youtu.be/Tl5oA1Gjsro',
     },
     {
       time: '11:30 a.m.',
@@ -170,6 +200,7 @@ export default function SemanaSTEM() {
       icon: '🤝',
       color: 'from-cyan-400 to-cyan-600',
       eCardImage: '/Semana%20STEM/23/Agenda/Redes-colaborativas.jpeg',
+      videoUrl: 'https://youtu.be/hVAuw6zeAFA',
     },
     {
       time: '12:30 p.m.',
@@ -706,14 +737,14 @@ export default function SemanaSTEM() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setActiveYear(2025)}
+            onClick={() => setActiveYear('principal')}
             className={`px-8 py-3 rounded-lg font-bold text-lg transition-all ${
-              activeYear === 2025
+              activeYear === 'principal'
                 ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >
-            2025
+            ¿Qué es?
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -727,11 +758,190 @@ export default function SemanaSTEM() {
           >
             2026
           </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setActiveYear(2025)}
+            className={`px-8 py-3 rounded-lg font-bold text-lg transition-all ${
+              activeYear === 2025
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+          >
+            2025
+          </motion.button>
         </div>
       </section>
 
       {/* Content based on year */}
-      {activeYear === 2025 ? (
+      {activeYear === 'principal' ? (
+        <section
+          className="relative min-h-screen flex items-center justify-center overflow-hidden"
+          style={{ background: '#0f0a1e' }}
+        >
+          {/* Diagonal stripe texture */}
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0px, #ffffff 1px, transparent 1px, transparent 40px)',
+            }}
+          />
+
+          {/* Accent line top */}
+          <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #7c3aed, #f97316, #7c3aed)' }} />
+
+          <div className="relative z-10 w-full max-w-5xl mx-auto px-6 py-20">
+
+            {/* Eyebrow */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="flex items-center justify-center gap-3 mb-8"
+            >
+              <div className="h-px w-12" style={{ background: '#f97316' }} />
+              <span className="text-xs font-bold tracking-[0.25em] uppercase" style={{ color: '#f97316' }}>
+                Envigado · Ciudad del Aprendizaje
+              </span>
+              <div className="h-px w-12" style={{ background: '#f97316' }} />
+            </motion.div>
+
+            {/* Title */}
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="font-black text-center leading-none mb-8"
+              style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', color: '#ffffff', letterSpacing: '-0.03em' }}
+            >
+              ¿Qué es la<br />
+              <span style={{ color: '#7c3aed' }}>Semana STEM+</span>?
+            </motion.h2>
+
+            {/* Intro paragraph */}
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="text-center text-lg leading-relaxed mx-auto mb-16"
+              style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '60ch' }}
+            >
+              La Semana STEM+ es el evento anual que reúne a estudiantes, docentes,
+              instituciones educativas y aliados de Envigado en torno a la ciencia, la
+              tecnología, la ingeniería, las matemáticas y las artes. Una semana para
+              imaginar, crear y aprender haciendo, que reafirma a Envigado como Ciudad del
+              Aprendizaje y Territorio STEM, con una educación transformadora, ética y
+              conectada con los desafíos del siglo XXI.
+            </motion.p>
+
+            {/* What STEM+ means — colored letter system */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="mb-16"
+            >
+              <p className="text-center text-sm font-bold tracking-[0.2em] uppercase mb-8" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                ¿Qué significa STEM+?
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
+                {[
+                  { letter: 'S', word: 'Ciencia', color: '#7c3aed' },
+                  { letter: 'T', word: 'Tecnología', color: '#2563eb' },
+                  { letter: 'E', word: 'Ingeniería', color: '#f97316' },
+                  { letter: 'M', word: 'Matemáticas', color: '#16a34a' },
+                  { letter: '+', word: 'Arte & Humanidades', color: '#db2777' },
+                ].map((item, i) => (
+                  <motion.div
+                    key={item.letter}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.4, delay: 0.35 + i * 0.08 }}
+                    className="flex flex-col items-center text-center rounded-2xl px-4 py-6"
+                    style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${item.color}33` }}
+                  >
+                    <span className="font-black leading-none mb-3" style={{ fontSize: '3rem', color: item.color, letterSpacing: '-0.03em' }}>
+                      {item.letter}
+                    </span>
+                    <span className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.75)' }}>
+                      {item.word}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Pillars */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 max-w-4xl mx-auto"
+            >
+              {[
+                {
+                  color: '#7c3aed',
+                  title: 'Educación transformadora',
+                  text: 'Aprendizaje basado en retos reales, pensamiento crítico, creativo y colaborativo.',
+                },
+                {
+                  color: '#2563eb',
+                  title: 'Innovación y tecnología',
+                  text: 'Robótica, inteligencia artificial y herramientas digitales al servicio del aprendizaje.',
+                },
+                {
+                  color: '#f97316',
+                  title: 'Comunidad y territorio',
+                  text: 'Instituciones, docentes, estudiantes y aliados que construyen conocimiento con sentido territorial.',
+                },
+              ].map((pillar, i) => (
+                <motion.div
+                  key={pillar.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.45 + i * 0.1 }}
+                  className="rounded-2xl p-6"
+                  style={{ background: 'rgba(255,255,255,0.04)', borderTop: `3px solid ${pillar.color}` }}
+                >
+                  <h3 className="font-bold text-lg mb-2" style={{ color: '#ffffff' }}>
+                    {pillar.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                    {pillar.text}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* CTA buttons to editions */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.55 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            >
+              <button
+                onClick={() => setActiveYear(2025)}
+                className="px-8 py-3 rounded-lg font-bold text-base text-white shadow-lg transition-transform hover:scale-105"
+                style={{ background: 'linear-gradient(90deg, #2563eb, #7c3aed)' }}
+              >
+                Ver edición 2025
+              </button>
+              <button
+                onClick={() => setActiveYear(2026)}
+                className="px-8 py-3 rounded-lg font-bold text-base transition-transform hover:scale-105"
+                style={{ background: 'transparent', color: '#ffffff', border: '1px solid rgba(255,255,255,0.3)' }}
+              >
+                Conoce la edición 2026
+              </button>
+            </motion.div>
+
+          </div>
+
+          {/* Accent line bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
+        </section>
+      ) : activeYear === 2025 ? (
         <>
           {/* Hero Section */}
           <section className="relative w-full overflow-hidden">
@@ -824,17 +1034,50 @@ export default function SemanaSTEM() {
 
                         {'eCardImage' in session && session.eCardImage && (
                           <div className="mb-2">
-                            <picture>
-                              <source srcSet={toWebp(session.eCardImage)} type="image/webp" />
-                              <img
-                                src={session.eCardImage}
-                                alt={session.title}
-                                loading="lazy"
-                                decoding="async"
-                                fetchPriority="low"
-                                className="w-full rounded-lg shadow-lg"
-                              />
-                            </picture>
+                            {'videoUrl' in session && session.videoUrl ? (
+                              <a
+                                href={session.videoUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`Ver video: ${session.title}`}
+                                className="group relative block rounded-lg overflow-hidden shadow-lg cursor-pointer"
+                              >
+                                <picture>
+                                  <source srcSet={toWebp(session.eCardImage)} type="image/webp" />
+                                  <img
+                                    src={session.eCardImage}
+                                    alt={session.title}
+                                    loading="lazy"
+                                    decoding="async"
+                                    fetchPriority="low"
+                                    className="w-full transition-transform duration-300 group-hover:scale-[1.02]"
+                                  />
+                                </picture>
+
+                                {/* Capa oscura al pasar el mouse */}
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
+
+                                {/* Etiqueta indicadora */}
+                                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/70 text-white text-sm font-semibold px-4 py-2 rounded-full backdrop-blur-sm pointer-events-none whitespace-nowrap">
+                                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                                    <path d="M8 5v14l11-7z" />
+                                  </svg>
+                                  Haz click para ver el video
+                                </div>
+                              </a>
+                            ) : (
+                              <picture>
+                                <source srcSet={toWebp(session.eCardImage)} type="image/webp" />
+                                <img
+                                  src={session.eCardImage}
+                                  alt={session.title}
+                                  loading="lazy"
+                                  decoding="async"
+                                  fetchPriority="low"
+                                  className="w-full rounded-lg shadow-lg"
+                                />
+                              </picture>
+                            )}
                           </div>
                         )}
                       </div>
@@ -880,6 +1123,10 @@ export default function SemanaSTEM() {
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ delay: idx * 0.1 }}
                       viewport={{ once: true }}
+                      onClick={() => openLightbox(galleryImages, idx)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(galleryImages, idx); } }}
                       className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
                     >
                       <picture>
@@ -1168,6 +1415,10 @@ export default function SemanaSTEM() {
                           whileInView={{ opacity: 1, scale: 1 }}
                           transition={{ delay: idx * 0.08 }}
                           viewport={{ once: true }}
+                          onClick={() => openLightbox(day2GalleryImages, idx)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(day2GalleryImages, idx); } }}
                           className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
                         >
                           <picture>
@@ -1399,6 +1650,10 @@ export default function SemanaSTEM() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ delay: idx * 0.08 }}
                         viewport={{ once: true }}
+                        onClick={() => openLightbox(day3GalleryImages, idx)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(day3GalleryImages, idx); } }}
                         className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
                       >
                         <picture>
@@ -1602,6 +1857,10 @@ export default function SemanaSTEM() {
                           whileInView={{ opacity: 1, scale: 1 }}
                           transition={{ delay: idx * 0.08 }}
                           viewport={{ once: true }}
+                          onClick={() => openLightbox(day4GalleryImages, idx)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(day4GalleryImages, idx); } }}
                           className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
                         >
                           <picture>
@@ -1780,6 +2039,81 @@ export default function SemanaSTEM() {
           {/* Accent line bottom */}
           <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
         </section>
+      )}
+
+      {/* Visor de galería (lightbox) */}
+      {lightboxImages && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 sm:p-8"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+        >
+          {/* Cuadro / ventana emergente */}
+          <div
+            className="relative w-full max-w-5xl bg-white rounded-2xl shadow-2xl p-3 sm:p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Cerrar */}
+            <button
+              type="button"
+              onClick={closeLightbox}
+              aria-label="Cerrar"
+              className="absolute -top-3 -right-3 z-20 flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-700 shadow-lg ring-1 ring-black/10 hover:bg-gray-100 transition-colors"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
+                <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+              </svg>
+            </button>
+
+            {/* Imagen + flechas dentro del recuadro */}
+            <div className="relative flex items-center justify-center">
+              <picture>
+                <source srcSet={toWebp(lightboxImages[lightboxIndex])} type="image/webp" />
+                <img
+                  src={lightboxImages[lightboxIndex]}
+                  alt={`Foto ${lightboxIndex + 1}`}
+                  className="w-full max-h-[78vh] object-contain rounded-lg select-none"
+                />
+              </picture>
+
+              {/* Anterior */}
+              {lightboxImages.length > 1 && (
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); showPrevImage(); }}
+                  aria-label="Foto anterior"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-11 h-11 rounded-full bg-black/55 text-white hover:bg-black/75 transition-colors shadow-lg"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} className="w-6 h-6">
+                    <path d="M15 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              )}
+
+              {/* Siguiente */}
+              {lightboxImages.length > 1 && (
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); showNextImage(); }}
+                  aria-label="Foto siguiente"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-11 h-11 rounded-full bg-black/55 text-white hover:bg-black/75 transition-colors shadow-lg"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} className="w-6 h-6">
+                    <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              )}
+            </div>
+
+            {/* Contador */}
+            {lightboxImages.length > 1 && (
+              <div className="mt-3 text-center text-sm font-semibold text-gray-500">
+                {lightboxIndex + 1} / {lightboxImages.length}
+              </div>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

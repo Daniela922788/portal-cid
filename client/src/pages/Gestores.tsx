@@ -116,7 +116,7 @@ const competenciasClave: Competencia[] = [
   },
   {
     title: "Articulación institucional",
-    description: "Trabajo coordinado con instituciones educativas, centros de ciencia y aliados.",
+    description: "Trabajo coordinado con instituciones educativas oficiales, centros de ciencia y aliados.",
     icon: Waypoints,
   },
 ];
@@ -124,21 +124,21 @@ const competenciasClave: Competencia[] = [
 const frentesTrabajo: FrenteTrabajo[] = [
   {
     id: "cid",
-    title: "Centro de Innovación (CID)",
+    title: "Centro de Innovación y Desarrollo (CID)",
     summary: "Procesos formativos dirigidos a docentes, estudiantes y comunidad.",
     icon: Lightbulb,
     acciones: [
       "Talleres formativos y cursos en tecnología, innovación y STEM.",
       "Clubes y espacios de experimentación con enfoque práctico.",
       "Procesos de alfabetización digital y apropiación del conocimiento.",
-      "Diseño de experiencias que luego se trasladan a las instituciones educativas.",
+      "Diseño de experiencias que luego se trasladan a las instituciones educativas oficiales.",
     ],
     impacto:
       "El CID funciona como un laboratorio de aprendizaje donde se exploran metodologías, herramientas y rutas de innovación aplicables al territorio.",
   },
   {
     id: "instituciones",
-    title: "Instituciones Educativas",
+    title: "Instituciones Educativas Oficiales",
     summary: "Fortalecen centros de interés, semilleros de investigación y proyectos STEM.",
     icon: School,
     acciones: [
@@ -263,7 +263,7 @@ const gestoresData: Gestor[] = [
     profesion: "Ingeniera Física, Magister en Ingeniería",
     tipo: "STEM",
     foto: IsabelImg,
-    institucionAsignada: "Institución Educativa José Manuel Restrepo"
+    institucionAsignada: "Institución Educativa José Manuel Restrepo Vélez"
   },
   {
     id: 3,
@@ -300,7 +300,7 @@ const gestoresData: Gestor[] = [
     profesion: "Licenciada en Ed. Básica con énfasis en Ciencias Naturales y Educación Ambiental",
     tipo: "STEM",
     foto: MonicaImg,
-    institucionAsignada: "Institución Educativa El Salado Sede Principal"
+    institucionAsignada: "Institución Educativa El Salado"
   },
   {
     id: 7,
@@ -332,7 +332,7 @@ const gestoresData: Gestor[] = [
     profesion: "Ciencias Política Politólogo",
     tipo: "STEM",
     foto: VictorImg,
-    institucionAsignada: "Institución Educativa Martín Eduardo Ríos Llano"
+    institucionAsignada: "Institución Educativa Martín Eduardo Ríos Llanos"
   },
   {
     id: 11,
@@ -487,7 +487,7 @@ function GestorCard({ gestor, onSelect }: { gestor: Gestor; onClick?: () => void
 
       <div className="flex flex-1 flex-col gap-1.5 px-4 py-3">
         <h3 className="text-sm font-bold leading-snug text-slate-900">{gestor.nombre}</h3>
-        <p className="line-clamp-2 text-xs leading-relaxed text-slate-500">{gestor.profesion}</p>
+        <p className="line-clamp-2 text-xs font-normal leading-relaxed text-slate-500">{gestor.profesion}</p>
         <div className="mt-auto pt-2">
           <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${tipoColor}`}>
             {gestor.tipo}
@@ -590,11 +590,6 @@ export default function Gestores() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            {/* Badge: desktop only */}
-            <span className="hidden md:mb-4 md:inline-flex items-center gap-2 rounded-full border border-[#11B2AA]/50 bg-[#11B2AA]/15 px-4 py-1.5 text-sm font-semibold text-[#11B2AA] backdrop-blur-sm">
-              <Sparkles className="h-3.5 w-3.5" /> Innovación Educativa · Envigado
-            </span>
-
             <h1 className="text-2xl font-black leading-tight text-white md:mt-3 md:text-6xl lg:text-7xl">
               Gestores de<br />
               <span className="text-[#11B2AA]">Innovación</span>
@@ -614,7 +609,7 @@ export default function Gestores() {
             className="hidden md:flex mt-10 flex-wrap justify-center gap-3"
           >
             <StatCard number="16" label="Gestores activos" accent="text-[#11B2AA]" />
-            <StatCard number="14" label="Instituciones educativas" accent="text-[#FFDE07]" />
+            <StatCard number="14" label="Instituciones Educativas Oficiales" accent="text-[#FFDE07]" />
           </motion.div>
         </div>
         <div className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-white/40">
@@ -631,18 +626,15 @@ export default function Gestores() {
           <div className="relative overflow-hidden rounded-2xl bg-[#0D1F2D] p-8 text-white">
             <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-[#11B2AA]/20 blur-2xl" />
             <div className="relative">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#11B2AA]/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#11B2AA]">
-                ¿Quiénes son?
-              </span>
               <h2 className="mt-3 text-2xl font-black leading-tight md:text-3xl">
                 Agentes de cambio<br />en el aula
               </h2>
-              <p className="mt-4 text-sm leading-relaxed text-white/75">
+              <p className="mt-4 text-sm font-normal leading-relaxed text-white/75">
                 Son profesionales con mentalidad innovadora, capaces de trascender los modelos tradicionales y
                 acompañar nuevas formas de aprendizaje. Su enfoque multidisciplinario integra distintas áreas
                 del conocimiento.
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-white/75">
+              <p className="mt-3 text-sm font-normal leading-relaxed text-white/75">
                 Más que capacitadores externos, son <strong className="text-white">aliados en el aula</strong> que
                 fortalecen las prácticas pedagógicas desde la realidad del territorio.
               </p>
@@ -662,15 +654,15 @@ export default function Gestores() {
               <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EC6910]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#EC6910]">
                 Propósito
               </span>
-              <p className="mt-3 text-sm leading-relaxed text-slate-700">
+              <p className="mt-3 text-sm font-normal leading-relaxed text-slate-700">
                 Conectan conocimiento, comunidad y soluciones a problemáticas reales, impulsando procesos
-                educativos alineados con la sostenibilidad y el enfoque de <strong>Territorio STEM+ SMART</strong>.
+                educativos alineados con la sostenibilidad y el enfoque de <strong>Territorio STEM+ SMART Regenerativo</strong>.
               </p>
               <div className="mt-4 grid grid-cols-2 gap-2">
                 {capacidadesCiudadanas.map((cap) => (
                   <div key={cap} className="flex items-start gap-2 rounded-xl bg-slate-50 p-3">
                     <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#11B2AA]" />
-                    <span className="text-xs leading-relaxed text-slate-600">{cap}</span>
+                    <span className="text-xs font-normal leading-relaxed text-slate-600">{cap}</span>
                   </div>
                 ))}
               </div>
@@ -703,7 +695,7 @@ export default function Gestores() {
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#0D4B56] text-[10px] font-black text-white">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-xs leading-relaxed text-slate-700">{fn}</span>
+                  <span className="text-xs font-normal leading-relaxed text-slate-700">{fn}</span>
                 </div>
               ))}
             </div>
@@ -773,7 +765,7 @@ export default function Gestores() {
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="text-sm font-bold text-slate-900">{comp.title}</h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-600">{comp.description}</p>
+                  <p className="mt-1.5 text-xs font-normal leading-relaxed text-slate-600">{comp.description}</p>
                 </div>
               );
             })}
@@ -783,9 +775,6 @@ export default function Gestores() {
         {/* ── FRENTES DE TRABAJO ───────────────────────────────────────────── */}
         <section className="mt-12">
           <div className="mb-6">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#2D3586]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#2D3586]">
-              Frentes de trabajo
-            </span>
             <h2 className="mt-2 text-2xl font-black text-slate-900 md:text-3xl">¿Cómo trabajan los gestores?</h2>
             <p className="mt-1 max-w-xl text-sm text-slate-500">
               Explora los cinco escenarios principales en los que desarrollan su labor transformadora.
@@ -833,7 +822,7 @@ export default function Gestores() {
                         <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-[#11B2AA] text-[9px] font-black text-white">
                           {i + 1}
                         </span>
-                        <span className="text-xs leading-relaxed text-slate-700">{accion}</span>
+                        <span className="text-xs font-normal leading-relaxed text-slate-700">{accion}</span>
                       </div>
                     ))}
                   </div>
@@ -868,7 +857,7 @@ export default function Gestores() {
                 Transformando la educación<br />
                 <span className="text-[#11B2AA]">desde adentro</span>
               </h2>
-              <p className="mt-4 text-sm leading-relaxed text-white/70">
+              <p className="mt-4 text-sm font-normal leading-relaxed text-white/70">
                 Los Gestores de Innovación conectan la escuela con la tecnología, la innovación y las
                 necesidades reales del territorio, generando un impacto que va más allá del aula.
               </p>
@@ -882,7 +871,7 @@ export default function Gestores() {
                 ].map((item) => (
                   <div key={item.label} className="rounded-xl border border-white/8 bg-white/6 p-4">
                     <p className={`text-sm font-bold ${item.color}`}>{item.label}</p>
-                    <p className="mt-1 text-xs leading-relaxed text-white/60">{item.desc}</p>
+                    <p className="mt-1 text-xs font-normal leading-relaxed text-white/60">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -1016,7 +1005,7 @@ export default function Gestores() {
               exit={{ opacity: 0, scale: 0.95, y: 12 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-lg rounded-2xl bg-white shadow-2xl"
+              className="relative w-full max-w-3xl rounded-2xl bg-white shadow-2xl"
             >
               {/* Header */}
               <div className="flex items-start justify-between border-b border-slate-100 px-5 py-4">
@@ -1043,12 +1032,12 @@ export default function Gestores() {
                         <img
                           src={institucionModalImage}
                           alt={institucionModalActual}
-                          className="h-56 w-full object-cover"
+                          className="h-96 w-full object-cover"
                           loading="lazy"
                           decoding="async"
                         />
                       ) : (
-                        <div className="flex h-56 items-center justify-center text-sm text-slate-400">
+                        <div className="flex h-96 items-center justify-center text-sm text-slate-400">
                           Sin foto disponible
                         </div>
                       )}

@@ -311,7 +311,7 @@ export default function Nosotros() {
     { id: 5, nombre: "Daniela Jaramillo Hoyos", cargo: "Directora de Innovación", foto: DanielaImg, categoria: "administrativo" },
     { id: 1, nombre: "Alexander Heredia Heredia", cargo: "Profesional Universitario", foto: AlexImg, categoria: ["administrativo", "tecnologia"] },
     { id: 12, nombre: "Yethy Gisela Granda Zapata", cargo: "Coordinadora Gestores Innovación - UPB", foto: YethyImg, categoria: "administrativo" },
-    { id: 4, nombre: "Carolina Tabres Isaza", cargo: "Técnico Operativo", foto: CaroImg, categoria: "administrativo" },
+    { id: 4, nombre: "Carolina Tabares Isaza", cargo: "Técnico Operativo", foto: CaroImg, categoria: "administrativo" },
     { id: 14, nombre: "María Zuleima Arango Sánchez", cargo: "Profesional Universitaria", foto: "/gestores/Zuleima.webp", categoria: "administrativo" },
     { id: 9, nombre: "Jhon Fredy Ríos Montoya", cargo: "Profesional Universitario", foto: JhonImg, categoria: "administrativo" },
     { id: 2, nombre: "Angela María González Valencia", cargo: "Asistente Administrativa - UPB", foto: AngelaImg, categoria: "administrativo" },
@@ -333,7 +333,7 @@ export default function Nosotros() {
     },
     {
       key: "gestores" as TeamCategory,
-      title: "Gestores de Innovación e Investigación",
+      title: "Gestores de Innovación",
       description: "Acompaña procesos pedagógicos innovadores y de investigación que fortalecen la transformación educativa.",
       color: "bg-teal-500",
       descriptionClassName: "-mt-6",
@@ -689,16 +689,6 @@ export default function Nosotros() {
                   <p className="text-sm font-semibold text-teal-700 sm:text-base">
                     {teamCardItems.find((item) => item.key === selectedTeamCategory)?.title}
                   </p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedTeamCategory("all");
-                      setTeamPreviewCarouselIndex(0);
-                    }}
-                    className="text-xs font-medium text-slate-600 underline decoration-slate-400 underline-offset-4 hover:text-slate-900"
-                  >
-                    Mostrar todo
-                  </button>
                 </div>
 
                 <div className="relative">
@@ -843,7 +833,7 @@ export default function Nosotros() {
             >
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-teal-100 border border-blue-300 rounded-full px-4 py-2 mb-4">
                 <Sparkles className="w-4 h-4 text-blue-600 animate-pulse" />
-                <span className="text-blue-700 text-sm font-semibold">Línea de Tiempo Interactiva</span>
+                <span className="text-blue-700 text-sm font-semibold">LÍNEA DE TIEMPO</span>
               </div>
               <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-green-600 bg-clip-text text-transparent">
                 Nuestra Historia en Detalle
@@ -1040,7 +1030,7 @@ export default function Nosotros() {
           >
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-teal-100 border border-blue-300 rounded-full px-4 py-2 mb-4">
               <Users className="w-4 h-4 text-blue-600" />
-              <span className="text-blue-700 text-sm font-semibold">Nuestro Equipo</span>
+              <span className="text-blue-700 text-sm font-semibold">NUESTRO EQUIPO</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Gestores de Innovación - Dirección de Innovación

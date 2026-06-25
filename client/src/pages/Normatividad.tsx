@@ -147,11 +147,6 @@ export default function Normatividad() {
         <div className="pointer-events-none absolute right-1/3 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-[#11B2AA]/20 blur-2xl" />
 
         <div className="relative z-10 container flex min-h-[480px] flex-col justify-start pb-3 pt-28 md:justify-end md:pt-0 md:pb-10">
-          <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/35 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em]">
-            <Scale className="h-4 w-4 text-[#FFDE07]" />
-            Marco legal CID
-          </div>
-
           <h1 className="text-5xl font-extrabold leading-tight lg:text-6xl">Normatividad</h1>
           <p className="mt-3 max-w-xl text-base leading-relaxed text-white/80 lg:text-lg">
             Leyes, documentos CONPES, políticas públicas y lineamientos que enmarcan la labor del Centro de Innovación y Desarrollo.
