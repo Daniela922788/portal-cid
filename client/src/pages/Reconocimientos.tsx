@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { Award, Sparkles, X } from "lucide-react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 function AutoPlayShortsEmbed({ videoId, title }: { videoId: string; title: string }) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -417,6 +418,8 @@ export default function Reconocimientos() {
             </div>
           </div>
         </section>
+
+        <Breadcrumbs items={[{ label: "Reconocimientos" }]} />
 
         <div className="grid md:grid-cols-2 gap-6">
           {orderedNoticias.map((noticia) => (

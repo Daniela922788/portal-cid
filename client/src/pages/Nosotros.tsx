@@ -35,6 +35,7 @@ import ServicesSection from "@/components/ServicesSection";
 import { ThematicLines } from "@/components/ThematicLines";
 import CommunityImpactSectionV1 from "@/components/CommunityImpactV1-codigo";
 import CommunityImpactV2 from "@/components/CommunityImpactV2-codigo";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 
 interface TimelineEvent {
@@ -596,6 +597,10 @@ export default function Nosotros() {
           className="w-full h-auto object-contain md:h-full md:object-cover md:object-center"
         />
       </section>
+
+      <div className="container">
+        <Breadcrumbs items={[{ label: "Nosotros" }]} />
+      </div>
 
       {/* Nuestro ADN */}
       <section className="pt-10 pb-2 bg-white">

@@ -88,7 +88,7 @@ export default function IEOficiales() {
 
       <div className="py-8">
         <div className="container">
-          <Breadcrumbs items={[{ label: "IE Oficiales" }]} />
+          <Breadcrumbs items={[{ label: "Instituciones Educativas Oficiales" }]} />
 
         {/* Instituciones Educativas */}
         <div>

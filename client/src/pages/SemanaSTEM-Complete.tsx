@@ -19,6 +19,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function SemanaSTEM() {
   const [bannerSrc, setBannerSrc] = useState('/images/semana-stem-banner.png');
@@ -771,7 +772,10 @@ export default function SemanaSTEM() {
             2025
           </motion.button>
         </div>
+        <Breadcrumbs items={[{ label: "Semana STEM" }]} />
       </section>
+
+      
 
       {/* Content based on year */}
       {activeYear === 'principal' ? (

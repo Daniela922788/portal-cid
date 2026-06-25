@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, GraduationCap, Video, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 // ─── Actualiza estas rutas cuando tengas las imágenes del aula ───────────────
 const WHATSAPP_ADMIN = "https://wa.me/573012577662";
@@ -267,6 +268,11 @@ export default function Centro() {
 
       {/* ─── 2. ¿QUÉ ES EL AULA? ───────────────────────────────────────── */}
       <section className="py-20">
+
+        <div className="container">
+          <Breadcrumbs items={[{ label: "Aula de Experimentación Audiovisual" }]} />
+        </div>
+
         <div className="container mx-auto max-w-[96rem] px-6">
           <div className="grid gap-12 lg:grid-cols-[2.1fr_0.7fr] lg:items-center">
             <AutoCarousel

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const SHORTS = [
   { id: "7bviMX88Y7k", title: "🚀📚 Desde Bucaramanga hasta Envigado, una experiencia que inspira, transforma y deja nuevas perspectivas para la educación del futuro. La innovación educativa se construye con ideas, aprendizaje y el compromiso de seguir creando oportunidades para las próximas generaciones. ✨🎓" },
@@ -451,6 +452,15 @@ export default function Videos() {
         {/* SHORTS SECTION */}
         {filteredShorts.length > 0 && (
           <section style={{ marginBottom: 40 }}>
+
+            <Breadcrumbs
+              items={[{ label: "Nosotros" }]}
+              className="text-white"
+              linkClassName="text-white hover:text-primary"
+              iconClassName="text-white"
+              activeClassName="text-white font-medium"
+            />
+
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="#ff0000">
                 <path d="M10 9l5 3-5 3V9z" />

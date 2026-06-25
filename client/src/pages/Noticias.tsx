@@ -510,7 +510,6 @@ export default function Noticias() {
   return (
     <div className="min-h-screen py-8">
       <div className="container">
-        <Breadcrumbs items={[{ label: "Noticias" }]} />
         <section className="relative mb-10 overflow-hidden rounded-[2rem] border border-[#0D4B56]/20 bg-[linear-gradient(125deg,#182130_0%,#0D4B56_45%,#11B2AA_100%)] p-6 text-white shadow-xl sm:p-8 lg:p-10">
           <div className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-[#FFDE07]/25 blur-2xl" />
           <div className="pointer-events-none absolute -left-14 bottom-0 h-40 w-40 rounded-full bg-[#EC6910]/20 blur-2xl" />
@@ -539,6 +538,9 @@ export default function Noticias() {
             </div>
           </div>
         </section>
+
+        <Breadcrumbs items={[{ label: "Noticias" }]} />
+
         {isLoading && noticiasFiltradas.length === 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (

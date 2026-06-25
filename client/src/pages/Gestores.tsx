@@ -618,7 +618,7 @@ export default function Gestores() {
       </section>
 
       <div className="container py-8">
-        <Breadcrumbs items={[{ label: "Inicio", href: "/" }, { label: "Gestores de Innovación" }]} />
+        <Breadcrumbs items={[{ label: "Gestores de Innovación" }]} />
 
         {/* ── ¿QUÉ SON? + PROPÓSITO ────────────────────────────────────────── */}
         <section className="mt-8 grid gap-6 lg:grid-cols-2">

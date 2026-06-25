@@ -1,8 +1,7 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Target, Award, Users, Lightbulb, TrendingUp, BookOpen, Zap, ChevronLeft, ChevronRight, ExternalLink, PlayCircle } from 'lucide-react';
+import { MapPin, Target, Award, Users, Lightbulb, TrendingUp, BookOpen, Zap, ChevronLeft, ChevronRight, ExternalLink, PlayCircle, Home } from 'lucide-react';
 import { CircleMarker, MapContainer, Popup, TileLayer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -225,6 +224,24 @@ export default function TerritorioStem() {
         </section>
       </div>
 
+      {/* ===== BREADCRUMB ===== */}
+      {/* Usa <a href> normal (NO el <Link> de wouter) porque esta página
+          se monta fuera del Router. Para cambiar el nombre, edita el texto
+          dentro del <span> de abajo. */}
+      <nav aria-label="Breadcrumb" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <ol className="flex items-center gap-2 text-sm">
+          <li>
+            <a href="/" className="flex items-center text-muted-foreground hover:text-primary transition-colors">
+              <Home className="h-4 w-4" />
+            </a>
+          </li>
+          <li className="flex items-center gap-2">
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <span className="text-foreground font-medium">Territorio STEM+</span>
+          </li>
+        </ol>
+      </nav>
+
       {/* ===== SECCIÓN: MANIFIESTO ===== */}
       <motion.section
         initial="hidden"
@@ -239,7 +256,6 @@ export default function TerritorioStem() {
           </motion.h2>
 
           <motion.p variants={itemVariants} className="mx-auto mb-10 max-w-3xl text-center text-lg text-[#0D4B56]">
-            Una lectura extensa, ahora organizada en bloques para facilitar su recorrido. Puedes reemplazar las 3 imágenes de ejemplo por las tuyas cuando quieras.
           </motion.p>
 
           <motion.div
@@ -512,10 +528,6 @@ export default function TerritorioStem() {
         <div className="max-w-6xl mx-auto">
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <motion.div variants={itemVariants} className="space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#2D3586]/20 bg-white/85 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#2D3586]">
-                <PlayCircle className="h-4 w-4" />
-                Videoteca Territorio STEM+
-              </div>
               <div>
                 <h2 className="text-4xl font-black leading-tight text-[#182130] md:text-5xl">Aprende en video y llévate ideas listas para aplicar</h2>
                 <p className="mt-4 text-base leading-7 text-[#0D4B56] md:text-lg">Explora esta playlist oficial con contenidos que acercan el enfoque STEM+ al aula de forma práctica. Es un formato dinámico para motivar a docentes y equipos directivos a ver, compartir y poner en marcha nuevas estrategias.</p>
