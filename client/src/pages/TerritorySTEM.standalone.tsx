@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Target, Award, Users, Lightbulb, TrendingUp, BookOpen, Zap, ChevronLeft, ChevronRight, ExternalLink, PlayCircle, Home } from 'lucide-react';
+import { MapPin, Target, Award, Users, Lightbulb, TrendingUp, BookOpen, Zap, ChevronLeft, ChevronRight, ExternalLink, PlayCircle, ArrowRight, Home } from 'lucide-react';
 import { CircleMarker, MapContainer, Popup, TileLayer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -38,6 +38,21 @@ function FitAllInstitutionsOnLoad({ points }: { points: Array<[number, number]> 
   return null;
 }
 
+/* Eyebrow editorial reutilizable: regla teal + etiqueta en versalitas. */
+function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
+  return (
+    <div className="mb-5 flex items-center gap-3">
+      <span className="h-px w-10" style={{ backgroundColor: '#11B2AA' }} />
+      <span
+        className="text-lg font-semibold uppercase tracking-[0.22em]"
+        style={{ color: light ? '#11B2AA' : '#0D4B56' }}
+      >
+        {children}
+      </span>
+    </div>
+  );
+}
+
 export default function TerritorioStem() {
   const [activeTestimony, setActiveTestimony] = useState(0);
   const [selectedInstitution, setSelectedInstitution] = useState(0);
@@ -45,50 +60,34 @@ export default function TerritorioStem() {
   const playlistUrl = 'https://www.youtube.com/playlist?list=PLzd_wYuK8iVLJZku5Go5bitRXDS9AjlQ8';
   const playlistEmbedUrl = 'https://www.youtube.com/embed/videoseries?list=PLzd_wYuK8iVLJZku5Go5bitRXDS9AjlQ8';
 
-  const pastelColors = {
-    pink: '#EC6910',
-    blue: '#2D3586',
-    green: '#11B2AA',
+  // Paleta con roles claros. Teal = firma. Amarillo = única chispa.
+  const C = {
+    ink:    '#182130',
+    deep:   '#0D4B56',
+    forest: '#0D4B56',
+    teal:   '#11B2AA',
+    indigo: '#2D3586',
     yellow: '#FFDE07',
-    purple: '#182130',
-    peach: '#0D4B56',
+    orange: '#EC6910',
   };
 
+  // Cifras resumen de las metas, usadas como apoyo del hero (la sección
+  // completa de Metas se conserva más abajo, en su orden original).
+  const heroStats = [
+    { prefix: '', metric: '100%', label: 'instituciones educativas oficiales con asistencia técnica' },
+    { prefix: 'Más de', metric: '1.000', label: 'estudiantes formados en metodologías STEM+' },
+    { prefix: 'Más de', metric: '50', label: 'docentes capacitados en el enfoque STEM+' },
+  ];
+
   const goals = [
-    {
-      title: 'Asistencia Técnica a Instituciones',
-      description: 'Brindar asistencia técnica al 100% de las instituciones educativas oficiales del municipio de Envigado para la implementación de metodologías con enfoque STEM y STEM+',
-      icon: Target,
-      color: pastelColors.pink,
-    },
-    {
-      title: 'Formación de Estudiantes',
-      description: 'Formar a 1.000 estudiantes de instituciones educativas oficiales del municipio de Envigado en metodologías para la resolución de problemas y retos asociados al enfoque STEM y STEM+',
-      icon: Users,
-      color: pastelColors.blue,
-    },
-    {
-      title: 'Capacitación Docente',
-      description: 'Formar a 50 docentes del municipio de Envigado en metodologías para la resolución de problemas y retos relacionados con el enfoque STEM y STEM+',
-      icon: BookOpen,
-      color: pastelColors.green,
-    },
+    { title: 'Asistencia Técnica a Instituciones', description: 'Brindar asistencia técnica al 100% de las instituciones educativas oficiales del municipio de Envigado para la implementación de metodologías con enfoque STEM y STEM+', icon: Target, metric: '100%', metricLabel: 'instituciones', accent: C.teal },
+    { title: 'Formación de Estudiantes', description: 'Formar a 1.000 estudiantes de instituciones educativas oficiales del municipio de Envigado en metodologías para la resolución de problemas y retos asociados al enfoque STEM y STEM+', icon: Users, metric: '1.000', metricLabel: 'estudiantes', accent: C.indigo },
+    { title: 'Capacitación Docente', description: 'Formar a 50 docentes del municipio de Envigado en metodologías para la resolución de problemas y retos relacionados con el enfoque STEM y STEM+', icon: BookOpen, metric: '50', metricLabel: 'docentes', accent: C.deep },
   ];
 
   const testimonies = [
-    {
-      title: 'Testimonio de:',
-      embedUrl: 'https://www.youtube.com/embed/LZgiyBqGILc?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1',
-      lines: ['Luz Ester Pérez M. - Estudiante de fotografía'],
-    },
-    {
-      title: 'Testimonios de:',
-      embedUrl: 'https://www.youtube.com/embed/0boej4mKxB4?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1',
-      lines: [
-        'Temuujin Parra - Estudiante',
-        'Alejandro Manjarrés - Estudiante',
-      ],
-    },
+    { title: 'Testimonio de:', embedUrl: 'https://www.youtube.com/embed/LZgiyBqGILc?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1', lines: ['Luz Ester Pérez M. - Estudiante de fotografía'] },
+    { title: 'Testimonios de:', embedUrl: 'https://www.youtube.com/embed/0boej4mKxB4?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1', lines: ['Temuujin Parra - Estudiante', 'Alejandro Manjarrés - Estudiante'] },
   ];
 
   const playlistHighlights = [
@@ -98,12 +97,12 @@ export default function TerritorioStem() {
   ];
 
   const stemConsiderations = [
-    { title: 'Es un enfoque, no una metodología', description: 'Impulsa procesos de innovación educativa y transformación curricular.', color: pastelColors.pink },
-    { title: 'Participación colectiva', description: 'Promueve alianzas entre instituciones educativas, organizaciones y actores del territorio.', color: pastelColors.blue },
-    { title: 'Aprendizaje centrado en el estudiante', description: 'Prioriza experiencias activas e integradas entre áreas del conocimiento.', color: pastelColors.green },
-    { title: 'Docente investigador', description: 'Reflexiona sobre su práctica pedagógica y diseña experiencias de aprendizaje situadas.', color: pastelColors.yellow },
-    { title: 'Competencias para el siglo XXI', description: 'Fomenta pensamiento crítico, creatividad, resolución de problemas y colaboración.', color: pastelColors.purple },
-    { title: 'Ciudadanía responsable', description: 'Busca formar estudiantes comprometidos con el desarrollo sostenible y los desafíos sociales y ambientales.', color: pastelColors.peach },
+    { title: 'Es un enfoque, no una metodología', description: 'Impulsa procesos de innovación educativa y transformación curricular.' },
+    { title: 'Participación colectiva', description: 'Promueve alianzas entre instituciones educativas, organizaciones y actores del territorio.' },
+    { title: 'Aprendizaje centrado en el estudiante', description: 'Prioriza experiencias activas e integradas entre áreas del conocimiento.' },
+    { title: 'Docente investigador', description: 'Reflexiona sobre su práctica pedagógica y diseña experiencias de aprendizaje situadas.' },
+    { title: 'Competencias para el siglo XXI', description: 'Fomenta pensamiento crítico, creatividad, resolución de problemas y colaboración.' },
+    { title: 'Ciudadanía responsable', description: 'Busca formar estudiantes comprometidos con el desarrollo sostenible y los desafíos sociales y ambientales.' },
   ];
 
   const territoryMaturityModel = [
@@ -118,8 +117,8 @@ export default function TerritorioStem() {
 
   const manifestoImages = [
     { src: '/Territorio/1.jpg', alt: 'Estudiantes colaborando en actividad STEM+', caption: 'Aprendizaje colaborativo' },
-    { src: '/Territorio/2.jpg', alt: 'Trabajo articulado entre actores del territorio', caption: 'Articulacion territorial' },
-    { src: '/Territorio/3.jpg', alt: 'Innovacion educativa en entorno escolar', caption: 'Innovacion educativa' },
+    { src: '/Territorio/2.jpg', alt: 'Trabajo articulado entre actores del territorio', caption: 'Articulación territorial' },
+    { src: '/Territorio/3.jpg', alt: 'Innovación educativa en entorno escolar', caption: 'Innovación educativa' },
   ];
 
   const manifestoParagraphs = [
@@ -129,6 +128,21 @@ export default function TerritorioStem() {
     { text: 'Generar un compromiso de los diferentes estamentos es el primer punto para abordar para que este proyecto se lleve a cabo y haga de Envigado un territorio STEM+, es por eso que la instauración del concepto de Smart regenerativo debe ser una política pública que todos estemos dispuestos a acatar.', strong: true },
     { text: 'El compromiso de trabajo de una mesa para el cumplimento de metas del territorio STEM+ es quien debe velar por la consecución de los logros, por eso es importante que esta sea una política pública perdurable en el tiempo con un trabajo continuo, que va desde la comunicación del concepto a los diferentes estamentos, hasta la apropiación de éste. Es por esto que lo consignado en la declaración de Envigado como territorio STEM+ Smart regenerativo es un trabajo que no puede morir con un manifiesto, sino más bien debe comenzar su implementación, articulando, socializando y trabajando con los distintos actores identificados durante la creación de este territorio para lograr en su primera etapa dar a conocer el concepto.', strong: false },
     { text: 'El trabajo continuo de los diversos involucrados debe darse de manera continua sin detención alguna, pues la manera de apropiación del concepto es la repetición y el trabajo de los diferentes planes establecidos. De esta manera consideramos que lograremos transformar la sociedad y el sector empresarial, educación, estado y población de nuestro territorio.', strong: false },
+  ];
+
+  const territoryActors = [
+    { title: 'Centro de Innovación y Desarrollo', description: 'Epicentro de la transformación STEM+ en Envigado, donde se articulan iniciativas educativas, empresariales y comunitarias para potenciar el territorio.' },
+    { title: 'Instituciones Educativas', description: 'Más de 15 instituciones educativas públicas y privadas implementan el enfoque STEM+ en sus currículos, formando a estudiantes desde primaria hasta educación superior.' },
+    { title: 'Alianzas Empresariales', description: 'Empresas tecnológicas, de manufactura y servicios se unen para crear oportunidades de aprendizaje práctico y empleo para nuestros jóvenes.' },
+  ];
+
+  const aims = [
+    { icon: Lightbulb, title: 'Innovación Educativa', description: 'Transformar prácticas pedagógicas mediante metodologías activas y experiencias de aprendizaje significativo.' },
+    { icon: Users, title: 'Inclusión Social', description: 'Garantizar que todos los estudiantes, sin importar su origen, tengan acceso a educación STEM+ de calidad.' },
+    { icon: TrendingUp, title: 'Desarrollo Económico', description: 'Preparar talento humano competitivo para las demandas del mercado laboral del siglo XXI.' },
+    { icon: Target, title: 'Solución de Problemas', description: 'Formar ciudadanos capaces de identificar y resolver problemáticas locales con enfoque científico y tecnológico.' },
+    { icon: Award, title: 'Posicionamiento Regional', description: 'Consolidar a Envigado como referente nacional en educación STEM+ e innovación educativa.' },
+    { icon: Zap, title: 'Transformación Social', description: 'Crear una cultura de innovación, emprendimiento y pensamiento crítico en toda la comunidad.' },
   ];
 
   const institutions = [
@@ -171,390 +185,375 @@ export default function TerritorioStem() {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
+    visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
   };
-
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 24 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
-  const toRgba = (hex: string, alpha: number) => {
-    const clean = hex.replace('#', '');
-    const r = Number.parseInt(clean.slice(0, 2), 16);
-    const g = Number.parseInt(clean.slice(2, 4), 16);
-    const b = Number.parseInt(clean.slice(4, 6), 16);
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-  };
-
-  const softCardStyle = (color: string) => ({
-    backgroundColor: toRgba(color, 0.62),
-    border: `1px solid ${toRgba(color, 0.84)}`,
-    color: '#182130',
-  });
-
-  const strongAccentStyle = (color: string) => ({
-    backgroundColor: toRgba(color, 0.72),
-    border: `1px solid ${toRgba(color, 0.94)}`,
-    color: '#182130',
-  });
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-[#00838f]/10 to-white">
+    <div className="min-h-screen bg-white text-[#182130]">
 
-      {/* ===== HERO — fondo teal que sube detrás del header ===== */}
+      {/* ===== HERO — banner (logo) con teal continuo hasta el menú ===== */}
       {/*
-        El div exterior tiene el color de fondo del banner (#00838f / teal).
-        Como el header es `absolute` en esta ruta, el padding-top empuja
-        el banner hacia abajo exactamente la altura del header (80px = h-20),
-        de modo que el banner no se mueve pero el color sí llena el espacio
-        que ocupa el header.
-        Si tu header tiene otra altura, ajusta el pt-20 en consecuencia.
+        El fondo del hero usa el MISMO teal del banner (#018290), de modo que
+        el color sube detrás del header sin verse "cortado". El pt-20 reserva
+        la altura del header absoluto. Tras el banner, un fundido teal→verde
+        lleva la vista hacia la zona oscura donde van la bajada, las cifras
+        y la ruta (breadcrumb) en blanco, alineada con el texto.
+        Si tu header tiene otra altura, ajusta el pt-20.
       */}
-      <div className="bg-[#00838f] pt-20">
-        <section className="relative w-full overflow-hidden">
+      <div className="bg-[#018290] pt-20">
+        <section className="relative w-full overflow-hidden bg-[#018290]">
           <img
             src="/banners/banner-territorio.webp"
-            alt="Banner Territorio STEM"
+            alt="Banner Territorio STEM+ — Envigado"
             loading="eager"
             fetchPriority="high"
             decoding="async"
             className="w-full h-[150px] object-cover object-center md:h-auto"
           />
+          {/* Fundido del teal del banner hacia el verde de la zona de cifras */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#182130]" />
         </section>
+
+        {/* Zona oscura: bajada editorial + cifras + ruta (todo alineado) */}
+        <div className="bg-[#182130] px-4 sm:px-6 lg:px-8 pb-12 pt-10">
+          <div className="max-w-6xl mx-auto">
+            <motion.h1
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="max-w-3xl text-3xl font-light leading-snug text-white md:text-5xl"
+            >
+              Un territorio que potencia la{' '}
+              <span className="font-black text-white">ciencia, la tecnología, la ingeniería, las matemáticas y las artes</span>{' '}
+              <span className="text-[#11B2AA]">en toda su población.</span>
+            </motion.h1>
+
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={containerVariants}
+              className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3"
+            >
+              {heroStats.map((s) => (
+                <motion.div key={s.metric} variants={itemVariants} className="bg-[#182130] p-7">
+                  <div className="mb-2 h-px w-8" style={{ backgroundColor: '#11B2AA' }} />
+                  <p className="text-lg font-semibold uppercase tracking-wide text-white/55">{s.prefix || '\u00A0'}</p>
+                  <p className="text-5xl font-black leading-none text-white md:text-6xl">{s.metric}</p>
+                  <p className="mt-2 text-xl leading-snug text-white/70">{s.label}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* Ruta (breadcrumb): sobre el oscuro, en blanco, alineada con el texto */}
+            <nav aria-label="Ruta de navegación" className="mt-8 flex items-center gap-2 text-xl text-white/70">
+              <a href="/" className="inline-flex items-center gap-1.5 transition-colors hover:text-white">
+                <Home className="h-4 w-4" />
+                Inicio
+              </a>
+              <ChevronRight className="h-4 w-4 text-white/40" />
+              <span className="font-medium text-white">Territorio STEM+</span>
+            </nav>
+          </div>
+        </div>
       </div>
 
-      {/* ===== BREADCRUMB ===== */}
-      {/* Usa <a href> normal (NO el <Link> de wouter) porque esta página
-          se monta fuera del Router. Para cambiar el nombre, edita el texto
-          dentro del <span> de abajo. */}
-      <nav aria-label="Breadcrumb" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <ol className="flex items-center gap-2 text-sm">
-          <li>
-            <a href="/" className="flex items-center text-muted-foreground hover:text-primary transition-colors">
-              <Home className="h-4 w-4" />
-            </a>
-          </li>
-          <li className="flex items-center gap-2">
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
-            <span className="text-foreground font-medium">Territorio STEM+</span>
-          </li>
-        </ol>
-      </nav>
-
-      {/* ===== SECCIÓN: MANIFIESTO ===== */}
+      {/* ===== 1 · MANIFIESTO — bloque oscuro ===== */}
       <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-white"
+        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariants}
+        className="bg-[#182130] px-4 sm:px-6 lg:px-8 py-24"
       >
         <div className="max-w-4xl mx-auto">
-          <motion.h2 variants={itemVariants} className="text-4xl font-bold text-center mb-12 text-[#182130]">
-            Manifiesto Envigado Territorio STEM+
-          </motion.h2>
-
-          <motion.p variants={itemVariants} className="mx-auto mb-10 max-w-3xl text-center text-lg text-[#0D4B56]">
-          </motion.p>
-
-          <motion.div
-            variants={itemVariants}
-            className="relative rounded-3xl border border-[#0D4B56]/20 bg-white p-6 shadow-xl sm:p-8"
-          >
-            <div className="space-y-5 text-[#182130] leading-relaxed">
-              {manifestoParagraphs.map((paragraph, idx) => (
-                <React.Fragment key={idx}>
-                  <div className="rounded-2xl border border-[#11B2AA]/20 bg-[#11B2AA]/8 p-5">
-                    <p className={`text-base sm:text-lg ${paragraph.strong ? 'font-semibold' : ''}`}>
-                      {paragraph.text}
-                    </p>
-                  </div>
-
-                  {idx === 1 && (
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      {manifestoImages.slice(0, 2).map((image) => (
-                        <figure key={image.src} className="overflow-hidden rounded-2xl border border-[#0D4B56]/20 bg-white shadow-sm">
-                          <img src={image.src} alt={image.alt} loading="lazy" decoding="async" className="h-52 w-full object-cover" />
-                        </figure>
-                      ))}
-                    </div>
-                  )}
-
-                  {idx === 3 && (
-                    <figure className="overflow-hidden rounded-2xl border border-[#0D4B56]/20 bg-white shadow-sm">
-                      <img src={manifestoImages[2].src} alt={manifestoImages[2].alt} loading="lazy" decoding="async" className="h-64 w-full object-cover" />
-                    </figure>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
+          <motion.div variants={itemVariants}>
+            <h2 className="mb-12 text-5xl font-black leading-[1.05] tracking-tight text-white md:text-6xl">
+              Manifiesto Envigado Territorio STEM+
+            </h2>
           </motion.div>
+
+          <div className="space-y-6 leading-relaxed">
+            {manifestoParagraphs.map((paragraph, idx) => (
+              <React.Fragment key={idx}>
+                {paragraph.strong ? (
+                  <motion.div variants={itemVariants} className="rounded-2xl border-l-4 border-[#FFDE07] bg-white/[0.04] p-6">
+                    <p className="text-2xl font-semibold text-white md:text-2xl">{paragraph.text}</p>
+                  </motion.div>
+                ) : (
+                  <motion.p variants={itemVariants} className="text-xl leading-relaxed text-white/75 md:text-2xl">
+                    {paragraph.text}
+                  </motion.p>
+                )}
+
+                {idx === 1 && (
+                  <motion.div variants={itemVariants} className="grid gap-3 py-2 sm:grid-cols-2">
+                    {manifestoImages.slice(0, 2).map((image) => (
+                      <figure key={image.src} className="overflow-hidden rounded-2xl">
+                        <img src={image.src} alt={image.alt} loading="lazy" decoding="async" className="h-52 w-full object-cover" />
+                        <figcaption className="mt-2 text-lg uppercase tracking-wide text-[#11B2AA]">{image.caption}</figcaption>
+                      </figure>
+                    ))}
+                  </motion.div>
+                )}
+
+                {idx === 3 && (
+                  <motion.figure variants={itemVariants} className="overflow-hidden rounded-2xl py-2">
+                    <img src={manifestoImages[2].src} alt={manifestoImages[2].alt} loading="lazy" decoding="async" className="h-64 w-full object-cover rounded-2xl" />
+                    <figcaption className="mt-2 text-lg uppercase tracking-wide text-[#11B2AA]">{manifestoImages[2].caption}</figcaption>
+                  </motion.figure>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       </motion.section>
 
-      {/* ===== SECCIÓN: DÓNDE SE DESARROLLA - MAPA INTERACTIVO ===== */}
+      {/* ===== 2 · DÓNDE SE DESARROLLA — MAPA ===== */}
       <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-        className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto"
+        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariants}
+        className="bg-[#F6F8F8] px-4 sm:px-6 lg:px-8 py-24"
       >
-        <motion.h2 variants={itemVariants} className="text-4xl font-bold text-center mt-6 mb-12 text-[#182130]">
-          Dónde se desarrolla
-        </motion.h2>
-
-        <div className="grid md:grid-cols-3 gap-6 mb-6">
-          <motion.div variants={itemVariants} className="rounded-2xl p-8 shadow-lg" style={softCardStyle(pastelColors.green)}>
-            <h3 className="text-2xl font-bold mb-4">Centro de Innovación y Desarrollo</h3>
-            <p className="leading-relaxed">Epicentro de la transformación STEM+ en Envigado, donde se articulan iniciativas educativas, empresariales y comunitarias para potenciar el territorio.</p>
-          </motion.div>
-          <motion.div variants={itemVariants} className="rounded-2xl p-8 shadow-lg" style={softCardStyle(pastelColors.blue)}>
-            <h3 className="text-2xl font-bold mb-4">Instituciones Educativas</h3>
-            <p className="leading-relaxed">Más de 15 instituciones educativas públicas y privadas implementan el enfoque STEM+ en sus currículos, formando a estudiantes desde primaria hasta educación superior.</p>
-          </motion.div>
-          <motion.div variants={itemVariants} className="rounded-2xl p-8 shadow-lg" style={softCardStyle(pastelColors.peach)}>
-            <h3 className="text-2xl font-bold mb-4">Alianzas Empresariales</h3>
-            <p className="leading-relaxed">Empresas tecnológicas, de manufactura y servicios se unen para crear oportunidades de aprendizaje práctico y empleo para nuestros jóvenes.</p>
-          </motion.div>
-        </div>
-
-        <motion.div variants={itemVariants} className="rounded-2xl border border-[#0D4B56]/20 bg-white p-5 shadow-xl">
-          <div className="mb-5">
-            <h3 className="text-2xl font-bold text-center text-[#182130] mb-4">Envigado, Antioquia</h3>
-            <p className="text-[#0D4B56] leading-relaxed text-sm md:text-base mb-4">
-              En el marco del Territorio STEM+ Smart Regenerativo, la estrategia tiene como alcance todo el territorio del municipio de Envigado y, como punto de partida, para fortalecer las capacidades educativas, la Secretaría de Educación de Envigado orienta el trabajo con las instituciones educativas oficiales para promover la innovación educativa y consolidar el ecosistema STEM+ en el municipio.
+        <div className="max-w-6xl mx-auto">
+          <motion.div variants={itemVariants}>
+            <h2 className="mb-4 text-5xl font-black leading-[1.05] tracking-tight text-[#182130] md:text-6xl">Dónde se desarrolla</h2>
+            <p className="mb-12 max-w-3xl text-2xl text-[#0D4B56]">
+              El alcance es todo el municipio de Envigado. Como punto de partida, la Secretaría de Educación orienta el trabajo con las instituciones educativas oficiales para consolidar el ecosistema STEM+.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          </motion.div>
+
+          <div className="mb-6 grid gap-5 md:grid-cols-3">
+            {territoryActors.map((actor, idx) => (
+              <motion.div key={idx} variants={itemVariants} className="rounded-2xl border border-[#0D4B56]/12 bg-white p-7">
+                <span className="mb-4 block h-1 w-8 rounded-full" style={{ backgroundColor: idx === 0 ? '#11B2AA' : idx === 1 ? '#2D3586' : '#0D4B56' }} />
+                <h3 className="mb-2 text-2xl font-bold text-[#182130]">{actor.title}</h3>
+                <p className="text-xl leading-relaxed text-[#0D4B56]">{actor.description}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div variants={itemVariants} className="rounded-3xl border border-[#0D4B56]/12 bg-white p-5 shadow-sm">
+            <h3 className="mb-4 text-center text-2xl font-bold text-[#182130]">Envigado, Antioquia · Instituciones del ecosistema</h3>
+            <div className="mb-5 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
               {institutions.map((inst, idx) => (
                 <motion.button
                   key={idx}
                   onClick={() => setSelectedInstitution(idx)}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`rounded-lg p-3 shadow-md transition-all ${
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className={`rounded-lg border p-3 text-left transition-all ${
                     selectedInstitution === idx
-                      ? 'ring-2 ring-offset-2 ring-[#2D3586] bg-[#11B2AA]/10'
-                      : 'bg-white hover:bg-[#11B2AA]/10'
+                      ? 'border-[#11B2AA] bg-[#11B2AA]/10'
+                      : 'border-[#0D4B56]/10 bg-white hover:border-[#11B2AA]/40 hover:bg-[#11B2AA]/[0.04]'
                   }`}
                 >
-                  <p className="font-semibold text-[#182130] text-sm">{inst.name}</p>
-                  <p className="text-xs text-[#0D4B56] mt-1">{inst.type}</p>
+                  <p className="text-xl font-semibold text-[#182130]">{inst.name}</p>
+                  <p className="mt-0.5 text-lg text-[#0D4B56]">{inst.type}</p>
                 </motion.button>
               ))}
             </div>
-          </div>
 
-          <div className="w-full max-w-[1200px] h-[300px] mx-auto overflow-hidden rounded-xl border border-[#0D4B56]/20">
-            <MapContainer center={selectedPosition} zoom={14} scrollWheelZoom className="h-full w-full">
-              <TileLayer attribution='&copy; OpenStreetMap contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <FitAllInstitutionsOnLoad points={institutionPoints} />
-              <FlyToSelectedInstitution position={selectedPosition} />
-              {institutions.map((inst, idx) => (
-                <CircleMarker
-                  key={inst.name}
-                  center={[inst.lat, inst.lng]}
-                  radius={selectedInstitution === idx ? 11 : 8}
-                  pathOptions={{
-                    color: selectedInstitution === idx ? '#2D3586' : '#182130',
-                    fillColor: selectedInstitution === idx ? '#11B2AA' : '#0D4B56',
-                    fillOpacity: 0.9,
-                    weight: selectedInstitution === idx ? 3 : 2,
-                  }}
-                  eventHandlers={{ click: () => setSelectedInstitution(idx) }}
-                >
-                  <Popup><strong>{inst.name}</strong><br />Tipo: {inst.type}</Popup>
-                </CircleMarker>
-              ))}
-            </MapContainer>
-          </div>
+            <div className="mx-auto h-[340px] w-full max-w-[1200px] overflow-hidden rounded-2xl border border-[#0D4B56]/12">
+              <MapContainer center={selectedPosition} zoom={14} scrollWheelZoom className="h-full w-full">
+                <TileLayer attribution='&copy; OpenStreetMap contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <FitAllInstitutionsOnLoad points={institutionPoints} />
+                <FlyToSelectedInstitution position={selectedPosition} />
+                {institutions.map((inst, idx) => (
+                  <CircleMarker
+                    key={inst.name}
+                    center={[inst.lat, inst.lng]}
+                    radius={selectedInstitution === idx ? 11 : 8}
+                    pathOptions={{
+                      color: selectedInstitution === idx ? '#2D3586' : '#0D4B56',
+                      fillColor: selectedInstitution === idx ? '#11B2AA' : '#0D4B56',
+                      fillOpacity: 0.9,
+                      weight: selectedInstitution === idx ? 3 : 2,
+                    }}
+                    eventHandlers={{ click: () => setSelectedInstitution(idx) }}
+                  >
+                    <Popup><strong>{inst.name}</strong><br />Tipo: {inst.type}</Popup>
+                  </CircleMarker>
+                ))}
+              </MapContainer>
+            </div>
 
-          <motion.div key={selectedInstitution} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }} className="mt-5 text-center">
-            <p className="text-lg font-bold text-[#182130]">{institutions[selectedInstitution].name}</p>
-            <p className="text-sm text-[#0D4B56] mt-1">Tipo: {institutions[selectedInstitution].type}</p>
+            <motion.div key={selectedInstitution} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }} className="mt-5 flex items-center justify-center gap-3 text-center">
+              <MapPin className="h-5 w-5" style={{ color: '#11B2AA' }} />
+              <div>
+                <p className="text-xl font-bold text-[#182130]">{institutions[selectedInstitution].name}</p>
+                <p className="text-xl text-[#0D4B56]">{institutions[selectedInstitution].type}</p>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </motion.section>
 
-      {/* ===== SECCIÓN: QUÉ SE BUSCA ===== */}
+      {/* ===== 3 · QUÉ SE BUSCA ===== */}
       <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-[#11B2AA]/12 via-[#FFDE07]/18 to-[#EC6910]/15"
+        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariants}
+        className="bg-white px-4 sm:px-6 lg:px-8 py-24"
       >
         <div className="max-w-6xl mx-auto">
-          <motion.h2 variants={itemVariants} className="text-4xl font-bold text-center mb-12 text-[#182130]">
-            Qué se busca con Territorio STEM+ Smart Regenerativo
-          </motion.h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: Lightbulb, title: 'Innovación Educativa', description: 'Transformar prácticas pedagógicas mediante metodologías activas y experiencias de aprendizaje significativo.', color: pastelColors.yellow },
-              { icon: Users, title: 'Inclusión Social', description: 'Garantizar que todos los estudiantes, sin importar su origen, tengan acceso a educación STEM+ de calidad.', color: pastelColors.pink },
-              { icon: TrendingUp, title: 'Desarrollo Económico', description: 'Preparar talento humano competitivo para las demandas del mercado laboral del siglo XXI.', color: pastelColors.blue },
-              { icon: Target, title: 'Solución de Problemas', description: 'Formar ciudadanos capaces de identificar y resolver problemáticas locales con enfoque científico y tecnológico.', color: pastelColors.green },
-              { icon: Award, title: 'Posicionamiento Regional', description: 'Consolidar a Envigado como referente nacional en educación STEM+ e innovación educativa.', color: pastelColors.purple },
-              { icon: Zap, title: 'Transformación Social', description: 'Crear una cultura de innovación, emprendimiento y pensamiento crítico en toda la comunidad.', color: pastelColors.peach },
-            ].map((item, idx) => (
-              <motion.div key={idx} variants={itemVariants} className="rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow" style={softCardStyle(item.color)}>
-                <item.icon className="w-12 h-12 mb-4" style={{ color: '#182130' }} />
-                <h3 className="text-xl font-bold mb-3" style={{ color: '#182130' }}>{item.title}</h3>
-                <p className="leading-relaxed" style={{ color: '#182130' }}>{item.description}</p>
+          <motion.div variants={itemVariants}>
+            <h2 className="mb-12 max-w-3xl text-5xl font-black leading-[1.05] tracking-tight text-[#182130] md:text-6xl">
+              Qué se busca con el Territorio STEM+ Smart Regenerativo
+            </h2>
+          </motion.div>
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {aims.map((item, idx) => (
+              <motion.div key={idx} variants={itemVariants} whileHover={{ y: -4 }} className="rounded-2xl border border-[#0D4B56]/12 bg-white p-7 transition-shadow hover:shadow-lg">
+                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[#11B2AA]/12">
+                  <item.icon className="h-6 w-6" style={{ color: '#11B2AA' }} />
+                </div>
+                <h3 className="mb-2 text-2xl font-bold text-[#182130]">{item.title}</h3>
+                <p className="text-xl leading-relaxed text-[#0D4B56]">{item.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </motion.section>
 
-      {/* ===== SECCIÓN: METAS 2024-2027 ===== */}
+      {/* ===== 4 · METAS 2024-2027 — las cifras son el héroe ===== */}
       <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-        className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto"
-      >
-        <motion.h2 variants={itemVariants} className="text-4xl font-bold text-center mb-4 text-[#182130]">
-          Metas Plan de Desarrollo <span className="italic">Envigado Vamos Adelante, Amor por la Gente, Amor por Envigado</span> 2024 - 2027
-        </motion.h2>
-        <motion.p variants={itemVariants} className="text-center text-[#0D4B56] mb-12 text-lg">
-          Compromisos medibles para consolidar a Envigado como territorio STEM+
-        </motion.p>
-        <div className="space-y-8">
-          {goals.map((goal, idx) => (
-            <motion.div key={idx} variants={itemVariants}>
-              <div className="rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all" style={strongAccentStyle(goal.color)}>
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#182130' }}>{goal.title}</h3>
-                    <p style={{ color: '#182130' }}>{goal.description}</p>
-                  </div>
-                  <goal.icon className="w-12 h-12 flex-shrink-0 ml-4" style={{ color: '#182130' }} />
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.section>
-
-      {/* ===== SECCIÓN: ¿QUÉ ES STEM+? ===== */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-        className="py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto"
-      >
-        <motion.h2 variants={itemVariants} className="text-4xl font-bold text-center mb-4 text-[#182130]">
-          ¿Qué es el enfoque educativo STEM+?
-        </motion.h2>
-        <motion.p variants={itemVariants} className="text-center text-[#0D4B56] mb-12 text-lg max-w-3xl mx-auto">
-          Una visión integrada del conocimiento para aprender de forma activa, interdisciplinaria y conectada con los desafíos del contexto.
-        </motion.p>
-
-        <motion.div variants={itemVariants} className="rounded-3xl p-8 mb-8 shadow-xl border border-[#2D3586]/20 bg-gradient-to-br from-white via-[#11B2AA]/10 to-[#FFDE07]/15">
-          <div className="space-y-6 text-lg text-[#0D4B56] leading-relaxed">
-            <p>Las diferentes interpretaciones sobre el enfoque STEM/STEAM, tanto en la práctica como en los contextos académicos e investigativos, orientan la forma en que cada país y su sistema educativo decide implementarlo. Esto se refleja en aspectos como el diseño curricular, las prácticas pedagógicas, la colaboración entre docentes y la participación de los estudiantes en su proceso de aprendizaje.</p>
-            <p>En Colombia se ha adoptado el término STEM+, donde la "+" incorpora las artes, el diseño y otras áreas del conocimiento. Más que una modificación del término, esta propuesta plantea una visión integrada del conocimiento, que busca facilitar su apropiación dentro del sistema educativo y promover experiencias de aprendizaje activas, interdisciplinarias y conectadas con los desafíos del contexto.</p>
-            <p>A partir de diferentes investigaciones y lineamientos estratégicos, el enfoque STEM+ promueve el desarrollo de competencias para la vida, el pensamiento crítico, la creatividad, la resolución de problemas y el trabajo colaborativo, situando al estudiante en el centro del proceso educativo y reconociendo al docente como un investigador pedagógico que diseña experiencias de aprendizaje contextualizadas.</p>
-          </div>
-        </motion.div>
-
-        <motion.h3 variants={itemVariants} className="text-2xl font-bold mb-6 text-[#182130]">
-          Consideraciones generales del enfoque STEM+
-        </motion.h3>
-
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          {stemConsiderations.map((item, idx) => (
-            <motion.div key={idx} variants={itemVariants} whileHover={{ y: -4 }} className="rounded-2xl p-7 shadow-lg transition-transform" style={softCardStyle(item.color)}>
-              <h4 className="text-xl font-bold mb-3" style={{ color: '#182130' }}>{item.title}</h4>
-              <p className="leading-relaxed" style={{ color: '#182130' }}>{item.description}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        <motion.div variants={itemVariants} className="rounded-2xl p-8 mb-10 shadow-lg border-l-4 border-[#2D3586] bg-gradient-to-r from-[#2D3586]/10 via-[#11B2AA]/10 to-transparent">
-          <h4 className="text-2xl font-bold mb-3 text-[#182130]">STEM+ y el desarrollo de los territorios</h4>
-          <p className="text-lg text-[#0D4B56] leading-relaxed">El enfoque STEM+ también ha sido proyectado como una estrategia para impulsar el desarrollo de territorios y comunidades sostenibles. Durante el II Encuentro de la Red STEM Latinoamérica (Monterrey, 2023), se reafirmó este propósito y se propuso avanzar en la construcción de Territorios STEM+, entendidos como ecosistemas de actores educativos, sociales y productivos que trabajan de manera articulada para transformar la educación y generar impacto en el territorio.</p>
-        </motion.div>
-
-        <motion.h3 variants={itemVariants} className="text-2xl font-bold mb-6 text-[#182130]">
-          Modelo de madurez para Territorios STEM+
-        </motion.h3>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-          {territoryMaturityModel.map((step, idx) => (
-            <motion.div key={idx} variants={itemVariants} whileHover={{ y: -3 }} className="rounded-2xl border border-[#0D4B56]/20 bg-white p-5 shadow-sm hover:shadow-md transition-shadow">
-              <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#2D3586]/15 text-[#2D3586] text-sm font-bold mb-3">{idx + 1}</div>
-              <p className="text-sm leading-6 text-[#0D4B56]">{step}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        <motion.div variants={itemVariants} className="rounded-2xl p-8 mb-8 border border-[#11B2AA]/20 bg-gradient-to-r from-[#11B2AA]/10 to-[#FFDE07]/15">
-          <p className="text-lg text-[#0D4B56] leading-relaxed">Estos elementos permiten comprender el enfoque STEM+ no solo como una estrategia educativa, sino también como una oportunidad para fortalecer el desarrollo territorial a través de la educación, la innovación y la colaboración entre actores.</p>
-        </motion.div>
-
-        <motion.div variants={itemVariants} className="rounded-2xl p-6 bg-[#0D4B56]/10 border-l-4 border-[#0D4B56]">
-          <h4 className="text-xl font-bold text-[#182130] mb-4">Fuentes</h4>
-          <ul className="space-y-2 text-sm text-[#0D4B56] mb-5">
-            <li>Organización de Estados Iberoamericanos (OEI) y Ministerio de Educación Nacional (MEN). Visión STEM+: una propuesta para la transformación educativa en Colombia (2020).</li>
-            <li>Red STEM Latinoamérica. Declaración de Monterrey y modelo de madurez para Territorios STEM+ (2023).</li>
-          </ul>
-          <div className="flex flex-wrap gap-3">
-            <a href="https://eduteka.icesi.edu.co/pdfdir/eduteka-explora-oei-men-vision-stem-2020.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-2 rounded-full bg-[#2D3586] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#182130]">
-              Descargar documento Visión STEM+ <ExternalLink className="h-4 w-4" />
-            </a>
-            <a href="https://educacion.stem.siemens-stiftung.org/wp-content/uploads/2024/10/001_Sie_Modelo_De_Madurez_Territorios_STEM__17_07.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-2 rounded-full border border-[#0D4B56]/30 bg-white px-4 text-sm font-semibold text-[#0D4B56] transition-colors hover:bg-[#11B2AA]/10">
-              Descargar documento Territorios STEM+ <ExternalLink className="h-4 w-4" />
-            </a>
-          </div>
-        </motion.div>
-      </motion.section>
-
-      {/* ===== SECCIÓN: VIDEOTECA STEM+ ===== */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-[linear-gradient(120deg,#11B2AA1A_0%,#2D35861A_45%,#FFDE071F_100%)]"
+        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariants}
+        className="bg-[#F6F8F8] px-4 sm:px-6 lg:px-8 py-24"
       >
         <div className="max-w-6xl mx-auto">
-          <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <motion.div variants={itemVariants}>
+            <Eyebrow>Compromisos · 2024–2027</Eyebrow>
+            <h2 className="mb-3 max-w-4xl text-5xl font-black leading-[1.05] tracking-tight text-[#182130] md:text-6xl">
+              Metas del Plan de Desarrollo
+            </h2>
+            <p className="mb-12 max-w-2xl text-2xl italic text-[#0D4B56]">
+              Envigado Vamos Adelante, Amor por la Gente, Amor por Envigado
+            </p>
+          </motion.div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {goals.map((goal, idx) => (
+              <motion.div key={idx} variants={itemVariants} className="flex flex-col rounded-2xl border border-[#0D4B56]/12 bg-white p-8 transition-shadow hover:shadow-lg">
+                <goal.icon className="mb-6 h-9 w-9" style={{ color: goal.accent }} />
+                <p className="text-6xl font-black leading-none text-[#182130] md:text-6xl">{goal.metric}</p>
+                <p className="mt-2 text-lg font-semibold uppercase tracking-wide" style={{ color: goal.accent }}>{goal.metricLabel}</p>
+                <h3 className="mt-6 mb-2 text-2xl font-bold text-[#182130]">{goal.title}</h3>
+                <p className="text-xl leading-relaxed text-[#0D4B56]">{goal.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ===== 5 · ¿QUÉ ES STEM+? ===== */}
+      <motion.section
+        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariants}
+        className="bg-white px-4 sm:px-6 lg:px-8 py-24"
+      >
+        <div className="max-w-6xl mx-auto">
+          <motion.div variants={itemVariants}>
+          </motion.div>
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+            <motion.h2 variants={itemVariants} className="text-5xl font-black leading-[1.05] tracking-tight text-[#182130] md:text-6xl">
+              ¿Qué es el enfoque educativo <span className="text-[#11B2AA]">STEM+</span>?
+            </motion.h2>
+            <motion.div variants={itemVariants} className="space-y-5 text-2xl leading-relaxed text-[#0D4B56]">
+              <p className="text-2xl font-medium text-[#182130]">Una visión integrada del conocimiento para aprender de forma activa, interdisciplinaria y conectada con los desafíos del contexto.</p>
+              <p>Las diferentes interpretaciones sobre el enfoque STEM/STEAM, tanto en la práctica como en los contextos académicos e investigativos, orientan la forma en que cada país y su sistema educativo decide implementarlo. Esto se refleja en el diseño curricular, las prácticas pedagógicas, la colaboración entre docentes y la participación de los estudiantes en su proceso de aprendizaje.</p>
+              <p>En Colombia se ha adoptado el término STEM+, donde la "+" incorpora las artes, el diseño y otras áreas del conocimiento. Más que una modificación del término, plantea una visión integrada del conocimiento que busca facilitar su apropiación y promover experiencias de aprendizaje activas, interdisciplinarias y conectadas con los desafíos del contexto.</p>
+              <p>A partir de diferentes investigaciones y lineamientos estratégicos, el enfoque STEM+ promueve el desarrollo de competencias para la vida, el pensamiento crítico, la creatividad, la resolución de problemas y el trabajo colaborativo, situando al estudiante en el centro del proceso educativo y reconociendo al docente como un investigador pedagógico.</p>
+            </motion.div>
+          </div>
+
+          {/* Consideraciones */}
+          <motion.div variants={itemVariants} className="mt-16">
+            <div className="grid gap-px overflow-hidden rounded-2xl border border-[#0D4B56]/12 bg-[#0D4B56]/10 md:grid-cols-2 lg:grid-cols-3">
+              {stemConsiderations.map((item) => (
+                <div key={item.title} className="group bg-white p-7 transition-colors hover:bg-[#11B2AA]/[0.04]">
+                  <span className="mb-4 block h-1 w-8 rounded-full" style={{ backgroundColor: '#11B2AA' }} />
+                  <h4 className="mb-2 text-2xl font-bold text-[#182130]">{item.title}</h4>
+                  <p className="text-xl leading-relaxed text-[#0D4B56]">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Pull-quote territorios */}
+          <motion.div variants={itemVariants} className="mt-12 rounded-3xl bg-[#182130] p-10 md:p-12">
+            <Eyebrow light>STEM+ y el desarrollo de los territorios</Eyebrow>
+            <p className="max-w-4xl text-2xl font-light leading-relaxed text-white md:text-3xl">
+              Durante el II Encuentro de la Red STEM Latinoamérica (Monterrey, 2023) se propuso avanzar en la construcción de <span className="font-semibold text-[#11B2AA]">Territorios STEM+</span>: ecosistemas de actores educativos, sociales y productivos que trabajan de manera articulada para transformar la educación y generar impacto en el territorio.
+            </p>
+          </motion.div>
+
+          {/* Modelo de madurez: secuencia real → timeline numerada */}
+          <motion.div variants={itemVariants} className="mt-16">
+            <Eyebrow>Modelo de madurez · 7 etapas</Eyebrow>
+            <h3 className="mb-8 text-3xl font-bold text-[#182130] md:text-4xl">Cómo madura un Territorio STEM+</h3>
+            <div className="space-y-px overflow-hidden rounded-2xl border border-[#0D4B56]/12">
+              {territoryMaturityModel.map((step, idx) => (
+                <div key={idx} className="flex items-center gap-5 bg-white p-5 transition-colors hover:bg-[#11B2AA]/[0.04]">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xl font-black text-white" style={{ backgroundColor: idx === territoryMaturityModel.length - 1 ? '#EC6910' : '#11B2AA' }}>
+                    {idx + 1}
+                  </span>
+                  <p className="text-[#0D4B56]">{step}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Cierre + Fuentes */}
+          <motion.div variants={itemVariants} className="mt-12 rounded-2xl border-l-4 border-[#11B2AA] bg-[#11B2AA]/[0.06] p-8">
+            <p className="text-2xl leading-relaxed text-[#0D4B56]">Estos elementos permiten comprender el enfoque STEM+ no solo como una estrategia educativa, sino también como una oportunidad para fortalecer el desarrollo territorial a través de la educación, la innovación y la colaboración entre actores.</p>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="mt-6 rounded-2xl border border-[#0D4B56]/12 bg-[#0D4B56]/[0.04] p-7">
+            <h4 className="mb-4 text-xl font-bold uppercase tracking-wide text-[#182130]">Fuentes</h4>
+            <ul className="mb-5 space-y-2 text-xl text-[#0D4B56]">
+              <li>Organización de Estados Iberoamericanos (OEI) y Ministerio de Educación Nacional (MEN). Visión STEM+: una propuesta para la transformación educativa en Colombia (2020).</li>
+              <li>Red STEM Latinoamérica. Declaración de Monterrey y modelo de madurez para Territorios STEM+ (2023).</li>
+            </ul>
+            <div className="flex flex-wrap gap-3">
+              <a href="https://eduteka.icesi.edu.co/pdfdir/eduteka-explora-oei-men-vision-stem-2020.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-2 rounded-full bg-[#2D3586] px-4 text-xl font-semibold text-white transition-colors hover:bg-[#182130]">
+                Visión STEM+ <ExternalLink className="h-4 w-4" />
+              </a>
+              <a href="https://educacion.stem.siemens-stiftung.org/wp-content/uploads/2024/10/001_Sie_Modelo_De_Madurez_Territorios_STEM__17_07.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-2 rounded-full border border-[#0D4B56]/25 bg-white px-4 text-xl font-semibold text-[#0D4B56] transition-colors hover:bg-[#11B2AA]/10">
+                Territorios STEM+ <ExternalLink className="h-4 w-4" />
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* ===== 6 · VIDEOTECA STEM+ ===== */}
+      <motion.section
+        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariants}
+        className="bg-[#F6F8F8] px-4 sm:px-6 lg:px-8 py-24"
+      >
+        <div className="max-w-6xl mx-auto">
+          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <motion.div variants={itemVariants} className="space-y-6">
-              <div>
-                <h2 className="text-4xl font-black leading-tight text-[#182130] md:text-5xl">Aprende en video y llévate ideas listas para aplicar</h2>
-                <p className="mt-4 text-base leading-7 text-[#0D4B56] md:text-lg">Explora esta playlist oficial con contenidos que acercan el enfoque STEM+ al aula de forma práctica. Es un formato dinámico para motivar a docentes y equipos directivos a ver, compartir y poner en marcha nuevas estrategias.</p>
-              </div>
-              <div className="grid gap-3">
+              <h2 className="text-5xl font-black leading-[1.05] tracking-tight text-[#182130] md:text-6xl">Aprende en video y llévate ideas listas para aplicar</h2>
+              <p className="text-2xl leading-relaxed text-[#0D4B56]">Playlist oficial con contenidos que acercan el enfoque STEM+ al aula de forma práctica. Un formato dinámico para que docentes y equipos directivos vean, compartan y pongan en marcha nuevas estrategias.</p>
+              <div className="grid gap-2">
                 {playlistHighlights.map((highlight) => (
-                  <div key={highlight} className="flex items-start gap-3 rounded-2xl border border-[#0D4B56]/15 bg-white/85 px-4 py-3 shadow-sm backdrop-blur">
-                    <span className="mt-1 inline-block h-2.5 w-2.5 rounded-full bg-[#EC6910]" />
-                    <p className="text-sm leading-6 text-[#0D4B56]">{highlight}</p>
+                  <div key={highlight} className="flex items-start gap-3 border-t border-[#0D4B56]/10 pt-3">
+                    <ArrowRight className="mt-0.5 h-4 w-4 shrink-0" style={{ color: '#11B2AA' }} />
+                    <p className="text-xl leading-6 text-[#0D4B56]">{highlight}</p>
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-3">
-                <a href={playlistUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center gap-2 rounded-full bg-[#182130] px-5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 hover:bg-[#2D3586]">
+              <div className="flex flex-wrap gap-3 pt-2">
+                <a href={playlistUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center gap-2 rounded-full bg-[#182130] px-5 text-xl font-semibold text-white transition-transform hover:-translate-y-0.5 hover:bg-[#2D3586]">
                   Ver playlist completa <ExternalLink className="h-4 w-4" />
                 </a>
-                <a href={playlistUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center gap-2 rounded-full border border-[#0D4B56]/30 bg-white px-5 text-sm font-semibold text-[#0D4B56] transition-colors hover:bg-[#11B2AA]/10">
+                <a href={playlistUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center gap-2 rounded-full border border-[#0D4B56]/25 bg-white px-5 text-xl font-semibold text-[#0D4B56] transition-colors hover:bg-[#11B2AA]/10">
                   Guardar en YouTube <PlayCircle className="h-4 w-4" />
                 </a>
               </div>
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <div className="rounded-3xl border border-[#0D4B56]/15 bg-white/90 p-3 shadow-[0_24px_65px_rgba(24,33,48,0.18)] backdrop-blur-sm">
-                <div className="relative overflow-hidden rounded-2xl bg-[#182130]">
-                  <iframe src={playlistEmbedUrl} title="Playlist Territorio STEM+" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen className="aspect-video w-full" />
-                </div>
+              <div className="overflow-hidden rounded-3xl border border-[#0D4B56]/12 bg-[#182130] p-2 shadow-[0_24px_65px_rgba(24,33,48,0.18)]">
+                <iframe src={playlistEmbedUrl} title="Playlist Territorio STEM+" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen className="aspect-video w-full rounded-2xl" />
               </div>
             </motion.div>
           </div>
@@ -563,17 +562,14 @@ export default function TerritorioStem() {
 
       {/* ===== BANNER SEMANA STEM ===== */}
       <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-        className="py-12 px-4 sm:px-6 lg:px-8 bg-white"
+        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariants}
+        className="bg-white px-4 sm:px-6 lg:px-8 pb-20 pt-4"
       >
         <div className="max-w-6xl mx-auto">
           <motion.div variants={itemVariants}>
             <a href="/semana-stem-complete" aria-label="Ir a Semana STEM" className="group block">
-              <div className="rounded-2xl border border-[#0D4B56]/20 bg-white p-3 shadow-md transition-all group-hover:shadow-lg">
-                <div className="relative overflow-hidden rounded-xl">
+              <div className="overflow-hidden rounded-3xl border border-[#0D4B56]/15 bg-white shadow-md transition-all group-hover:shadow-xl">
+                <div className="relative overflow-hidden">
                   <img src="/banners/banner-semana-click.webp" alt="Banner Semana STEM" loading="lazy" decoding="async" className="h-[190px] w-full object-cover object-center md:h-[230px]" />
                   <div className="pointer-events-none absolute inset-0 bg-[#182130]/0 transition-colors duration-300 group-hover:bg-[#182130]/20" />
                 </div>

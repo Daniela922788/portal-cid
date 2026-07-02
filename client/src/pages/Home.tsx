@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "wouter";
 import CoursesCarouselNew from "@/components/CoursesCarouselNew";
-import { ChevronLeft, ChevronRight, ArrowUpRight, Calendar, Clock, Users, MapPin } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import educacionLogo from "@/assets/educacion-logo.png";
 import alcaldiaLogo from "@/assets/alcaldia-envigado-logo.png";
@@ -10,48 +10,6 @@ import ticLogo from "@/assets/tic-logo.png";
 
 // Convierte la ruta de una imagen a su versión .webp (si es .jpg/.jpeg/.png)
 const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
-
-// ════════════════════════════════════════════════════════════════
-//  AHORA EN EL CID  ·  bloque "lo que estamos haciendo ahora"
-//  ───────────────────────────────────────────────────────────────
-//  Primer bloque después del banner. Es lo que la gente ve apenas
-//  entra: el evento / la noticia / lo que esté pasando hoy.
-//
-//  👉 Para cambiarlo más adelante (cuando los vacacionales pasen y
-//     venga otra cosa) SOLO edita este objeto.
-//
-//  · kicker        → texto al lado del punto "en curso"
-//  · titleLead     → 1ª parte del título (peso fino)
-//  · titleEmphasis → 2ª parte del título (negrilla + color)
-//  · subtitle      → línea de apoyo
-//  · tagline       → frase corta destacada
-//  · description   → párrafo
-//  · details       → lista con iconos (icon: calendar | clock | users | mapPin)
-//  · badge         → etiqueta (pon null para ocultarla)
-//  · video/poster  → video vertical .mp4 en /public/videos/
-//  · cta           → botón: { href, label }  (pon null para ocultarlo)
-// ════════════════════════════════════════════════════════════════
-const currentHappening = {
-  kicker: "Vacaciones STEM",
-  titleLead: "Campus",
-  titleEmphasis: "vacacional",
-  subtitle: "ciencia, tecnología y diversión",
-  tagline: "Aprender nunca fue tan divertido.",
-  description:
-    "Ciencia, tecnología, creatividad y juego se unen en un campus lleno de experiencias, retos y descubrimientos.",
-  details: [
-    { icon: "calendar", k: "Fechas", v: "Sem. 1: 16–19 jun · Sem. 2: 22–26 jun" },
-    { icon: "clock", k: "Horario", v: "8:00 a. m. – 12:00 m." },
-    { icon: "users", k: "Edades", v: "6 a 17 años" },
-    { icon: "mapPin", k: "Lugar", v: "Biblioteca Débora Arango, 3er piso" },
-  ],
-  badge: "Sin costo",
-  video: "/videos/campus-vacacional.mp4",
-  poster: "/videos/campus-vacacional.jpg",
-  cta: { href: "/formacion", label: "Ir a formación" } as { href: string; label: string } | null,
-};
-
-const iconMap = { calendar: Calendar, clock: Clock, users: Users, mapPin: MapPin };
 
 export default function Home() {
   const showCoursesCarousel = false;
@@ -187,13 +145,6 @@ export default function Home() {
         }
         .cid-carousel-arrow:hover { background: #11B2AA; color: #fff; transform: scale(1.08); box-shadow: 0 12px 30px rgba(17,178,170,0.35); }
 
-        .cid-diagonal-strip { clip-path: polygon(0 6%, 100% 0%, 100% 94%, 0% 100%); }
-
-        @keyframes now-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-        @keyframes now-twinkle { 0%,100% { opacity: 0.18; } 50% { opacity: 0.9; } }
-        .now-float { animation: now-float 7s ease-in-out infinite; }
-        .now-star  { animation: now-twinkle 3.6s ease-in-out infinite; }
-        @media (prefers-reduced-motion: reduce) { .now-float, .now-star { animation: none; } }
       `}</style>
 
       {/* ═══════════════════════════════════════
@@ -233,7 +184,7 @@ export default function Home() {
           </h1>
           <div className="cid-fade-up-3 mt-6 md:mt-8 flex items-center gap-3">
             <span className="cid-rule" />
-            <span className="cid-font text-white/60 text-sm font-medium">Envigado, Antioquia</span>
+            <span className="cid-font text-white/60 text-lg md:text-2xl font-medium">Envigado, Antioquia</span>
           </div>
         </div>
 
@@ -243,164 +194,13 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════════════════════════
-          AHORA EN EL CID — primer bloque después del banner
-          (se alimenta de `currentHappening`; edita ese objeto para
-           cambiarlo por otra cosa más adelante)
-      ═══════════════════════════════════════ */}
-      <section
-        id="ahora"
-        className="relative overflow-hidden py-20 md:py-28"
-        style={{
-          background:
-            'radial-gradient(130% 100% at 78% 0%, #2D3586 0%, #1e2658 40%, #182130 74%, #11162a 100%)',
-        }}
-      >
-        {/* Resplandores de color */}
-        <div className="pointer-events-none absolute -top-32 right-0 h-96 w-96 rounded-full blur-3xl"
-          style={{ background: 'rgba(236,105,16,0.16)' }} aria-hidden="true" />
-        <div className="pointer-events-none absolute -bottom-40 -left-24 h-[28rem] w-[28rem] rounded-full blur-3xl"
-          style={{ background: 'rgba(17,178,170,0.18)' }} aria-hidden="true" />
-        <div className="pointer-events-none absolute bottom-0 right-1/4 h-80 w-80 rounded-full blur-3xl"
-          style={{ background: 'rgba(45,53,134,0.45)' }} aria-hidden="true" />
-
-        {/* Planeta tipo Saturno */}
-        <svg className="pointer-events-none absolute right-6 top-12 hidden md:block opacity-50"
-          width="84" height="84" viewBox="0 0 84 84" aria-hidden="true">
-          <circle cx="42" cy="42" r="18" fill="rgba(236,105,16,0.45)" />
-          <ellipse cx="42" cy="42" rx="36" ry="11" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2" transform="rotate(-20 42 42)" />
-        </svg>
-
-        {/* Estrellas */}
-        {[
-          { top: '14%', left: '6%', s: 3 }, { top: '22%', left: '40%', s: 2 },
-          { top: '10%', left: '62%', s: 2 }, { top: '70%', left: '12%', s: 3 },
-          { top: '82%', left: '54%', s: 2 }, { top: '40%', left: '90%', s: 3 },
-          { top: '58%', left: '78%', s: 2 }, { top: '88%', left: '32%', s: 2 },
-          { top: '30%', left: '24%', s: 2 },
-        ].map((st, i) => (
-          <span key={i} className="now-star pointer-events-none absolute rounded-full bg-white"
-            style={{ top: st.top, left: st.left, width: st.s, height: st.s, animationDelay: `${i * 0.4}s` }} aria-hidden="true" />
-        ))}
-        {/* Destellos "+" */}
-        {[{ top: '18%', left: '84%', c: '#11B2AA' }, { top: '76%', left: '88%', c: '#EC6910' }, { top: '64%', left: '4%', c: '#FFDE07' }].map((p, i) => (
-          <span key={`p${i}`} className="now-star pointer-events-none absolute select-none font-bold"
-            style={{ top: p.top, left: p.left, color: p.c, fontSize: '14px', animationDelay: `${i * 0.7}s` }} aria-hidden="true">+</span>
-        ))}
-
-        <div className="relative z-10 container mx-auto px-4 md:px-8">
-          <div className="mb-10 md:mb-14 flex items-center gap-3">
-            <span className="cid-rule" />
-            <p className="cid-label text-white/55">Ahora en el CID</p>
-          </div>
-
-          <div className="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-20">
-            {/* ── Texto ── */}
-            <div className="cid-fade-in md:flex-1 text-center md:text-left">
-              {/* "En curso" con punto pulsante */}
-              <div className="mb-6 flex items-center justify-center md:justify-start gap-2.5">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style={{ background: '#FFDE07' }} />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full" style={{ background: '#FFDE07' }} />
-                </span>
-                <p className="cid-label" style={{ color: '#FFDE07' }}>En curso · {currentHappening.kicker}</p>
-              </div>
-
-              {/* Título: fino + negrilla en color */}
-              <h2 className="cid-h mb-4" style={{ fontSize: 'clamp(2.6rem, 5.6vw, 4.8rem)' }}>
-                <span style={{ fontWeight: 300, color: 'rgba(255,255,255,0.92)' }}>{currentHappening.titleLead} </span>
-                <span style={{ fontWeight: 800, color: '#EC6910' }}>{currentHappening.titleEmphasis}</span>
-                <span className="block" style={{ fontWeight: 600, color: 'rgba(255,255,255,0.9)', fontSize: 'clamp(1.2rem, 2.5vw, 2rem)', marginTop: '0.35rem', letterSpacing: '-0.02em' }}>
-                  {currentHappening.subtitle}
-                </span>
-              </h2>
-
-              <p className="cid-font text-lg md:text-xl mb-3" style={{ color: '#11B2AA', fontWeight: 600 }}>
-                {currentHappening.tagline}
-              </p>
-              <p className="cid-font text-white/60 text-base md:text-lg leading-relaxed max-w-lg mx-auto md:mx-0 mb-8" style={{ fontWeight: 400 }}>
-                {currentHappening.description}
-              </p>
-
-              {/* Detalles en cuadrícula 2×2 */}
-              <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 max-w-lg mx-auto md:mx-0">
-                {currentHappening.details.map(({ icon, k, v }) => {
-                  const Icon = iconMap[icon as keyof typeof iconMap];
-                  return (
-                    <div key={k} className="flex items-center gap-3.5 text-left">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05]">
-                        {Icon ? <Icon className="h-[18px] w-[18px]" style={{ color: '#11B2AA' }} /> : null}
-                      </span>
-                      <div className="min-w-0">
-                        <p className="cid-label text-white/40 mb-0.5" style={{ fontSize: '0.6rem' }}>{k}</p>
-                        <p className="cid-font text-white text-sm leading-snug" style={{ fontWeight: 500 }}>{v}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Badge + botón a Formación */}
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-                {currentHappening.badge && (
-                  <span className="cid-font rounded-full px-5 py-2.5 text-sm font-extrabold text-[#182130]" style={{ background: '#FFDE07' }}>
-                    {currentHappening.badge}
-                  </span>
-                )}
-                {currentHappening.cta && (
-                  <Link
-                    href={currentHappening.cta.href}
-                    onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "auto" })}
-                    className="cid-font group inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-extrabold text-white transition-transform hover:scale-[1.03]"
-                    style={{ background: '#EC6910' }}
-                  >
-                    {currentHappening.cta.label}
-                    <ArrowUpRight className="cid-arrow h-4 w-4" />
-                  </Link>
-                )}
-              </div>
-            </div>
-
-            {/* ── Video vertical flotando ── */}
-            <div className="relative flex justify-center md:flex-1">
-              {/* Órbita */}
-              <svg className="pointer-events-none absolute left-1/2 top-1/2 hidden sm:block"
-                width="480" height="430" viewBox="0 0 480 430"
-                style={{ transform: 'translate(-50%, -50%) rotate(-15deg)' }} aria-hidden="true">
-                <ellipse cx="240" cy="215" rx="218" ry="150" fill="none" stroke="rgba(17,178,170,0.30)" strokeWidth="1.4" strokeDasharray="3 9" />
-                <circle cx="30" cy="150" r="6" fill="#EC6910" />
-                <circle cx="455" cy="270" r="3.5" fill="#FFDE07" />
-              </svg>
-
-              <div className="now-float relative">
-                <div className="absolute -inset-5 rounded-[3rem] blur-2xl opacity-55"
-                  style={{ background: 'linear-gradient(140deg, #EC6910, #11B2AA)' }} aria-hidden="true" />
-                <div className="phone-frame relative bg-black" style={{ width: 'min(76vw, 285px)' }}>
-                  <div className="phone-notch" />
-                  <div className="aspect-[9/16] w-full">
-                    <video
-                      src={currentHappening.video}
-                      poster={currentHappening.poster}
-                      autoPlay muted loop playsInline preload="metadata"
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
           EXPLORA — banners de acceso rápido
       ═══════════════════════════════════════ */}
       <section className="relative bg-white py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">
           <div className="mb-8 md:mb-12">
-            <p className="cid-label text-[#11B2AA] mb-3">Explora</p>
             <h2 className="cid-h text-[#182130]" style={{ fontSize: 'clamp(2rem, 4.5vw, 3.6rem)' }}>
-              <span style={{ fontWeight: 300 }}>Todo lo que somos, </span>
-              <span style={{ fontWeight: 800 }}>en un solo lugar</span>
+              <span style={{ fontWeight: 300 }}>Todo lo que somos, en un solo lugar</span>
             </h2>
           </div>
 
@@ -448,7 +248,7 @@ export default function Home() {
           NUESTRAS SECCIONES — franja diagonal teal (diseño anterior)
       ═══════════════════════════════════════ */}
       <section
-        className="relative py-20 md:py-28 cid-diagonal-strip"
+        className="relative py-20 md:py-28"
         style={{ background: 'linear-gradient(135deg, #023A34 0%, #11B2AA 100%)' }}
       >
         <div className="container mx-auto px-4 md:px-8">

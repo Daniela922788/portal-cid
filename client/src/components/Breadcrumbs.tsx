@@ -8,40 +8,26 @@ interface BreadcrumbItem {
 
 interface BreadcrumbsProps {
   items: BreadcrumbItem[];
-  className?: string;
-  linkClassName?: string;
-  iconClassName?: string;
-  activeClassName?: string;
 }
 
-export default function Breadcrumbs({
-  items,
-  className = "",
-  linkClassName = "",
-  iconClassName = "",
-  activeClassName = "",
-}: BreadcrumbsProps) {
-  const baseLinkClass = linkClassName || "text-muted-foreground hover:text-primary transition-colors";
-  const baseIconClass = iconClassName || "text-muted-foreground";
-  const baseActiveClass = activeClassName || "text-foreground font-medium";
-
+export default function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
-    <nav aria-label="Breadcrumb" className={`py-4 ${className}`.trim()}>
+    <nav aria-label="Breadcrumb" className="py-4">
       <ol className="flex items-center gap-2 text-sm">
         <li>
-          <Link href="/" className={`flex items-center ${baseLinkClass}`}>
-            <Home className={`h-4 w-4 ${baseIconClass}`} />
+          <Link href="/" className="flex items-center text-muted-foreground hover:text-primary transition-colors">
+            <Home className="h-4 w-4" />
           </Link>
         </li>
         {items.map((item, index) => (
           <li key={index} className="flex items-center gap-2">
-            <ChevronRight className={`h-4 w-4 ${baseIconClass}`} />
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
             {item.href ? (
-              <Link href={item.href} className={baseLinkClass}>
+              <Link href={item.href} className="text-muted-foreground hover:text-primary transition-colors">
                 {item.label}
               </Link>
             ) : (
-              <span className={baseActiveClass}>{item.label}</span>
+              <span className="text-foreground font-medium">{item.label}</span>
             )}
           </li>
         ))}

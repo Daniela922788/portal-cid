@@ -1,41 +1,49 @@
-import { useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Calendar, ChevronLeft, ChevronRight, ExternalLink, Newspaper, X } from "lucide-react";
+import { Calendar, ExternalLink, Newspaper, Search, X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { Skeleton } from "@/components/ui/skeleton";
 
-type NoticiaLocal = {
+type Noticia = {
   id: string;
   titulo: string;
   fecha: string;
   resumen: string;
-  contenido: string[];
+  contenido: ReactNode[];
   tipo: "propia" | "mencion";
   imagenes: string[];
   autor?: string;
   video?: string;
   videoFinal?: string;
+  videoLocalFinal?: string;
+  videoLocalFinalPoster?: string;
   instagramReels?: string[];
+  categoria?: string;
 };
 
-type NoticiaUI = {
-  id: string;
-  titulo: string;
-  fecha: string;
-  resumen: string;
-  tipo: "propia" | "mencion";
-  imagenes: string[];
-  autor?: string;
-  contenido?: string[];
-  video?: string;
-  videoFinal?: string;
-  instagramReels?: string[];
-};
-
-const noticiasLocales: NoticiaLocal[] = [
+const noticiasLocales: Noticia[] = [
+  {
+    id: "campus-vacacional-stem-2026",
+    titulo: "Con gran éxito culminó el Campus Vacacional STEM+ 2026",
+    fecha: "2026-06-27",
+    resumen:
+      "Durante dos semanas, niñas, niños y jóvenes de 6 a 17 años vivieron el Campus Vacacional STEM+ en la Biblioteca Débora Arango, un espacio gratuito donde la ciencia, la tecnología y la creatividad se combinaron con juego y diversión.",
+    contenido: [
+      "Aprender nunca fue tan divertido. Así lo demostró el Campus Vacacional STEM+, un espacio gratuito organizado por la Secretaría de Educación de Envigado a través del Centro de Innovación y Desarrollo (CID), que reunió a niñas, niños y jóvenes de 6 a 17 años en dos semanas cargadas de ciencia, tecnología y creatividad.",
+      "El campus se llevó a cabo en las instalaciones del tercer piso de la Biblioteca Débora Arango, en dos jornadas: la primera del 16 al 19 de junio y la segunda del 22 al 26 de junio, con horario de 8:00 a. m. a 12:00 m., y sin ningún costo para las familias participantes.",
+      "Durante las jornadas, los asistentes vivieron experiencias, retos y descubrimientos que unieron el juego con el aprendizaje: actividades de robótica, experimentación científica, creatividad digital y trabajo en equipo, pensadas para que la curiosidad de niñas, niños y jóvenes se convirtiera en el motor del aprendizaje durante las vacaciones de mitad de año.",
+      "Con este tipo de iniciativas, la Secretaría de Educación de Envigado reafirma su apuesta por acercar la ciencia y la tecnología a la niñez y la juventud del municipio, incluso fuera del calendario escolar, fortaleciendo el enfoque STEM+ que caracteriza a la educación envigadeña.",
+    ],
+    tipo: "propia",
+    imagenes: [
+      "/Noticias/vacacionales/noticia%20vacacionales%201.webp",
+      "/Noticias/vacacionales/noticia%20vacacionales%202.webp",
+      "/Noticias/vacacionales/noticia%20vacacionales%203.webp",
+      "/Noticias/vacacionales/noticia%20vacacionales%204.webp",
+    ],
+    videoLocalFinal: "/videos/campus-vacacional.mp4",
+    videoLocalFinalPoster: "/videos/campus-vacacional.jpg",
+    autor: "Secretaría de Educación de Envigado",
+  },
   {
     id: "amor-por-envigado-calidad-educativa-bienestar",
     titulo: "Envigado destaca por sus avances en educación, innovación y bienestar social",
@@ -177,8 +185,8 @@ const noticiasLocales: NoticiaLocal[] = [
     ],
     tipo: "propia",
     imagenes: [
-      "/Noticias/estudiantes-el-salado-computadores/151822_estudiantes-de-la-i-e-el-salado-en-envigado-estrenaron_1024x600.jpeg",
       "/Noticias/estudiantes-el-salado-computadores/151823_whatsapp-image-20260129-at-23459-pm_1024x600.jpeg",
+      "/Noticias/estudiantes-el-salado-computadores/151822_estudiantes-de-la-i-e-el-salado-en-envigado-estrenaron_1024x600.jpeg",
       "/Noticias/estudiantes-el-salado-computadores/151824_whatsapp-image-20260129-at-23502-pm_1024x600.jpeg",
       "/Noticias/estudiantes-el-salado-computadores/151825_whatsapp-image-20260129-at-23459-pm-1_1024x600.jpeg",
       "/Noticias/estudiantes-el-salado-computadores/151826_whatsapp-image-20260129-at-23459-pm-2_1024x600.jpeg",
@@ -435,43 +443,68 @@ const fuentesOficialesById: Record<string, string> = {
 const getPreferredImageSrc = (src: string) =>
   src.replace(/\.(jpe?g|png)$/i, '.webp');
 
-// Encuadre por imagen. Por defecto se ancla arriba ("center top"), que funciona
-// para fotos de personas/grupos. Aquí se sobrescriben los casos puntuales en los
-// que el sujeto está en otra zona de la foto.
-const imagePositionOverrides: Record<string, string> = {
-  "/Noticias/El Colegio Comercial de Envigado, entre los 10 mejores/Comercial_Top2.jpg": "center bottom",
-  "/Noticias/estudiantes-el-salado-computadores/151822_estudiantes-de-la-i-e-el-salado-en-envigado-estrenaron_1024x600.jpeg": "center 30%",
+// Encuadre vertical SOLO de la imagen de portada (la que se ve en el cuadro).
+// object-cover recorta lo que sobra, así que este valor decide qué parte se ve:
+//   "center top" / "center 0%"    -> muestra ARRIBA
+//   "center"      / "center 50%"   -> muestra el CENTRO
+//   "center bottom"/ "center 100%" -> muestra ABAJO
+//   intermedios: "center 30%", "center 70%", etc.
+// Subir el % muestra más de abajo; bajarlo muestra más de arriba.
+// Esto NO afecta las imágenes del carrusel al abrir la noticia (esas quedan centradas).
+const portadaPositionOverrides: Record<string, string> = {
+  // Desde Tlaxcala hasta Envigado: jóvenes que inspiran con innovación y edu…
+  "/Noticias/Mexico/4S8A3179.jpg": "center 63%",
+  // El talento, la creatividad y el trabajo en equipo brillaron en RoboJam 2…
+  "/Noticias/RoboJam/4S8A3409.jpg": "center 23%",
+  // El Colegio Comercial de Envigado, entre los 10 mejores colegios del mund…
+  "/Noticias/El Colegio Comercial de Envigado, entre los 10 mejores/Comercial_Top1.jpg": "center 18%",
+  // Envigado se suma a la Red Nacional de Ciudades del Aprendizaje
+  "/Noticias/envigado-red-ciudades-aprendizaje/1.jpeg": "center",
+  // Estudiantes de la I. E. El Salado, en Envigado, estrenaron computadores
+  "/Noticias/estudiantes-el-salado-computadores/151823_whatsapp-image-20260129-at-23459-pm_1024x600.jpeg": "center 25%",
+  // Envigado, ganador del Reto Nacional por la Educación 2025
+  "/Noticias/envigado-ganador-reto-nacional/1.jpeg": "center 15%",
+  // Envigado recibió reconocimiento por sus buenas prácticas en Foro Latinoa…
+  "/Noticias/envigado-reconocimiento-foro-latinoamericano/1.jpeg": "center 30%",
+  // Envigado exaltó a los mejores docentes de 2025 en la Gala del Maestro
+  "/Noticias/gala-maestro-2025/145681_envigado-exalto-a-los-mejores-docentes-de-2025-en-la_1024x600.jpeg": "center",
+  // La I.E. Comercial de Envigado ganó el Premio Santillana al mejor proyect…
+  "/Noticias/premio-santillana-ie-comercial/145363_la-ie-comercial-de-envi.jpeg": "center 55%",
+  // Envigado llevó su innovación educativa al Congreso Internacional de Gest…
+  "/Noticias/congreso-gestion-riesgo-2025/145349_envigado-lleva-su-innova.jpg": "center",
+  // Envigado da inicio a la Semana STEM+ 2025 con foro sobre educación, tecn…
+  "/Noticias/semana-stem-2025-foro/144974_envigado-da-inicio-a-la-semana-stem-2025-con-foro-.jpeg": "center 25%",
+  // Envigado canta y cuenta su historia con creatividad estudiantil
+  "/Noticias/envigado-canta-cuenta/145310_envigado-canta-y-cuenta-su-historia-con-creativida.jpeg": "center",
+  // Envigado recibió visita para avanzar en su certificación como Centro de …
+  "/Noticias/envigado-certificacion-centro-ciencia/140823_envigado-recibio-visita-para-avanzar-en-su-certificacion_1024x600.jpg": "center 30%",
+  // Alcaldía de Envigado entregará kits escolares, tecnología y mobiliario p…
+  "/Noticias/kits-escolares-2025/131105_alcaldia-de-envigado-invierte-mas-de-3000-millones-en_102.jpeg": "center",
 };
-const getImagePosition = (src: string) => {
-  // Ajustes puntuales por imagen (tienen prioridad sobre las reglas por carpeta).
-  if (imagePositionOverrides[src]) return imagePositionOverrides[src];
-  // RoboJam y Colegio Comercial: fotos de personas con las caras en la parte alta.
-  if (src.startsWith("/Noticias/RoboJam/")) return "center top";
-  if (src.startsWith("/Noticias/El Colegio Comercial de Envigado, entre los 10 mejores/")) return "center top";
-  // México: encuadre hacia la parte baja de la foto, sin llegar al fondo del todo.
-  if (src.startsWith("/Noticias/Mexico/")) return "center 70%";
-  // Por defecto, centrado (como estaba originalmente y como se ven bien las demás).
-  return "center";
-};
+const getPortadaPosition = (src: string) => portadaPositionOverrides[src] ?? "center";
 
 export default function Noticias() {
-  const [selectedNews, setSelectedNews] = useState<NoticiaUI | null>(null);
-  const [currentImageByNews, setCurrentImageByNews] = useState<Record<string, number>>({});
+  const [selectedNews, setSelectedNews] = useState<Noticia | null>(null);
+  const [currentImage, setCurrentImage] = useState(0);
   const [visibleCount, setVisibleCount] = useState(6);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [fuenteFiltro, setFuenteFiltro] = useState("");
+  const [anioFiltro, setAnioFiltro] = useState("");
   const { data: noticias = [], isLoading } = trpc.news.list.useQuery();
   
   // Mapear noticias de la BD a formato de UI
-  const noticiasMapeadas: NoticiaUI[] = noticias.map(n => ({
+  const noticiasMapeadas: Noticia[] = noticias.map(n => ({
     id: String(n.id),
     titulo: n.titulo,
     fecha: n.createdAt ? new Date(n.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
     resumen: n.descripcion || n.contenido || "",
+    contenido: [n.descripcion || n.contenido || ""],
     tipo: n.estado === "publicado" ? "propia" as const : "mencion" as const,
     imagenes: [n.imagen || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=400&fit=crop"],
     autor: n.autor ?? undefined
   }));
   
-  const noticiasFiltradas: NoticiaUI[] = [...noticiasLocales, ...noticiasMapeadas];
+  const noticiasFiltradas: Noticia[] = [...noticiasLocales, ...noticiasMapeadas];
   const latestNewsTimestamp = noticiasFiltradas.length
     ? Math.max(...noticiasFiltradas.map((item) => new Date(item.fecha).getTime()))
     : null;
@@ -483,79 +516,198 @@ export default function Noticias() {
       })
     : "Sin publicaciones";
 
-  const getCurrentImageIndex = (newsId: string) => currentImageByNews[newsId] ?? 0;
-  const nextImage = (newsId: string, total: number) => {
-    setCurrentImageByNews((prev) => ({
-      ...prev,
-      [newsId]: ((prev[newsId] ?? 0) + 1) % total,
-    }));
-  };
-  const prevImage = (newsId: string, total: number) => {
-    setCurrentImageByNews((prev) => ({
-      ...prev,
-      [newsId]: ((prev[newsId] ?? 0) - 1 + total) % total,
-    }));
-  };
   const getFuenteOficialUrl = (newsId: string) => fuentesOficialesById[newsId];
+
+  // Etiqueta naranja superior (equivalente a "categoria" en Reconocimientos).
+  const getCategoriaLabel = (noticia: Noticia) =>
+    noticia.categoria ?? noticia.autor ?? "Noticia";
+
+  // ===== Filtros (buscador + fuente + año) =====
+  const normalizarTexto = (t: string) =>
+    t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const extraerAnio = (fecha: string) => fecha.match(/\d{4}/)?.[0] ?? "";
+
+  const fuentesDisponibles = Array.from(
+    new Set(noticiasFiltradas.map((n) => getCategoriaLabel(n)))
+  ).sort((a, b) => a.localeCompare(b));
+  const aniosDisponibles = Array.from(
+    new Set(noticiasFiltradas.map((n) => extraerAnio(n.fecha)).filter(Boolean))
+  ).sort((a, b) => Number(b) - Number(a));
+
+  const noticiasVisibles = noticiasFiltradas.filter((noticia) => {
+    const texto = normalizarTexto(
+      `${noticia.titulo} ${noticia.resumen} ${getCategoriaLabel(noticia)} ${noticia.autor ?? ""}`
+    );
+    const coincideBusqueda =
+      searchTerm.trim() === "" || texto.includes(normalizarTexto(searchTerm.trim()));
+    const coincideFuente = fuenteFiltro === "" || getCategoriaLabel(noticia) === fuenteFiltro;
+    const coincideAnio = anioFiltro === "" || extraerAnio(noticia.fecha) === anioFiltro;
+    return coincideBusqueda && coincideFuente && coincideAnio;
+  });
+
+  const hayFiltrosActivos =
+    searchTerm.trim() !== "" || fuenteFiltro !== "" || anioFiltro !== "";
+  const limpiarFiltros = () => {
+    setSearchTerm("");
+    setFuenteFiltro("");
+    setAnioFiltro("");
+  };
+
+  // Al cambiar cualquier filtro, volver a mostrar la primera tanda.
+  useEffect(() => {
+    setVisibleCount(6);
+  }, [searchTerm, fuenteFiltro, anioFiltro]);
+
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>, fallbackSrc: string) => {
     const target = event.currentTarget;
     // Si ya estamos mostrando justamente este fallback, no hacemos nada (evita bucles).
     if (target.dataset.currentFallback === fallbackSrc) return;
-    // Marcamos el fallback de ESTA imagen (no una bandera global de la tarjeta),
-    // así cada imagen del carrusel puede recuperarse de forma independiente.
     target.dataset.currentFallback = fallbackSrc;
     target.src = fallbackSrc;
   };
 
+  const preloadImage = (src: string) => {
+    const img = new Image();
+    img.decoding = "async";
+    img.src = src;
+  };
+
+  const goPrevImage = () => {
+    if (!selectedNews) return;
+    setCurrentImage((prev) => (prev === 0 ? selectedNews.imagenes.length - 1 : prev - 1));
+  };
+
+  const goNextImage = () => {
+    if (!selectedNews) return;
+    setCurrentImage((prev) => (prev === selectedNews.imagenes.length - 1 ? 0 : prev + 1));
+  };
+
+  const openNoticia = (noticia: Noticia) => {
+    noticia.imagenes.forEach((src) => preloadImage(getPreferredImageSrc(src)));
+    setCurrentImage(0);
+    setSelectedNews(noticia);
+  };
+
+  useEffect(() => {
+    if (!selectedNews || selectedNews.imagenes.length === 0) return;
+    const total = selectedNews.imagenes.length;
+    const nextIndex = (currentImage + 1) % total;
+    const prevIndex = (currentImage - 1 + total) % total;
+    preloadImage(getPreferredImageSrc(selectedNews.imagenes[nextIndex]));
+    preloadImage(getPreferredImageSrc(selectedNews.imagenes[prevIndex]));
+  }, [selectedNews, currentImage]);
+
   return (
-    <div className="min-h-screen py-8">
-      <div className="container">
-        <section className="relative mb-10 overflow-hidden rounded-[2rem] border border-[#0D4B56]/20 bg-[linear-gradient(125deg,#182130_0%,#0D4B56_45%,#11B2AA_100%)] p-6 text-white shadow-xl sm:p-8 lg:p-10">
-          <div className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-[#FFDE07]/25 blur-2xl" />
-          <div className="pointer-events-none absolute -left-14 bottom-0 h-40 w-40 rounded-full bg-[#EC6910]/20 blur-2xl" />
+    <div className="min-h-screen">
+      {/* ===== HERO / BANNER (full-bleed, hasta el tope detrás del header) ===== */}
+      <section className="relative isolate overflow-hidden text-white">
+        {/* Degradado base petróleo -> teal */}
+        <div className="absolute inset-0 -z-20 bg-[linear-gradient(115deg,#11212e_0%,#0D4B56_46%,#0e6e72_74%,#11B2AA_100%)]" />
+        {/* Brillo teal a la derecha */}
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(70%_120%_at_88%_22%,rgba(17,178,170,0.55)_0%,rgba(17,178,170,0)_60%)]" />
+        {/* Acentos suaves de marca */}
+        <div className="pointer-events-none absolute -right-28 -top-28 -z-10 h-80 w-80 rounded-full bg-[#FFDE07]/12 blur-3xl" />
+        <div className="pointer-events-none absolute -left-24 -bottom-20 -z-10 h-72 w-72 rounded-full bg-[#EC6910]/12 blur-3xl" />
+        {/* Filo inferior */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-white/10" />
 
-          <div className="relative z-10 max-w-3xl">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em]">
-              <Newspaper className="h-4 w-4" />
-              Boletin CID
-            </div>
-
-            <h1 className="text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
+        <div className="container relative pt-32 pb-16 md:pt-40 md:pb-24">
+          <div className="max-w-3xl">
+            <h1 className="text-5xl font-black leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
               Noticias
             </h1>
-            <p className="mt-3 text-sm leading-relaxed text-cyan-50 sm:text-base lg:text-lg">
-              Mantente al dia con los avances, reconocimientos y actividades que fortalecen la innovacion educativa en Envigado.
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-cyan-50/90 sm:text-lg">
+              Mantente al día con los avances, reconocimientos y actividades que fortalecen la innovación educativa en Envigado.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-3 text-sm">
-              <div className="rounded-full border border-white/35 bg-white/12 px-4 py-2 font-medium">
+            <div className="mt-8 flex flex-wrap gap-3 text-sm">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 font-medium backdrop-blur-sm">
+                <Newspaper className="h-4 w-4 text-[#FFDE07]" />
                 {noticiasFiltradas.length} noticias publicadas
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/12 px-4 py-2 font-medium">
-                <Calendar className="h-4 w-4" />
-                Ultima publicacion: {latestNewsLabel}
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 font-medium backdrop-blur-sm">
+                <Calendar className="h-4 w-4 text-[#FFDE07]" />
+                Última publicación: {latestNewsLabel}
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
+      {/* ===== CONTENIDO ===== */}
+      <div className="container py-10">
         <Breadcrumbs items={[{ label: "Noticias" }]} />
 
+        {/* ===== FILTROS (buscador + fuente + año) ===== */}
+        <div className="mt-4 mb-6">
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+            <div className="relative w-full sm:w-64">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#0D4B56]/60" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Buscar noticias..."
+                className="w-full rounded-lg border border-[#0D4B56]/25 bg-white py-2 pl-9 pr-3 text-sm text-[#182130] outline-none transition-colors focus:border-[#0D4B56] focus:ring-1 focus:ring-[#0D4B56]/30"
+              />
+            </div>
+
+            <select
+              value={fuenteFiltro}
+              onChange={(e) => setFuenteFiltro(e.target.value)}
+              className="w-full rounded-lg border border-[#0D4B56]/25 bg-white py-2 px-3 text-sm text-[#182130] outline-none transition-colors focus:border-[#0D4B56] focus:ring-1 focus:ring-[#0D4B56]/30 sm:w-auto"
+            >
+              <option value="">Todas las fuentes</option>
+              {fuentesDisponibles.map((f) => (
+                <option key={f} value={f}>
+                  {f}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={anioFiltro}
+              onChange={(e) => setAnioFiltro(e.target.value)}
+              className="w-full rounded-lg border border-[#0D4B56]/25 bg-white py-2 px-3 text-sm text-[#182130] outline-none transition-colors focus:border-[#0D4B56] focus:ring-1 focus:ring-[#0D4B56]/30 sm:w-auto"
+            >
+              <option value="">Todos los años</option>
+              {aniosDisponibles.map((a) => (
+                <option key={a} value={a}>
+                  {a}
+                </option>
+              ))}
+            </select>
+
+            {hayFiltrosActivos && (
+              <button
+                onClick={limpiarFiltros}
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-[#EC6910] transition-colors hover:bg-[#EC6910]/10"
+              >
+                <X className="h-4 w-4" />
+                Limpiar
+              </button>
+            )}
+          </div>
+
+          {hayFiltrosActivos && (
+            <p className="mt-2 text-xs text-[#0D4B56]/70">
+              {noticiasVisibles.length}{" "}
+              {noticiasVisibles.length === 1 ? "resultado" : "resultados"}
+            </p>
+          )}
+        </div>
+
         {isLoading && noticiasFiltradas.length === 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <Card key={i}>
-                <Skeleton className="h-48 w-full" />
-                <CardHeader>
-                  <Skeleton className="h-4 w-20 mb-2" />
-                  <Skeleton className="h-6 w-full mb-2" />
-                  <Skeleton className="h-4 w-32" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-16 w-full mb-4" />
-                  <Skeleton className="h-10 w-full" />
-                </CardContent>
-              </Card>
+          <div className="grid md:grid-cols-2 gap-6">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="overflow-hidden rounded-xl border border-border bg-white">
+                <div className="h-56 w-full animate-pulse bg-muted" />
+                <div className="p-5 space-y-3">
+                  <div className="h-3 w-24 animate-pulse rounded bg-muted" />
+                  <div className="h-5 w-full animate-pulse rounded bg-muted" />
+                  <div className="h-4 w-40 animate-pulse rounded bg-muted" />
+                </div>
+              </div>
             ))}
           </div>
         ) : noticiasFiltradas.length === 0 ? (
@@ -563,119 +715,127 @@ export default function Noticias() {
             <Newspaper className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
             <p className="text-muted-foreground">No hay noticias disponibles</p>
           </div>
+        ) : noticiasVisibles.length === 0 ? (
+          <div className="py-12 text-center">
+            <Newspaper className="mx-auto mb-4 h-12 w-12 text-[#0D4B56]/40" />
+            <p className="text-[#0D4B56]">No se encontraron noticias con esos filtros.</p>
+            {hayFiltrosActivos && (
+              <button
+                onClick={limpiarFiltros}
+                className="mt-4 inline-flex items-center gap-1.5 rounded-lg border border-[#0D4B56] bg-[#FFDE07]/20 px-5 py-2 text-sm font-semibold text-[#182130] transition-colors hover:bg-[#FFDE07]/35"
+              >
+                Limpiar filtros
+              </button>
+            )}
+          </div>
         ) : (
           <>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {noticiasFiltradas.slice(0, visibleCount).map((noticia) => (
-              <Card key={noticia.id} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative h-48 overflow-hidden bg-[#11B2AA]/10">
-                  {noticia.video ? (
-                    <iframe
-                      src={`https://www.youtube.com/embed/${noticia.video}?autoplay=1&mute=1&playsinline=1&controls=0&rel=0&modestbranding=1`}
-                      title={noticia.titulo}
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                      className="absolute inset-0 h-full w-full"
-                    />
-                  ) : (
-                    <>
+            <div className="grid md:grid-cols-2 gap-6">
+              {noticiasVisibles.slice(0, visibleCount).map((noticia) => (
+                <button
+                  key={noticia.id}
+                  onClick={() => openNoticia(noticia)}
+                  className="text-left overflow-hidden rounded-xl border border-border bg-white hover:shadow-lg transition-shadow"
+                >
+                  <div className="h-56 bg-muted overflow-hidden">
+                    {noticia.video ? (
+                      <iframe
+                        src={`https://www.youtube.com/embed/${noticia.video}?autoplay=1&mute=1&playsinline=1&controls=0&rel=0&modestbranding=1`}
+                        title={noticia.titulo}
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                        className="h-full w-full"
+                      />
+                    ) : (
                       <img
-                        src={getPreferredImageSrc(noticia.imagenes[getCurrentImageIndex(noticia.id)])}
+                        src={getPreferredImageSrc(noticia.imagenes[0])}
                         alt={noticia.titulo}
                         loading="lazy"
                         decoding="async"
                         fetchPriority="low"
-                        onError={(e) => handleImageError(e, noticia.imagenes[getCurrentImageIndex(noticia.id)])}
+                        onError={(e) => handleImageError(e, noticia.imagenes[0])}
                         className="w-full h-full object-cover"
-                        style={{ objectPosition: getImagePosition(noticia.imagenes[getCurrentImageIndex(noticia.id)]) }}
+                        style={{ objectPosition: getPortadaPosition(noticia.imagenes[0]) }}
                       />
-                      {noticia.imagenes.length > 1 && (
-                        <>
-                          <button
-                            type="button"
-                            aria-label="Imagen anterior"
-                            onClick={() => prevImage(noticia.id, noticia.imagenes.length)}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-1.5 text-[#FFDE07] hover:bg-[#023A34]"
-                          >
-                            <ChevronLeft className="h-4 w-4" />
-                          </button>
-                          <button
-                            type="button"
-                            aria-label="Siguiente imagen"
-                            onClick={() => nextImage(noticia.id, noticia.imagenes.length)}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-1.5 text-[#FFDE07] hover:bg-[#023A34]"
-                          >
-                            <ChevronRight className="h-4 w-4" />
-                          </button>
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
-                <CardHeader>
-                  <Badge variant="secondary" className="border-[#11B2AA]/40 bg-[#11B2AA]/20 text-[#0D4B56]">
-                    Noticia Externa
-                  </Badge>
-                  <CardTitle className="line-clamp-2">{noticia.titulo}</CardTitle>
-                  <CardDescription className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-[#0D4B56]" />
-                    <span className="font-medium">Fecha de publicación:</span>
-                    {new Date(noticia.fecha).toLocaleDateString('es-CO')}
-                    {noticia.autor && <span className="ml-2">• {noticia.autor}</span>}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground line-clamp-3 mb-4">{noticia.resumen}</p>
-                  <Button
-                    variant="outline"
-                    className="w-full border-[#0D4B56] bg-[#FFDE07]/20 text-[#182130] hover:bg-[#FFDE07]/35"
-                    onClick={() => setSelectedNews(noticia)}
-                  >
-                    Leer más
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          {visibleCount < noticiasFiltradas.length && (
-            <div className="mt-8 flex justify-center">
-              <Button
-                variant="outline"
-                onClick={() => setVisibleCount((c) => c + 6)}
-                className="border-[#0D4B56] bg-[#FFDE07]/20 text-[#182130] hover:bg-[#FFDE07]/35 px-8"
-              >
-                Ver más noticias
-              </Button>
+                    )}
+                  </div>
+                  <div className="p-5 space-y-2">
+                    <span className="text-xs font-bold text-[#EC6910] uppercase tracking-wider">
+                      {getCategoriaLabel(noticia)}
+                    </span>
+                    <h2 className="text-xl font-bold text-[#182130] leading-snug">{noticia.titulo}</h2>
+                    <p className="text-sm text-[#023A34]">
+                      <span className="font-medium">Fecha de publicación:</span>{" "}
+                      {new Date(noticia.fecha).toLocaleDateString("es-CO")}
+                    </p>
+                    <p className="text-sm text-[#2D3586] font-semibold pt-1">Abrir noticia</p>
+                  </div>
+                </button>
+              ))}
             </div>
-          )}
+
+            {visibleCount < noticiasVisibles.length && (
+              <div className="mt-8 flex justify-center">
+                <button
+                  onClick={() => setVisibleCount((c) => c + 6)}
+                  className="rounded-lg border border-[#0D4B56] bg-[#FFDE07]/20 px-8 py-2.5 text-sm font-semibold text-[#182130] hover:bg-[#FFDE07]/35 transition-colors"
+                >
+                  Ver más noticias
+                </button>
+              </div>
+            )}
           </>
         )}
+      </div>
 
-        {selectedNews && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#182130]/70 p-4"
-            onClick={() => setSelectedNews(null)}
-          >
-            <div
-              className="max-h-[90vh] w-full max-w-4xl overflow-auto rounded-2xl bg-white"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-white px-6 py-4">
-                <h2 className="text-xl font-bold text-slate-900">{selectedNews.titulo}</h2>
-                <button
-                  type="button"
-                  aria-label="Cerrar noticia"
-                  onClick={() => setSelectedNews(null)}
-                  className="rounded-full p-1 text-[#0D4B56] hover:bg-[#11B2AA]/15"
-                >
-                  <X className="h-5 w-5" />
+      {selectedNews && (
+        <div className="fixed inset-0 z-50 bg-black/60 p-4 overflow-y-auto" onClick={() => setSelectedNews(null)}>
+          <div className="min-h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+            <div className="w-full max-w-5xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+              <div className="flex items-center justify-between p-4 border-b">
+                <h3 className="font-bold">Noticia</h3>
+                <button onClick={() => setSelectedNews(null)} className="p-1 rounded hover:bg-muted" aria-label="Cerrar noticia">
+                  <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="p-6">
-                <div className="relative mb-6 overflow-hidden rounded-xl bg-[#11B2AA]/10">
+              <div className="p-6 md:p-8 max-h-[85vh] overflow-y-auto">
+                <div className="mb-4">
+                  <span className="text-sm font-bold text-[#EC6910] uppercase tracking-wider">
+                    {getCategoriaLabel(selectedNews)}
+                  </span>
+                </div>
+                <h1 className="text-3xl md:text-4xl font-bold text-[#182130] mb-4 leading-tight">{selectedNews.titulo}</h1>
+                <p className="text-lg text-[#023A34] mb-6 leading-relaxed">{selectedNews.resumen}</p>
+
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[#0D4B56] border-t border-b border-slate-300 py-4 mb-8">
+                  {selectedNews.autor && selectedNews.autor !== getCategoriaLabel(selectedNews) && (
+                    <span className="font-semibold text-[#182130]">{selectedNews.autor}</span>
+                  )}
+                  <span className="inline-flex items-center gap-1.5">
+                    <Calendar className="h-4 w-4 text-[#0D4B56]" />
+                    <span className="font-medium text-[#182130]">Fecha de publicación:</span>{" "}
+                    {new Date(selectedNews.fecha).toLocaleDateString("es-CO")}
+                  </span>
+                </div>
+
+                {getFuenteOficialUrl(selectedNews.id) && (
+                  <div className="mb-8">
+                    <a
+                      href={getFuenteOficialUrl(selectedNews.id)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg bg-[#0D4B56] px-4 py-2 text-sm font-semibold text-[#FFDE07] hover:bg-[#023A34] transition-colors"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Ir a la fuente oficial
+                    </a>
+                  </div>
+                )}
+
+                <div className="mb-8 rounded-lg overflow-hidden shadow-xl bg-muted relative">
                   {selectedNews.video ? (
                     <div className="relative aspect-video w-full bg-black">
                       <iframe
@@ -691,116 +851,128 @@ export default function Noticias() {
                   ) : (
                     <>
                       <img
-                        src={getPreferredImageSrc(selectedNews.imagenes[getCurrentImageIndex(selectedNews.id)])}
+                        src={getPreferredImageSrc(selectedNews.imagenes[currentImage])}
                         alt={selectedNews.titulo}
                         loading="eager"
                         decoding="async"
                         fetchPriority="high"
-                        onError={(e) => handleImageError(e, selectedNews.imagenes[getCurrentImageIndex(selectedNews.id)])}
-                        className="h-[380px] w-full object-cover"
-                        style={{ objectPosition: getImagePosition(selectedNews.imagenes[getCurrentImageIndex(selectedNews.id)]) }}
+                        onError={(e) => handleImageError(e, selectedNews.imagenes[currentImage])}
+                        className="w-full h-[500px] object-cover object-center"
                       />
+
                       {selectedNews.imagenes.length > 1 && (
                         <>
                           <button
-                            type="button"
+                            onClick={goPrevImage}
+                            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 text-white text-xl hover:bg-black/60 transition-colors"
                             aria-label="Imagen anterior"
-                            onClick={() => prevImage(selectedNews.id, selectedNews.imagenes.length)}
-                            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-2 text-[#FFDE07] hover:bg-[#023A34]"
                           >
-                            <ChevronLeft className="h-5 w-5" />
+                            ‹
                           </button>
                           <button
-                            type="button"
-                            aria-label="Siguiente imagen"
-                            onClick={() => nextImage(selectedNews.id, selectedNews.imagenes.length)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-[#0D4B56]/90 p-2 text-[#FFDE07] hover:bg-[#023A34]"
+                            onClick={goNextImage}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 text-white text-xl hover:bg-black/60 transition-colors"
+                            aria-label="Imagen siguiente"
                           >
-                            <ChevronRight className="h-5 w-5" />
+                            ›
                           </button>
+
+                          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 bg-black/25 px-3 py-1 rounded-full">
+                            {selectedNews.imagenes.map((_, idx) => (
+                              <button
+                                key={idx}
+                                onClick={() => setCurrentImage(idx)}
+                                className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                                  currentImage === idx ? "bg-white" : "bg-white/50"
+                                }`}
+                                aria-label={`Ir a imagen ${idx + 1}`}
+                              />
+                            ))}
+                          </div>
                         </>
                       )}
                     </>
                   )}
                 </div>
 
-                <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-[#023A34]">
-                  <Badge variant="secondary" className="border-[#11B2AA]/40 bg-[#11B2AA]/20 text-[#0D4B56]">
-                    Noticia Externa
-                  </Badge>
-                  <span className="inline-flex items-center gap-1">
-                    <Calendar className="h-4 w-4 text-[#0D4B56]" />
-                    <span className="font-medium">Fecha de publicación:</span>
-                    {new Date(selectedNews.fecha).toLocaleDateString("es-CO")}
-                  </span>
-                  {selectedNews.autor && <span>• {selectedNews.autor}</span>}
-                </div>
+                <div className="bg-white rounded-lg shadow-lg p-8 space-y-6">
+                  {(selectedNews.contenido ?? [selectedNews.resumen]).map((parrafo: ReactNode, idx: number) =>
+                    typeof parrafo === "string" ? (
+                      <p key={idx} className="text-lg text-[#0D4B56] leading-relaxed">
+                        {parrafo}
+                      </p>
+                    ) : (
+                      <div key={idx} className="text-lg text-[#0D4B56] leading-relaxed">
+                        {parrafo}
+                      </div>
+                    )
+                  )}
 
-                {getFuenteOficialUrl(selectedNews.id) && (
-                  <div className="mb-5">
-                    <Button asChild className="bg-[#0D4B56] text-[#FFDE07] hover:bg-[#023A34]">
-                      <a
-                        href={getFuenteOficialUrl(selectedNews.id)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <ExternalLink className="mr-2 h-4 w-4" />
-                        Ir a la fuente oficial
-                      </a>
-                    </Button>
-                  </div>
-                )}
-
-                <div className="space-y-4 text-slate-700 leading-relaxed">
-                  {(selectedNews.contenido ?? [selectedNews.resumen]).map((paragraph, idx) => (
-                    <p key={idx}>{paragraph}</p>
-                  ))}
-                </div>
-
-                {selectedNews.videoFinal && (
-                  <div className="mt-8">
-                    <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#0D4B56]">
-                      Conozca aquí la historia
-                    </p>
-                    <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black shadow-lg">
-                      <iframe
-                        src={`https://www.youtube.com/embed/${selectedNews.videoFinal}?playsinline=1&rel=0&modestbranding=1`}
-                        title={`Video: ${selectedNews.titulo}`}
-                        loading="lazy"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        allowFullScreen
-                        className="absolute inset-0 h-full w-full"
-                      />
+                  {selectedNews.videoFinal && (
+                    <div className="pt-4">
+                      <h4 className="font-semibold text-[#182130] mb-3">Conozca aquí la historia</h4>
+                      <div className="rounded-lg overflow-hidden border border-slate-200 shadow-sm w-full max-w-4xl">
+                        <div className="relative aspect-video w-full bg-black">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${selectedNews.videoFinal}?playsinline=1&rel=0&modestbranding=1`}
+                            title={`Video: ${selectedNews.titulo}`}
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            allowFullScreen
+                            className="absolute inset-0 h-full w-full"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                )}
-                {selectedNews.instagramReels && selectedNews.instagramReels.length > 0 && (
-                  <div className="mt-8">
-                    <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#0D4B56]">
-                      Míralo en Instagram
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-6">
-                      {selectedNews.instagramReels.map((code) => (
-                        <iframe
-                          key={code}
-                          src={`https://www.instagram.com/reel/${code}/embed`}
-                          title={`Reel de Instagram ${code}`}
-                          loading="lazy"
-                          scrolling="no"
-                          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                          allowFullScreen
-                          className="h-[640px] w-full max-w-[340px] overflow-hidden rounded-xl border border-[#0D4B56]/15 bg-white shadow-lg"
-                        />
-                      ))}
+                  )}
+
+                  {selectedNews.videoLocalFinal && (
+                    <div className="pt-4 text-center">
+                      <h4 className="font-semibold text-[#182130] mb-3">Revive el Campus Vacacional</h4>
+                      <div className="rounded-lg overflow-hidden border border-slate-200 shadow-sm w-full max-w-sm mx-auto">
+                        <div className="relative aspect-[9/16] w-full bg-black">
+                          <video
+                            src={selectedNews.videoLocalFinal}
+                            poster={selectedNews.videoLocalFinalPoster}
+                            controls
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            preload="auto"
+                            className="absolute inset-0 h-full w-full object-cover"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+
+                  {selectedNews.instagramReels && selectedNews.instagramReels.length > 0 && (
+                    <div className="pt-4">
+                      <h4 className="font-semibold text-[#182130] mb-3">Míralo en Instagram</h4>
+                      <div className="flex flex-wrap justify-center gap-6">
+                        {selectedNews.instagramReels.map((code: string) => (
+                          <iframe
+                            key={code}
+                            src={`https://www.instagram.com/reel/${code}/embed`}
+                            title={`Reel de Instagram ${code}`}
+                            loading="lazy"
+                            scrolling="no"
+                            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                            allowFullScreen
+                            className="h-[640px] w-full max-w-[340px] overflow-hidden rounded-xl border border-[#0D4B56]/15 bg-white shadow-lg"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { Award, Sparkles, X } from "lucide-react";
+import { Award, Search, Sparkles, X } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 function AutoPlayShortsEmbed({ videoId, title }: { videoId: string; title: string }) {
@@ -61,6 +61,9 @@ type Noticia = {
 export default function Reconocimientos() {
   const [selectedNews, setSelectedNews] = useState<Noticia | null>(null);
   const [currentImage, setCurrentImage] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoriaFiltro, setCategoriaFiltro] = useState("");
+  const [anioFiltro, setAnioFiltro] = useState("");
   const toWebp = (imagePath: string) => imagePath.replace(/\.(jpe?g|png|jfif)$/i, ".webp");
   const getOptimizedImageSrc = (imagePath: string) => toWebp(imagePath);
   const extractYouTubeVideoId = (url: string) => {
@@ -314,7 +317,37 @@ export default function Reconocimientos() {
     .map((id) => noticias.find((noticia) => noticia.id === id))
     .filter((noticia): noticia is Noticia => Boolean(noticia));
   const categoriesCount = new Set(orderedNoticias.map((item) => item.categoria)).size;
-  const featuredCategoria = orderedNoticias[0]?.categoria ?? "Reconocimientos";
+
+  // ===== Filtros (buscador + categoría + año) =====
+  const normalizarTexto = (t: string) =>
+    t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const extraerAnio = (fecha: string) => fecha.match(/\d{4}/)?.[0] ?? "";
+
+  const categoriasDisponibles = Array.from(
+    new Set(orderedNoticias.map((n) => n.categoria))
+  ).sort((a, b) => a.localeCompare(b));
+  const aniosDisponibles = Array.from(
+    new Set(orderedNoticias.map((n) => extraerAnio(n.fecha)).filter(Boolean))
+  ).sort((a, b) => Number(b) - Number(a));
+
+  const noticiasVisibles = orderedNoticias.filter((noticia) => {
+    const texto = normalizarTexto(
+      `${noticia.titulo} ${noticia.resumen} ${noticia.categoria} ${noticia.autor}`
+    );
+    const coincideBusqueda =
+      searchTerm.trim() === "" || texto.includes(normalizarTexto(searchTerm.trim()));
+    const coincideCategoria = categoriaFiltro === "" || noticia.categoria === categoriaFiltro;
+    const coincideAnio = anioFiltro === "" || extraerAnio(noticia.fecha) === anioFiltro;
+    return coincideBusqueda && coincideCategoria && coincideAnio;
+  });
+
+  const hayFiltrosActivos =
+    searchTerm.trim() !== "" || categoriaFiltro !== "" || anioFiltro !== "";
+  const limpiarFiltros = () => {
+    setSearchTerm("");
+    setCategoriaFiltro("");
+    setAnioFiltro("");
+  };
 
   const goPrevImage = () => {
     if (!selectedNews) return;
@@ -344,85 +377,121 @@ export default function Reconocimientos() {
   }, [selectedNews, currentImage]);
 
   return (
-    <div className="min-h-screen py-8">
-      <div className="container">
-        <section className="relative mb-10 min-h-[460px] overflow-hidden rounded-[2.5rem] text-white shadow-2xl sm:min-h-[500px]">
-          {/* Fondo degradado con textura */}
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,#0D2137_0%,#0D4B56_45%,#0A7A72_100%)]" />
+    <div className="min-h-screen">
+      {/* ===== HERO / BANNER (full-bleed, hasta el tope detrás del header) ===== */}
+      <section className="relative isolate overflow-hidden text-white">
+        {/* Degradado base petróleo -> teal */}
+        <div className="absolute inset-0 -z-20 bg-[linear-gradient(115deg,#11212e_0%,#0D4B56_46%,#0e6e72_74%,#11B2AA_100%)]" />
+        {/* Brillo teal a la derecha */}
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(70%_120%_at_88%_22%,rgba(17,178,170,0.55)_0%,rgba(17,178,170,0)_60%)]" />
+        {/* Acentos suaves de marca */}
+        <div className="pointer-events-none absolute -right-28 -top-28 -z-10 h-80 w-80 rounded-full bg-[#FFDE07]/12 blur-3xl" />
+        <div className="pointer-events-none absolute -left-24 -bottom-20 -z-10 h-72 w-72 rounded-full bg-[#EC6910]/12 blur-3xl" />
+        {/* Filo inferior */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-white/10" />
 
-          {/* Puntos decorativos */}
-          <div className="pointer-events-none absolute inset-0 opacity-10"
-            style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
-
-          {/* Brillo superior izquierdo */}
-          <div className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-[#FFDE07]/20 blur-3xl" />
-          {/* Brillo inferior derecho */}
-          <div className="pointer-events-none absolute -bottom-16 right-1/4 h-56 w-56 rounded-full bg-[#EC6910]/25 blur-3xl" />
-          {/* Brillo centro */}
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#11B2AA]/30 blur-2xl" />
-
-          {/* Línea decorativa dorada */}
-          <div className="pointer-events-none absolute left-0 top-0 h-1.5 w-full bg-[linear-gradient(90deg,#FFDE07_0%,#EC6910_50%,transparent_100%)] opacity-80" />
-
-          {/* Imagen del trofeo - desktop */}
-          <div className="absolute inset-y-0 right-0 hidden w-[45%] items-end justify-center md:flex">
-            <img
-              src="/imagen_premio.png"
-              alt="Trofeo Reconocimientos"
-              className="h-[105%] w-auto object-contain drop-shadow-[0_0_40px_rgba(255,222,7,0.35)]"
-              onError={(e) => { e.currentTarget.src = "/premio.png"; }}
-            />
-          </div>
-
-          {/* Imagen del trofeo - móvil (fondo tenue) */}
-          <div className="absolute inset-0 opacity-15 md:hidden">
-            <img
-              src="/imagen_premio.png"
-              alt=""
-              className="h-full w-full object-contain object-right"
-              onError={(e) => { e.currentTarget.src = "/premio.png"; }}
-            />
-          </div>
-
-          {/* Contenido texto */}
-          <div className="relative z-10 flex min-h-[460px] w-full flex-col justify-center px-8 sm:min-h-[500px] sm:px-12 md:max-w-[58%] lg:px-16">
-            {/* Chip */}
-            <div className="mb-5 hidden w-fit items-center gap-2 rounded-full border border-[#FFDE07]/50 bg-[#FFDE07]/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[#FFDE07] md:inline-flex">
-              <Award className="h-3.5 w-3.5" />
-              Reconocimientos CID
-            </div>
-
-            <h1 className="text-3xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-              <span className="md:hidden">Reconocimientos</span>
-              <span className="hidden md:inline">Reconoci&shy;mientos</span>
+        <div className="container relative pt-32 pb-16 md:pt-40 md:pb-24">
+          <div className="max-w-3xl">
+            <h1 className="text-5xl font-black leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
+              Reconocimientos
             </h1>
-
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/75 sm:text-base lg:text-[1.05rem]">
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-cyan-50/90 sm:text-lg">
               Un recorrido por los logros que posicionan a Envigado como referente en innovación, educación y transformación territorial.
             </p>
 
-            {/* Estadísticas */}
-            <div className="mt-8 flex flex-wrap gap-3">
-              <div className="flex flex-col rounded-2xl border border-white/20 bg-white/10 px-5 py-3 backdrop-blur-sm">
-                <span className="text-2xl font-black text-[#FFDE07]">{orderedNoticias.length}</span>
-                <span className="text-xs font-medium text-white/70">Historias destacadas</span>
+            <div className="mt-8 flex flex-wrap gap-3 text-sm">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 font-medium backdrop-blur-sm">
+                <Award className="h-4 w-4 text-[#FFDE07]" />
+                {orderedNoticias.length} historias destacadas
               </div>
-              <div className="flex flex-col rounded-2xl border border-white/20 bg-white/10 px-5 py-3 backdrop-blur-sm">
-                <span className="text-2xl font-black text-[#11B2AA]">{categoriesCount}</span>
-                <span className="text-xs font-medium text-white/70">Categorías</span>
-              </div>
-              <div className="flex items-center gap-2 rounded-2xl border border-white/20 bg-white/10 px-5 py-3 backdrop-blur-sm">
-                <Sparkles className="h-4 w-4 text-[#EC6910]" />
-                <span className="text-sm font-semibold text-white/90">{featuredCategoria}</span>
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 font-medium backdrop-blur-sm">
+                <Sparkles className="h-4 w-4 text-[#FFDE07]" />
+                {categoriesCount} categorías
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
+      {/* ===== CONTENIDO ===== */}
+      <div className="container py-10">
         <Breadcrumbs items={[{ label: "Reconocimientos" }]} />
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {orderedNoticias.map((noticia) => (
+        {/* ===== FILTROS (buscador + categoría + año) ===== */}
+        <div className="mt-4 mb-6">
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+            <div className="relative w-full sm:w-64">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#0D4B56]/60" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Buscar reconocimientos..."
+                className="w-full rounded-lg border border-[#0D4B56]/25 bg-white py-2 pl-9 pr-3 text-sm text-[#182130] outline-none transition-colors focus:border-[#0D4B56] focus:ring-1 focus:ring-[#0D4B56]/30"
+              />
+            </div>
+
+            <select
+              value={categoriaFiltro}
+              onChange={(e) => setCategoriaFiltro(e.target.value)}
+              className="w-full rounded-lg border border-[#0D4B56]/25 bg-white py-2 px-3 text-sm text-[#182130] outline-none transition-colors focus:border-[#0D4B56] focus:ring-1 focus:ring-[#0D4B56]/30 sm:w-auto"
+            >
+              <option value="">Todas las categorías</option>
+              {categoriasDisponibles.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={anioFiltro}
+              onChange={(e) => setAnioFiltro(e.target.value)}
+              className="w-full rounded-lg border border-[#0D4B56]/25 bg-white py-2 px-3 text-sm text-[#182130] outline-none transition-colors focus:border-[#0D4B56] focus:ring-1 focus:ring-[#0D4B56]/30 sm:w-auto"
+            >
+              <option value="">Todos los años</option>
+              {aniosDisponibles.map((a) => (
+                <option key={a} value={a}>
+                  {a}
+                </option>
+              ))}
+            </select>
+
+            {hayFiltrosActivos && (
+              <button
+                onClick={limpiarFiltros}
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-[#EC6910] transition-colors hover:bg-[#EC6910]/10"
+              >
+                <X className="h-4 w-4" />
+                Limpiar
+              </button>
+            )}
+          </div>
+
+          {hayFiltrosActivos && (
+            <p className="mt-2 text-xs text-[#0D4B56]/70">
+              {noticiasVisibles.length}{" "}
+              {noticiasVisibles.length === 1 ? "resultado" : "resultados"}
+            </p>
+          )}
+        </div>
+
+        {noticiasVisibles.length === 0 ? (
+          <div className="py-12 text-center">
+            <Award className="mx-auto mb-4 h-12 w-12 text-[#0D4B56]/40" />
+            <p className="text-[#0D4B56]">No se encontraron reconocimientos con esos filtros.</p>
+            {hayFiltrosActivos && (
+              <button
+                onClick={limpiarFiltros}
+                className="mt-4 inline-flex items-center gap-1.5 rounded-lg border border-[#0D4B56] bg-[#FFDE07]/20 px-5 py-2 text-sm font-semibold text-[#182130] transition-colors hover:bg-[#FFDE07]/35"
+              >
+                Limpiar filtros
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-6">
+            {noticiasVisibles.map((noticia) => (
             <button
               key={noticia.id}
               onClick={() => openNoticia(noticia)}
@@ -454,7 +523,8 @@ export default function Reconocimientos() {
               </div>
             </button>
           ))}
-        </div>
+          </div>
+        )}
       </div>
 
       {selectedNews && (

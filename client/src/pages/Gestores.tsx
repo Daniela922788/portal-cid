@@ -443,7 +443,7 @@ function FrenteTab({
       >
         <Icon className="h-4 w-4" />
       </div>
-      <span className={`text-sm font-semibold leading-tight ${isActive ? "text-[#0D4B56]" : ""}`}>
+      <span className={`text-[17px] font-semibold leading-tight ${isActive ? "text-[#0D4B56]" : ""}`}>
         {frente.title}
       </span>
       {isActive && <ChevronRight className="ml-auto h-4 w-4 shrink-0 text-[#11B2AA]" />}
@@ -486,10 +486,10 @@ function GestorCard({ gestor, onSelect }: { gestor: Gestor; onClick?: () => void
       </button>
 
       <div className="flex flex-1 flex-col gap-1.5 px-4 py-3">
-        <h3 className="text-sm font-bold leading-snug text-slate-900">{gestor.nombre}</h3>
-        <p className="line-clamp-2 text-xs font-normal leading-relaxed text-slate-500">{gestor.profesion}</p>
+        <h3 className="text-base font-bold leading-snug text-slate-900">{gestor.nombre}</h3>
+        <p className="line-clamp-2 text-sm font-normal leading-relaxed text-slate-500">{gestor.profesion}</p>
         <div className="mt-auto pt-2">
-          <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${tipoColor}`}>
+          <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold ${tipoColor}`}>
             {gestor.tipo}
           </span>
         </div>
@@ -584,7 +584,7 @@ export default function Gestores() {
           />
         </picture>
         <div className="absolute inset-0 bg-gradient-to-t from-[#0D1F2D]/80 via-[#0D1F2D]/40 to-transparent" />
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-5 px-4 text-center md:justify-center md:pb-0">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-5 px-4 text-center md:justify-end md:pb-16 lg:pb-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -629,18 +629,18 @@ export default function Gestores() {
               <h2 className="mt-3 text-2xl font-black leading-tight md:text-3xl">
                 Agentes de cambio<br />en el aula
               </h2>
-              <p className="mt-4 text-sm font-normal leading-relaxed text-white/75">
+              <p className="mt-4 text-[17px] font-normal leading-relaxed text-white/75">
                 Son profesionales con mentalidad innovadora, capaces de trascender los modelos tradicionales y
                 acompañar nuevas formas de aprendizaje. Su enfoque multidisciplinario integra distintas áreas
                 del conocimiento.
               </p>
-              <p className="mt-3 text-sm font-normal leading-relaxed text-white/75">
+              <p className="mt-3 text-[17px] font-normal leading-relaxed text-white/75">
                 Más que capacitadores externos, son <strong className="text-white">aliados en el aula</strong> que
                 fortalecen las prácticas pedagógicas desde la realidad del territorio.
               </p>
               <div className="mt-6 grid grid-cols-2 gap-2">
                 {["Agentes de cambio", "Acompañamiento pedagógico", "Innovación territorial", "Enfoque STEM+"].map((tag) => (
-                  <div key={tag} className="rounded-lg border border-white/10 bg-white/8 px-3 py-2 text-xs font-medium text-white/80">
+                  <div key={tag} className="rounded-lg border border-white/10 bg-white/8 px-3 py-2 text-sm font-medium text-white/80">
                     {tag}
                   </div>
                 ))}
@@ -651,18 +651,18 @@ export default function Gestores() {
           {/* Right: Propósito + imágenes */}
           <div className="flex flex-col gap-4">
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EC6910]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#EC6910]">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EC6910]/10 px-3 py-1 text-sm font-bold uppercase tracking-wider text-[#EC6910]">
                 Propósito
               </span>
-              <p className="mt-3 text-sm font-normal leading-relaxed text-slate-700">
+              <p className="mt-3 text-[17px] font-normal leading-relaxed text-slate-700">
                 Conectan conocimiento, comunidad y soluciones a problemáticas reales, impulsando procesos
                 educativos alineados con la sostenibilidad y el enfoque de <strong>Territorio STEM+ SMART Regenerativo</strong>.
               </p>
               <div className="mt-4 grid grid-cols-2 gap-2">
                 {capacidadesCiudadanas.map((cap) => (
                   <div key={cap} className="flex items-start gap-2 rounded-xl bg-slate-50 p-3">
-                    <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#11B2AA]" />
-                    <span className="text-xs font-normal leading-relaxed text-slate-600">{cap}</span>
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#11B2AA]" />
+                    <span className="text-[17px] font-normal leading-relaxed text-slate-600">{cap}</span>
                   </div>
                 ))}
               </div>
@@ -686,16 +686,16 @@ export default function Gestores() {
         <section className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="mb-1 text-xl font-black text-slate-900">¿Qué hacen los gestores?</h2>
-            <p className="mb-5 text-sm text-slate-500">
+            <p className="mb-5 text-[17px] text-slate-500">
               Diseñan, implementan y acompañan procesos educativos innovadores en múltiples niveles del sistema.
             </p>
             <div className="grid gap-2 sm:grid-cols-2">
               {funcionesGenerales.map((fn, i) => (
                 <div key={fn} className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3.5">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#0D4B56] text-[10px] font-black text-white">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0D4B56] text-sm font-black text-white">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-xs font-normal leading-relaxed text-slate-700">{fn}</span>
+                  <span className="text-[17px] font-normal leading-relaxed text-slate-700">{fn}</span>
                 </div>
               ))}
             </div>
@@ -703,21 +703,21 @@ export default function Gestores() {
 
           <div className="rounded-2xl border border-[#2D3586]/20 bg-gradient-to-br from-[#2D3586]/5 to-white p-6 shadow-sm">
             <h2 className="mb-1 text-xl font-black text-slate-900">Competencias S. XXI</h2>
-            <p className="mb-5 text-sm text-slate-500">Desarrollo integral para el ciudadano del futuro.</p>
+            <p className="mb-5 text-[17px] text-slate-500">Desarrollo integral para el ciudadano del futuro.</p>
             <div className="flex flex-col gap-3">
               {competenciasSigloXXI.map((comp, i) => {
                 const colors = ["#11B2AA", "#EC6910", "#2D3586", "#0D4B56"];
                 return (
                   <div key={comp} className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-3.5 shadow-sm">
                     <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-black text-white"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-lg font-black text-white"
                       style={{ backgroundColor: colors[i] }}
                     >
                       {comp[0]}
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-slate-900">{comp}</p>
-                      <p className="text-xs text-slate-500">Aprender, hacer, convivir y actuar.</p>
+                      <p className="text-[17px] font-bold text-slate-900">{comp}</p>
+                      <p className="text-[17px] text-slate-500">Aprender, hacer, convivir y actuar.</p>
                     </div>
                   </div>
                 );
@@ -745,8 +745,8 @@ export default function Gestores() {
               <BrainCircuit className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="text-2xl font-black text-slate-900">Perfil y competencias del gestor</h2>
-              <p className="text-sm text-slate-500">Capacidades pedagógicas, tecnológicas y sociales para generar impacto real.</p>
+              <h2 className="text-3xl font-black text-slate-900">Perfil y competencias del gestor</h2>
+              <p className="text-[17px] text-slate-500">Capacidades pedagógicas, tecnológicas y sociales para generar impacto real.</p>
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -764,8 +764,8 @@ export default function Gestores() {
                   <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl ${a.icon}`}>
                     <Icon className="h-5 w-5" />
                   </div>
-                  <h3 className="text-sm font-bold text-slate-900">{comp.title}</h3>
-                  <p className="mt-1.5 text-xs font-normal leading-relaxed text-slate-600">{comp.description}</p>
+                  <h3 className="text-lg font-bold text-slate-900">{comp.title}</h3>
+                  <p className="mt-1.5 text-[17px] font-normal leading-relaxed text-slate-600">{comp.description}</p>
                 </div>
               );
             })}
@@ -776,7 +776,7 @@ export default function Gestores() {
         <section className="mt-12">
           <div className="mb-6">
             <h2 className="mt-2 text-2xl font-black text-slate-900 md:text-3xl">¿Cómo trabajan los gestores?</h2>
-            <p className="mt-1 max-w-xl text-sm text-slate-500">
+            <p className="mt-1 max-w-xl text-[17px] text-slate-500">
               Explora los cinco escenarios principales en los que desarrollan su labor transformadora.
             </p>
           </div>
@@ -810,26 +810,26 @@ export default function Gestores() {
                       <IconoFrenteActual className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-black text-slate-900">{frenteActual.title}</h3>
-                      <p className="text-sm text-slate-500">{frenteActual.summary}</p>
+                      <h3 className="text-xl font-black text-slate-900">{frenteActual.title}</h3>
+                      <p className="text-[17px] text-slate-500">{frenteActual.summary}</p>
                     </div>
                   </div>
 
-                  <p className="mb-4 text-xs font-bold uppercase tracking-widest text-[#0D4B56]">Acciones destacadas</p>
+                  <p className="mb-4 text-[17px] font-bold uppercase tracking-widest text-[#0D4B56]">Acciones destacadas</p>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {frenteActual.acciones.map((accion, i) => (
                       <div key={accion} className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3.5">
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-[#11B2AA] text-[9px] font-black text-white">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-[#11B2AA] text-base font-black text-white">
                           {i + 1}
                         </span>
-                        <span className="text-xs font-normal leading-relaxed text-slate-700">{accion}</span>
+                        <span className="text-[17px] font-normal leading-relaxed text-slate-700">{accion}</span>
                       </div>
                     ))}
                   </div>
 
                   <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-[#EC6910]/25 bg-[#EC6910]/5 p-4">
                     <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-[#EC6910]" />
-                    <p className="text-sm text-slate-700">
+                    <p className="text-[17px] text-slate-700">
                       <strong className="text-[#EC6910]">Impacto: </strong>
                       {frenteActual.impacto}
                     </p>
@@ -857,7 +857,7 @@ export default function Gestores() {
                 Transformando la educación<br />
                 <span className="text-[#11B2AA]">desde adentro</span>
               </h2>
-              <p className="mt-4 text-sm font-normal leading-relaxed text-white/70">
+              <p className="mt-4 text-[17px] font-normal leading-relaxed text-white/70">
                 Los Gestores de Innovación conectan la escuela con la tecnología, la innovación y las
                 necesidades reales del territorio, generando un impacto que va más allá del aula.
               </p>
@@ -870,8 +870,8 @@ export default function Gestores() {
                   { label: "Proyección territorial", color: "text-[#A78BFA]", desc: "Educación conectada con el futuro del municipio." },
                 ].map((item) => (
                   <div key={item.label} className="rounded-xl border border-white/8 bg-white/6 p-4">
-                    <p className={`text-sm font-bold ${item.color}`}>{item.label}</p>
-                    <p className="mt-1 text-xs font-normal leading-relaxed text-white/60">{item.desc}</p>
+                    <p className={`text-[17px] font-bold ${item.color}`}>{item.label}</p>
+                    <p className="mt-1 text-[17px] font-normal leading-relaxed text-white/60">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -903,11 +903,11 @@ export default function Gestores() {
             className="mb-8 flex flex-col items-start gap-2 sm:flex-row sm:items-end sm:justify-between"
           >
             <div>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0D4B56]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#0D4B56]">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0D4B56]/10 px-3 py-1 text-sm font-bold uppercase tracking-wider text-[#0D4B56]">
                 <Users className="h-3.5 w-3.5" /> Nuestro equipo
               </span>
               <h2 className="mt-2 text-3xl font-black text-slate-900 md:text-4xl">Conoce a los Gestores</h2>
-              <p className="mt-1 text-sm text-slate-500 max-w-md">
+              <p className="mt-1 text-[17px] text-slate-500 max-w-md">
                 Profesionales comprometidos con la innovación educativa en Envigado.
               </p>
             </div>

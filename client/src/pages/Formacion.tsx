@@ -4,7 +4,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Users, BookOpen, X, Search, ChevronRight, ChevronLeft, GraduationCap } from "lucide-react";
+import { Users, BookOpen, X, Search, ChevronRight, ChevronLeft, Tag, CalendarDays, MapPin, CircleDot } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -27,6 +27,7 @@ interface ECard {
   enfoqueCierre: string;
   competencias: string[];
   proyectoFinal: string;
+  imagenesGaleria?: string[]; // imágenes adicionales opcionales para el modal de detalle
 }
 
 const toWebp = (src: string) => src.replace(/\.(jpe?g|png)$/i, ".webp");
@@ -39,33 +40,17 @@ export default function Formacion() {
   const [selectedLugares, setSelectedLugares] = useState<string[]>([]);
   const [ecardOpen, setEcardOpen] = useState(false);
   const [selectedEcard, setSelectedEcard] = useState<ECard | null>(null);
+  const [galeriaIndex, setGaleriaIndex] = useState(0);
   const [calendarDate, setCalendarDate] = useState(new Date());
   const { data: cursos = [], isLoading } = trpc.courses.list.useQuery();
 
-  // Opciones de filtros
-  const tematicas = ["Robótica", "Inteligencia Artificial", "Alfabetización Digital", "Diseño", "Animación", "Música", "Ciencia", "Fotografía", "Medio ambiente", "Podcast", "Edición", "Cocina", "Analítica", "Tecnología", "Creatividad", "Escritura", "Audiovisual"];
-  const tematicaAliases: Record<string, string[]> = {
-    "Robótica": ["Robótica", "Robotica"],
-    "Inteligencia Artificial": ["Inteligencia Artificial", "IA"],
-    "Música": ["Música", "Musica"],
-    "Fotografía": ["Fotografía", "Fotografia"],
-    "Edición": ["Edición", "Edicion"],
-  };
-  const estados = ["Abierto", "En inscripciones", "En curso", "Finalizado"];
-  const edades = ["8 - 12", "12 a 18", "+18", "+60"];
+  // Buckets de edad (rangos etarios para filtrar por solapamiento)
+  const edades = ["Niñez (6 a 11)", "Adolescencia (12 a 17)", "Adultos (+18)", "Adultos mayores (+60)"];
   const edadBuckets: Record<string, { min: number; max: number }> = {
-    "8 - 12": { min: 8, max: 12 },
-    "12 a 18": { min: 12, max: 18 },
-    "+18": { min: 18, max: Number.POSITIVE_INFINITY },
-    "+60": { min: 60, max: Number.POSITIVE_INFINITY },
-  };
-  const lugares = [
-    "Biblioteca Pública y Parque Cultural Débora Arango",
-    "Otros lugares",
-  ];
-  const lugarAliases: Record<string, string[]> = {
-    "Biblioteca Pública y Parque Cultural Débora Arango": ["Biblioteca Pública y Parque Cultural Débora Arango"],
-    "Otros lugares": ["Lugar X", "Palma de Mayorca", "Area de Recreación Urbana (ARU) Trianón-La Heliodora", "Envigado", "Lugar Y"],
+    "Niñez (6 a 11)": { min: 6, max: 11 },
+    "Adolescencia (12 a 17)": { min: 12, max: 17 },
+    "Adultos (+18)": { min: 18, max: Number.POSITIVE_INFINITY },
+    "Adultos mayores (+60)": { min: 60, max: Number.POSITIVE_INFINITY },
   };
 
   // Datos de ejemplo de ECards
@@ -800,266 +785,32 @@ export default function Formacion() {
     },
     {
       id: "2026-1",
-      titulo: "De Jugador a Creador",
-      tematica: "Tecnología",
-      estado: "Abierto",
-      edad: "6 a 8 años",
+      titulo: "Bootcamp Presencial: Inteligencia Artificial (Explorador/Básico)",
+      tematica: "Inteligencia Artificial",
+      estado: "Finalizado",
+      edad: "Público general",
       lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
-      fechas: ["21 de abril de 2026"],
-      sesiones: ["2026-04-21"],
+      fechas: ["16 de febrero de 2026"],
+      sesiones: ["2026-02-16"],
       ano: 2026,
-      imagen: "/Formación%202026/De%20Jugador%20a%20Creador.png",
-      subtitulo: "Curso enfocado en la creación de videojuegos para primeras infancias.",
+      imagen: "/Formación%202026/IA%20Talento%20Tech.webp",
+      subtitulo: "Programa introductorio para dar los primeros pasos en inteligencia artificial de forma práctica.",
       descripcion: [
-        "Curso enfocado en la creación de videojuegos, donde los participantes aprendieron fundamentos de diseño, lógica de programación y desarrollo de entornos interactivos. A través de herramientas digitales, pasaron de jugar a construir sus propias experiencias.",
+        "Bootcamp Presencial: Inteligencia Artificial (Explorador/Básico) es un programa de formación diseñado para introducir a los participantes en los conceptos fundamentales de la inteligencia artificial y sus aplicaciones prácticas. A través de sesiones presenciales, los asistentes desarrollan competencias digitales, exploran herramientas basadas en IA y fortalecen habilidades para aplicar estas tecnologías en contextos académicos, laborales y de emprendimiento, promoviendo la innovación y la transformación digital.",
       ],
       trabajado: [
-        "Fundamentos de diseño de videojuegos",
-        "Lógica de programación",
-        "Desarrollo de entornos interactivos",
+        "Conceptos fundamentales de la inteligencia artificial",
+        "Exploración de herramientas basadas en IA",
+        "Aplicación de la IA en contextos académicos, laborales y de emprendimiento",
       ],
-      enfoque: "Aprendizaje creativo para transformar el juego en experiencias digitales propias.",
-      metodologias: ["Aprendizaje basado en retos", "Exploración guiada", "Creación digital"],
-      enfoqueCierre: "Fortalecimiento de pensamiento lógico y creatividad desde el diseño de videojuegos.",
-      competencias: ["Pensamiento lógico", "Creatividad", "Resolución de problemas", "Competencias digitales"],
-      proyectoFinal: "Construcción de una experiencia básica de videojuego.",
+      enfoque: "Formación introductoria y práctica orientada a la apropiación de la inteligencia artificial.",
+      metodologias: ["Bootcamp presencial", "Exploración guiada de herramientas", "Aplicación práctica"],
+      enfoqueCierre: "Fortalecimiento de competencias digitales para aplicar la IA en el día a día.",
+      competencias: ["Alfabetización en IA", "Competencia digital", "Innovación aplicada"],
+      proyectoFinal: "Aplicación práctica de una herramienta de IA a un caso académico, laboral o de emprendimiento.",
     },
     {
       id: "2026-2",
-      titulo: "Docentes que enseñan con IA",
-      tematica: "Tecnología",
-      estado: "Abierto",
-      edad: "Adultos",
-      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
-      fechas: ["15 de abril de 2026"],
-      sesiones: ["2026-04-15"],
-      ano: 2026,
-      imagen: "/Formación%202026/Docentes%20que%20enseñan%20con%20IA.png",
-      subtitulo: "Bootcamp orientado al uso pedagógico de herramientas de inteligencia artificial.",
-      descripcion: [
-        "Bootcamp orientado a docentes para el uso pedagógico de herramientas de inteligencia artificial en el aula. Durante las sesiones, exploraron aplicaciones prácticas para innovar en sus metodologías de enseñanza y fortalecer sus procesos educativos.",
-      ],
-      trabajado: [
-        "Uso pedagógico de herramientas de IA",
-        "Aplicaciones prácticas para el aula",
-        "Innovación en metodologías de enseñanza",
-      ],
-      enfoque: "Integración pedagógica de la inteligencia artificial en contextos educativos.",
-      metodologias: ["Bootcamp", "Laboratorio práctico", "Aplicación a casos pedagógicos"],
-      enfoqueCierre: "Diseño de experiencias de aula apoyadas por IA.",
-      competencias: ["Innovación educativa", "Competencia digital docente", "Diseño pedagógico"],
-      proyectoFinal: "Diseño de una estrategia de enseñanza con apoyo de IA.",
-    },
-    {
-      id: "2026-3",
-      titulo: "Emprende en video",
-      tematica: "Audiovisual",
-      estado: "Abierto",
-      edad: "Adultos",
-      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
-      fechas: ["21 de abril de 2026"],
-      sesiones: ["2026-04-21"],
-      ano: 2026,
-      imagen: "/Formación%202026/Emprende%20en%20video.png",
-      subtitulo: "Curso práctico de creación y edición de video para emprendimientos.",
-      descripcion: [
-        "Curso práctico enfocado en la creación y edición de videos para fortalecer la presencia digital de emprendimientos. Los participantes aprendieron a producir contenido audiovisual con fines comerciales, potenciando sus estrategias de comunicación y ventas.",
-      ],
-      trabajado: [
-        "Creación de contenido audiovisual",
-        "Edición de video para fines comerciales",
-        "Estrategias de comunicación y ventas",
-      ],
-      enfoque: "Producción audiovisual aplicada al fortalecimiento de emprendimientos.",
-      metodologias: ["Taller práctico", "Producción guiada", "Aplicación comercial"],
-      enfoqueCierre: "Potenciación de la presencia digital a través del video.",
-      competencias: ["Producción audiovisual", "Comunicación digital", "Creatividad aplicada"],
-      proyectoFinal: "Producción de una pieza de video para promocionar un emprendimiento.",
-    },
-    {
-      id: "2026-4",
-      titulo: "Ciudadanos del Cosmos: el cielo de Envigado",
-      tematica: "Ciencia",
-      estado: "Abierto",
-      edad: "14 a 17 años",
-      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
-      fechas: ["23 de abril de 2026"],
-      sesiones: ["2026-04-23"],
-      ano: 2026,
-      imagen: "/Formación%202026/Ciudadanos%20del%20Cosmos%20el%20cielo%20de%20Envigado.png",
-      subtitulo: "Curso teórico-práctico para explorar el universo desde una mirada científica.",
-      descripcion: [
-        "Curso teórico-práctico enfocado en la exploración del universo, donde los participantes desarrollaron habilidades científicas para comprender fenómenos astronómicos. A través de actividades formativas, pasaron de la observación a la validación de conceptos físicos y científicos.",
-      ],
-      trabajado: [
-        "Exploración del universo",
-        "Comprensión de fenómenos astronómicos",
-        "Validación de conceptos físicos y científicos",
-      ],
-      enfoque: "Aprendizaje científico basado en observación, análisis y exploración astronómica.",
-      metodologias: ["Taller teórico-práctico", "Observación guiada", "Análisis científico"],
-      enfoqueCierre: "Fortalecimiento del pensamiento científico mediante la astronomía.",
-      competencias: ["Pensamiento científico", "Observación", "Análisis crítico"],
-      proyectoFinal: "Socialización de aprendizajes sobre fenómenos astronómicos y físicos.",
-    },
-    {
-      id: "2026-5",
-      titulo: "IA para la gestión educativa",
-      tematica: "Inteligencia Artificial",
-      estado: "En curso",
-      edad: "Adultos",
-      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
-      fechas: ["21 de abril de 2026"],
-      sesiones: ["2026-04-21"],
-      ano: 2026,
-      imagen: "/Formación%202026/IA%20para%20la%20gestión%20educativa.png",
-      subtitulo: "Aplicación de inteligencia artificial en procesos educativos y administrativos.",
-      descripcion: [
-        "El curso IA para la gestión educativa es una experiencia formativa dirigida a funcionarios, enfocada en la aplicación de la inteligencia artificial en procesos educativos y administrativos. A través de sesiones prácticas, los participantes exploran herramientas digitales que fortalecen la eficiencia, la toma de decisiones y la innovación en el ámbito educativo.",
-      ],
-      trabajado: [
-        "Aplicación de IA en procesos educativos",
-        "Uso de herramientas digitales para eficiencia administrativa",
-        "Innovación y toma de decisiones",
-      ],
-      enfoque: "Transformación de la gestión educativa mediante inteligencia artificial.",
-      metodologias: ["Sesiones prácticas", "Resolución de casos", "Aplicación institucional"],
-      enfoqueCierre: "Optimización de procesos y toma de decisiones en educación.",
-      competencias: ["Gestión educativa", "Competencia digital", "Innovación institucional"],
-      proyectoFinal: "Diseño de una mejora de proceso educativo apoyada por IA.",
-    },
-    {
-      id: "2026-6",
-      titulo: "Gobierno digital inteligente",
-      tematica: "Inteligencia Artificial",
-      estado: "En curso",
-      edad: "Adultos",
-      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
-      fechas: ["22 de abril de 2026"],
-      sesiones: ["2026-04-22"],
-      ano: 2026,
-      imagen: "/Formación%202026/Gobierno%20digital%20inteligente.png",
-      subtitulo: "Formación en uso de IA para fortalecer la gestión pública e institucional.",
-      descripcion: [
-        "El curso Gobierno digital inteligente es una formación dirigida a funcionarios, enfocada en el uso de la inteligencia artificial para fortalecer la gestión pública y la innovación institucional. A través de sesiones prácticas, los participantes exploran herramientas digitales que optimizan procesos, mejoran la toma de decisiones y promueven una administración más eficiente.",
-      ],
-      trabajado: [
-        "Uso de IA en gestión pública",
-        "Optimización de procesos institucionales",
-        "Mejora de toma de decisiones",
-      ],
-      enfoque: "Innovación pública orientada a una administración más eficiente.",
-      metodologias: ["Formación práctica", "Estudio de casos", "Aplicación institucional"],
-      enfoqueCierre: "Fortalecimiento de capacidades para gobierno digital.",
-      competencias: ["Transformación digital", "Innovación pública", "Análisis para decisión"],
-      proyectoFinal: "Propuesta de mejora de un proceso institucional con apoyo de IA.",
-    },
-    {
-      id: "2026-7",
-      titulo: "Mujeres que usan la IA para la vida cotidiana",
-      tematica: "Inteligencia Artificial",
-      estado: "En curso",
-      edad: "18 años en adelante",
-      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
-      fechas: ["8 de mayo de 2026"],
-      sesiones: ["2026-05-08"],
-      ano: 2026,
-      imagen: "/Formación%202026/Mujeres%20que%20usan%20la%20IA%20para%20la%20vida%20cotidiana.png",
-      subtitulo: "Espacio formativo para el uso práctico de IA en la vida diaria.",
-      descripcion: [
-        "El curso Mujeres que usan la IA para la vida cotidiana es un espacio formativo dirigido a mujeres, enfocado en el uso práctico de la inteligencia artificial y herramientas digitales en la vida diaria. A través de sesiones dinámicas, las participantes fortalecen habilidades tecnológicas básicas, promoviendo la autonomía, el aprendizaje continuo y el aprovechamiento de la tecnología en su entorno cotidiano.",
-      ],
-      trabajado: [
-        "Uso práctico de herramientas de IA",
-        "Fortalecimiento de habilidades tecnológicas básicas",
-        "Aprovechamiento de tecnología en el entorno cotidiano",
-      ],
-      enfoque: "Apropiación tecnológica para autonomía y aprendizaje continuo.",
-      metodologias: ["Sesiones dinámicas", "Prácticas guiadas", "Aprendizaje aplicado"],
-      enfoqueCierre: "Promoción de autonomía y uso consciente de herramientas digitales.",
-      competencias: ["Alfabetización digital", "Autonomía tecnológica", "Aprendizaje continuo"],
-      proyectoFinal: "Aplicación de herramientas de IA en situaciones cotidianas reales.",
-    },
-    {
-      id: "2026-8",
-      titulo: "Código en Juego",
-      tematica: "Tecnología",
-      estado: "En curso",
-      edad: "7 a 13 años",
-      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
-      fechas: ["22 de abril de 2026"],
-      sesiones: ["2026-04-22", "2026-04-29", "2026-05-06", "2026-05-13", "2026-05-20", "2026-05-27", "2026-06-03", "2026-06-10"],
-      ano: 2026,
-      imagen: "/Formación%202026/Código%20en%20Juego.png",
-      subtitulo: "Curso de programación con retos para desarrollar pensamiento lógico.",
-      descripcion: [
-        "El curso Código en Juego es un espacio formativo dirigido a niños y niñas, enfocado en el desarrollo de habilidades de pensamiento lógico y resolución de problemas a través de retos de programación. Mediante actividades prácticas, los participantes fortalecen su creatividad, pensamiento crítico y competencias digitales en un entorno dinámico y participativo.",
-      ],
-      trabajado: [
-        "Retos de programación",
-        "Pensamiento lógico",
-        "Resolución de problemas",
-      ],
-      enfoque: "Aprendizaje activo de programación para infancia y adolescencia.",
-      metodologias: ["Retos prácticos", "Gamificación", "Trabajo participativo"],
-      enfoqueCierre: "Consolidación de pensamiento crítico y creatividad digital.",
-      competencias: ["Pensamiento lógico", "Creatividad", "Competencias digitales", "Resolución de problemas"],
-      proyectoFinal: "Desarrollo de un reto de programación resuelto en equipo.",
-    },
-    {
-      id: "2026-9",
-      titulo: "Robótica: De 0 a prototipo",
-      tematica: "Robótica",
-      estado: "En curso",
-      edad: "14 a 17 años",
-      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
-      fechas: ["30 de abril de 2026"],
-      sesiones: ["2026-04-30", "2026-05-07", "2026-05-14", "2026-05-21", "2026-05-28", "2026-06-04", "2026-06-11"],
-      ano: 2026,
-      imagen: "/Formación%202026/Robótica%20De%200%20a%20prototipo.png",
-      subtitulo: "Curso STEM para diseñar, construir y programar robots funcionales.",
-      descripcion: [
-        "El curso Robótica: De 0 a prototipo es un espacio formativo dirigido a adolescentes, enfocado en el diseño, construcción y programación de robots mediante un enfoque STEM. A través de proyectos prácticos, los participantes desarrollan habilidades en electrónica, programación e integración de sensores, creando prototipos funcionales capaces de ejecutar tareas autónomas o controladas.",
-      ],
-      trabajado: [
-        "Diseño y construcción de robots",
-        "Programación e integración de sensores",
-        "Prototipado funcional",
-      ],
-      enfoque: "Aprendizaje STEM orientado a la creación de prototipos robóticos.",
-      metodologias: ["Proyectos prácticos", "Prototipado", "Experimentación guiada"],
-      enfoqueCierre: "Desarrollo de soluciones robóticas funcionales con aplicación práctica.",
-      competencias: ["Electrónica básica", "Programación", "Pensamiento ingenieril", "Trabajo en equipo"],
-      proyectoFinal: "Construcción y prueba de un prototipo robótico funcional.",
-    },
-    {
-      id: "2026-10",
-      titulo: "Marketing Digital",
-      tematica: "Audiovisual",
-      estado: "En curso",
-      edad: "+18",
-      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
-      fechas: ["28 de abril de 2026"],
-      sesiones: ["2026-04-28"],
-      ano: 2026,
-      imagen: "/Formación%202026/MARKETING.png",
-      subtitulo: "Curso práctico para fortalecer proyectos con promoción y comunicación digital.",
-      descripcion: [
-        "El curso Marketing Digital está diseñado para que los participantes aprendan a utilizar herramientas digitales de manera estratégica para fortalecer proyectos, atraer clientes y aumentar ventas. A través de siete sesiones prácticas, los asistentes desarrollarán competencias en promoción digital, comunicación efectiva y posicionamiento de iniciativas en entornos digitales.",
-      ],
-      trabajado: [
-        "Estrategias de promoción digital",
-        "Comunicación efectiva en redes",
-        "Posicionamiento de proyectos y ventas",
-      ],
-      enfoque: "Marketing digital aplicado al fortalecimiento de proyectos y negocios en entornos audiovisuales.",
-      metodologias: ["Sesiones prácticas", "Análisis de casos", "Producción de contenido"],
-      enfoqueCierre: "Integración de estrategias digitales para posicionar iniciativas y generar resultados concretos.",
-      competencias: ["Promoción digital", "Comunicación estratégica", "Posicionamiento de marca", "Competencias digitales"],
-      proyectoFinal: "Diseño de una campaña digital para un proyecto o emprendimiento audiovisual.",
-    },
-    {
-      id: "2026-11",
       titulo: "Historias del clima",
       tematica: "Medio ambiente",
       estado: "Finalizado",
@@ -1085,33 +836,319 @@ export default function Formacion() {
       proyectoFinal: "Memoria colectiva sobre cambios ambientales en el territorio.",
     },
     {
+      id: "2026-3",
+      titulo: "Docentes que enseñan con IA",
+      tematica: "Tecnología",
+      estado: "Finalizado",
+      edad: "Adultos",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["15 de abril de 2026"],
+      sesiones: ["2026-04-15"],
+      ano: 2026,
+      imagen: "/Formación%202026/Docentes%20que%20enseñan%20con%20IA.png",
+      subtitulo: "Bootcamp orientado al uso pedagógico de herramientas de inteligencia artificial.",
+      descripcion: [
+        "Bootcamp orientado a docentes para el uso pedagógico de herramientas de inteligencia artificial en el aula. Durante las sesiones, exploraron aplicaciones prácticas para innovar en sus metodologías de enseñanza y fortalecer sus procesos educativos.",
+      ],
+      trabajado: [
+        "Uso pedagógico de herramientas de IA",
+        "Aplicaciones prácticas para el aula",
+        "Innovación en metodologías de enseñanza",
+      ],
+      enfoque: "Integración pedagógica de la inteligencia artificial en contextos educativos.",
+      metodologias: ["Bootcamp", "Laboratorio práctico", "Aplicación a casos pedagógicos"],
+      enfoqueCierre: "Diseño de experiencias de aula apoyadas por IA.",
+      competencias: ["Innovación educativa", "Competencia digital docente", "Diseño pedagógico"],
+      proyectoFinal: "Diseño de una estrategia de enseñanza con apoyo de IA.",
+    },
+    {
+      id: "2026-4",
+      titulo: "De Jugador a Creador",
+      tematica: "Tecnología",
+      estado: "Finalizado",
+      edad: "6 a 8 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["21 de abril de 2026"],
+      sesiones: ["2026-04-21"],
+      ano: 2026,
+      imagen: "/Formación%202026/De%20Jugador%20a%20Creador.png",
+      subtitulo: "Curso enfocado en la creación de videojuegos para primeras infancias.",
+      descripcion: [
+        "Curso enfocado en la creación de videojuegos, donde los participantes aprendieron fundamentos de diseño, lógica de programación y desarrollo de entornos interactivos. A través de herramientas digitales, pasaron de jugar a construir sus propias experiencias.",
+      ],
+      trabajado: [
+        "Fundamentos de diseño de videojuegos",
+        "Lógica de programación",
+        "Desarrollo de entornos interactivos",
+      ],
+      enfoque: "Aprendizaje creativo para transformar el juego en experiencias digitales propias.",
+      metodologias: ["Aprendizaje basado en retos", "Exploración guiada", "Creación digital"],
+      enfoqueCierre: "Fortalecimiento de pensamiento lógico y creatividad desde el diseño de videojuegos.",
+      competencias: ["Pensamiento lógico", "Creatividad", "Resolución de problemas", "Competencias digitales"],
+      proyectoFinal: "Construcción de una experiencia básica de videojuego.",
+    },
+    {
+      id: "2026-5",
+      titulo: "Emprende en video",
+      tematica: "Audiovisual",
+      estado: "Finalizado",
+      edad: "Adultos",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["21 de abril de 2026"],
+      sesiones: ["2026-04-21"],
+      ano: 2026,
+      imagen: "/Formación%202026/Emprende%20en%20video.png",
+      subtitulo: "Curso práctico de creación y edición de video para emprendimientos.",
+      descripcion: [
+        "Curso práctico enfocado en la creación y edición de videos para fortalecer la presencia digital de emprendimientos. Los participantes aprendieron a producir contenido audiovisual con fines comerciales, potenciando sus estrategias de comunicación y ventas.",
+      ],
+      trabajado: [
+        "Creación de contenido audiovisual",
+        "Edición de video para fines comerciales",
+        "Estrategias de comunicación y ventas",
+      ],
+      enfoque: "Producción audiovisual aplicada al fortalecimiento de emprendimientos.",
+      metodologias: ["Taller práctico", "Producción guiada", "Aplicación comercial"],
+      enfoqueCierre: "Potenciación de la presencia digital a través del video.",
+      competencias: ["Producción audiovisual", "Comunicación digital", "Creatividad aplicada"],
+      proyectoFinal: "Producción de una pieza de video para promocionar un emprendimiento.",
+    },
+    {
+      id: "2026-6",
+      titulo: "IA para la gestión educativa",
+      tematica: "Inteligencia Artificial",
+      estado: "Finalizado",
+      edad: "Adultos",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["21 de abril de 2026"],
+      sesiones: ["2026-04-21"],
+      ano: 2026,
+      imagen: "/Formación%202026/IA%20para%20la%20gestión%20educativa.png",
+      subtitulo: "Aplicación de inteligencia artificial en procesos educativos y administrativos.",
+      descripcion: [
+        "El curso IA para la gestión educativa es una experiencia formativa dirigida a funcionarios, enfocada en la aplicación de la inteligencia artificial en procesos educativos y administrativos. A través de sesiones prácticas, los participantes exploran herramientas digitales que fortalecen la eficiencia, la toma de decisiones y la innovación en el ámbito educativo.",
+      ],
+      trabajado: [
+        "Aplicación de IA en procesos educativos",
+        "Uso de herramientas digitales para eficiencia administrativa",
+        "Innovación y toma de decisiones",
+      ],
+      enfoque: "Transformación de la gestión educativa mediante inteligencia artificial.",
+      metodologias: ["Sesiones prácticas", "Resolución de casos", "Aplicación institucional"],
+      enfoqueCierre: "Optimización de procesos y toma de decisiones en educación.",
+      competencias: ["Gestión educativa", "Competencia digital", "Innovación institucional"],
+      proyectoFinal: "Diseño de una mejora de proceso educativo apoyada por IA.",
+    },
+    {
+      id: "2026-7",
+      titulo: "Senior Tech: Herramientas digitales para la vida",
+      tematica: "Alfabetización Digital",
+      estado: "Finalizado",
+      edad: "Público general",
+      lugar: "Calle 41 sur No. 25 - 100 JAC la Mina",
+      fechas: ["21 de abril de 2026"],
+      sesiones: ["2026-04-21"],
+      ano: 2026,
+      imagen: "/Formación%202026/Senior%20Tech%20JAC%20la%20Mina.webp",
+      subtitulo: "Ruta formativa para fortalecer competencias digitales y autonomía tecnológica.",
+      descripcion: [
+        "Senior Tech: Herramientas digitales para la vida es un espacio formativo diseñado para fortalecer las competencias digitales, brindándoles conocimientos y herramientas que les permitan comunicarse con mayor facilidad, realizar trámites en línea de forma segura y aprovechar las oportunidades que ofrece la tecnología en la vida diaria. A través de actividades prácticas y acompañamiento permanente, los participantes desarrollarán habilidades para desenvolverse con mayor confianza en entornos digitales.",
+      ],
+      trabajado: [
+        "Comunicación a través de herramientas digitales",
+        "Trámites en línea de forma segura",
+        "Aprovechamiento de oportunidades tecnológicas en la vida diaria",
+      ],
+      enfoque: "Formación práctica y acompañada para fortalecer la confianza en entornos digitales.",
+      metodologias: ["Actividades prácticas", "Acompañamiento permanente", "Ejercicios cotidianos"],
+      enfoqueCierre: "Mayor confianza y autonomía para desenvolverse en entornos digitales.",
+      competencias: ["Alfabetización digital", "Autonomía tecnológica", "Comunicación digital"],
+      proyectoFinal: "Realización de un trámite o gestión en línea aplicando lo aprendido.",
+    },
+    {
+      id: "2026-8",
+      titulo: "Gobierno digital inteligente",
+      tematica: "Inteligencia Artificial",
+      estado: "Finalizado",
+      edad: "Adultos",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["22 de abril de 2026"],
+      sesiones: ["2026-04-22"],
+      ano: 2026,
+      imagen: "/Formación%202026/Gobierno%20digital%20inteligente.png",
+      subtitulo: "Formación en uso de IA para fortalecer la gestión pública e institucional.",
+      descripcion: [
+        "El curso Gobierno digital inteligente es una formación dirigida a funcionarios, enfocada en el uso de la inteligencia artificial para fortalecer la gestión pública y la innovación institucional. A través de sesiones prácticas, los participantes exploran herramientas digitales que optimizan procesos, mejoran la toma de decisiones y promueven una administración más eficiente.",
+      ],
+      trabajado: [
+        "Uso de IA en gestión pública",
+        "Optimización de procesos institucionales",
+        "Mejora de toma de decisiones",
+      ],
+      enfoque: "Innovación pública orientada a una administración más eficiente.",
+      metodologias: ["Formación práctica", "Estudio de casos", "Aplicación institucional"],
+      enfoqueCierre: "Fortalecimiento de capacidades para gobierno digital.",
+      competencias: ["Transformación digital", "Innovación pública", "Análisis para decisión"],
+      proyectoFinal: "Propuesta de mejora de un proceso institucional con apoyo de IA.",
+    },
+    {
+      id: "2026-9",
+      titulo: "Código en Juego",
+      tematica: "Tecnología",
+      estado: "Finalizado",
+      edad: "7 a 13 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["22 de abril de 2026"],
+      sesiones: ["2026-04-22", "2026-04-29", "2026-05-06", "2026-05-13", "2026-05-20", "2026-05-27", "2026-06-03", "2026-06-10"],
+      ano: 2026,
+      imagen: "/Formación%202026/Código%20en%20Juego.png",
+      subtitulo: "Curso de programación con retos para desarrollar pensamiento lógico.",
+      descripcion: [
+        "El curso Código en Juego es un espacio formativo dirigido a niños y niñas, enfocado en el desarrollo de habilidades de pensamiento lógico y resolución de problemas a través de retos de programación. Mediante actividades prácticas, los participantes fortalecen su creatividad, pensamiento crítico y competencias digitales en un entorno dinámico y participativo.",
+      ],
+      trabajado: [
+        "Retos de programación",
+        "Pensamiento lógico",
+        "Resolución de problemas",
+      ],
+      enfoque: "Aprendizaje activo de programación para infancia y adolescencia.",
+      metodologias: ["Retos prácticos", "Gamificación", "Trabajo participativo"],
+      enfoqueCierre: "Consolidación de pensamiento crítico y creatividad digital.",
+      competencias: ["Pensamiento lógico", "Creatividad", "Competencias digitales", "Resolución de problemas"],
+      proyectoFinal: "Desarrollo de un reto de programación resuelto en equipo.",
+    },
+    {
+      id: "2026-10",
+      titulo: "Senior Tech: Herramientas digitales para la vida",
+      tematica: "Alfabetización Digital",
+      estado: "Finalizado",
+      edad: "Público general",
+      lugar: "Fundación Jesús de la Buena Esperanza, Calle 38 A Sur No. 39-62, Envigado.",
+      fechas: ["22 de abril de 2026"],
+      sesiones: ["2026-04-22"],
+      ano: 2026,
+      imagen: "/Formación%202026/Senior%20Tech%20Fundación%20de%20la%20Buena%20Esperanza.webp",
+      subtitulo: "Ruta formativa para fortalecer competencias digitales y autonomía tecnológica.",
+      descripcion: [
+        "Senior Tech: Herramientas digitales para la vida es un espacio formativo diseñado para fortalecer las competencias digitales, brindándoles conocimientos y herramientas que les permitan comunicarse con mayor facilidad, realizar trámites en línea de forma segura y aprovechar las oportunidades que ofrece la tecnología en la vida diaria. A través de actividades prácticas y acompañamiento permanente, los participantes desarrollarán habilidades para desenvolverse con mayor confianza en entornos digitales.",
+      ],
+      trabajado: [
+        "Comunicación a través de herramientas digitales",
+        "Trámites en línea de forma segura",
+        "Aprovechamiento de oportunidades tecnológicas en la vida diaria",
+      ],
+      enfoque: "Formación práctica y acompañada para fortalecer la confianza en entornos digitales.",
+      metodologias: ["Actividades prácticas", "Acompañamiento permanente", "Ejercicios cotidianos"],
+      enfoqueCierre: "Mayor confianza y autonomía para desenvolverse en entornos digitales.",
+      competencias: ["Alfabetización digital", "Autonomía tecnológica", "Comunicación digital"],
+      proyectoFinal: "Realización de un trámite o gestión en línea aplicando lo aprendido.",
+    },
+    {
+      id: "2026-11",
+      titulo: "Ciudadanos del Cosmos: el cielo de Envigado",
+      tematica: "Ciencia",
+      estado: "Finalizado",
+      edad: "14 a 17 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["23 de abril de 2026"],
+      sesiones: ["2026-04-23"],
+      ano: 2026,
+      imagen: "/Formación%202026/Ciudadanos%20del%20Cosmos%20el%20cielo%20de%20Envigado.png",
+      subtitulo: "Curso teórico-práctico para explorar el universo desde una mirada científica.",
+      descripcion: [
+        "Curso teórico-práctico enfocado en la exploración del universo, donde los participantes desarrollaron habilidades científicas para comprender fenómenos astronómicos. A través de actividades formativas, pasaron de la observación a la validación de conceptos físicos y científicos.",
+      ],
+      trabajado: [
+        "Exploración del universo",
+        "Comprensión de fenómenos astronómicos",
+        "Validación de conceptos físicos y científicos",
+      ],
+      enfoque: "Aprendizaje científico basado en observación, análisis y exploración astronómica.",
+      metodologias: ["Taller teórico-práctico", "Observación guiada", "Análisis científico"],
+      enfoqueCierre: "Fortalecimiento del pensamiento científico mediante la astronomía.",
+      competencias: ["Pensamiento científico", "Observación", "Análisis crítico"],
+      proyectoFinal: "Socialización de aprendizajes sobre fenómenos astronómicos y físicos.",
+    },
+    {
       id: "2026-12",
-      titulo: "Miradas del territorio: Mapeando el riesgo",
-      tematica: "Comunidad",
+      titulo: "Marketing Digital",
+      tematica: "Audiovisual",
       estado: "Finalizado",
       edad: "+18",
       lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
-      fechas: ["27 de mayo de 2026"],
-      sesiones: ["2026-05-27"],
+      fechas: ["28 de abril de 2026"],
+      sesiones: ["2026-04-28"],
       ano: 2026,
-      imagen: "/Formación%202026/E-card%20Miradas%20del%20territorio%20Mapeando%20el%20riesgo.png",
-      subtitulo: "Experiencia participativa para identificar riesgos y fortalecer acciones comunitarias.",
+      imagen: "/Formación%202026/MARKETING.png",
+      subtitulo: "Curso práctico para fortalecer proyectos con promoción y comunicación digital.",
       descripcion: [
-        "Miradas del territorio: Mapeando el riesgo es una experiencia participativa orientada a reconocer el territorio desde las vivencias y conocimientos de la comunidad. A través de la construcción colectiva de mapas, los participantes identifican riesgos, comparten saberes y fortalecen la comprensión de su entorno, promoviendo acciones comunitarias para la prevención y la gestión del riesgo.",
+        "El curso Marketing Digital está diseñado para que los participantes aprendan a utilizar herramientas digitales de manera estratégica para fortalecer proyectos, atraer clientes y aumentar ventas. A través de siete sesiones prácticas, los asistentes desarrollarán competencias en promoción digital, comunicación efectiva y posicionamiento de iniciativas en entornos digitales.",
       ],
       trabajado: [
-        "Identificación de riesgos",
-        "Construcción colectiva de mapas",
-        "Compartir saberes comunitarios",
+        "Estrategias de promoción digital",
+        "Comunicación efectiva en redes",
+        "Posicionamiento de proyectos y ventas",
       ],
-      enfoque: "Prevención y gestión del riesgo desde la comunidad mediante mapeo participativo.",
-      metodologias: ["Mapeo participativo", "Taller comunitario", "Construcción colectiva"],
-      enfoqueCierre: "Acciones comunitarias para la prevención y gestión del riesgo.",
-      competencias: ["Identificación de riesgos", "Trabajo comunitario", "Manejo de herramientas de mapeo"],
-      proyectoFinal: "Mapa colectivo de riesgos y plan de acción comunitaria.",
+      enfoque: "Marketing digital aplicado al fortalecimiento de proyectos y negocios en entornos audiovisuales.",
+      metodologias: ["Sesiones prácticas", "Análisis de casos", "Producción de contenido"],
+      enfoqueCierre: "Integración de estrategias digitales para posicionar iniciativas y generar resultados concretos.",
+      competencias: ["Promoción digital", "Comunicación estratégica", "Posicionamiento de marca", "Competencias digitales"],
+      proyectoFinal: "Diseño de una campaña digital para un proyecto o emprendimiento audiovisual.",
     },
     {
       id: "2026-13",
+      titulo: "Robótica: De 0 a prototipo",
+      tematica: "Robótica",
+      estado: "Finalizado",
+      edad: "14 a 17 años",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["30 de abril de 2026"],
+      sesiones: ["2026-04-30", "2026-05-07", "2026-05-14", "2026-05-21", "2026-05-28", "2026-06-04", "2026-06-11"],
+      ano: 2026,
+      imagen: "/Formación%202026/Robótica%20De%200%20a%20prototipo.png",
+      subtitulo: "Curso STEM para diseñar, construir y programar robots funcionales.",
+      descripcion: [
+        "El curso Robótica: De 0 a prototipo es un espacio formativo dirigido a adolescentes, enfocado en el diseño, construcción y programación de robots mediante un enfoque STEM. A través de proyectos prácticos, los participantes desarrollan habilidades en electrónica, programación e integración de sensores, creando prototipos funcionales capaces de ejecutar tareas autónomas o controladas.",
+      ],
+      trabajado: [
+        "Diseño y construcción de robots",
+        "Programación e integración de sensores",
+        "Prototipado funcional",
+      ],
+      enfoque: "Aprendizaje STEM orientado a la creación de prototipos robóticos.",
+      metodologias: ["Proyectos prácticos", "Prototipado", "Experimentación guiada"],
+      enfoqueCierre: "Desarrollo de soluciones robóticas funcionales con aplicación práctica.",
+      competencias: ["Electrónica básica", "Programación", "Pensamiento ingenieril", "Trabajo en equipo"],
+      proyectoFinal: "Construcción y prueba de un prototipo robótico funcional.",
+    },
+    {
+      id: "2026-14",
+      titulo: "Mujeres que usan la IA para la vida cotidiana",
+      tematica: "Inteligencia Artificial",
+      estado: "Finalizado",
+      edad: "18 años en adelante",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["8 de mayo de 2026"],
+      sesiones: ["2026-05-08"],
+      ano: 2026,
+      imagen: "/Formación%202026/Mujeres%20que%20usan%20la%20IA%20para%20la%20vida%20cotidiana.png",
+      subtitulo: "Espacio formativo para el uso práctico de IA en la vida diaria.",
+      descripcion: [
+        "El curso Mujeres que usan la IA para la vida cotidiana es un espacio formativo dirigido a mujeres, enfocado en el uso práctico de la inteligencia artificial y herramientas digitales en la vida diaria. A través de sesiones dinámicas, las participantes fortalecen habilidades tecnológicas básicas, promoviendo la autonomía, el aprendizaje continuo y el aprovechamiento de la tecnología en su entorno cotidiano.",
+      ],
+      trabajado: [
+        "Uso práctico de herramientas de IA",
+        "Fortalecimiento de habilidades tecnológicas básicas",
+        "Aprovechamiento de tecnología en el entorno cotidiano",
+      ],
+      enfoque: "Apropiación tecnológica para autonomía y aprendizaje continuo.",
+      metodologias: ["Sesiones dinámicas", "Prácticas guiadas", "Aprendizaje aplicado"],
+      enfoqueCierre: "Promoción de autonomía y uso consciente de herramientas digitales.",
+      competencias: ["Alfabetización digital", "Autonomía tecnológica", "Aprendizaje continuo"],
+      proyectoFinal: "Aplicación de herramientas de IA en situaciones cotidianas reales.",
+    },
+    {
+      id: "2026-15",
       titulo: "Volando el Territorio",
       tematica: "Tecnología",
       estado: "Finalizado",
@@ -1137,10 +1174,36 @@ export default function Formacion() {
       proyectoFinal: "Registro y análisis de imágenes aéreas para identificar riesgos.",
     },
     {
-      id: "2026-14",
+      id: "2026-16",
+      titulo: "Miradas del territorio: Mapeando el riesgo",
+      tematica: "Comunidad",
+      estado: "Finalizado",
+      edad: "+18",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["27 de mayo de 2026"],
+      sesiones: ["2026-05-27"],
+      ano: 2026,
+      imagen: "/Formación%202026/E-card%20Miradas%20del%20territorio%20Mapeando%20el%20riesgo.png",
+      subtitulo: "Experiencia participativa para identificar riesgos y fortalecer acciones comunitarias.",
+      descripcion: [
+        "Miradas del territorio: Mapeando el riesgo es una experiencia participativa orientada a reconocer el territorio desde las vivencias y conocimientos de la comunidad. A través de la construcción colectiva de mapas, los participantes identifican riesgos, comparten saberes y fortalecen la comprensión de su entorno, promoviendo acciones comunitarias para la prevención y la gestión del riesgo.",
+      ],
+      trabajado: [
+        "Identificación de riesgos",
+        "Construcción colectiva de mapas",
+        "Compartir saberes comunitarios",
+      ],
+      enfoque: "Prevención y gestión del riesgo desde la comunidad mediante mapeo participativo.",
+      metodologias: ["Mapeo participativo", "Taller comunitario", "Construcción colectiva"],
+      enfoqueCierre: "Acciones comunitarias para la prevención y gestión del riesgo.",
+      competencias: ["Identificación de riesgos", "Trabajo comunitario", "Manejo de herramientas de mapeo"],
+      proyectoFinal: "Mapa colectivo de riesgos y plan de acción comunitaria.",
+    },
+    {
+      id: "2026-17",
       titulo: "Campus vacacional: Ciencia, tecnología y diversión",
       tematica: "Tecnología",
-      estado: "En curso",
+      estado: "Finalizado",
       edad: "6 a 17",
       lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
       fechas: ["16 de junio - 26 de junio de 2026"],
@@ -1174,10 +1237,10 @@ export default function Formacion() {
       proyectoFinal: "Presentación de un proyecto o reto final que recoja los aprendizajes y creaciones del campus.",
     },
     {
-      id: "2026-15",
+      id: "2026-18",
       titulo: "Campus vacacional: Zona Challenge STEM+",
       tematica: "Tecnología",
-      estado: "En curso",
+      estado: "Finalizado",
       edad: "8 a 17",
       lugar: "I.E. José Manuel Restrepo Vélez (JOMAR), Envigado.",
       fechas: ["16 al 19 de junio de 2026"],
@@ -1205,14 +1268,111 @@ export default function Formacion() {
       competencias: ["Pensamiento crítico", "Creatividad", "Resolución de problemas", "Trabajo en equipo", "Competencias digitales básicas"],
       proyectoFinal: "Presentación de un reto resuelto del campus Challenge STEM+.",
     },
+    {
+      id: "2026-19",
+      titulo: "Con la inteligencia artificial pasarás de la idea a la acción",
+      tematica: "Inteligencia Artificial",
+      estado: "Finalizado",
+      edad: "Público general",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: ["16 de junio de 2026"],
+      sesiones: ["2026-06-16"],
+      ano: 2026,
+      imagen: "/Formación%202026/IA%20en%20accion.webp",
+      subtitulo: "Espacio formativo para convertir ideas en soluciones reales con apoyo de la inteligencia artificial.",
+      descripcion: [
+        "Con la inteligencia artificial pasarás de la idea a la acción es un espacio formativo orientado a fortalecer las capacidades de innovación mediante el uso de herramientas de inteligencia artificial. Los participantes aprenderán a transformar ideas en soluciones, potenciar emprendimientos o empresas con apoyo de la tecnología y utilizar herramientas digitales que optimicen procesos, fomenten la creatividad y mejoren la productividad en distintos contextos personales y profesionales.",
+      ],
+      trabajado: [
+        "Transformación de ideas en soluciones con apoyo de IA",
+        "Fortalecimiento de emprendimientos y empresas con tecnología",
+        "Uso de herramientas digitales para optimizar procesos",
+      ],
+      enfoque: "Aprendizaje aplicado para convertir ideas en acciones concretas mediante inteligencia artificial.",
+      metodologias: ["Taller práctico", "Estudio de casos", "Aplicación a proyectos propios"],
+      enfoqueCierre: "Fortalecimiento de la creatividad y la productividad mediante herramientas de IA.",
+      competencias: ["Innovación", "Pensamiento emprendedor", "Competencia digital"],
+      proyectoFinal: "Diseño de una idea o solución llevada a la acción con apoyo de herramientas de IA.",
+    },
+    {
+      id: "2026-20",
+      titulo: "Curso para empresarios: Edición de contenido audiovisual para redes sociales",
+      tematica: "Audiovisual",
+      estado: "En curso",
+      edad: "Público general",
+      lugar: "Biblioteca Pública y Parque Cultural Débora Arango",
+      fechas: [
+        "Martes y jueves del 23 de junio al 16 de julio de 2026",
+        "8:00 a.m. a 10:00 a.m.",
+      ],
+      sesiones: [
+        "2026-06-23",
+        "2026-06-25",
+        "2026-06-30",
+        "2026-07-02",
+        "2026-07-07",
+        "2026-07-09",
+        "2026-07-14",
+        "2026-07-16",
+      ],
+      ano: 2026,
+      imagen: "/Formación%202026/Audiovisual-edicion1.webp",
+      imagenesGaleria: ["/Formación%202026/Audiovisual-edicion2.webp"],
+      subtitulo: "Curso práctico para crear y editar contenido audiovisual atractivo para redes sociales.",
+      descripcion: [
+        "Curso para empresarios: Edición de contenido audiovisual para redes sociales es un espacio formativo orientado a fortalecer las habilidades de creación y edición de contenido digital para redes sociales. A través de herramientas prácticas, los participantes aprenden a producir videos atractivos para promocionar emprendimientos, comunicar ideas de manera creativa y desarrollar contenidos que potencien su presencia en plataformas digitales. Además, el curso fomenta el uso estratégico de recursos audiovisuales para impulsar negocios, optimizar procesos de comunicación y fortalecer competencias digitales.",
+      ],
+      trabajado: [
+        "Creación y edición de contenido para redes sociales",
+        "Producción de videos para promocionar emprendimientos",
+        "Uso estratégico de recursos audiovisuales",
+      ],
+      enfoque: "Producción audiovisual aplicada al fortalecimiento de negocios y comunicación digital.",
+      metodologias: ["Taller práctico", "Producción guiada", "Aplicación comercial"],
+      enfoqueCierre: "Fortalecimiento de la presencia digital mediante contenido audiovisual estratégico.",
+      competencias: ["Producción audiovisual", "Comunicación digital", "Competencias digitales"],
+      proyectoFinal: "Producción de una pieza audiovisual para redes sociales de un emprendimiento.",
+    },
   ];
 
-  const ecardTagStyles: Record<string, string> = {
-    tematica: "border-[#11B2AA]/40 bg-[#11B2AA]/12 text-[#0D4B56]",
-    fechas: "border-[#FFDE07]/50 bg-[#FFDE07]/18 text-[#182130]",
-    estado: "border-[#EC6910]/45 bg-[#EC6910]/14 text-[#182130]",
-    edad: "border-[#023A34]/40 bg-[#023A34]/12 text-[#023A34]",
-    lugar: "border-[#2D3586]/40 bg-[#2D3586]/12 text-[#2D3586]",
+  // Opciones de filtros derivadas de los datos reales (siempre sincronizadas).
+  // Si se agrega un curso con una temática o lugar nuevo, aparece solo en los filtros.
+  const collator = new Intl.Collator("es", { sensitivity: "base" });
+  const tematicas = Array.from(new Set(ecards.map((e) => e.tematica))).sort((a, b) =>
+    collator.compare(a, b)
+  );
+  const lugares = Array.from(new Set(ecards.map((e) => e.lugar))).sort((a, b) =>
+    collator.compare(a, b)
+  );
+  // Estados en orden lógico, mostrando solo los que existen en los datos.
+  const ordenEstados = ["Abierto", "En curso", "Finalizado"];
+  const estadosPresentes = new Set(ecards.map((e) => e.estado));
+  const estados = ordenEstados.filter((estado) => estadosPresentes.has(estado));
+
+  // Esquema de color sobrio: solo el ESTADO lleva color (codifica disponibilidad de un
+  // vistazo). El resto de los tags usan un tono neutro y se diferencian por su ícono.
+  const tagNeutral = "border-[#0D4B56]/20 bg-[#0D4B56]/[0.06] text-[#0D4B56]";
+  const estadoStyle = (estado: string) => {
+    switch (estado) {
+      case "Abierto":
+        return "border-[#11B2AA]/45 bg-[#11B2AA]/15 text-[#023A34]";
+      case "En curso":
+        return "border-[#EC6910]/45 bg-[#EC6910]/14 text-[#9a3d08]";
+      case "Finalizado":
+        return "border-[#0D4B56]/25 bg-[#0D4B56]/[0.08] text-[#0D4B56]";
+      default:
+        return tagNeutral;
+    }
+  };
+
+  // Metadatos de cada tag: etiqueta legible + ícono. Esto aclara qué significa cada tag
+  // cuando se abre el curso, sin alargar las tarjetas.
+  const tagMeta = {
+    tematica: { label: "Temática", Icon: Tag },
+    edad: { label: "Edad", Icon: Users },
+    fechas: { label: "Fechas", Icon: CalendarDays },
+    estado: { label: "Estado", Icon: CircleDot },
+    lugar: { label: "Lugar", Icon: MapPin },
   };
 
   // Funciones de filtrado
@@ -1268,15 +1428,12 @@ export default function Formacion() {
 
   const filteredEcards = ecards.filter((ecard) => {
     const ecardEdadRange = parseEdadRange(ecard.edad);
-    const selectedTematicaValues = new Set(
-      selectedTematicas.flatMap((tematica) => tematicaAliases[tematica] ?? [tematica])
-    );
     const matchesSearch = ecard.titulo
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesTematica =
       selectedTematicas.length === 0 ||
-      selectedTematicaValues.has(ecard.tematica);
+      selectedTematicas.includes(ecard.tematica);
     const matchesEstado =
       selectedEstados.length === 0 || selectedEstados.includes(ecard.estado);
     const matchesEdad =
@@ -1287,17 +1444,28 @@ export default function Formacion() {
         return rangesOverlap(bucketRange, ecardEdadRange);
       }));
     const matchesLugar =
-      selectedLugares.length === 0 ||
-      selectedLugares.some((lugarSeleccionado) => {
-        const lugarAliasValues = lugarAliases[lugarSeleccionado] ?? [lugarSeleccionado];
-        return lugarAliasValues.includes(ecard.lugar);
-      });
+      selectedLugares.length === 0 || selectedLugares.includes(ecard.lugar);
 
     return matchesSearch && matchesTematica && matchesEstado && matchesEdad && matchesLugar;
   });
 
-  // Separar por categoría
-  const cursosActivos = filteredEcards.filter((e) => e.id === "2026-14" || e.id === "2026-15");
+  // Conteo de cursos por opción de filtro (para mostrar "Robótica (3)", etc.)
+  const countByTematica = (value: string) =>
+    ecards.filter((e) => e.tematica === value).length;
+  const countByEstado = (value: string) =>
+    ecards.filter((e) => e.estado === value).length;
+  const countByLugar = (value: string) =>
+    ecards.filter((e) => e.lugar === value).length;
+  const countByEdad = (value: string) => {
+    const bucketRange = edadBuckets[value];
+    if (!bucketRange) return 0;
+    return ecards.filter((e) => {
+      const range = parseEdadRange(e.edad);
+      return range ? rangesOverlap(bucketRange, range) : false;
+    }).length;
+  };
+
+  // Separar por año
   const cursos2026 = filteredEcards.filter((e) => e.ano === 2026);
   const cursos2025 = filteredEcards.filter((e) => e.ano === 2025);
 
@@ -1314,12 +1482,13 @@ export default function Formacion() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [ecardOpen]);
 
-  // Lógica del calendario
-  const activeSessions = ecards
-    .filter((e) => e.id === "2026-14" || e.id === "2026-15")
-    .flatMap((e) =>
-      e.sesiones.map((date) => ({ date, id: e.id, titulo: e.titulo, tematica: e.tematica }))
-    );
+  // Calendario de sesiones. Solo muestra sesiones de cursos activos (Abierto o En curso).
+  // Como ahora mismo todos están finalizados, el calendario queda vacío; en cuanto se
+  // abra un curso, sus sesiones aparecerán automáticamente.
+  const estadosActivos = new Set(["Abierto", "En curso"]);
+  const calendarSessions = ecards
+    .filter((e) => estadosActivos.has(e.estado))
+    .flatMap((e) => e.sesiones.map((date) => ({ date, id: e.id, titulo: e.titulo })));
 
   const calendarYear = calendarDate.getFullYear();
   const calendarMonth = calendarDate.getMonth();
@@ -1331,38 +1500,16 @@ export default function Formacion() {
   ];
   const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
 
-  // dias con sesiones en el mes visible
-  const sessionsByDay: Record<number, { id: string; titulo: string; tematica: string }[]> = {};
-  activeSessions.forEach(({ date, id, titulo, tematica }) => {
+  // Días con sesiones en el mes visible
+  const sessionsByDay: Record<number, { id: string; titulo: string }[]> = {};
+  calendarSessions.forEach(({ date, id, titulo }) => {
     const d = new Date(date + "T00:00:00");
     if (d.getFullYear() === calendarYear && d.getMonth() === calendarMonth) {
       const day = d.getDate();
       if (!sessionsByDay[day]) sessionsByDay[day] = [];
-      sessionsByDay[day].push({ id, titulo, tematica });
+      sessionsByDay[day].push({ id, titulo });
     }
   });
-
-  const tematicaColor: Record<string, string> = {
-    Robotica: "bg-[#11B2AA]",
-    "Robótica": "bg-[#11B2AA]",
-    IA: "bg-[#2D3586]",
-    "Inteligencia Artificial": "bg-[#2D3586]",
-    "Animación": "bg-[#EC6910]",
-    Musica: "bg-[#FFDE07]",
-    "Diseño": "bg-[#0D4B56]",
-    Ciencia: "bg-[#023A34]",
-    Fotografia: "bg-[#FFDE07]",
-    "Fotografía": "bg-[#FFDE07]",
-    "Medio ambiente": "bg-[#11B2AA]",
-    Podcast: "bg-[#2D3586]",
-    Edicion: "bg-[#EC6910]",
-    "Edición": "bg-[#EC6910]",
-    Cocina: "bg-[#182130]",
-    "Analítica": "bg-[#0D4B56]",
-    "Tecnología": "bg-[#EC6910]",
-    "Creatividad": "bg-[#EC6910]",
-    "Escritura": "bg-[#182130]",
-  };
 
   const wideCardWidthMultiplier = 1.28;
   const normalizeCourseTitle = (value: string) =>
@@ -1375,6 +1522,7 @@ export default function Formacion() {
 
   const wideImageCourseTitles = new Set(
     [
+      "Senior Tech: Herramientas digitales para la vida",
       "STEAMers Kids 2",
       "Stop Motion con Legos",
       "Música y Ciencia",
@@ -1411,6 +1559,9 @@ export default function Formacion() {
       "Volando el Territorio",
       "Código en Juego",
       "Robótica: De 0 a prototipo",
+      "Bootcamp Presencial: Inteligencia Artificial (Explorador/Básico)",
+      "Con la inteligencia artificial pasarás de la idea a la acción",
+      "Curso para empresarios: Edición de contenido audiovisual para redes sociales",
     ].map(normalizeCourseTitle)
   );
 
@@ -1528,7 +1679,7 @@ export default function Formacion() {
         <div className="mb-5 flex items-center justify-between gap-4">
           <div>
             <h3 className="text-2xl font-bold text-[#182130]">{title}</h3>
-            <p className="mt-1 text-sm text-[#0D4B56]/75">{items.length} cursos disponibles</p>
+            <p className="mt-1 text-sm text-[#0D4B56]/75">{items.length} {items.length === 1 ? "curso" : "cursos"}</p>
           </div>
         </div>
 
@@ -1578,6 +1729,7 @@ export default function Formacion() {
                       type="button"
                       onClick={() => {
                         setSelectedEcard(ecard);
+                        setGaleriaIndex(0);
                         setEcardOpen(true);
                       }}
                       className="group flex snap-start snap-always flex-col overflow-hidden rounded-2xl border border-[#0D4B56]/15 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
@@ -1605,19 +1757,24 @@ export default function Formacion() {
                       <div className="flex h-[11.5rem] flex-shrink-0 flex-col bg-[#0D4B56]/[0.04] px-3 py-3">
                         <p className="mb-2 line-clamp-2 text-sm font-bold text-[#182130]">{ecard.titulo}</p>
                         <div className="-ml-0.5 mt-1 flex flex-wrap content-start gap-1.5 overflow-hidden">
-                          <Badge variant="outline" className={`max-w-full whitespace-normal break-words rounded-full px-2 py-0.5 text-xs ${ecardTagStyles.tematica}`}>
-                            {ecard.tematica}
-                          </Badge>
-                          <Badge variant="outline" className={`max-w-full whitespace-normal break-words rounded-full px-2 py-0.5 text-xs ${ecardTagStyles.edad}`}>
-                            {ecard.edad}
-                          </Badge>
-                          <Badge variant="outline" className={`max-w-full whitespace-normal break-words rounded-full px-2 py-0.5 text-xs ${ecardTagStyles.fechas}`}>
-                            {ecard.fechas[0]}
-                          </Badge>
-                          <Badge variant="outline" className={`max-w-full whitespace-normal break-words rounded-full px-2 py-0.5 text-xs ${ecardTagStyles.estado}`}>
+                          <Badge variant="outline" className={`inline-flex max-w-full items-center gap-1 whitespace-normal break-words rounded-full px-2 py-0.5 text-xs font-medium ${estadoStyle(ecard.estado)}`}>
+                            <CircleDot className="h-3 w-3 shrink-0" />
                             {ecard.estado}
                           </Badge>
-                          <Badge variant="outline" className={`max-w-full whitespace-normal break-words rounded-full px-2 py-0.5 text-left text-xs leading-4 ${ecardTagStyles.lugar}`}>
+                          <Badge variant="outline" className={`inline-flex max-w-full items-center gap-1 whitespace-normal break-words rounded-full px-2 py-0.5 text-xs font-medium ${tagNeutral}`}>
+                            <Tag className="h-3 w-3 shrink-0" />
+                            {ecard.tematica}
+                          </Badge>
+                          <Badge variant="outline" className={`inline-flex max-w-full items-center gap-1 whitespace-normal break-words rounded-full px-2 py-0.5 text-xs font-medium ${tagNeutral}`}>
+                            <Users className="h-3 w-3 shrink-0" />
+                            {ecard.edad}
+                          </Badge>
+                          <Badge variant="outline" className={`inline-flex max-w-full items-center gap-1 whitespace-normal break-words rounded-full px-2 py-0.5 text-xs font-medium ${tagNeutral}`}>
+                            <CalendarDays className="h-3 w-3 shrink-0" />
+                            {ecard.fechas[0]}
+                          </Badge>
+                          <Badge variant="outline" className={`inline-flex max-w-full items-start gap-1 whitespace-normal break-words rounded-full px-2 py-0.5 text-left text-xs font-medium leading-4 ${tagNeutral}`}>
+                            <MapPin className="mt-0.5 h-3 w-3 shrink-0" />
                             {ecard.lugar}
                           </Badge>
                         </div>
@@ -1655,12 +1812,7 @@ export default function Formacion() {
         <div className="pointer-events-none absolute -left-16 bottom-0 h-48 w-48 rounded-full bg-[#EC6910]/15 blur-3xl" />
         <div className="pointer-events-none absolute right-1/3 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-[#11B2AA]/20 blur-2xl" />
 
-        <div className="relative z-10 container flex min-h-[480px] flex-col justify-end pb-3 md:pb-10">
-          <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/35 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em]">
-            <GraduationCap className="h-4 w-4 text-[#FFDE07]" />
-            Aprende con el CID
-          </div>
-
+        <div className="relative z-10 container flex min-h-[400px] flex-col justify-end pb-3 md:pb-10">
           <h1 className="text-5xl font-extrabold leading-tight lg:text-6xl">Formación Continua</h1>
           <p className="mt-3 max-w-xl text-base leading-relaxed text-white/80 lg:text-lg">
             Cursos, talleres y diplomados para fortalecer competencias educativas en ciencia, tecnología, arte e innovación.
@@ -1683,17 +1835,18 @@ export default function Formacion() {
         <div className="container">
           <Breadcrumbs items={[{ label: "Formación" }]} />
 
-        {/* CALENDARIO DE SESIONES ACTIVAS */}
+        {/* CALENDARIO DE SESIONES */}
         <div className="mb-10 rounded-2xl border border-[#0D4B56]/20 bg-[#0D4B56]/[0.04] p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-lg font-bold text-[#182130]">Próximas sesiones</h2>
-              <p className="text-sm text-[#0D4B56]/75">Días con cursos activos este mes</p>
+              <h2 className="text-lg font-bold text-[#182130]">Calendario de sesiones</h2>
+              <p className="text-sm text-[#0D4B56]/75">Días con sesiones de cursos activos</p>
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setCalendarDate(new Date(calendarYear, calendarMonth - 1, 1))}
                 className="rounded-lg p-2 transition-colors hover:bg-[#FFDE07]/18"
+                aria-label="Mes anterior"
               >
                 <ChevronLeft className="h-4 w-4 text-[#182130]" />
               </button>
@@ -1703,6 +1856,7 @@ export default function Formacion() {
               <button
                 onClick={() => setCalendarDate(new Date(calendarYear, calendarMonth + 1, 1))}
                 className="rounded-lg p-2 transition-colors hover:bg-[#FFDE07]/18"
+                aria-label="Mes siguiente"
               >
                 <ChevronRight className="h-4 w-4 text-[#182130]" />
               </button>
@@ -1750,16 +1904,10 @@ export default function Formacion() {
                     {day}
                   </span>
                   {sessions && (
-                    <div className="flex flex-wrap justify-center gap-0.5 mt-1">
-                      {sessions.map((s, idx) => {
-                        const courseColor = s.id === "2026-14" ? "bg-[#FFDE07]" : "bg-[#EC6910]";
-                        return (
-                          <span
-                            key={idx}
-                            className={`h-1.5 w-1.5 rounded-full ${courseColor}`}
-                          />
-                        );
-                      })}
+                    <div className="mt-1 flex flex-wrap justify-center gap-0.5">
+                      {sessions.slice(0, 4).map((s, idx) => (
+                        <span key={idx} className="h-1.5 w-1.5 rounded-full bg-[#2D3586]" />
+                      ))}
                     </div>
                   )}
                 </div>
@@ -1767,17 +1915,17 @@ export default function Formacion() {
             })}
           </div>
 
-          {/* Leyenda */}
-          {activeSessions.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-4 border-t border-[#0D4B56]/12 pt-4">
-              {cursosActivos.map((e) => (
-                <div key={e.id} className="flex items-center gap-2">
-                  <span
-                    className={`h-2.5 w-2.5 rounded-full ${e.id === "2026-14" ? "bg-[#FFDE07]" : "bg-[#EC6910]"}`}
-                  />
-                  <span className="text-xs text-[#0D4B56]/80">{e.titulo}</span>
-                </div>
-              ))}
+          {/* Leyenda o estado vacío */}
+          {calendarSessions.length > 0 ? (
+            <div className="mt-4 flex items-center gap-2 border-t border-[#0D4B56]/12 pt-4">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#2D3586]" />
+              <span className="text-xs text-[#0D4B56]/80">
+                Día con sesión programada — pasa el cursor sobre el día para ver el curso
+              </span>
+            </div>
+          ) : (
+            <div className="mt-4 border-t border-[#0D4B56]/12 pt-4 text-center text-xs text-[#0D4B56]/70">
+              Por ahora no hay cursos activos con sesiones programadas.
             </div>
           )}
         </div>
@@ -1787,7 +1935,12 @@ export default function Formacion() {
           {/* SIDEBAR DE FILTROS - IZQUIERDA */}
           <div className="lg:col-span-1">
             <div className="sticky top-8 rounded-2xl border border-[#0D4B56]/20 bg-[#0D4B56]/[0.04] p-6 shadow-sm">
-              <h2 className="mb-6 text-lg font-bold text-[#182130]">Filtros</h2>
+              <div className="mb-5 flex items-baseline justify-between">
+                <h2 className="text-lg font-bold text-[#182130]">Filtros</h2>
+                <span className="text-xs font-medium text-[#0D4B56]/70">
+                  {filteredEcards.length} {filteredEcards.length === 1 ? "resultado" : "resultados"}
+                </span>
+              </div>
 
               {/* Búsqueda */}
               <div className="mb-8">
@@ -1806,9 +1959,48 @@ export default function Formacion() {
                 </div>
               </div>
 
+              {/* Filtros por Estado */}
+              <div className="mb-8 border-b border-[#0D4B56]/16 pb-8">
+                <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[#182130]">
+                  <CircleDot className="h-4 w-4 text-[#0D4B56]/70" />
+                  Estado
+                </h3>
+                <div className="space-y-2">
+                  {estados.map((estado) => {
+                    const dot =
+                      estado === "Abierto"
+                        ? "bg-[#11B2AA]"
+                        : estado === "En curso"
+                        ? "bg-[#EC6910]"
+                        : "bg-[#0D4B56]/45";
+                    return (
+                      <label
+                        key={estado}
+                        className="flex items-center gap-3 cursor-pointer group"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedEstados.includes(estado)}
+                          onChange={() =>
+                            toggleFilter(estado, selectedEstados, setSelectedEstados)
+                          }
+                          className="h-4 w-4 rounded border-[#0D4B56]/30 text-[#EC6910] focus:ring-2 focus:ring-[#EC6910]/35"
+                        />
+                        <span className={`h-2 w-2 shrink-0 rounded-full ${dot}`} />
+                        <span className="flex-1 text-sm text-[#0D4B56] group-hover:text-[#182130]">
+                          {estado}
+                        </span>
+                        <span className="text-xs text-[#0D4B56]/55">{countByEstado(estado)}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Filtros por Temática */}
               <div className="mb-8 border-b border-[#0D4B56]/16 pb-8">
-                <h3 className="mb-3 text-sm font-semibold text-[#182130]">
+                <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[#182130]">
+                  <Tag className="h-4 w-4 text-[#0D4B56]/70" />
                   Temática
                 </h3>
                 <div className="space-y-2">
@@ -1821,48 +2013,14 @@ export default function Formacion() {
                         type="checkbox"
                         checked={selectedTematicas.includes(tematica)}
                         onChange={() =>
-                          toggleFilter(
-                            tematica,
-                            selectedTematicas,
-                            setSelectedTematicas
-                          )
+                          toggleFilter(tematica, selectedTematicas, setSelectedTematicas)
                         }
                         className="h-4 w-4 rounded border-[#0D4B56]/30 text-[#11B2AA] focus:ring-2 focus:ring-[#11B2AA]/35"
                       />
-                      <span className="text-sm text-[#0D4B56] group-hover:text-[#182130]">
+                      <span className="flex-1 text-sm text-[#0D4B56] group-hover:text-[#182130]">
                         {tematica}
                       </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Filtros por Estado */}
-              <div className="mb-8 border-b border-[#0D4B56]/16 pb-8">
-                <h3 className="mb-3 text-sm font-semibold text-[#182130]">
-                  Estado
-                </h3>
-                <div className="space-y-2">
-                  {estados.map((estado) => (
-                    <label
-                      key={estado}
-                      className="flex items-center gap-3 cursor-pointer group"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={selectedEstados.includes(estado)}
-                        onChange={() =>
-                          toggleFilter(
-                            estado,
-                            selectedEstados,
-                            setSelectedEstados
-                          )
-                        }
-                        className="h-4 w-4 rounded border-[#0D4B56]/30 text-[#EC6910] focus:ring-2 focus:ring-[#EC6910]/35"
-                      />
-                      <span className="text-sm text-[#0D4B56] group-hover:text-[#182130]">
-                        {estado}
-                      </span>
+                      <span className="text-xs text-[#0D4B56]/55">{countByTematica(tematica)}</span>
                     </label>
                   ))}
                 </div>
@@ -1870,7 +2028,8 @@ export default function Formacion() {
 
               {/* Filtros por Edad */}
               <div className="mb-8 border-b border-[#0D4B56]/16 pb-8">
-                <h3 className="mb-3 text-sm font-semibold text-[#182130]">
+                <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[#182130]">
+                  <Users className="h-4 w-4 text-[#0D4B56]/70" />
                   Edad
                 </h3>
                 <div className="space-y-2">
@@ -1883,17 +2042,14 @@ export default function Formacion() {
                         type="checkbox"
                         checked={selectedEdades.includes(edad)}
                         onChange={() =>
-                          toggleFilter(
-                            edad,
-                            selectedEdades,
-                            setSelectedEdades
-                          )
+                          toggleFilter(edad, selectedEdades, setSelectedEdades)
                         }
                         className="h-4 w-4 rounded border-[#0D4B56]/30 text-[#023A34] focus:ring-2 focus:ring-[#023A34]/35"
                       />
-                      <span className="text-sm text-[#0D4B56] group-hover:text-[#182130]">
+                      <span className="flex-1 text-sm text-[#0D4B56] group-hover:text-[#182130]">
                         {edad}
                       </span>
+                      <span className="text-xs text-[#0D4B56]/55">{countByEdad(edad)}</span>
                     </label>
                   ))}
                 </div>
@@ -1901,30 +2057,28 @@ export default function Formacion() {
 
               {/* Filtros por Lugar */}
               <div className="mb-6">
-                <h3 className="mb-3 text-sm font-semibold text-[#182130]">
+                <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[#182130]">
+                  <MapPin className="h-4 w-4 text-[#0D4B56]/70" />
                   Lugar
                 </h3>
                 <div className="space-y-2">
                   {lugares.map((lugar) => (
                     <label
                       key={lugar}
-                      className="flex items-center gap-3 cursor-pointer group"
+                      className="flex items-start gap-3 cursor-pointer group"
                     >
                       <input
                         type="checkbox"
                         checked={selectedLugares.includes(lugar)}
                         onChange={() =>
-                          toggleFilter(
-                            lugar,
-                            selectedLugares,
-                            setSelectedLugares
-                          )
+                          toggleFilter(lugar, selectedLugares, setSelectedLugares)
                         }
-                        className="h-4 w-4 rounded border-[#0D4B56]/30 text-[#2D3586] focus:ring-2 focus:ring-[#2D3586]/35"
+                        className="mt-0.5 h-4 w-4 shrink-0 rounded border-[#0D4B56]/30 text-[#2D3586] focus:ring-2 focus:ring-[#2D3586]/35"
                       />
-                      <span className="line-clamp-2 text-sm text-[#0D4B56] group-hover:text-[#182130]">
+                      <span className="flex-1 text-sm leading-snug text-[#0D4B56] group-hover:text-[#182130]">
                         {lugar}
                       </span>
+                      <span className="mt-0.5 text-xs text-[#0D4B56]/55">{countByLugar(lugar)}</span>
                     </label>
                   ))}
                 </div>
@@ -1944,7 +2098,7 @@ export default function Formacion() {
                     setSelectedEdades([]);
                     setSelectedLugares([]);
                   }}
-                  className="w-full rounded-lg px-3 py-2 text-sm font-medium text-[#0D4B56] transition-colors hover:bg-[#FFDE07]/16 hover:text-[#182130]"
+                  className="w-full rounded-lg border border-[#0D4B56]/15 px-3 py-2 text-sm font-medium text-[#0D4B56] transition-colors hover:bg-[#FFDE07]/16 hover:text-[#182130]"
                 >
                   Limpiar filtros
                 </button>
@@ -1954,7 +2108,6 @@ export default function Formacion() {
 
           {/* CONTENIDO DE CARROUSELES - DERECHA */}
           <div className="lg:col-span-3">
-            <Carousel title="Cursos Activos" items={cursosActivos} />
             <Carousel title="2026" items={cursos2026} />
             <Carousel title="2025" items={cursos2025} />
           </div>
@@ -1968,72 +2121,114 @@ export default function Formacion() {
           onClick={() => setEcardOpen(false)}
         >
           <div
-            className="max-h-[90vh] w-full max-w-5xl overflow-x-hidden overflow-y-auto rounded-3xl border border-[#0D4B56]/20 bg-white shadow-2xl"
+            className="max-h-[92vh] w-full max-w-6xl overflow-x-hidden overflow-y-auto rounded-3xl border border-[#0D4B56]/20 bg-white shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="relative p-5 md:p-8">
               <button
                 type="button"
                 onClick={() => setEcardOpen(false)}
-                className="absolute right-4 top-4 rounded-full p-1.5 text-[#0D4B56] hover:bg-[#FFDE07]/18"
+                className="absolute right-4 top-4 z-10 rounded-full bg-white/80 p-1.5 text-[#0D4B56] hover:bg-[#FFDE07]/18"
                 aria-label="Cerrar información del curso"
               >
                 <X className="h-5 w-5" />
               </button>
 
-              <div className="grid gap-6 md:grid-cols-[320px_minmax(0,1fr)] md:gap-8">
-                <div className="max-h-[320px] overflow-hidden rounded-2xl border border-[#0D4B56]/20 bg-[#0D4B56]/[0.04] md:max-h-none">
-                  <picture className="contents">
-                    <source srcSet={toWebp(selectedEcard.imagen)} type="image/webp" />
-                    <img
-                      src={selectedEcard.imagen}
-                      alt={selectedEcard.titulo}
-                      loading="eager"
-                      decoding="async"
-                      className="h-full w-full object-contain"
-                    />
-                  </picture>
-                </div>
+              <div className="grid gap-6 md:grid-cols-[minmax(0,460px)_minmax(0,1fr)] md:gap-8">
+                {(() => {
+                  const galeriaImages = [selectedEcard.imagen, ...(selectedEcard.imagenesGaleria ?? [])];
+                  const tieneGaleria = galeriaImages.length > 1;
+                  const imagenActual = galeriaImages[galeriaIndex] ?? galeriaImages[0];
+
+                  return (
+                    <div className="relative flex max-h-[440px] items-center justify-center overflow-hidden rounded-2xl border border-[#0D4B56]/20 bg-[#0D4B56]/[0.04] md:max-h-none">
+                      <picture className="contents">
+                        <source srcSet={toWebp(imagenActual)} type="image/webp" />
+                        <img
+                          src={imagenActual}
+                          alt={selectedEcard.titulo}
+                          loading="eager"
+                          decoding="async"
+                          className="h-full max-h-[440px] w-full object-contain md:max-h-[640px]"
+                        />
+                      </picture>
+
+                      {tieneGaleria && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setGaleriaIndex(
+                                (prev) => (prev - 1 + galeriaImages.length) % galeriaImages.length
+                              )
+                            }
+                            className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/85 p-2 text-[#0D4B56] shadow-md transition-colors hover:bg-[#FFDE07]/25"
+                            aria-label="Ver la imagen anterior del curso"
+                          >
+                            <ChevronLeft className="h-5 w-5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setGaleriaIndex((prev) => (prev + 1) % galeriaImages.length)
+                            }
+                            className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/85 p-2 text-[#0D4B56] shadow-md transition-colors hover:bg-[#FFDE07]/25"
+                            aria-label="Ver la siguiente imagen del curso"
+                          >
+                            <ChevronRight className="h-5 w-5" />
+                          </button>
+                          <div className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-white/85 px-2.5 py-1 text-xs font-semibold text-[#0D4B56] shadow-md">
+                            {galeriaIndex + 1}/{galeriaImages.length}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+                })()}
 
                 <div className="md:pr-8">
                   <h3 className="text-2xl font-black text-[#182130] md:text-3xl">
                     {selectedEcard.titulo}
                   </h3>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
+                  {/* Estado destacado: la única etiqueta con color, da la disponibilidad de un vistazo */}
+                  <div className="mt-3">
                     <Badge
                       variant="outline"
-                      className={`max-w-full whitespace-normal break-words rounded-full px-3 py-1 text-left text-sm font-semibold ${ecardTagStyles.estado}`}
+                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold ${estadoStyle(selectedEcard.estado)}`}
                     >
+                      <CircleDot className="h-3.5 w-3.5" />
                       {selectedEcard.estado}
-                    </Badge>
-                    <Badge
-                      variant="outline"
-                      className={`max-w-full whitespace-normal break-words rounded-full px-3 py-1 text-left text-sm font-semibold ${ecardTagStyles.tematica}`}
-                    >
-                      {selectedEcard.tematica}
-                    </Badge>
-                    <Badge
-                      variant="outline"
-                      className={`max-w-full whitespace-normal break-words rounded-full px-3 py-1 text-left text-sm font-semibold ${ecardTagStyles.edad}`}
-                    >
-                      {selectedEcard.edad}
-                    </Badge>
-                    <Badge
-                      variant="outline"
-                      className={`max-w-full whitespace-normal break-words rounded-full px-3 py-1 text-left text-sm font-semibold ${ecardTagStyles.fechas}`}
-                    >
-                      {selectedEcard.fechas[0]}
-                    </Badge>
-                    <Badge
-                      variant="outline"
-                      className={`max-w-full whitespace-normal break-words rounded-xl px-3 py-1 text-left text-sm font-semibold ${ecardTagStyles.lugar}`}
-                    >
-                      {selectedEcard.lugar}
                     </Badge>
                   </div>
 
-                  <div className="mt-5 h-px w-full bg-[#0D4B56]/16" />
+                  {/* Metadatos del curso, cada uno con su etiqueta para que se entienda qué es */}
+                  <dl className="mt-5 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+                    {[
+                      { ...tagMeta.tematica, values: [selectedEcard.tematica] },
+                      { ...tagMeta.edad, values: [selectedEcard.edad] },
+                      { ...tagMeta.fechas, values: selectedEcard.fechas },
+                      { ...tagMeta.lugar, values: [selectedEcard.lugar] },
+                    ].map(({ label, Icon, values }) => (
+                      <div key={label} className="flex items-start gap-3">
+                        <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0D4B56]/[0.07] text-[#0D4B56]">
+                          <Icon className="h-4 w-4" />
+                        </span>
+                        <div className="min-w-0">
+                          <dt className="text-xs font-semibold uppercase tracking-wide text-[#0D4B56]/55">
+                            {label}
+                          </dt>
+                          {values.map((v) => (
+                            <dd key={v} className="text-sm font-medium leading-snug text-[#182130]">
+                              {v}
+                            </dd>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </dl>
+
+                  <div className="mt-6 h-px w-full bg-[#0D4B56]/16" />
 
                   <div className="mt-5 space-y-4">
                     {selectedEcard.descripcion.map((parrafo) => (

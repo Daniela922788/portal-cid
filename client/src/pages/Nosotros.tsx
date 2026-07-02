@@ -311,18 +311,18 @@ export default function Nosotros() {
   const equipoImagenes: TeamMember[] = [
     { id: 5, nombre: "Daniela Jaramillo Hoyos", cargo: "Directora de Innovación", foto: DanielaImg, categoria: "administrativo" },
     { id: 1, nombre: "Alexander Heredia Heredia", cargo: "Profesional Universitario", foto: AlexImg, categoria: ["administrativo", "tecnologia"] },
-    { id: 12, nombre: "Yethy Gisela Granda Zapata", cargo: "Coordinadora Gestores Innovación - UPB", foto: YethyImg, categoria: "administrativo" },
-    { id: 4, nombre: "Carolina Tabares Isaza", cargo: "Técnico Operativo", foto: CaroImg, categoria: "administrativo" },
     { id: 14, nombre: "María Zuleima Arango Sánchez", cargo: "Profesional Universitaria", foto: "/gestores/Zuleima.webp", categoria: "administrativo" },
+    { id: 4, nombre: "Carolina Tabares Isaza", cargo: "Técnico Operativo", foto: CaroImg, categoria: "administrativo" },
     { id: 9, nombre: "Jhon Fredy Ríos Montoya", cargo: "Profesional Universitario", foto: JhonImg, categoria: "administrativo" },
-    { id: 2, nombre: "Angela María González Valencia", cargo: "Asistente Administrativa - UPB", foto: AngelaImg, categoria: "administrativo" },
+    { id: 12, nombre: "Yethy Gisela Granda Zapata", cargo: "Coordinadora Gestores Innovación", foto: YethyImg, categoria: "administrativo" },
     { id: 3, nombre: "Juan Camilo Álvarez Bedoya", cargo: "Contratista", foto: CamiloImg, categoria: "administrativo" },
-    { id: 13, nombre: "Daniela Serna Gallego", cargo: "Programadora - UPB", foto: "/gestores/Daniela%20SG.png", categoria: "tecnologia" },
-    { id: 10, nombre: "John Fredis Carmona Calderin", cargo: "Técnico Audiovisual - UPB", foto: JohnImg, categoria: "audiovisuales" },
-    { id: 11, nombre: "Jorge Guzmán Ruiz", cargo: "Técnico Audiovisual - UPB", foto: JorgeImg, categoria: "audiovisuales" },
+    { id: 2, nombre: "Angela María González Valencia", cargo: "Asistente Administrativa", foto: AngelaImg, categoria: "administrativo" },
+    { id: 13, nombre: "Daniela Serna Gallego", cargo: "Programadora", foto: "/gestores/Daniela%20SG.png", categoria: "tecnologia" },
     { id: 6, nombre: "Dubiel Enrique Restrepo Marulanda", cargo: "Contratista", foto: DubielImg, categoria: "tecnologia" },
-    { id: 8, nombre: "Jairo Alberto Muñoz Díaz", cargo: "Contratista", foto: JairoImg, categoria: "tecnologia" },
     { id: 7, nombre: "Hernán Alberto Maury Andrade", cargo: "Soporte Técnico de Tigo", foto: HernanImg, categoria: "tecnologia" },
+    { id: 8, nombre: "Jairo Alberto Muñoz Díaz", cargo: "Contratista", foto: JairoImg, categoria: "tecnologia" },
+    { id: 10, nombre: "John Fredis Carmona Calderin", cargo: "Técnico Audiovisual", foto: JohnImg, categoria: "audiovisuales" },
+    { id: 11, nombre: "Jorge Guzmán Ruiz", cargo: "Técnico Audiovisual", foto: JorgeImg, categoria: "audiovisuales" },
   ];
 
   const teamCardItems = [
@@ -608,24 +608,123 @@ export default function Nosotros() {
           <h2 className="text-4xl font-bold mb-12 text-center text-[#2D3586]">Nuestro ADN</h2>
           
           {/* Dirección de Innovación */}
-          <div className="mb-16">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-[#0D4B56]">Dirección de Innovación</h3>
-            <p className="text-base sm:text-lg text-gray-700 mb-6">
-              La Dirección de Innovación es una dependencia estratégica de la Secretaría de Educación de Envigado, cuyo propósito principal es liderar, coordinar y promover el desarrollo científico, tecnológico y de innovación como motores del progreso social, económico, educativo y cultural.
-            </p>
-            <p className="text-base sm:text-lg text-gray-700">
-              Esta dirección actúa como puente entre la comunidad, el conocimiento científico y las soluciones innovadoras a problemáticas reales del entorno.
-            </p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
+            className="mb-16"
+          >
+            <div className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-slate-50 via-white to-teal-50/40 p-6 shadow-sm sm:p-10 lg:p-12">
+              {/* Halos decorativos */}
+              <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-[#11B2AA]/10 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-20 -left-12 h-56 w-56 rounded-full bg-[#2D3586]/10 blur-3xl" />
+
+              <div className="relative grid items-center gap-10 lg:grid-cols-2">
+                {/* Texto */}
+                <div>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#11B2AA]/30 bg-[#11B2AA]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-[#0D4B56]">
+                    <Rocket className="h-4 w-4" />
+                    Quiénes somos
+                  </span>
+
+                  <h3 className="mt-5 text-3xl font-bold leading-tight text-[#0D4B56] sm:text-4xl">
+                    Dirección de Innovación
+                  </h3>
+                  <div className="mt-3 h-1.5 w-20 rounded-full bg-gradient-to-r from-[#EC6910] to-[#FFDE07]" />
+
+                  <p className="mt-6 text-base leading-relaxed text-slate-700 sm:text-lg">
+                    La Dirección de Innovación es una{" "}
+                    <span className="font-semibold text-[#2D3586]">dependencia estratégica</span>{" "}
+                    de la Secretaría de Educación de Envigado, cuyo propósito principal es liderar,
+                    coordinar y promover el desarrollo científico, tecnológico y de innovación como
+                    motores del progreso social, económico, educativo y cultural.
+                  </p>
+
+                  <div className="mt-6 rounded-2xl border-l-4 border-[#11B2AA] bg-white/70 p-5 shadow-sm backdrop-blur">
+                    <p className="text-base leading-relaxed text-slate-700 sm:text-lg">
+                      Actuamos como <span className="font-semibold text-[#0D4B56]">puente</span> entre
+                      la comunidad, el conocimiento científico y las soluciones innovadoras a
+                      problemáticas reales del entorno.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Pilares */}
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+                  {[
+                    {
+                      icon: Lightbulb,
+                      title: "Desarrollo científico",
+                      description: "Acercamos el conocimiento científico a la comunidad y lo convertimos en valor para el territorio.",
+                      color: "#2D3586",
+                    },
+                    {
+                      icon: Waypoints,
+                      title: "Desarrollo tecnológico",
+                      description: "Impulsamos la apropiación de la tecnología como herramienta de transformación educativa.",
+                      color: "#11B2AA",
+                    },
+                    {
+                      icon: Sparkles,
+                      title: "Cultura de innovación",
+                      description: "Promovemos soluciones creativas a problemáticas reales del entorno social y cultural.",
+                      color: "#EC6910",
+                    },
+                  ].map((pilar, i) => {
+                    const Icon = pilar.icon;
+                    return (
+                      <motion.div
+                        key={pilar.title}
+                        initial={{ opacity: 0, x: 24 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: i * 0.1 }}
+                        whileHover={{ y: -4 }}
+                        className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+                      >
+                        <div
+                          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-white shadow-sm"
+                          style={{ backgroundColor: pilar.color }}
+                        >
+                          <Icon className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <h4 className="text-base font-bold text-slate-900 sm:text-lg">{pilar.title}</h4>
+                          <p className="mt-1 text-sm leading-snug text-slate-600">{pilar.description}</p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </motion.div>
 
           {/* Foto del Equipo */}
-          <img 
-            src={equipoCIDImg}
-            alt="Equipo CID"
-            loading="lazy"
-            decoding="async"
-            className="rounded-2xl shadow-2xl w-full h-auto object-cover mb-16"
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
+            className="group relative mb-16 overflow-hidden rounded-3xl shadow-2xl ring-1 ring-slate-200"
+          >
+            <img
+              src={equipoCIDImg}
+              alt="Equipo CID"
+              loading="lazy"
+              decoding="async"
+              className="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+            />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-6 pt-20 sm:p-8">
+              <div className="flex items-center gap-2 text-white">
+                <Users className="h-5 w-5 text-[#FFDE07]" />
+                <span className="text-sm font-semibold uppercase tracking-wide sm:text-base">
+                  Equipo Centro de Innovación y Desarrollo
+                </span>
+              </div>
+            </div>
+          </motion.div>
 
           {/* Nuestro Equipo */}
           <div className="mb-16">

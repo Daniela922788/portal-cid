@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building2, Camera, CheckCircle2, ChevronLeft, ChevronRight, GraduationCap, LayoutGrid, Monitor, MousePointerClick, Palette, Sparkles, XCircle, X } from "lucide-react";
+import { Building2, CalendarDays, Camera, CheckCircle2, ChevronLeft, ChevronRight, GraduationCap, LayoutGrid, Monitor, MousePointerClick, Palette, Sparkles, XCircle, X } from "lucide-react";
 
 type Sala = {
 	nombre: string;
@@ -139,6 +139,172 @@ const salas: Sala[] = [
 	},
 ];
 
+// ═══════════════════════════════════════════════════
+//  SELECTOR DE FECHA — solo días hábiles (lun–vie)
+//  Deshabilita visualmente fines de semana y días pasados.
+//  Solo permite seleccionar a partir del día siguiente al actual.
+//  Mantiene un input oculto name="fechaEvento" para que el
+//  envío del formulario (FormData) siga funcionando igual.
+// ═══════════════════════════════════════════════════
+function SelectorFechaHabil({
+	value,
+	onChange,
+	invalid,
+}: {
+	value: string;
+	onChange: (iso: string) => void;
+	invalid?: boolean;
+}) {
+	const [abierto, setAbierto] = useState(false);
+	const contenedorRef = useRef<HTMLDivElement>(null);
+
+	const hoy = new Date();
+	hoy.setHours(0, 0, 0, 0);
+	const minDate = new Date(hoy);
+	minDate.setDate(minDate.getDate() + 1);
+
+	const parseISO = (iso: string): Date | null => {
+		if (!iso) return null;
+		const [y, m, d] = iso.split("-").map(Number);
+		return new Date(y, m - 1, d);
+	};
+	const toISO = (date: Date) =>
+		`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
+	const baseVista = parseISO(value) ?? minDate;
+	const [vista, setVista] = useState(new Date(baseVista.getFullYear(), baseVista.getMonth(), 1));
+
+	// Re-sincronizar la vista cuando el valor cambia desde afuera (p. ej. reset).
+	useEffect(() => {
+		const base = parseISO(value) ?? minDate;
+		setVista(new Date(base.getFullYear(), base.getMonth(), 1));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [value]);
+
+	// Cerrar el calendario al hacer clic afuera.
+	useEffect(() => {
+		if (!abierto) return;
+		const handler = (e: MouseEvent) => {
+			if (contenedorRef.current && !contenedorRef.current.contains(e.target as Node)) {
+				setAbierto(false);
+			}
+		};
+		document.addEventListener("mousedown", handler);
+		return () => document.removeEventListener("mousedown", handler);
+	}, [abierto]);
+
+	const nombresMes = [
+		"enero", "febrero", "marzo", "abril", "mayo", "junio",
+		"julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+	];
+	const diasSemana = ["do.", "lu.", "ma.", "mi.", "ju.", "vi.", "sá."];
+
+	const anio = vista.getFullYear();
+	const mes = vista.getMonth();
+	const primerDiaSemana = new Date(anio, mes, 1).getDay();
+	const diasEnMes = new Date(anio, mes + 1, 0).getDate();
+
+	const celdas: (number | null)[] = [];
+	for (let i = 0; i < primerDiaSemana; i++) celdas.push(null);
+	for (let d = 1; d <= diasEnMes; d++) celdas.push(d);
+
+	const esDeshabilitado = (dia: number) => {
+		const fecha = new Date(anio, mes, dia);
+		const finDeSemana = fecha.getDay() === 0 || fecha.getDay() === 6;
+		return finDeSemana || fecha < minDate;
+	};
+
+	const formatoDisplay = (iso: string) => {
+		const f = parseISO(iso);
+		if (!f) return "";
+		return `${String(f.getDate()).padStart(2, "0")}/${String(f.getMonth() + 1).padStart(2, "0")}/${f.getFullYear()}`;
+	};
+
+	const mesMinimo = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+	const puedeRetroceder = new Date(anio, mes, 1) > mesMinimo;
+
+	return (
+		<div className="relative" ref={contenedorRef}>
+			{/* Input oculto: conserva la compatibilidad con FormData / validación de envío */}
+			<input type="hidden" name="fechaEvento" value={value} readOnly />
+
+			<button
+				type="button"
+				onClick={() => setAbierto((p) => !p)}
+				className={`mt-1 flex h-10 w-full items-center justify-between rounded-lg border px-3 text-sm outline-none transition focus:border-[#0D4B56] ${
+					invalid ? "border-red-500 ring-1 ring-red-200" : "border-slate-300"
+				} ${value ? "text-slate-800" : "text-slate-400"}`}
+			>
+				<span>{value ? formatoDisplay(value) : "dd/mm/aaaa"}</span>
+				<CalendarDays className="h-4 w-4 text-slate-400" />
+			</button>
+
+			{abierto && (
+				<div className="absolute left-0 z-30 mt-2 w-72 rounded-xl border border-slate-200 bg-white p-3 shadow-xl">
+					<div className="mb-2 flex items-center justify-between">
+						<button
+							type="button"
+							disabled={!puedeRetroceder}
+							onClick={() => setVista(new Date(anio, mes - 1, 1))}
+							className="rounded-full p-1 text-slate-600 transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
+							aria-label="Mes anterior"
+						>
+							<ChevronLeft className="h-4 w-4" />
+						</button>
+						<span className="text-sm font-semibold capitalize text-[#182130]">
+							{nombresMes[mes]} de {anio}
+						</span>
+						<button
+							type="button"
+							onClick={() => setVista(new Date(anio, mes + 1, 1))}
+							className="rounded-full p-1 text-slate-600 transition-colors hover:bg-slate-100"
+							aria-label="Mes siguiente"
+						>
+							<ChevronRight className="h-4 w-4" />
+						</button>
+					</div>
+
+					<div className="grid grid-cols-7 gap-1 text-center">
+						{diasSemana.map((d) => (
+							<span key={d} className="py-1 text-xs font-semibold text-slate-400">{d}</span>
+						))}
+						{celdas.map((dia, idx) => {
+							if (dia === null) return <span key={`vacio-${idx}`} />;
+							const deshabilitado = esDeshabilitado(dia);
+							const iso = toISO(new Date(anio, mes, dia));
+							const seleccionado = iso === value;
+							return (
+								<button
+									key={iso}
+									type="button"
+									disabled={deshabilitado}
+									onClick={() => {
+										onChange(iso);
+										setAbierto(false);
+									}}
+									className={`flex aspect-square items-center justify-center rounded-md text-sm transition-colors ${
+										seleccionado
+											? "bg-[#0D4B56] font-semibold text-white"
+											: deshabilitado
+												? "cursor-not-allowed text-slate-300"
+												: "text-slate-700 hover:bg-[#0D4B56]/10"
+									}`}
+								>
+									{dia}
+								</button>
+							);
+						})}
+					</div>
+
+					<p className="mt-2 text-center text-[11px] leading-tight text-slate-400">
+						Fines de semana y días pasados no disponibles.
+					</p>
+				</div>
+			)}
+		</div>
+	);
+}
+
 export default function Salas() {
 	const [, navigate] = useLocation();
 	const formRef = useRef<HTMLFormElement>(null);
@@ -149,6 +315,7 @@ export default function Salas() {
 	const [reservaValidationError, setReservaValidationError] = useState("");
 	const [showReservaValidationFeedback, setShowReservaValidationFeedback] = useState(false);
 	const [tipoProyecto, setTipoProyecto] = useState<string[]>([]);
+	const [fechaEvento, setFechaEvento] = useState("");
 	const [feedbackModal, setFeedbackModal] = useState<{ tipo: "exito" | "error"; mensaje: string } | null>(null);
 
 	const tipoProyectoOpciones = [
@@ -176,6 +343,7 @@ export default function Salas() {
 		if (!salaSeleccionada) return;
 		setReservaValidationError("");
 		setShowReservaValidationFeedback(false);
+		setFechaEvento("");
 		setReservaAbierta(true);
 	};
 
@@ -184,6 +352,7 @@ export default function Salas() {
 		setShowReservaValidationFeedback(false);
 		setReservaAbierta(false);
 		setTipoProyecto([]);
+		setFechaEvento("");
 	};
 
 	const handleReservaSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -192,26 +361,63 @@ export default function Salas() {
 
 		if (!salaSeleccionada) return;
 
-		if (salaSeleccionada.nombre === "Aula de Experimentación Audiovisual") {
-			const horaInicioVal = (event.currentTarget.elements.namedItem("horaInicio") as HTMLInputElement)?.value;
-			const horaFinVal = (event.currentTarget.elements.namedItem("horaFin") as HTMLInputElement)?.value;
+		const esAulaAudiovisual = salaSeleccionada.nombre === "Aula de Experimentación Audiovisual";
 
-			if (horaInicioVal && horaFinVal) {
-				const [hIni, mIni] = horaInicioVal.split(":").map(Number);
-				const [hFin, mFin] = horaFinVal.split(":").map(Number);
-				const inicioMin = hIni * 60 + mIni;
-				const finMin = hFin * 60 + mFin;
+		// ── Validación de FECHA (global, todas las salas) ──
+		// Solo se permite reservar a partir del día siguiente al actual
+		// y nunca sábados ni domingos.
+		const fechaVal = (event.currentTarget.elements.namedItem("fechaEvento") as HTMLInputElement)?.value;
+		if (!fechaVal) {
+			setReservaValidationError("Debes seleccionar la fecha del evento.");
+			return;
+		}
+		{
+			const hoy = new Date();
+			hoy.setHours(0, 0, 0, 0);
+			const manana = new Date(hoy);
+			manana.setDate(manana.getDate() + 1);
+			const fechaSeleccionada = new Date(fechaVal + "T00:00:00");
 
-				const enBloqueManana = inicioMin >= 7 * 60 && finMin <= 12 * 60 && inicioMin < finMin;
-				const enBloqueTarde = inicioMin >= 13 * 60 && finMin <= 17 * 60 && inicioMin < finMin;
+			if (fechaSeleccionada < manana) {
+				setReservaValidationError("La fecha del evento debe ser a partir del día siguiente al actual. No se puede reservar para hoy ni para días pasados.");
+				return;
+			}
 
-				if (!enBloqueManana && !enBloqueTarde) {
-					setReservaValidationError(
-						"El horario permitido es de 7:00 a 12:00 o de 13:00 a 17:00. La reserva no puede cruzar el mediodía ni salir de estos rangos."
-					);
-					return;
-				}
+			const diaSemana = fechaSeleccionada.getDay();
+			if (diaSemana === 0 || diaSemana === 6) {
+				setReservaValidationError("No se pueden hacer reservas los sábados ni domingos. Por favor selecciona un día hábil (lunes a viernes).");
+				return;
+			}
+		}
 
+		// ── Validación de HORARIO (global, todas las salas) ──
+		// Horario de atención: 7:00–12:00 y 13:00–17:00.
+		const horaInicioVal = (event.currentTarget.elements.namedItem("horaInicio") as HTMLInputElement)?.value;
+		const horaFinVal = (event.currentTarget.elements.namedItem("horaFin") as HTMLInputElement)?.value;
+
+		if (horaInicioVal && horaFinVal) {
+			const [hIni, mIni] = horaInicioVal.split(":").map(Number);
+			const [hFin, mFin] = horaFinVal.split(":").map(Number);
+			const inicioMin = hIni * 60 + mIni;
+			const finMin = hFin * 60 + mFin;
+
+			if (inicioMin >= finMin) {
+				setReservaValidationError("La hora de finalización debe ser posterior a la hora de inicio.");
+				return;
+			}
+
+			const enBloqueManana = inicioMin >= 7 * 60 && finMin <= 12 * 60;
+			const enBloqueTarde = inicioMin >= 13 * 60 && finMin <= 17 * 60;
+
+			if (!enBloqueManana && !enBloqueTarde) {
+				setReservaValidationError(
+					"El horario permitido es de 7:00 a 12:00 o de 13:00 a 17:00. La reserva no puede cruzar el mediodía ni salir de estos rangos."
+				);
+				return;
+			}
+
+			// Máximo de 2 horas: exclusivo del Aula de Experimentación Audiovisual
+			if (esAulaAudiovisual) {
 				const duracionMin = finMin - inicioMin;
 				if (duracionMin > 120) {
 					setReservaValidationError(
@@ -220,39 +426,19 @@ export default function Salas() {
 					return;
 				}
 			}
+		}
 
-			const asistentesVal = Number((event.currentTarget.elements.namedItem("numeroAsistentes") as HTMLInputElement)?.value);
-			if (asistentesVal > 15) {
-				setReservaValidationError("El número máximo de asistentes para el Aula de Experimentación Audiovisual es de 15 personas.");
-				return;
-			}
+		// ── Validación de CAPACIDAD (global, todas las salas) ──
+		const asistentesVal = Number((event.currentTarget.elements.namedItem("numeroAsistentes") as HTMLInputElement)?.value);
+		if (asistentesVal > salaSeleccionada.capacidadMaxima) {
+			setReservaValidationError(`El número máximo de asistentes para ${salaSeleccionada.nombre} es de ${salaSeleccionada.capacidadMaxima} personas.`);
+			return;
+		}
 
+		// ── Validaciones exclusivas del Aula de Experimentación Audiovisual ──
+		if (esAulaAudiovisual) {
 			if (tipoProyecto.length === 0) {
 				setReservaValidationError("Debes seleccionar al menos un Tipo de Proyecto.");
-				return;
-			}
-		}
-
-		if (salaSeleccionada.nombre === "Aula de Experimentación Audiovisual") {
-			const fechaVal = (event.currentTarget.elements.namedItem("fechaEvento") as HTMLInputElement)?.value;
-			if (fechaVal) {
-				const hoy = new Date();
-				hoy.setHours(0, 0, 0, 0);
-				const manana = new Date(hoy);
-				manana.setDate(manana.getDate() + 1);
-				const fechaSeleccionada = new Date(fechaVal + "T00:00:00");
-				if (fechaSeleccionada < manana) {
-					setReservaValidationError("La fecha del evento debe ser a partir del día siguiente al actual.");
-					return;
-				}
-			}
-		}
-
-		const fechaValGlobal = (event.currentTarget.elements.namedItem("fechaEvento") as HTMLInputElement)?.value;
-		if (fechaValGlobal) {
-			const diaSemana = new Date(fechaValGlobal + "T00:00:00").getDay();
-			if (diaSemana === 0 || diaSemana === 6) {
-				setReservaValidationError("No se pueden hacer reservas los sábados ni domingos. Por favor selecciona un día hábil.");
 				return;
 			}
 		}
@@ -312,6 +498,7 @@ export default function Salas() {
 			setShowReservaValidationFeedback(false);
 			setReservaAbierta(false);
 			setTipoProyecto([]);
+			setFechaEvento("");
 			setFeedbackModal({
 				tipo: "exito",
 				mensaje: "Solicitud enviada correctamente. Pronto recibirás respuesta por correo.",
@@ -363,14 +550,9 @@ export default function Salas() {
 					style={{ background: "linear-gradient(to bottom, #FFDE07, #EC6910, transparent)" }}
 				/>
 
-				<div className="container relative z-10 flex min-h-[480px] flex-col justify-center py-20 md:py-28">
+				<div className="container relative z-10 flex min-h-[480px] flex-col justify-center pb-16 pt-28 md:pb-28 md:pt-44">
 
 					{/* Etiqueta superior */}
-					<div className="mb-6 inline-flex w-fit items-center gap-2.5 rounded-none border-l-2 border-[#FFDE07] pl-3 text-xs font-bold uppercase tracking-[0.22em] text-[#FFDE07]">
-						<Building2 className="h-3.5 w-3.5" />
-						Infraestructura educativa CID
-					</div>
-
 					{/* Título principal con corte tipográfico */}
 					<h1 className="text-5xl font-black uppercase leading-[0.92] tracking-tight lg:text-7xl">
 						<span className="block text-white">Salas para</span>
@@ -658,15 +840,18 @@ export default function Salas() {
 									</p>
 								</div>
 
-								<div className="mt-6 lg:mt-auto">
-									<button
-										type="button"
-										onClick={abrirReserva}
-										className="inline-flex w-full items-center justify-center rounded-full bg-[#0D4B56] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0A3A42]"
-									>
-										Reservar este espacio
-									</button>
-								</div>
+								{/* Formulario de reserva deshabilitado temporalmente */}
+								{false && (
+									<div className="mt-6 lg:mt-auto">
+										<button
+											type="button"
+											onClick={abrirReserva}
+											className="inline-flex w-full items-center justify-center rounded-full bg-[#0D4B56] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0A3A42]"
+										>
+											Reservar este espacio
+										</button>
+									</div>
+								)}
 							</div>
 						</div>
 					</div>
@@ -762,6 +947,18 @@ export default function Salas() {
 									{reservaValidationError}
 								</p>
 							)}
+
+							<label className="block text-sm font-semibold text-[#0D4B56]">
+								Espacio que estás reservando
+								<input
+									type="text"
+									name="espacioSolicitado"
+									value={salaSeleccionada.nombre}
+									readOnly
+									className="mt-1 h-11 w-full rounded-lg border-2 border-[#0D4B56]/30 bg-[#F8FBFB] px-3 text-base font-bold text-[#182130]"
+								/>
+							</label>
+
 							<div className="grid gap-4 md:grid-cols-2">
 								<label className="text-sm font-medium text-slate-700 flex flex-col">
 									<span>Nombres y apellidos del solicitante <span className="text-red-600">*</span></span>
@@ -769,6 +966,10 @@ export default function Salas() {
 										type="text"
 										name="solicitanteNombre"
 										required
+										inputMode="text"
+										onInput={(e) => {
+											e.currentTarget.value = e.currentTarget.value.replace(/[0-9]/g, "");
+										}}
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
 								</label>
@@ -783,6 +984,7 @@ export default function Salas() {
 										<option value="" disabled>Seleccione una opción</option>
 										<option value="nit">Nit</option>
 										<option value="cc">Cédula de ciudadanía</option>
+										<option value="ti">Tarjeta de identidad</option>
 										<option value="ce">Cédula de extranjería</option>
 									</select>
 								</label>
@@ -792,6 +994,10 @@ export default function Salas() {
 										type="text"
 										name="numeroDocumento"
 										required
+										inputMode="numeric"
+										onInput={(e) => {
+											e.currentTarget.value = e.currentTarget.value.replace(/[^\d-]/g, "");
+										}}
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
 								</label>
@@ -906,29 +1112,29 @@ export default function Salas() {
 										</select>
 									</label>
 								)}
-								<label className="text-sm font-medium text-slate-700 flex flex-col">
+								<div className="text-sm font-medium text-slate-700 flex flex-col">
 									<span>Fecha evento <span className="text-red-600">*</span></span>
-									<input
-										type="date"
-										name="fechaEvento"
-										required
-										{...(salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && {
-											min: (() => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; })()
-										})}
-										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
+									<SelectorFechaHabil
+										value={fechaEvento}
+										onChange={(iso) => {
+											setFechaEvento(iso);
+											if (reservaValidationError) setReservaValidationError("");
+										}}
+										invalid={showReservaValidationFeedback && !fechaEvento}
 									/>
-								</label>
+									<span className="mt-1 text-xs text-slate-500">Solo días hábiles (lunes a viernes), a partir de mañana.</span>
+								</div>
 								<label className="text-sm font-medium text-slate-700 flex flex-col">
 									<span>Hora de inicio del evento <span className="text-red-600">*</span></span>
 									<input
 										type="time"
 										name="horaInicio"
 										required
+										min="07:00"
+										max="17:00"
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
-									{salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && (
-										<span className="mt-1 text-xs text-slate-500">Horario permitido: 7:00–12:00 o 13:00–17:00</span>
-									)}
+									<span className="mt-1 text-xs text-slate-500">Horario permitido: 7:00–12:00 o 13:00–17:00</span>
 								</label>
 								<label className="text-sm font-medium text-slate-700 flex flex-col">
 									<span>Hora de finalización del evento <span className="text-red-600">*</span></span>
@@ -936,6 +1142,8 @@ export default function Salas() {
 										type="time"
 										name="horaFin"
 										required
+										min="07:00"
+										max="17:00"
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
 									{salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && (
@@ -948,13 +1156,11 @@ export default function Salas() {
 										type="number"
 										name="numeroAsistentes"
 										min={1}
-										{...(salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" ? { max: 15 } : {})}
+										max={salaSeleccionada.capacidadMaxima}
 										required
 										className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition focus:border-[#0D4B56]"
 									/>
-									{salaSeleccionada.nombre === "Aula de Experimentación Audiovisual" && (
-										<span className="mt-1 text-xs text-slate-500">Máximo 15 asistentes</span>
-									)}
+									<span className="mt-1 text-xs text-slate-500">Máximo {salaSeleccionada.capacidadMaxima} asistentes</span>
 								</label>
 							</div>
 
@@ -974,17 +1180,6 @@ export default function Salas() {
 									name="observaciones"
 									rows={3}
 									className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-[#0D4B56]"
-								/>
-							</label>
-
-							<label className="block text-sm font-medium text-slate-700">
-								Espacio solicitado
-								<input
-									type="text"
-									name="espacioSolicitado"
-									value={salaSeleccionada.nombre}
-									readOnly
-									className="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 text-sm text-slate-700"
 								/>
 							</label>
 

@@ -19,15 +19,33 @@ import {
 } from "@/components/ui/accordion";
 
 const SEARCH_RESULT_SECTIONS = [
+  { path: "/", label: "Inicio" },
   { path: "/nosotros", label: "Nosotros" },
+  { path: "/gestores", label: "Gestores de Innovación" },
+  { path: "/salas", label: "Nuestros Espacios" },
+  { path: "/centro", label: "Aula Audiovisual" },
+  { path: "/noticias", label: "Noticias" },
+  { path: "/videos", label: "Videos" },
   { path: "/semana-stem-complete", label: "Semana STEM" },
+  { path: "/publicaciones", label: "Publicaciones" },
   { path: "/reconocimientos", label: "Reconocimientos" },
-  { path: "/formacion", label: "Formacion" },
-  { path: "/mesa-ayuda", label: "Contactanos" },
+  { path: "/ie-oficiales", label: "IE Oficiales" },
+  { path: "/territorio-stem", label: "Territorio STEM" },
+  { path: "/aliados", label: "Aliados" },
+  { path: "/normatividad", label: "Normatividad" },
+  { path: "/formacion", label: "Formación" },
+  { path: "/mesa-ayuda", label: "Contáctanos" },
+  { path: "/premios", label: "Premios" },
+  { path: "/testimonios", label: "Testimonios" },
+  { path: "/enlaces", label: "Enlaces" },
+  { path: "/kit-herramientas", label: "Kit de Herramientas" },
+  { path: "/convocatorias", label: "Convocatorias" },
 ] as const;
 
+// El mapa se indexa en minúsculas para tolerar diferencias de mayúsculas
+// en las rutas devueltas por el backend (ej: "/Centro" vs "/centro").
 const SEARCH_RESULT_LABELS = new Map<string, string>(
-  SEARCH_RESULT_SECTIONS.map((item) => [item.path, item.label])
+  SEARCH_RESULT_SECTIONS.map((item) => [item.path.toLowerCase(), item.label])
 );
 
 const dropdownItemClass =
@@ -58,6 +76,8 @@ export default function Header() {
   const normalizedLocationLower = normalizedLocation.toLowerCase();
 
   const isBlackLogoRoute =
+    normalizedLocationLower === "/noticias" ||
+    normalizedLocationLower === "/reconocimientos" ||
     normalizedLocationLower === "/semana-stem" ||
     normalizedLocationLower === "/semana-stem-complete" ||
     normalizedLocationLower === "/kit-herramientas";
@@ -66,7 +86,6 @@ export default function Header() {
     "/", "/nosotros", "/centro", "/gestores", "/territorio-stem",
     "/ie-oficiales", "/normatividad", "/formacion", "/mesa-ayuda",
     "/aliados", "/publicaciones", "/salas",
-    "/noticias", "/reconocimientos",
   ]);
   const isTransparent = transparentPaths.has(normalizedLocationLower);
   const isSolidDarkHeader = normalizedLocationLower === "/videos";
@@ -210,15 +229,18 @@ export default function Header() {
       const response = await fetch(`/api/site-search?q=${encodeURIComponent(value)}`);
       if (!response.ok) throw new Error("Search API request failed");
       const data = (await response.json()) as { matches?: Array<{ path: string }> };
-      const allowedPaths = new Set<string>(SEARCH_RESULT_SECTIONS.map((item) => item.path));
-      const uniqueMatches = Array.from(
-        new Set(
-          (data.matches ?? []).map((match) => match.path).filter((path) => allowedPaths.has(path))
-        )
-      );
-      const topResults = uniqueMatches
-        .map((path) => ({ path, label: SEARCH_RESULT_LABELS.get(path) ?? path }))
-        .slice(0, 5);
+      // El backend ya devuelve los resultados ordenados por relevancia.
+      // Conservamos ese orden, mostramos solo las páginas con etiqueta
+      // conocida y evitamos repetir una misma sección.
+      const seenLabels = new Set<string>();
+      const topResults: Array<{ path: string; label: string }> = [];
+      for (const match of data.matches ?? []) {
+        const label = SEARCH_RESULT_LABELS.get(match.path.toLowerCase());
+        if (!label || seenLabels.has(label)) continue;
+        seenLabels.add(label);
+        topResults.push({ path: match.path, label });
+        if (topResults.length >= 5) break;
+      }
       setSearchResults(topResults);
       if (topResults.length === 0) {
         window.alert(`No se encontraron resultados para: ${value}`);
@@ -316,7 +338,7 @@ export default function Header() {
                         { href: "/nosotros", title: "Nosotros", desc: "Misión, visión y valores del CID" },
                         { href: "/gestores", title: "Gestores de Innovación", desc: "Equipo de Gestores de Innovación" },
                         { href: "/salas", title: "Nuestros Espacios", desc: "Espacios educativos y ambientes de aprendizaje" },
-                        { href: "/centro", title: "Centro de Producción", desc: "Aula de Experimentación Audiovisual del CID" },
+                        { href: "/centro", title: "Aula Audiovisual", desc: "Aula de Experimentación Audiovisual del CID" },
                       ].map(({ href, title, desc }) => (
                         <li key={href}>
                           <Link href={href}>

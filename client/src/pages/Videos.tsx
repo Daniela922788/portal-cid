@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
 
 const SHORTS = [
   { id: "7bviMX88Y7k", title: "🚀📚 Desde Bucaramanga hasta Envigado, una experiencia que inspira, transforma y deja nuevas perspectivas para la educación del futuro. La innovación educativa se construye con ideas, aprendizaje y el compromiso de seguir creando oportunidades para las próximas generaciones. ✨🎓" },
@@ -453,13 +452,43 @@ export default function Videos() {
         {filteredShorts.length > 0 && (
           <section style={{ marginBottom: 40 }}>
 
-            <Breadcrumbs
-              items={[{ label: "Nosotros" }]}
-              className="text-white"
-              linkClassName="text-white hover:text-primary"
-              iconClassName="text-white"
-              activeClassName="text-white font-medium"
-            />
+            <nav
+              aria-label="Breadcrumb"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                marginBottom: 16,
+                fontSize: 14,
+              }}
+            >
+              <a
+                href="/"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  color: "#fff",
+                  textDecoration: "none",
+                }}
+                aria-label="Inicio"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <path d="M9 22V12h6v10" />
+                </svg>
+              </a>
+              <span style={{ color: "#717171" }}>›</span>
+              <span style={{ color: "#fff", fontWeight: 500 }}>Videos</span>
+            </nav>
 
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="#ff0000">
